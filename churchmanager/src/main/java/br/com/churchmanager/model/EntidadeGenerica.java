@@ -1,9 +1,7 @@
 package br.com.churchmanager.model;
 
-import br.com.churchmanager.model.Status;
-import br.com.churchmanager.util.AES;
-
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
+
+import br.com.churchmanager.util.AES;
 
 @MappedSuperclass
 public class EntidadeGenerica implements Serializable {
@@ -61,7 +61,6 @@ public class EntidadeGenerica implements Serializable {
 	}
 
 	public int hashCode() {
-		boolean prime = true;
 		byte result = 1;
 		int result1 = 31 * result + (this.id == null ? 0 : this.id.hashCode());
 		return result1;

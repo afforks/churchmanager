@@ -1,5 +1,14 @@
 package br.com.churchmanager.controllers;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import br.com.churchmanager.bo.TipoBO;
 import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.Tipo;
@@ -7,15 +16,6 @@ import br.com.churchmanager.model.filter.TipoFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
 import br.com.churchmanager.util.faces.FacesUtil;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 @Named
 @ViewScoped
@@ -37,7 +37,7 @@ public class TipoMB implements Serializable {
 	public String salvar() {
 		this.bo.salvar(this.tipo);
 		FacesUtil.informacao("tipo-msg", "Cadastro com sucesso!", this.tipo.toString());
-		FacesUtil.atualizaComponenteDeMensagem("tipo-msg");
+		FacesUtil.atualizaComponente("tipo-msg");
 		this.tipo = null;
 		return null;
 	}
@@ -45,7 +45,7 @@ public class TipoMB implements Serializable {
 	public String atualizar() {
 		this.bo.atualizar(this.tipo);
 		FacesUtil.informacao("tipo-msg", "Editado com sucesso!", this.tipo.toString());
-		FacesUtil.atualizaComponenteDeMensagem("tipo-msg");
+		FacesUtil.atualizaComponente("tipo-msg");
 		FacesUtil.manterMensagem();
 		this.tipo = null;
 		return "/list/tipo?faces-redirect=true";

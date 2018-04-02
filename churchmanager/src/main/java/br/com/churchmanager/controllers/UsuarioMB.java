@@ -1,5 +1,14 @@
 package br.com.churchmanager.controllers;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import br.com.churchmanager.bo.UsuarioBO;
 import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.Usuario;
@@ -7,15 +16,6 @@ import br.com.churchmanager.model.filter.UsuarioFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
 import br.com.churchmanager.util.faces.FacesUtil;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 @Named
 @ViewScoped
@@ -38,7 +38,7 @@ public class UsuarioMB implements Serializable {
 	public String salvar() {
 		this.bo.salvar(this.usuario);
 		FacesUtil.informacao("msg", "Cadastro com sucesso!", this.usuario.toString());
-		FacesUtil.atualizaComponenteDeMensagem("msg");
+		FacesUtil.atualizaComponente("msg");
 		this.usuario = null;
 		return null;
 	}
@@ -46,7 +46,7 @@ public class UsuarioMB implements Serializable {
 	public String atualizar() {
 		this.bo.atualizar(this.usuario);
 		FacesUtil.informacao("msg", "Editado com sucesso!", this.usuario.toString());
-		FacesUtil.atualizaComponenteDeMensagem("msg");
+		FacesUtil.atualizaComponente("msg");
 		FacesUtil.manterMensagem();
 		this.usuario = null;
 		return "/list/usuario?faces-redirect=true";

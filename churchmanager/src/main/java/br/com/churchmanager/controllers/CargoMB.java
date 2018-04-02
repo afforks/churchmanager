@@ -54,7 +54,7 @@ public class CargoMB implements Serializable {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
 			e.printStackTrace();
 		} finally {
-			FacesUtil.atualizaComponenteDeMensagem("msg");
+			FacesUtil.atualizaComponente("msg");
 		}
 		return null;
 	}
@@ -63,7 +63,7 @@ public class CargoMB implements Serializable {
 		try {
 			this.bo.atualizar(this.cargo);
 			FacesUtil.informacao("msg", "Editado com sucesso!", this.cargo.toString());
-			FacesUtil.atualizaComponenteDeMensagem("msg");
+			FacesUtil.atualizaComponente("msg");
 			FacesUtil.manterMensagem();
 			this.cargo = null;
 		
@@ -72,7 +72,7 @@ public class CargoMB implements Serializable {
 			e.printStackTrace();
 			return null;
 		} finally {
-			FacesUtil.atualizaComponenteDeMensagem("msg");
+			FacesUtil.atualizaComponente("msg");
 		}
 	 
 		return "/list/cargo?faces-redirect=true";

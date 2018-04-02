@@ -1,18 +1,19 @@
 package br.com.churchmanager.util;
 
 public class ContextoDaAplicacao {
-	private static final String CONTEXTO_DA_APLICACAO = "";
+
+	public static final String EXTENSAO = ".xhtml";
 
 	public static String cadastrar(String pagina) {
-		return "/cad/" + pagina + ".xhtml";
+		return "/cad/" + pagina + EXTENSAO;
 	}
 
 	public static String editar(String pagina) {
-		return "/edit/" + pagina + ".xhtml";
+		return "/edit/" + pagina + EXTENSAO;
 	}
 
 	public static String listar(String pagina) {
-		return "/list/" + pagina + ".xhtml";
+		return "/list/" + pagina + EXTENSAO;
 	}
 
 	public static String login() {

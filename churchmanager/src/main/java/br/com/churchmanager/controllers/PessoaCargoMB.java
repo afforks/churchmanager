@@ -1,5 +1,14 @@
 package br.com.churchmanager.controllers;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import br.com.churchmanager.bo.PessoaCargoBO;
 import br.com.churchmanager.model.Cargo;
 import br.com.churchmanager.model.Pessoa;
@@ -9,15 +18,6 @@ import br.com.churchmanager.model.filter.PessoaCargoFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
 import br.com.churchmanager.util.faces.FacesUtil;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 @Named
 @ViewScoped
@@ -40,11 +40,11 @@ public class PessoaCargoMB implements Serializable {
 		try {
 			this.bo.salvar(this.pessoaCargo);
 			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.pessoaCargo.toString());
-			FacesUtil.atualizaComponenteDeMensagem("msg-cad-pessoa-cargo");
+			FacesUtil.atualizaComponente("msg-cad-pessoa-cargo");
 			this.pessoaCargo = null;
 		} catch (Exception arg1) {
 			FacesUtil.atencao("msg-cad-pessoa-cargo", arg1.getMessage(), "");
-			FacesUtil.atualizaComponenteDeMensagem("msg-cad-pessoa-cargo");
+			FacesUtil.atualizaComponente("msg-cad-pessoa-cargo");
 			arg1.printStackTrace();
 		}
 
@@ -55,12 +55,12 @@ public class PessoaCargoMB implements Serializable {
 		try {
 			this.bo.atualizar(this.pessoaCargo);
 			FacesUtil.informacao("msg", "Editado com sucesso!", this.pessoaCargo.toString());
-			FacesUtil.atualizaComponenteDeMensagem("msg");
+			FacesUtil.atualizaComponente("msg");
 			FacesUtil.manterMensagem();
 			this.pessoaCargo = null;
 		} catch (Exception arg1) {
 			FacesUtil.atencao("msg-cad-pessoa-cargo", arg1.getMessage(), "");
-			FacesUtil.atualizaComponenteDeMensagem("msg-cad-pessoa-cargo");
+			FacesUtil.atualizaComponente("msg-cad-pessoa-cargo");
 			arg1.printStackTrace();
 		}
 

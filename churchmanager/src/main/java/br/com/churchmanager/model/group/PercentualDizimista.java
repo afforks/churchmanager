@@ -3,7 +3,6 @@ package br.com.churchmanager.model.group;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 public class PercentualDizimista implements Serializable {
 	private static final long serialVersionUID = -7566679881358277939L;

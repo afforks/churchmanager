@@ -48,7 +48,7 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 
 		query.setParameter("data", stringParaDate(dia + "/" + mes + "/" + ano));
 
-		Map dados = (Map) query.uniqueResult();
+		Map<?, ?> dados = (Map<?, ?>) query.uniqueResult();
 		BigDecimal[] totais = new BigDecimal[] { (BigDecimal) dados.get("total"), (BigDecimal) dados.get("M"),
 				(BigDecimal) dados.get("F") };
 		return totais;
@@ -57,17 +57,17 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 	public List<Aniversariante> aniversariantesDoMes(PessoaFilter filter) {
 		int mes = Integer.valueOf(filter.getMes()).intValue();
 		String sql = "select * from aniversariantes where month(data) = :mes_atual order by day(data)";
-		ArrayList resultList = new ArrayList();
+		ArrayList<Aniversariante> resultList = new ArrayList<>();
 		Session session = (Session) this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setParameter("mes_atual", Integer.valueOf(mes));
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-		List data = query.list();
-		Iterator arg8 = data.iterator();
+		List<?> data = query.list();
+		Iterator<?> arg8 = data.iterator();
 
 		while (arg8.hasNext()) {
 			Object o = arg8.next();
-			Map map = (Map) o;
+			Map<?, ?> map = (Map<?, ?>) o;
 			resultList.add(new Aniversariante((String) map.get("nome"), (String) map.get("apelido"),
 					(Date) map.get("data"), ((Integer) map.get("idade")).intValue()));
 		}
@@ -77,7 +77,7 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 
 	public List<MembrosPorFaixaEtaria> membresiaFaixaEtaria(PessoaFilter filter) {
 		String sql = "select sum(M) as M, sum(F) as F, faixa_etaria from faixa_etaria where dc <= :data  group by faixa_etaria";
-		ArrayList resultList = new ArrayList();
+		ArrayList<MembrosPorFaixaEtaria> resultList = new ArrayList<>();
 		Session session = (Session) this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
@@ -88,12 +88,12 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 
 		query.setParameter("data", stringParaDate(dia + "/" + mes + "/" + ano));
 
-		List data = query.list();
-		Iterator arg7 = data.iterator();
+		List<?> data = query.list();
+		Iterator<?> arg7 = data.iterator();
 
 		while (arg7.hasNext()) {
 			Object o = arg7.next();
-			Map map = (Map) o;
+			Map<?, ?> map = (Map<?, ?>) o;
 			resultList.add(new MembrosPorFaixaEtaria((String) map.get("faixa_etaria"), (BigDecimal) map.get("M"),
 					(BigDecimal) map.get("F")));
 		}
@@ -103,7 +103,7 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 
 	public List<PessoaAtividaEclesiastica> pessoasPorAtividadeEclesiastica(PessoaFilter filter) {
 		String sql = "SELECT distinct categoria, sum(quantidade) as quantidade FROM pessoas_por_atividade_eclesiastica where data < :data group by categoria";
-		ArrayList resultList = new ArrayList();
+		ArrayList<PessoaAtividaEclesiastica> resultList = new ArrayList<>();
 		Session session = (Session) this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
@@ -114,12 +114,12 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 
 		query.setParameter("data", stringParaDate(dia + "/" + mes + "/" + ano));
 
-		List data = query.list();
-		Iterator arg6 = data.iterator();
+		List<?> data = query.list();
+		Iterator<?> arg6 = data.iterator();
 
 		while (arg6.hasNext()) {
 			Object o = arg6.next();
-			Map map = (Map) o;
+			Map<?, ?> map = (Map<?, ?>) o;
 			resultList.add(
 					new PessoaAtividaEclesiastica((String) map.get("categoria"), (BigDecimal) map.get("quantidade")));
 		}
@@ -135,7 +135,7 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 
 		query.setParameter("data", dataCadastro);
 
-		Map dados = (Map) query.uniqueResult();
+		Map<?, ?> dados = (Map<?, ?>) query.uniqueResult();
 		String qtdPorPeriodo = (String) dados.get("qtd_registros");
 		String matricula = ano() + semestre() + qtdPorPeriodo;
 		return matricula;

@@ -29,7 +29,6 @@ import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 
 import br.com.churchmanager.exception.DadosException;
-import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.EntidadeGenerica;
 import br.com.churchmanager.model.Status;
@@ -61,36 +60,40 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 
 			System.out.println("------------------ MENSAGEM");
 			System.out.println(e.getMessage());
-			
+
 			System.out.println("------------------ LOCALIZED MENSAGEM");
 			System.out.println(e.getLocalizedMessage());
-			
+
 			System.out.println("------------------ CAUSE MENSAGEM");
 			System.out.println(e.getCause().getMessage());
-			
+
 			System.out.println("------------------ GET STACKTRACE");
 			System.out.println(e.getCause().getStackTrace()[0]);
-			
-			if(e.getCause().toString().contains("ConstraintViolationException")) {
-				throw new ViolacaoDeRestricaoException("A operação DML solicitada resultou em uma violação de uma restrição de integridade definida.");
-			} else if(e.getCause().toString().contains("DataException")) {
-				throw new DadosException("A avaliação da instrução SQL válida em relação aos dados fornecidos resultou em alguma operação ilegal, tipos incompatíveis ou cardinalidade incorreta.");
+
+			if (e.getCause().toString().contains("ConstraintViolationException")) {
+				throw new ViolacaoDeRestricaoException(
+						"A operação DML solicitada resultou em uma violação de uma restrição de integridade definida.");
+			} else if (e.getCause().toString().contains("DataException")) {
+				throw new DadosException(
+						"A avaliação da instrução SQL válida em relação aos dados fornecidos resultou em alguma operação ilegal, tipos incompatíveis ou cardinalidade incorreta.");
 			}
 		}
 	}
 
 	@Transacional
-	public T atualizar(T entity)  throws ViolacaoDeRestricaoException, DadosException{
+	public T atualizar(T entity) throws ViolacaoDeRestricaoException, DadosException {
 		T t = null;
 		try {
 			t = this.entityManager.merge(entity);
 		} catch (PersistenceException e) {
-			if(e.getCause().toString().contains("ConstraintViolationException")) {
+			if (e.getCause().toString().contains("ConstraintViolationException")) {
 				e.printStackTrace();
-				throw new ViolacaoDeRestricaoException("A operação DML solicitada resultou em uma violação de uma restrição de integridade definida.");
-			} else if(e.getCause().toString().contains("DataException")) {
+				throw new ViolacaoDeRestricaoException(
+						"A operação DML solicitada resultou em uma violação de uma restrição de integridade definida.");
+			} else if (e.getCause().toString().contains("DataException")) {
 				e.printStackTrace();
-				throw new DadosException("A avaliação da instrução SQL válida em relação aos dados fornecidos resultou em alguma operação ilegal, tipos incompatíveis ou cardinalidade incorreta.");
+				throw new DadosException(
+						"A avaliação da instrução SQL válida em relação aos dados fornecidos resultou em alguma operação ilegal, tipos incompatíveis ou cardinalidade incorreta.");
 			}
 		}
 		return t;
@@ -108,7 +111,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 	}
 
 	@Transacional
-	public void atualizarStatus(T t) throws ViolacaoDeRestricaoException,  DadosException {
+	public void atualizarStatus(T t) throws ViolacaoDeRestricaoException, DadosException {
 		t.setStatus(Status.negarStatus(t.getStatus()));
 		this.atualizar(t);
 	}
@@ -117,6 +120,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 		return this.entityManager.createQuery(query, this.clazz).getSingleResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<T> listarComNamedQuery(String query, Object[] parametros) {
 		Query q = this.entityManager.createNamedQuery(query);
 
@@ -127,6 +131,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 		return q.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<T> listarComQueryNativa(String query, Object[] parametros) {
 		Query q = this.entityManager.createNamedQuery(query);
 
@@ -139,9 +144,9 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 
 	public List<T> listar(boolean ordemAscendente, String... propertiersOrders) {
 		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-		CriteriaQuery cq = builder.createQuery(this.clazz);
-		Root root = cq.from(this.clazz);
-		ArrayList orders = new ArrayList();
+		CriteriaQuery<T> cq = builder.createQuery(this.clazz);
+		Root<T> root = cq.from(this.clazz);
+		ArrayList<javax.persistence.criteria.Order> orders = new ArrayList<javax.persistence.criteria.Order>();
 		String[] arg9 = propertiersOrders;
 		int arg8 = propertiersOrders.length;
 
@@ -153,29 +158,28 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 				orders.add(builder.desc(root.get(p)));
 			}
 		}
-
 		cq.orderBy(orders);
 		return this.entityManager.createQuery(cq).getResultList();
 	}
 
 	public List<T> listarAutocompletar(String orderBy, boolean orderAsc, String propertyName, String value) {
-		ArrayList restricoes = new ArrayList();
+		ArrayList<Criterion> restricoes = new ArrayList<>();
 		if (value != null && !value.isEmpty()) {
 			restricoes.add(Restrictions.like(propertyName, value, MatchMode.ANYWHERE));
 		}
 
-		return this.listarPorAtributosERestricoes(orderBy, orderAsc, restricoes, (Collection) null);
+		return this.listarPorAtributosERestricoes(orderBy, orderAsc, restricoes, null);
 	}
 
 	public T buscarPorAtributo(String chave, Object valor) {
 		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-		CriteriaQuery cq = builder.createQuery(this.clazz);
-		Root root = cq.from(this.clazz);
+		CriteriaQuery<T> cq = builder.createQuery(this.clazz);
+		Root<T> root = cq.from(this.clazz);
 		Predicate predicate = builder.equal(root.get(chave), valor);
 		cq.select(root);
 		cq.where(predicate);
-		TypedQuery query = this.entityManager.createQuery(cq);
-		return (T) query.getSingleResult();
+		TypedQuery<T> query = this.entityManager.createQuery(cq);
+		return query.getSingleResult();
 	}
 
 	public T buscarPorAtributo(String... args) {
@@ -223,14 +227,14 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 		Criteria criteria = null;
 
 		try {
-			Session e = (Session) this.entityManager.unwrap(Session.class);
+			Session e = this.entityManager.unwrap(Session.class);
 			criteria = e.createCriteria(this.clazz);
 			if (includeDistinctRootEntity != null && includeDistinctRootEntity.booleanValue()) {
 				criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			}
 
 			if (aliases != null && !aliases.isEmpty()) {
-				Iterator criterion = aliases.iterator();
+				Iterator<?> criterion = aliases.iterator();
 
 				while (criterion.hasNext()) {
 					Alias iterator1 = (Alias) criterion.next();
@@ -244,7 +248,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 			}
 
 			if (restricoes != null && restricoes != null) {
-				Iterator iterator11 = restricoes.iterator();
+				Iterator<?> iterator11 = restricoes.iterator();
 
 				while (iterator11.hasNext()) {
 					Criterion criterion1 = (Criterion) iterator11.next();
@@ -263,14 +267,14 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 		Long size = null;
 
 		try {
-			Session e = (Session) this.entityManager.unwrap(Session.class);
+			Session e = this.entityManager.unwrap(Session.class);
 			Criteria criteria = e.createCriteria(clazz);
 			if (includeDistinctRootEntity != null && includeDistinctRootEntity.booleanValue()) {
 				criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			}
 
 			if (aliases != null && !aliases.isEmpty()) {
-				Iterator transaction = aliases.iterator();
+				Iterator<?> transaction = aliases.iterator();
 
 				while (transaction.hasNext()) {
 					Alias iterator1 = (Alias) transaction.next();
@@ -284,7 +288,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 			}
 
 			if (restricoes != null && restricoes != null) {
-				Iterator iterator11 = restricoes.iterator();
+				Iterator<?> iterator11 = restricoes.iterator();
 
 				while (iterator11.hasNext()) {
 					Criterion transaction1 = (Criterion) iterator11.next();
@@ -303,20 +307,21 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 		return size;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<T> listarPorDemanda(Class<T> clazz, Integer startPage, Integer maxPage, List<Criterion> restricoes,
 			List<Projection> projecoes, String campoOrdenacao, SortOrder tipoOrdem, List<Alias> aliases,
 			Boolean includeDistinctRootEntity) {
-		List list = null;
+		List<T> list = null;
 
 		try {
-			Session e = (Session) this.entityManager.unwrap(Session.class);
+			Session e = this.entityManager.unwrap(Session.class);
 			Criteria criteria = e.createCriteria(clazz);
 			if (includeDistinctRootEntity != null && includeDistinctRootEntity.booleanValue()) {
 				criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			}
 
 			if (aliases != null && !aliases.isEmpty()) {
-				Iterator transaction = aliases.iterator();
+				Iterator<?> transaction = aliases.iterator();
 
 				while (transaction.hasNext()) {
 					Alias iterator2 = (Alias) transaction.next();
@@ -329,7 +334,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 				}
 			}
 
-			Iterator iterator21;
+			Iterator<?> iterator21;
 			if (restricoes != null && !restricoes.isEmpty()) {
 				iterator21 = restricoes.iterator();
 
@@ -365,16 +370,17 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<T> listarPorAtributosERestricoes(String orderBy, boolean orderAsc, List<Criterion> restrictions,
 			Collection<Alias> aliases) {
-		List list = null;
+		List<T> list = null;
 
 		try {
-			Session e = (Session) this.entityManager.unwrap(Session.class);
+			Session e = this.entityManager.unwrap(Session.class);
 			Transaction transaction = e.beginTransaction();
 			Criteria criteria = e.createCriteria(this.clazz);
 			if (aliases != null && !aliases.isEmpty()) {
-				Iterator i = aliases.iterator();
+				Iterator<?> i = aliases.iterator();
 				Alias aux = null;
 
 				while (i.hasNext()) {
@@ -406,14 +412,15 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	public T buscarPorAtributosERestricoes(Class<T> clazz, List<Criterion> restrictions, Collection<Alias> aliases) {
-		EntidadeGenerica t = null;
+		T t = null;
 
 		try {
-			Session e = (Session) this.entityManager.unwrap(Session.class);
+			Session e = this.entityManager.unwrap(Session.class);
 			Criteria criteria = e.createCriteria(clazz);
 			if (aliases != null && !aliases.isEmpty()) {
-				Iterator i = aliases.iterator();
+				Iterator<?> i = aliases.iterator();
 				Alias aux = null;
 
 				while (i.hasNext()) {
@@ -432,14 +439,15 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 				}
 			}
 
-			t = (EntidadeGenerica) criteria.uniqueResult();
+			t = (T) criteria.uniqueResult();
 		} catch (HibernateException arg8) {
 			arg8.printStackTrace();
 		}
 
-		return (T) t;
+		return t;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public MyLazyDataModel<T> filtrar(DAO<T> dao, Filter filter) {
 		return new MyLazyDataModel(dao, this.clazz, filter.restricoes(), filter.projecoes(), filter.aliases(),
 				filter.usarDistinct());

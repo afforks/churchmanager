@@ -1,5 +1,16 @@
 package br.com.churchmanager.controllers;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import br.com.churchmanager.bo.EventoBO;
 import br.com.churchmanager.model.Evento;
 import br.com.churchmanager.model.Status;
@@ -9,18 +20,6 @@ import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.BuscarArquivo;
 import br.com.churchmanager.util.MyLazyDataModel;
 import br.com.churchmanager.util.faces.FacesUtil;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 @Named
 @ViewScoped
@@ -42,7 +41,7 @@ public class EventoMB implements Serializable {
 	public String salvar() {
 		this.bo.salvar(this.evento);
 		FacesUtil.informacao("msg", "Cadastro com sucesso!", this.evento.toString());
-		FacesUtil.atualizaComponenteDeMensagem("msg");
+		FacesUtil.atualizaComponente("msg");
 		this.evento = null;
 		return null;
 	}
@@ -50,7 +49,7 @@ public class EventoMB implements Serializable {
 	public String atualizar() {
 		this.bo.atualizar(this.evento);
 		FacesUtil.informacao("msg", "Editado com sucesso!", this.evento.toString());
-		FacesUtil.atualizaComponenteDeMensagem("msg");
+		FacesUtil.atualizaComponente("msg");
 		FacesUtil.manterMensagem();
 		this.evento = null;
 		return "/list/evento?faces-redirect=true";

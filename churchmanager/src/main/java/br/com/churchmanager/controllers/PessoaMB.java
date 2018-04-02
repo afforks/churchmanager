@@ -44,7 +44,7 @@ public class PessoaMB implements Serializable {
 		this.pessoa.setMatricula(matricula);
 		this.bo.salvar(this.pessoa);
 		FacesUtil.informacao("pessoa-msg", "Cadastro com sucesso!", this.pessoa.toString());
-		FacesUtil.atualizaComponenteDeMensagem("pessoa-msg");
+		FacesUtil.atualizaComponente("pessoa-msg");
 		this.pessoa = null;
 		return null;
 	}
@@ -52,7 +52,7 @@ public class PessoaMB implements Serializable {
 	public String atualizar() {
 		this.bo.atualizar(this.pessoa);
 		FacesUtil.informacao("pessoa-msg", "Editado com sucesso!", this.pessoa.toString());
-		FacesUtil.atualizaComponenteDeMensagem("pessoa-msg");
+		FacesUtil.atualizaComponente("pessoa-msg");
 		FacesUtil.manterMensagem();
 		this.pessoa = null;
 		return "/list/pessoa?faces-redirect=true";

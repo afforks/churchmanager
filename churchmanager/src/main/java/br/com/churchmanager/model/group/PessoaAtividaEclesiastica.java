@@ -2,7 +2,6 @@ package br.com.churchmanager.model.group;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 public class PessoaAtividaEclesiastica implements Serializable {
 	private static final long serialVersionUID = 3026082101675912254L;

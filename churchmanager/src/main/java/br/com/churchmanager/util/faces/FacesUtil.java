@@ -33,8 +33,12 @@ public class FacesUtil {
 				new FacesMessage(FacesMessage.SEVERITY_FATAL, message, detail));
 	}
 
-	public static void atualizaComponenteDeMensagem(String id) {
+	public static void atualizaComponente(String id) {
 		PrimeFaces.current().ajax().update(id);
+	}
+	
+	public static void executarJS(String statement) {
+		PrimeFaces.current().executeScript(statement);
 	}
 
 	public static void manterMensagem() {

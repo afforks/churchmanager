@@ -1,5 +1,22 @@
 package br.com.churchmanager.dao;
 
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+
+import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
+
 import br.com.churchmanager.generic.dao.DAO;
 import br.com.churchmanager.model.Movimentacao;
 import br.com.churchmanager.model.ParcelaMovimentacao;
@@ -9,21 +26,6 @@ import br.com.churchmanager.model.group.MovimentacaoAnual;
 import br.com.churchmanager.model.group.MovimentacaoCategoria;
 import br.com.churchmanager.model.group.Totais;
 import br.com.churchmanager.util.DataUtil;
-
-import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import org.hibernate.Criteria;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 public class ParcelaMovimentacaoDAO extends DAO<ParcelaMovimentacao> implements Serializable {
 	private static final long serialVersionUID = 1823847283499L;
@@ -35,27 +37,27 @@ public class ParcelaMovimentacaoDAO extends DAO<ParcelaMovimentacao> implements 
 	}
 
 	public List<ParcelaMovimentacao> busarParcelas(Movimentacao movimentacao) {
-		ArrayList restrictions = new ArrayList();
+		ArrayList<Criterion> restrictions = new ArrayList<>();
 		restrictions.add(Restrictions.eq("movimentacao", movimentacao));
-		return this.listarPorAtributosERestricoes("dataVencimento", true, restrictions, (Collection) null);
+		return this.listarPorAtributosERestricoes("dataVencimento", true, restrictions, null);
 	}
 
 	public List<DetalheMovimentacao> ultimosLancamentos(ParcelaMovimentacaoFilter filter) {
 		int mes = Integer.valueOf(filter.getMes()).intValue();
 		int ano = Integer.valueOf(filter.getAno()).intValue();
 		String sql = "select * from movimentacoes where mes = :mes and ano = :ano";
-		ArrayList resultList = new ArrayList();
+		ArrayList<DetalheMovimentacao> resultList = new ArrayList<>();
 		Session session = (Session) this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setParameter("mes", Integer.valueOf(mes));
 		query.setParameter("ano", Integer.valueOf(ano));
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-		List data = query.list();
-		Iterator arg9 = data.iterator();
+		List<?> data = query.list();
+		Iterator<?> arg9 = data.iterator();
 
 		while (arg9.hasNext()) {
 			Object o = arg9.next();
-			Map map = (Map) o;
+			Map<?, ?> map = (Map<?, ?>) o;
 			DetalheMovimentacao d = new DetalheMovimentacao();
 			d.setMes((BigInteger) map.get("mes"));
 			d.setAno((BigInteger) map.get("ano"));
@@ -82,20 +84,20 @@ public class ParcelaMovimentacaoDAO extends DAO<ParcelaMovimentacao> implements 
 		query.setParameter("mes", Integer.valueOf(mes));
 		query.setParameter("ano", Integer.valueOf(ano));
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-		Map dados = (Map) query.uniqueResult();
+		Map<?, ?> dados = (Map<?, ?>) query.uniqueResult();
 		Totais totais = null;
-				
-				if(dados != null) {
-					totais = new Totais(((Integer) dados.get("mes")).intValue(), ((Integer) dados.get("ano")).intValue(),
-						((Double) dados.get("recebidas")).doubleValue(), ((Double) dados.get("a_receber")).doubleValue(),
-							((Double) dados.get("pagas")).doubleValue(), ((Double) dados.get("a_pagar")).doubleValue());
-				}
+
+		if (dados != null) {
+			totais = new Totais(((Integer) dados.get("mes")).intValue(), ((Integer) dados.get("ano")).intValue(),
+					((Double) dados.get("recebidas")).doubleValue(), ((Double) dados.get("a_receber")).doubleValue(),
+					((Double) dados.get("pagas")).doubleValue(), ((Double) dados.get("a_pagar")).doubleValue());
+		}
 		return totais;
 	}
 
 	public List<MovimentacaoCategoria> custosPorCategoria(ParcelaMovimentacaoFilter filter) {
 		String sql = "select * from entradas_e_saidas_por_categoria where mes = :mes and ano = :ano and tipo = \'SAIDA\' ";
-		ArrayList resultList = new ArrayList();
+		ArrayList<MovimentacaoCategoria> resultList = new ArrayList<>();
 		Session session = (Session) this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		int mes = Integer.valueOf(filter.getMes()).intValue();
@@ -103,12 +105,12 @@ public class ParcelaMovimentacaoDAO extends DAO<ParcelaMovimentacao> implements 
 		query.setParameter("mes", Integer.valueOf(mes));
 		query.setParameter("ano", Integer.valueOf(ano));
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-		List data = query.list();
-		Iterator arg9 = data.iterator();
+		List<?> data = query.list();
+		Iterator<?> arg9 = data.iterator();
 
 		while (arg9.hasNext()) {
 			Object o = arg9.next();
-			Map map = (Map) o;
+			Map<?, ?> map = (Map<?, ?>) o;
 			resultList.add(new MovimentacaoCategoria((String) map.get("nome"),
 					((Double) map.get("valor")).doubleValue(), ((Integer) map.get("mes")).intValue(),
 					((Integer) map.get("ano")).intValue(), (String) map.get("tipo")));
@@ -119,7 +121,7 @@ public class ParcelaMovimentacaoDAO extends DAO<ParcelaMovimentacao> implements 
 
 	public List<MovimentacaoAnual> movimentacaoUltimos12Meses(ParcelaMovimentacaoFilter filter) {
 		String sql = "select * from tipo_status_total_mensal  where data <= :date order by data desc limit 48";
-		ArrayList resultList = new ArrayList();
+		ArrayList<MovimentacaoAnual> resultList = new ArrayList<>();
 		Session session = (Session) this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		int mes = Integer.valueOf(filter.getMes()).intValue();
@@ -127,12 +129,12 @@ public class ParcelaMovimentacaoDAO extends DAO<ParcelaMovimentacao> implements 
 		int dia = DataUtil.ultimoDiaDoMes(DataUtil.stringParaDate("01/" + mes + "/" + ano));
 		query.setParameter("date", DataUtil.stringParaDate(dia + "/" + mes + "/" + ano));
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-		List data = query.list();
-		Iterator arg10 = data.iterator();
+		List<?> data = query.list();
+		Iterator<?> arg10 = data.iterator();
 
 		while (arg10.hasNext()) {
 			Object o = arg10.next();
-			Map map = (Map) o;
+			Map<?, ?> map = (Map<?, ?>) o;
 			resultList.add(new MovimentacaoAnual((String) map.get("tipo"), (String) map.get("status"),
 					(String) map.get("mes") + "/" + (String) map.get("ano"),
 					((Double) map.get("valor")).doubleValue()));

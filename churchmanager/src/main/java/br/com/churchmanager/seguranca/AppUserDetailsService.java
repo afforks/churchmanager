@@ -1,19 +1,18 @@
 package br.com.churchmanager.seguranca;
 
-import br.com.churchmanager.bo.UsuarioBO;
-import br.com.churchmanager.model.Pagina;
-import br.com.churchmanager.model.Usuario;
-import br.com.churchmanager.seguranca.UsuarioSistema;
-import br.com.churchmanager.util.cdi.CDIServiceLocator;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import br.com.churchmanager.bo.UsuarioBO;
+import br.com.churchmanager.model.Pagina;
+import br.com.churchmanager.model.Usuario;
+import br.com.churchmanager.util.cdi.CDIServiceLocator;
 
 public class AppUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -29,15 +28,13 @@ public class AppUserDetailsService implements UserDetailsService {
 	}
 
 	private Collection<? extends GrantedAuthority> getPaginas(Usuario usuario) {
-		ArrayList autorities = new ArrayList();
-		Iterator arg3 = usuario.getPaginas().iterator();
+		ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-		while (arg3.hasNext()) {
-			Pagina grupo = (Pagina) arg3.next();
+		for (Pagina grupo : usuario.getPaginas()) {
 			String group = "ROLE_" + grupo.getNomeIdentificador();
-			autorities.add(new SimpleGrantedAuthority(group));
+			authorities.add(new SimpleGrantedAuthority(group));
 		}
 
-		return autorities;
+		return authorities;
 	}
 }

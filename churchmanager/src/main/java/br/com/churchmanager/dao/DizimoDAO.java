@@ -32,7 +32,7 @@ public class DizimoDAO extends DAO<Dizimo> implements Serializable {
 		query.setParameter("mes", Integer.valueOf(mes));
 		query.setParameter("ano", Integer.valueOf(ano));
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-		Map dados = (Map) query.uniqueResult();
+		Map<?, ?> dados = (Map<?, ?>) query.uniqueResult();
 		PercentualDizimista percentual = new PercentualDizimista(mes, ano, BigDecimal.valueOf(0));
 		if(dados != null) {
 			percentual = new PercentualDizimista(((Integer) dados.get("MES")).intValue(),

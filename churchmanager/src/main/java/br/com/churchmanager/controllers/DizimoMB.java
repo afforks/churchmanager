@@ -1,5 +1,17 @@
 package br.com.churchmanager.controllers;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.validation.constraints.Pattern;
+
 import br.com.churchmanager.bo.DizimoBO;
 import br.com.churchmanager.bo.PessoaBO;
 import br.com.churchmanager.model.Dizimo;
@@ -12,20 +24,6 @@ import br.com.churchmanager.util.BuscarArquivo;
 import br.com.churchmanager.util.DataUtil;
 import br.com.churchmanager.util.MyLazyDataModel;
 import br.com.churchmanager.util.faces.FacesUtil;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.validation.constraints.Pattern;
-import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
@@ -55,7 +53,7 @@ public class DizimoMB implements Serializable {
 	public String salvar() {
 		this.bo.salvar(this.dizimo);
 		FacesUtil.informacao("msg", "Cadastro com sucesso!", this.dizimo.toString());
-		FacesUtil.atualizaComponenteDeMensagem("msg");
+		FacesUtil.atualizaComponente("msg");
 		this.dizimo = null;
 		this.idPessoa = null;
 		return null;
@@ -64,7 +62,7 @@ public class DizimoMB implements Serializable {
 	public String atualizar() {
 		this.bo.atualizar(this.dizimo);
 		FacesUtil.informacao("msg", "Editado com sucesso!", this.dizimo.toString());
-		FacesUtil.atualizaComponenteDeMensagem("msg");
+		FacesUtil.atualizaComponente("msg");
 		FacesUtil.manterMensagem();
 		this.dizimo = null;
 		this.idPessoa = null;
@@ -93,7 +91,7 @@ public class DizimoMB implements Serializable {
 	public void buscarPessoa() {
 		Pessoa pessoa = this.pessoaBO.buscarPorId(this.getIdPessoa());
 		this.getDizimo().setPessoa(pessoa);
-		RequestContext.getCurrentInstance().update("grid-pessoa-selecionada");
+		FacesUtil.atualizaComponente("grid-pessoa-selecionada");
 	}
 
 	public void cancelarSelecao() {

@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -60,7 +59,7 @@ public class MovimentacaoMB implements Serializable {
 		this.movimentacao.gerarParcelas();
 		this.bo.salvar(this.movimentacao);
 		FacesUtil.informacao("msg", "Cadastro com sucesso!", this.movimentacao.toString());
-		FacesUtil.atualizaComponenteDeMensagem("msg");
+		FacesUtil.atualizaComponente("msg");
 		this.movimentacao = null;
 		return null;
 	}
@@ -69,7 +68,7 @@ public class MovimentacaoMB implements Serializable {
 		this.movimentacao.gerarParcelas();
 		this.bo.atualizar(this.movimentacao);
 		FacesUtil.informacao("msg", "Editado com sucesso!", this.movimentacao.toString());
-		FacesUtil.atualizaComponenteDeMensagem("msg");
+		FacesUtil.atualizaComponente("msg");
 		FacesUtil.manterMensagem();
 		this.movimentacao = null;
 		return "/list/movimentacao?faces-redirect=true";
@@ -220,10 +219,10 @@ public class MovimentacaoMB implements Serializable {
 			this.parcela = this.parcelasBO.atualizar(this.parcela);
 			this.movimentacao.atualizaParcela(this.parcela);
 			FacesUtil.informacao("msg-pagar-receber", "Editado com sucesso!", this.parcela.toString());
-			FacesUtil.atualizaComponenteDeMensagem("msg-pagar-receber");
+			FacesUtil.atualizaComponente("msg-pagar-receber");
 		} else {
 			FacesUtil.atencao("msg-pagar-receber", "É necessário informar a data!", "");
-			FacesUtil.atualizaComponenteDeMensagem("msg-pagar-receber");
+			FacesUtil.atualizaComponente("msg-pagar-receber");
 		}
 
 		return null;
@@ -254,7 +253,7 @@ public class MovimentacaoMB implements Serializable {
 		this.parcela = this.parcelasBO.atualizar(this.parcela);
 		this.movimentacao.atualizaParcela(this.parcela);
 		FacesUtil.informacao("msg-pagar-receber", "Editado com sucesso!", this.parcela.toString());
-		FacesUtil.atualizaComponenteDeMensagem("msg-pagar-receber");
+		FacesUtil.atualizaComponente("msg-pagar-receber");
 		return null;
 	}
 }

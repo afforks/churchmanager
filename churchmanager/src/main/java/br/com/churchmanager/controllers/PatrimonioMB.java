@@ -1,5 +1,14 @@
 package br.com.churchmanager.controllers;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import br.com.churchmanager.bo.PatrimonioBO;
 import br.com.churchmanager.model.AvaliacaoPatrimonio;
 import br.com.churchmanager.model.Patrimonio;
@@ -8,16 +17,6 @@ import br.com.churchmanager.model.filter.PatrimonioFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
 import br.com.churchmanager.util.faces.FacesUtil;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
@@ -40,7 +39,7 @@ public class PatrimonioMB implements Serializable {
 	public String salvar() {
 		this.bo.salvar(this.patrimonio);
 		FacesUtil.informacao("msg", "Cadastro com sucesso!", this.patrimonio.toString());
-		FacesUtil.atualizaComponenteDeMensagem("msg");
+		FacesUtil.atualizaComponente("msg");
 		this.patrimonio = null;
 		return null;
 	}
@@ -48,7 +47,7 @@ public class PatrimonioMB implements Serializable {
 	public String atualizar() {
 		this.bo.atualizar(this.patrimonio);
 		FacesUtil.informacao("msg", "Editado com sucesso!", this.patrimonio.toString());
-		FacesUtil.atualizaComponenteDeMensagem("msg");
+		FacesUtil.atualizaComponente("msg");
 		FacesUtil.manterMensagem();
 		this.patrimonio = null;
 		return "/list/patrimonio?faces-redirect=true";
@@ -86,7 +85,7 @@ public class PatrimonioMB implements Serializable {
 		this.patrimonio.atualizar(this.avaliacao);
 		FacesUtil.informacao("avaliacao-msg", "Avaliação atualzada!", (String) null);
 		this.avaliacao = new AvaliacaoPatrimonio();
-		RequestContext.getCurrentInstance().execute("PF(\'cad-avaliacao-patrimonio\').hide();");
+		FacesUtil.executarJS("PF(\'cad-avaliacao-patrimonio\').hide();");
 		return this.resetarAvaliacao();
 	}
 
