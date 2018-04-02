@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:metadata>
+	<f:viewParam name="dummy" />
+	<f:event listener="#{loginBean.preRender}" type="preRenderView" />
+</f:metadata>
+
+<h:head>
+
+	<f:facet name="first">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</f:facet>
+
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{facesContext.externalContext.requestContextPath}/resources/img/logo.ico" />
+
+	<title>Login</title>
+
+<!-- 	<h:outputStylesheet library="primefaces" name="grid/grid.css" /> -->
+	<h:outputStylesheet library="css" name="layout.css" />
+
+	<link href='http://fonts.googleapis.com/css?family=Roboto'
+		rel='stylesheet' type='text/css' />
+
+	<style>
+body {
+	min-height: 100vh;
+	background-color: #ccc;
+	background-image:
+		url('#{facesContext.externalContext.requestContextPath}/resources/img/bg-login.jpeg');
+}
+
+body .blur {
+	z-indez: 2;
+	background:
+}
+</style>
+</h:head>
+
+<h:form id="frm" prependId="false">
+
+	<div class="centralizado"
+		style="position: absolute; left: 5%; right: 5%;">
+
+		<div class="central ui-fluid">
+
+			<div class="card shadow-effect ">
+
+				<div class="center">
+
+					<h2 style="color: #464646;">
+						<i class="fa fa-institution" /> ChurchManager
+					</h2>
+				</div>
+
+				<div class="padding">
+					<p:outputLabel for="username" value="E-mail" styleClass="my-label" />
+					<p:inputText id="username" value="#{loginBean.email}"
+						required="true" placeholder="E-mail do usuário" />
+				</div>
+
+				<div class="padding">
+					<p:outputLabel for="password" value="Senha" styleClass="my-label" />
+					<p:password id="password" required="true"
+						placeholder="Digite sua senha" />
+				</div>
+
+				<div class="padding">
+					<p:commandButton id="btn-logar" icon="fa fa-arrow-right"
+						value="Logar" iconPos="right" update="frm"
+						action="#{loginBean.login}" ajax="false" />
+				</div>
+
+				<p:messages id="msg" closable="true" />
+
+			</div>
+		</div>
+	</div>
+</h:form>
+
+</html>

@@ -1,0 +1,799 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	template="/WEB-INF/template/layout.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="dummy" />
+		<f:event listener="#{dashBoard.loginSucesso}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="page-name">
+		Home
+	</ui:define>
+	
+	<ui:define name="footer">
+		<ui:include src="/WEB-INF/template/loading.xhtml" />
+	</ui:define>
+
+
+	<ui:define name="full-content">
+		<h:form  prependId="false">
+			<p:growl id="msg" showDetail="true" showSummary="true" />
+
+			<p:sticky target="filtragem" />
+			
+			<div class="ui-g">
+				<div class="ui-g-12  ui-md-12 ui-lg-12 ui-sm-12">
+					<div  class="ui-g-12 card shadow-effect "  >
+						<div class="ui-g-12 center">
+							<div class="dash-title-1 font-dark-grey"
+								style="font-weight: normal; padding-bottom: 10px;">Filtrar
+								por período</div>
+						</div>
+						<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+						<div class="ui-g-12">
+
+
+							<p:panelGrid id="filtragem" columns="2" styleClass="ui-panelgrid-blank"
+								style="margin-bottom: 15px;" layout="grid"
+								columnClasses="ui-grid-col-9, ui-grid-col-3">
+
+								<h:panelGroup>
+									<p:outputLabel value="Mês " styleClass="my-label" />
+									<br />
+									<p:selectOneButton id="mes" value="#{dashBoard.mes}"
+										styleClass="font-12">
+										<f:selectItems var="mes" itemLabel="#{mes.abreviacao}"
+											itemValue="#{mes.numero}" value="#{utilMB.meses()}" />
+										<p:ajax process="mes" listener="#{dashBoard.atualizarDados()}" update="frm"/>
+									</p:selectOneButton>
+								</h:panelGroup>
+
+								<h:panelGroup>
+									<p:outputLabel value="Ano " styleClass="my-label" />
+									<br />
+									<p:selectOneButton id="ano" value="#{dashBoard.ano}"
+										styleClass="font-12">
+										<f:selectItems var="ano" itemLabel="#{ano}" itemValue="#{ano}"
+											value="#{utilMB.anos()}" />
+										
+										<p:ajax process="ano" listener="#{dashBoard.atualizarDados()}" update="frm"/>
+									</p:selectOneButton>
+								</h:panelGroup>
+
+							</p:panelGrid>
+
+						</div>
+						<!-- </p:outputPanel> -->
+					</div>
+				</div>
+			</div>
+		</h:form>
+		
+
+	<h:form id="frm" prependId="false">
+
+			<div class="ui-g">
+
+				<div class="ui-g-3  ui-md-6 ui-lg-3 ui-sm-12">
+
+					<div class="ui-g-12 card shadow-effect " style="height: 100%;">
+
+						<div class="ui-g-12 center">
+							<div class="dash-title-1 font-dark-grey"
+								style="font-weight: normal; padding-bottom: 10px;">Membros</div>
+						</div>
+						<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+						<div class="ui-g-12">
+							<h:panelGrid columns="1"
+								styleClass="center ui-panelgrid-blank centralizado">
+
+								<p:graphicImage library="img" name="pessoa.svg" width="120"
+									height="120" title="Membros" />
+
+								<h:outputFormat value="{0} Membros" styleClass="dash-title-2"
+									style="font-weight:normal">
+									<f:param value="#{dashBoard.quantidadeDeMembros()}" />
+								</h:outputFormat>
+
+
+								<p:spacer height="20" width="0" />
+
+								<h:panelGrid columns="5" styleClass="center ui-panelgrid-blank">
+
+									<p:graphicImage library="img" name="homem.svg" width="46"
+										height="46" title="Homens" />
+
+									<h:outputFormat value="{0} H" styleClass="my-label">
+										<f:param value="#{dashBoard.quantidadeDeHomem()}" />
+									</h:outputFormat>
+
+									<p:spacer height="0" width="30" />
+
+									<p:graphicImage library="img" name="mulher.svg" width="46"
+										height="46" title="Mulheres" />
+
+
+									<h:outputFormat value="{0} M" styleClass="my-label">
+										<f:param value="#{dashBoard.quantidadeDeMulher()}" />
+									</h:outputFormat>
+								</h:panelGrid>
+							</h:panelGrid>
+						</div>
+						<!-- </p:outputPanel> -->
+					</div>
+				</div>
+
+				<div class="ui-g-9  ui-md-6 ui-lg-9 ui-sm-12">
+					<div class="ui-g-12 card shadow-effect ">
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+							<div class="center">
+								<div class="dash-title-1 font-dark-grey"
+									style="font-weight: normal;">Membresia</div>
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+							<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+							<p:chart type="bar" model="#{dashBoard.membresia}"
+								responsive="true" />
+							<!-- </p:outputPanel> -->
+						</div>
+					</div>
+				</div>
+
+				<div class="ui-g-12 ">
+					<div class="ui-g-12 card shadow-effect">
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+
+							<div class="dash-title-1 font-dark-grey"
+								style="font-weight: normal; padding-bottom: 10px;">Aniversariantes</div>
+
+							<div class="ui-g bg-blue shadow-effect font-white">
+								<div class="ui-g-12 dash-desc">
+									<div class="dash-table">
+										<div class="dash-table-title">
+											<h:outputText value="#{dashBoard.mesAtual().nome}" />
+										</div>
+										<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+										<p:dataTable var="pessoa"
+											value="#{dashBoard.aniversariantesDoMes()}" rowHover="true"
+											reflow="true" emptyMessage="Nenhum registro foi encontrado!">
+
+											<p:column headerText="Nome" colspan="3">
+												<p:outputLabel value="#{pessoa.nome}" />
+											</p:column>
+											<p:column headerText="Apelido" colspan="1"
+												styleClass="center">
+												<p:outputLabel value="#{pessoa.apelido}" />
+											</p:column>
+											<p:column headerText="Data" colspan="1" styleClass="center">
+												<p:outputLabel value="#{pessoa.data}">
+													<f:convertDateTime pattern="dd/MM" />
+												</p:outputLabel>
+											</p:column>
+											<p:column headerText="Idade" colspan="1" styleClass="center">
+												<p:outputLabel value="#{pessoa.idade}" />
+											</p:column>
+										</p:dataTable>
+										<!-- </p:outputPanel> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+ 
+								
+								
+				<div class="ui-g-12 ">
+					<div class="ui-g-12 card shadow-effect">
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+
+							<div class="dash-title-1 font-dark-grey"
+								style="font-weight: normal; padding-bottom: 10px;">Eventos</div>
+
+							<div class="ui-g bg-orange shadow-effect font-white">
+								<div class="ui-g-12 dash-desc">
+									<div class="dash-table">
+										<div class="dash-table-title">
+											<h:outputText value="#{dashBoard.mesAtual().nome}" />
+										</div>
+										<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+										<p:dataTable var="evento" value="#{dashBoard.eventosDoMes()}"
+											rowHover="true" reflow="true"
+											emptyMessage="Nenhum registro foi encontrado!">
+
+											<p:column headerText="Nome" colspan="2">
+												<p:outputLabel value="#{evento.nome}" />
+											</p:column>
+											<p:column headerText="Data" colspan="1" styleClass="center">
+												<h:outputFormat value="{0}/{1}">
+													<f:param value="#{evento.dia}" />
+													<f:param value="#{evento.mes}" />
+												</h:outputFormat>
+											</p:column>
+											<p:column headerText="Descrição" colspan="4" priority="5">
+												<p:outputLabel value="#{evento.descricao}" />
+											</p:column>
+										</p:dataTable>
+										<!-- </p:outputPanel> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+ 
+
+				<div class="ui-g-8  ui-md-6 ui-lg-8 ui-sm-12 font-white ">
+					<div class="ui-g-12 card shadow-effect">
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+							<div class="center">
+								<div class="dash-title-1 font-dark-grey"
+									style="font-weight: normal;">Movimentação Anual</div>
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+							<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+							<p:chart type="line" model="#{dashBoard.movimentacaoAnual}"
+								responsive="true" />
+							<!-- </p:outputPanel> -->
+						</div>
+					</div>
+				</div>
+
+				<div class="ui-g-4  ui-md-6 ui-lg-4 ui-sm-12">
+					<div class="ui-g-12 card shadow-effect" style="height: 100%;">
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 center">
+							<div class="dash-title-1 font-dark-grey"
+								style="font-weight: normal;">Dizimistas</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12" style="height: 80%">
+							<div class="centralizado">
+								<div class="knob-container ">
+									<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+									<p:knob labelTemplate="{value}%"
+										value="#{dashBoard.percentualDizimista.formatarPorcentagem()}"
+										foregroundColor="#2196F3" disabled="true" thickness=".5" />
+									<!-- </p:outputPanel> -->
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="ui-g-12 ">
+					<div class="ui-g-12 card shadow-effect">
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+							<div class="center">
+								<div class="dash-title-1 font-dark-grey"
+									style="font-weight: normal;">Pessoas por atividade
+									eclesiástica</div>
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+							<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+							<p:chart type="bar"
+								model="#{dashBoard.pessoasPorAtividadesEclesiasticas}"
+								responsive="true" />
+							<!-- </p:outputPanel> -->
+						</div>
+					</div>
+				</div>
+
+				<div class="ui-g-12">
+					<div class="ui-g-12 card shadow-effect">
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+							<div class="center">
+								<div class="dash-title-1 font-dark-grey"
+									style="font-weight: normal;">Custos Por Categoria</div>
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+							<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+							<p:chart type="pie" model="#{dashBoard.custoPorCategoria}"
+								responsive="true" style="height:400px" />
+							<!-- </p:outputPanel> -->
+						</div>
+					</div>
+				</div>
+
+
+				<div class="ui-g-12 ">
+					<div class="ui-g-12 card shadow-effect">
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+							<div class="center">
+								<div class="dash-title-1 font-dark-grey"
+									style="font-weight: normal;">Movimentação Anual</div>
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad font-white ">
+							<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+							<p:chart type="line" model="#{dashBoard.movimentacaoAnual}"
+								responsive="true" />
+							<!-- </p:outputPanel> -->
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				
+				<div class="ui-g-12 ">
+					<div class="ui-g-12 card shadow-effect">
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+
+							<div class="dash-title-1 font-dark-grey"
+								style="font-weight: normal; padding-bottom: 10px;">Resumo</div>
+								
+								
+								<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
+									columnClasses="ui-grid-col-12, ui-grid-col-12">
+									
+									<h:outputText value="Valores faturados" styleClass="destaque bg-dark-blue centralizado "/>
+									<h:outputText value="Próximas faturas" styleClass="destaque bg-dark-blue centralizado "/>
+								
+									<p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank"
+										columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-6 ">
+										
+										<div/>
+										<h:outputText value="Entradas" styleClass="my-label"/>
+										<h:outputText value="#{dashBoard.totalEntradasPagas()}" styleClass="destaque bg-green centralizado ">
+											<f:convertNumber type="currency"/>
+										</h:outputText>
+										
+										<div/>
+										<h:outputText value="Saídas" styleClass="my-label"/>
+										<h:outputText value="#{dashBoard.totalSaidasPagas()}"  styleClass="destaque bg-red centralizado " >
+											<f:convertNumber type="currency"/>
+										</h:outputText>
+										<div/>
+										<h:outputText value="Saldo" styleClass="my-label"/>
+										<h:outputText value="#{dashBoard.saldoFaturado()}"  styleClass="destaque bg-blue my-label font-med centralizado " >
+											<f:convertNumber type="currency"/>
+										</h:outputText>
+										
+									</p:panelGrid>
+								 
+									<p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank"
+										columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-6 ">
+										
+										<div/>
+										<h:outputText value="Entradas" styleClass="my-label"/>
+										<h:outputText value="#{dashBoard.totalEntradasEmAberto()}" styleClass="destaque bg-blue centralizado ">
+											<f:convertNumber type="currency"/>
+										</h:outputText>
+										<div/>
+										<h:outputText value="Saídas" styleClass="my-label"/>
+										<h:outputText value="#{dashBoard.totalSaidasEmAberto()}"  styleClass="destaque bg-yellow centralizado " >
+											<f:convertNumber type="currency"/>
+										</h:outputText>
+										
+										<div/>
+										<h:outputText value="Saldo" styleClass="my-label"/>
+										<h:outputText value="#{dashBoard.saldoAFaturar()}"  styleClass="destaque bg-orange my-label font-med centralizado " >
+											<f:convertNumber type="currency"/>
+										</h:outputText>
+									</p:panelGrid>
+								</p:panelGrid>
+								
+								<br/>
+								
+								<blockquote>
+									<i>
+										<h:outputText value="Ao término do processamento das próximas faturas, a previsão é que o saldo será de: " 
+											style="color: red"/>
+									</i>
+								</blockquote>
+								
+								<h:outputText value="#{dashBoard.saldoFaturado() + dashBoard.saldoAFaturar()}"  styleClass="destaque bg-green my-label font-med centralizado " >
+									<f:convertNumber type="currency"/>
+								</h:outputText>
+							 
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				
+				
+				<div class="ui-g-6 ui-md-6 ui-lg-6 ui-sm-12">
+					<div class="ui-g-12 card shadow-effect">
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<div class="dash-title-1 font-dark-grey"
+								style="font-weight: normal;">Entradas</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad font-white ">
+							<div class="ui-g bg-green shadow-effect">
+
+								<div class="ui-g-3 dash-values centralizado">
+									<div class="fa fa-arrow-circle-down " />
+								</div>
+
+								<div class="ui-g-9 dash-desc ">
+									<div class="dash-title-1"
+										style="font-weight: normal; padding-bottom: 10px;">Recebidas</div>
+									<div class="dash-desc-2">
+										<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+										<p:outputLabel value="#{dashBoard.totalEntradasPagas()}">
+											<f:convertNumber type="currency" />
+										</p:outputLabel>
+										<!-- </p:outputPanel> -->
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad font-white ">
+							<div class="ui-g bg-blue shadow-effect">
+
+								<div class="ui-g-3 dash-values centralizado">
+									<div class="fa fa-arrow-down " />
+								</div>
+
+								<div class="ui-g-9 dash-desc ">
+									<div class="dash-title-1"
+										style="font-weight: normal; padding-bottom: 10px;">A
+										receber</div>
+									<div class="dash-desc-2">
+										<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+										<p:outputLabel value="#{dashBoard.totalEntradasEmAberto()}">
+											<f:convertNumber type="currency" />
+										</p:outputLabel>
+										<!-- </p:outputPanel> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				<div class="ui-g-6  ui-md-6 ui-lg-6 ui-sm-12">
+					<div class="ui-g-12 card shadow-effect">
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
+							<div class="dash-title-1 font-dark-grey"
+								style="font-weight: normal;">Saídas</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad font-white ">
+							<div class="ui-g bg-red shadow-effect">
+								<div class="ui-g-3 dash-values centralizado">
+									<div class="fa fa-arrow-circle-up" />
+								</div>
+								<div class="ui-g-9 dash-desc">
+									<div class="dash-title-1"
+										style="font-weight: normal; padding-bottom: 10px;">Pagas</div>
+									<div class="dash-desc-2">
+										<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+										<p:outputLabel value="#{dashBoard.totalSaidasPagas()}">
+											<f:convertNumber type="currency" />
+										</p:outputLabel>
+										<!-- </p:outputPanel> -->
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad font-white ">
+							<div class="ui-g bg-yellow shadow-effect">
+								<div class="ui-g-3 dash-values centralizado">
+									<div class="fa fa-arrow-up" />
+								</div>
+								<div class="ui-g-9 dash-desc">
+									<div class="dash-title-1"
+										style="font-weight: normal; padding-bottom: 10px;">A
+										pagar</div>
+									<div class="dash-desc-2">
+										<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+										<p:outputLabel value="#{dashBoard.totalSaidasEmAberto()}">
+											<f:convertNumber type="currency" />
+										</p:outputLabel>
+										<!-- </p:outputPanel> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				
+				<div class="ui-g-12 ">
+					<div class="ui-g-12 card shadow-effect">
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+
+							<div class="dash-title-1 font-dark-grey"
+								style="font-weight: normal; padding-bottom: 10px;">Movimentações
+								em conta bancária</div>
+
+							<div class="ui-g bg-purple shadow-effect font-white">
+								<div class="ui-g-12 dash-desc">
+									<div class="dash-table">
+										<div class="dash-table-title">
+											<h:outputText value="#{dashBoard.mesAtual().nome}" />
+										</div>
+										<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+										<p:dataTable var="conta"
+											value="#{dashBoard.ultimosLancamentosEmConta()}"
+											rowHover="true" reflow="true"
+											emptyMessage="Nenhum registro foi encontrado!">
+
+											<p:column headerText="Descrição" colspan="3">
+												<h:outputFormat value="{0} ({1})" styleClass="text-overflow">
+													<f:param value="#{conta.nome}" />
+													<f:param value="#{conta.descricao}" />
+												</h:outputFormat>
+											</p:column>
+
+											<p:column headerText="Tipo" colspan="1" styleClass="center">
+												<p:outputLabel value="#{conta.tipoDescricao}"
+													style="#{conta.corTipo}" styleClass="destaque" />
+											</p:column>
+
+											<p:column headerText="Status" colspan="1" styleClass="center">
+												<p:outputLabel value="#{conta.statusDescricao}"
+													style="#{conta.corStatus}" styleClass="destaque" />
+											</p:column>
+
+											<p:column headerText="Vencimento" colspan="1"
+												styleClass="center">
+												<p:outputLabel value="#{conta.dataVencimento}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:outputLabel>
+											</p:column>
+
+											<p:column headerText="Pagamento" colspan="1">
+												<p:outputLabel value="#{conta.dataPagamento}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:outputLabel>
+											</p:column>
+
+											<p:column headerText="Valor" colspan="1">
+												<p:outputLabel value="#{conta.valor}">
+													<f:convertNumber type="currency" />
+												</p:outputLabel>
+											</p:column>
+										</p:dataTable>
+										<!-- </p:outputPanel> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				
+
+				<div class="ui-g-12 ">
+					<div class="ui-g-12 card shadow-effect">
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+
+							<div class="dash-title-1 font-dark-grey"
+								style="font-weight: normal; padding-bottom: 10px;">Entradas</div>
+
+							<div class="ui-g bg-green shadow-effect font-white">
+								<div class="ui-g-12 dash-desc">
+									<div class="dash-table">
+										<div class="dash-table-title">Últimas</div>
+										<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+										<p:dataTable var="conta"
+											value="#{dashBoard.ultimosLancamentosEntradas()}"
+											rowHover="true" reflow="true"
+											emptyMessage="Nenhum registro foi encontrado!">
+
+											<p:column headerText="Descrição" colspan="3">
+												<h:outputFormat value="{0} ({1})" styleClass="text-overflow">
+													<f:param value="#{conta.nome}" />
+													<f:param value="#{conta.descricao}" />
+												</h:outputFormat>
+											</p:column>
+
+											<p:column headerText="Vencimento" colspan="1"
+												styleClass="center">
+												<p:outputLabel value="#{conta.dataVencimento}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:outputLabel>
+											</p:column>
+
+											<p:column headerText="Pagamento" colspan="1">
+												<p:outputLabel value="#{conta.dataPagamento}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:outputLabel>
+											</p:column>
+
+											<p:column headerText="Valor" colspan="1">
+												<p:outputLabel value="#{conta.valor}">
+													<f:convertNumber type="currency" />
+												</p:outputLabel>
+											</p:column>
+										</p:dataTable>
+										<!-- </p:outputPanel> -->
+									</div>
+								</div>
+							</div>
+
+							<p:spacer width="0" height="20px" />
+
+
+							<div class="ui-g bg-blue shadow-effect font-white">
+								<div class="ui-g-12 dash-desc">
+									<div class="dash-table">
+										<div class="dash-table-title">Próximas</div>
+										<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+										<p:dataTable var="conta"
+											value="#{dashBoard.proximasEntradas()}" rowHover="true"
+											rows="5" reflow="true"
+											emptyMessage="Nenhum registro foi encontrado!">
+
+											<p:column headerText="Descrição" colspan="3">
+												<h:outputFormat value="{0} ({1})" styleClass="text-overflow">
+													<f:param value="#{conta.nome}" />
+													<f:param value="#{conta.descricao}" />
+												</h:outputFormat>
+											</p:column>
+
+											<p:column headerText="Vencimento" colspan="1"
+												styleClass="center">
+												<p:outputLabel value="#{conta.dataVencimento}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:outputLabel>
+											</p:column>
+
+											<p:column headerText="Pagamento" colspan="1"
+												styleClass="center">
+												<p:outputLabel value="#{conta.dataPagamento}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:outputLabel>
+											</p:column>
+
+											<p:column headerText="Valor" colspan="1">
+												<p:outputLabel value="#{conta.valor}">
+													<f:convertNumber type="currency" />
+												</p:outputLabel>
+											</p:column>
+										</p:dataTable>
+										<!-- </p:outputPanel> -->
+									</div>
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+				</div>
+
+
+
+
+				<div class="ui-g-12">
+					<div class="ui-g-12 card shadow-effect">
+						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
+
+							<div class="dash-title-1 font-dark-grey"
+								style="font-weight: normal; padding-bottom: 10px;">Saídas</div>
+
+							<div class="ui-g bg-red shadow-effect font-white">
+								<div class="ui-g-12 dash-desc">
+									<div class="dash-table">
+										<div class="dash-table-title">Últimas</div>
+										<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+										<p:dataTable var="conta"
+											value="#{dashBoard.ultimosLancamentosSaidas()}"
+											rowHover="true" reflow="true"
+											emptyMessage="Nenhum registro foi encontrado!">
+
+											<p:column headerText="Descrição" colspan="3">
+												<h:outputFormat value="{0} ({1})" styleClass="text-overflow">
+													<f:param value="#{conta.nome}" />
+													<f:param value="#{conta.descricao}" />
+												</h:outputFormat>
+											</p:column>
+
+											<p:column headerText="Vencimento" colspan="1"
+												styleClass="center">
+												<p:outputLabel value="#{conta.dataVencimento}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:outputLabel>
+											</p:column>
+
+											<p:column headerText="Pagamento" colspan="1"
+												styleClass="center">
+												<p:outputLabel value="#{conta.dataPagamento}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:outputLabel>
+											</p:column>
+
+											<p:column headerText="Valor" colspan="1">
+												<p:outputLabel value="#{conta.valor}">
+													<f:convertNumber type="currency" />
+												</p:outputLabel>
+											</p:column>
+										</p:dataTable>
+										<!-- </p:outputPanel> -->
+									</div>
+								</div>
+							</div>
+
+							<p:spacer width="0" height="20px" />
+
+							<div class="ui-g bg-yellow shadow-effect font-white">
+								<div class="ui-g-12 dash-desc">
+									<div class="dash-table">
+										<div class="dash-table-title ">Próximas</div>
+										<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+										<p:dataTable var="conta" value="#{dashBoard.proximasSaidas()}"
+											rowHover="true" reflow="true"
+											emptyMessage="Nenhum registro foi encontrado!">
+
+											<p:column headerText="Descrição" colspan="3">
+												<h:outputFormat value="{0} ({1})" styleClass="text-overflow">
+													<f:param value="#{conta.nome}" />
+													<f:param value="#{conta.descricao}" />
+												</h:outputFormat>
+											</p:column>
+
+											<p:column headerText="Vencimento" colspan="1"
+												styleClass="center">
+												<p:outputLabel value="#{conta.dataVencimento}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:outputLabel>
+											</p:column>
+
+											<p:column headerText="Pagamento" colspan="1"
+												styleClass="center">
+												<p:outputLabel value="#{conta.dataPagamento}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:outputLabel>
+											</p:column>
+
+											<p:column headerText="Valor" colspan="1">
+												<p:outputLabel value="#{conta.valor}">
+													<f:convertNumber type="currency" />
+												</p:outputLabel>
+											</p:column>
+										</p:dataTable>
+										<!-- </p:outputPanel> -->
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

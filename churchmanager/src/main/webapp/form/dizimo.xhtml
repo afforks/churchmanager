@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:form prependId="false">
+
+	<p:focus id="focus" context="group" />
+	<p:defaultCommand target="buscar-dizimista"/>
+
+	<div class="ui-fluid">
+		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
+
+		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank"
+			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
+			layout="grid">
+
+
+			<p:outputLabel value="Dizimista" styleClass="my-label"
+				for="dizimista" />
+
+			<p:panelGrid columns="3" id="grid-pessoa-selecionada" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-10">
+				<p:commandButton icon="fa fa-list-alt" styleClass="btn-grey" title="Buscar dizimista"
+				oncomplete="PF('membros').show()" update="list-membros membros"  process="@this"/>
+				
+				<p:commandButton id="buscar-dizimista" icon="fa fa-search" styleClass="btn-green"
+				 action="#{dizimoMB.buscarPessoa()}" process="@this codigo-dizimista" 
+				 update="id-codigo-dizimista grid-pessoa-selecionada"
+				 rendered="#{dizimoMB.dizimo.pessoa == null}"/>
+				
+				<p:inputText rendered="#{dizimoMB.dizimo.pessoa == null}" required="true"
+					requiredMessage="O campo de busca deve ser preenchido!"
+					value="#{dizimoMB.idPessoa}" id="codigo-dizimista">
+				</p:inputText>
+				
+				
+				<p:commandButton icon="fa fa-close" action="#{dizimoMB.cancelarSelecao()}"
+				styleClass="btn-red" process="@this" update="grid-pessoa-selecionada"
+				rendered="#{dizimoMB.dizimo.pessoa != null}"
+				title="Clique para cancelar a seleção"/>
+				
+				<p:outputLabel rendered="#{dizimoMB.dizimo.pessoa != null}" styleClass="destaque bg-green centralizado"
+				 id="dizimista" value="#{dizimoMB.dizimo.pessoa.nome}" title="Dizimista selecionado"/>
+				
+			</p:panelGrid>
+
+			<p:message id="id-codigo-dizimista" for="codigo-dizimista" />
+
+
+
+
+
+
+
+
+			<p:outputLabel for="valor-dizimo" styleClass="my-label"
+				value="Valor do dízimo" />
+			<p:inputText id="valor-dizimo" required="true" styleClass="moeda "
+				requiredMessage="Campo 'Valor do dízimo' é obrigatório!"
+				maxlength="10" value="#{dizimoMB.dizimo.valorDizimo}"
+				converter="javax.faces.BigDecimal">
+				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+			</p:inputText>
+			<p:message for="valor-dizimo" />
+
+			<p:outputLabel for="valor-oferta" styleClass="my-label"
+				value="Valor da oferta" />
+			<p:inputText id="valor-oferta" required="true" styleClass="moeda "
+				requiredMessage="Campo 'Valor da oferta' é obrigatório!"
+				maxlength="10" value="#{dizimoMB.dizimo.valorOferta}"
+				converter="javax.faces.BigDecimal">
+				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+			</p:inputText>
+			<p:message for="valor-oferta" />
+
+
+
+
+
+
+			<p:outputLabel for="dataBase" styleClass="my-label" value="Dt. de referência " />
+			<p:calendar id="dataBase" required="true" mask="99/99/9999"
+				requiredMessage="Campo 'Dt. de referência' é obrigatório!"
+				value="#{dizimoMB.dizimo.dataReferencia}" navigator="true"
+				pattern="dd/MM/yyyy" placeholder="Data de referência"
+				maskSlotChar="" />
+			<p:message for="dataBase" />
+
+
+			<p:outputLabel for="dataRecebimento" styleClass="my-label"
+				value="Dt. de recebimento " />
+			<p:calendar id="dataRecebimento" required="true" mask="99/99/9999"
+				placeholder="Data de recebimento" maskSlotChar=""
+				requiredMessage="Campo 'Dt. de recebimento' é obrigatório!"
+				value="#{dizimoMB.dizimo.dataRecebimento}" navigator="true"
+				pattern="dd/MM/yyyy" />
+			<p:message for="dataRecebimento" />
+
+
+
+
+			<p:outputLabel for="is13" styleClass="my-label" value="É 13º?" />
+			<p:selectOneRadio id="is13" required="true"
+				requiredMessage="Campo 'É 13º?' é obrigatório!"
+				value="#{dizimoMB.dizimo.is13}">
+				<f:selectItem itemValue="true" itemLabel="Sim" />
+				<f:selectItem itemLabel="Não" itemValue="false" />
+			</p:selectOneRadio>
+			<p:message for="status" />
+
+
+
+
+			<p:outputLabel for="status" styleClass="my-label" value="Status" />
+			<p:selectOneRadio id="status" required="true"
+				requiredMessage="Campo 'Status' é obrigatório!"
+				value="#{dizimoMB.dizimo.status}">
+				<f:selectItems itemLabel="#{status.descricao}" var="status"
+					value="#{dizimoMB.listarStatus()}" itemValue="#{status}" />
+			</p:selectOneRadio>
+			<p:message for="status" />
+
+
+
+			<p:outputLabel for="observacao" styleClass="my-label"
+				value="Observaçao" />
+			<p:inputTextarea id="observacao" required="true"
+				placeholder="Observação"
+				requiredMessage="Campo 'Observação' é obrigatório!"
+				value="#{dizimoMB.dizimo.observcao}" />
+			<p:message for="observacao" />
+
+			<p:outputLabel />
+
+
+
+
+
+
+
+
+		</p:panelGrid>
+
+		<p:panelGrid layout="grid" columns="2"
+			columnClasses="ui-grid-col-3,ui-grid-col-3"
+			styleClass="ui-panelgrid-blank">
+			<p:commandButton value="Cadastrar" action="#{dizimoMB.salvar()}"
+				update="focus group" validateClient="false" icon="fa fa-save"
+				oncomplete="goToTop()" rendered="#{dizimoMB.dizimo.id == null}"
+				styleClass="btn-blue">
+			</p:commandButton>
+
+			<p:commandButton value="Editar" action="#{dizimoMB.atualizar()}"
+				update="group" validateClient="false" icon="fa fa-edit"
+				rendered="#{dizimoMB.dizimo.id != null}" styleClass="btn-green">
+			</p:commandButton>
+
+			<p:button value="Cancelar" outcome="/list/dizimo" icon="fa fa-close"
+				styleClass="btn-red ">
+			</p:button>
+
+		</p:panelGrid>
+
+	</div>
+</h:form>
+
+<ui:include src="/fragmentos/list-pessoa.xhtml" />
+
+</html>

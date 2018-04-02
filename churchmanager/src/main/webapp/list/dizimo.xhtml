@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/layout.xhtml">
+
+	<ui:define name="page-name">
+		List. Dízimo
+	</ui:define>
+
+	<ui:define name="page-menu">
+		<ui:include src="/WEB-INF/template/links-funcionais.xhtml" />
+	</ui:define>
+
+	<ui:define name="page-image">
+		<p:graphicImage library="img" name="dizimo.svg" />
+	</ui:define>
+
+	<ui:define name="page-title">Dízimo</ui:define>
+	<ui:define name="page-subtitle">Lista de Dízimos</ui:define>
+	<ui:define name="content">
+		<h:form prependId="false">
+			<p:growl id="dizimo-msg" life="7000" showDetail="true"
+				showSummary="true" />
+				
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" style="margin-bottom: 15px;"
+				layout="grid" columnClasses="ui-grid-col-9, ui-grid-col-3">
+				
+				<h:panelGroup>
+				<p:outputLabel value="Mês " styleClass="my-label"/><br/>
+				<p:selectOneButton id="mes" value="#{dizimoMB.dizimoFilter.mes}" styleClass="font-12">
+					<f:selectItems var="mes" itemLabel="#{mes.abreviacao}"
+						itemValue="#{mes.numero}" value="#{utilMB.meses()}" />
+						<p:ajax process="mes" listener="#{dizimoMB.filtrar()}" update="table"/>
+				</p:selectOneButton>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:outputLabel value="Ano " styleClass="my-label"/><br/>
+				<p:selectOneButton id="ano" value="#{dizimoMB.dizimoFilter.ano}"  styleClass="font-12">
+					<f:selectItems var="ano" itemLabel="#{ano}" itemValue="#{ano}"
+						value="#{utilMB.anos()}" />
+						<p:ajax process="ano" listener="#{dizimoMB.filtrar()}" update="table"/>
+				</p:selectOneButton>
+				</h:panelGroup>
+
+			</p:panelGrid>
+				
+			<div class="ui-fluid">
+
+				<p:toolbar style="padding: 10px">
+					<f:facet name="left">
+						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
+							layout="grid"
+							columnClasses="ui-grid-col-3, ui-grid-col-6, ui-grid-col-3">
+
+							<p:outputLabel value="Filtrar por: " />
+
+							<p:inputText id="filtro" styleClass="ui-grid-col-6"
+								placeholder="Nome do dizimista"
+								value="#{dizimoMB.dizimoFilter.nomePessoa}" />
+
+							<h:panelGrid columns="3">
+								<p:commandButton action="#{dizimoMB.filtrar()}"
+									process="@this filtro" update="table" icon="fa fa-search"
+									styleClass="btn-grey" />
+
+								<p:button icon="fa fa-plus" styleClass="btn-green"
+									outcome="/cad/dizimo" />
+																							
+							</h:panelGrid>
+
+						</p:panelGrid>
+					</f:facet>
+				</p:toolbar>
+
+				<br />
+
+				<p:dataTable id="table" var="dizimo" lazy="true"
+					value="#{dizimoMB.dizimosLazy}" reflow="true" rowHover="true"
+					dizimotorPosition="bottom" dizimotor="true"
+					dizimotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
+					emptyMessage="Nenhum registro foi encontrado!"
+					dizimotorTemplate="{CurrentPageReport} {FirstPageLink} 
+						{PreviousPageLink} {PageLinks} {NextPageLink} 
+							{LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
+
+					<f:facet name="header" />
+
+
+					<p:column headerText="Dizimista" colspan="3">
+						<div class="text-overflow">
+							<p:link outcome="/edit/dizimo" styleClass="my-link"
+								value="#{dizimo.pessoa.nome}">
+								<f:param name="id" value="#{dizimo.idCriptografado()}" />
+							</p:link>
+						</div>
+					</p:column>
+					
+					<p:column headerText="13º" styleClass="center" colspan="1">
+						<p:outputLabel rendered="#{dizimo.is13}" value="#{dizimo.is13 ? 'Sim' : 'Não'}"
+						styleClass="destaque bg-green" />
+
+						<p:outputLabel rendered="#{!dizimo.is13}" value="#{dizimo.is13 ? 'Sim' : 'Não'}"
+						styleClass="destaque bg-red" />
+					</p:column>
+					
+					<p:column headerText="Referência" styleClass="center" colspan="1">
+						<p:outputLabel value="#{dizimo.dataReferencia}">
+							<f:convertDateTime pattern="dd/MM"/>
+						</p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Recebimento" styleClass="center" colspan="1">
+						<p:outputLabel value="#{dizimo.dataRecebimento}">
+							<f:convertDateTime pattern="dd/MM"/>
+						</p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Dízimo" styleClass="center" colspan="1">
+						<p:outputLabel value="#{dizimo.valorDizimo}">
+							<f:convertNumber type="currency"/>
+						</p:outputLabel>
+					</p:column>
+ 
+					<p:column headerText="Oferta" styleClass="center" colspan="1">
+						<p:outputLabel value="#{dizimo.valorOferta}">
+							<f:convertNumber type="currency"/>
+						</p:outputLabel>
+					</p:column>
+ 
+					<p:column headerText="Total" styleClass="center" colspan="1">
+						<p:outputLabel value="#{dizimo.valorTotal}">
+							<f:convertNumber type="currency"/>
+						</p:outputLabel>
+					</p:column>
+					
+					<p:column headerText="Envelope" styleClass="center" colspan="1">
+						<p:commandButton styleClass="btn-grey" icon="fa fa-file"
+						action="#{dizimoMB.gerarEnvelopeDizimo}" ajax="false" process="@this">
+						<f:setPropertyActionListener value="#{dizimo}" target="#{dizimoMB.dizimo}" />
+						</p:commandButton>
+					</p:column>
+ 
+<!-- 					<p:column headerText="Descrição" colspan="4" priority="5"> -->
+<!-- 						<p:outputLabel value="#{dizimo.observcao}" /> -->
+<!-- 					</p:column> -->
+
+				</p:dataTable>
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

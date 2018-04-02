@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form prependId="false">
+
+	<p:focus for="nome" />
+	<div class="ui-fluid">
+		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" closable="true"/>
+		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank"
+			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
+			layout="grid">
+
+			<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
+			<p:inputText id="nome" required="true"
+				requiredMessage="Campo 'Nome' é obrigatório!"
+				value="#{patrimonioMB.patrimonio.nome}" />
+			<p:message for="nome" />
+			
+			
+			
+			<p:outputLabel for="tipo" styleClass="my-label" value="Tipo"/>
+			
+			<p:panelGrid id="grid-tipo-selecionado" columns="3" layout="grid" 
+				columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-8"
+					>
+					
+				<p:commandButton process="@this" update="cad-tipos-patrimonio" 
+					oncomplete="PF('cad-tipos-patrimonio').show()" icon="fa fa-plus"
+					title="Novo tipo" />
+
+				<p:commandButton process="@this" update="grid-tipo-selecionado" 
+					icon="fa fa-close"	title="Remover tipo" styleClass="btn-red" 
+					rendered="#{patrimonioMB.patrimonio.tipo != null}" action="#{patrimonioMB.removerTipo()}"/>
+
+				<p:commandButton process="@this" update="grid-tipos-patrimonio" 
+					oncomplete="PF('tipos-patrimonio').show()" icon="fa fa-cube"
+					title="Selecionar tipo" styleClass="btn-grey" 
+					rendered="#{patrimonioMB.patrimonio.tipo == null}"/>
+
+			<p:outputLabel id="tipo" value="#{patrimonioMB.patrimonio.tipo.nome}" 
+				styleClass="my-label font-white destaque bg-green centralizado" title="Tipo selecionado"
+				rendered="#{patrimonioMB.patrimonio.tipo != null}"/>
+
+			</p:panelGrid>
+			
+			
+			<p:message for="tipo" />
+			
+
+
+			<p:outputLabel for="estado" styleClass="my-label" value="Estado" />
+			<p:selectOneRadio id="estado" required="true"
+				requiredMessage="Campo 'Estado' é obrigatório!"
+				value="#{patrimonioMB.patrimonio.estado}">
+				<f:selectItems itemLabel="#{estado.descricao}" var="estado"
+					value="#{utilMB.listarEstadoPatrimonio()}" itemValue="#{estado}" />
+			</p:selectOneRadio>
+			<p:message for="estado" />
+			
+			
+			
+			<p:outputLabel for="valor-aquisicao" styleClass="my-label" value="Valor de aquisição" />
+			<p:inputText id="valor-aquisicao" required="true" styleClass="moeda " 
+				requiredMessage="Campo 'Valor de aquisição' é obrigatório!" maxlength="10"
+				value="#{patrimonioMB.patrimonio.valorAquisicao}"
+				converter="javax.faces.BigDecimal">
+				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+			</p:inputText>
+			<p:message for="valor-aquisicao" />
+			
+			
+			
+			<p:outputLabel for="valor-atual" styleClass="my-label" value="Valor atual" />
+			<p:inputText id="valor-atual" required="true" styleClass="moeda " 
+				requiredMessage="Campo 'Valor atual' é obrigatório!" maxlength="10"
+				value="#{patrimonioMB.patrimonio.valorAtual}"
+				converter="javax.faces.BigDecimal">
+				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+			</p:inputText>
+			<p:message for="valor-atual" />
+
+			<p:outputLabel for="situacao" styleClass="my-label" value="Situação" />
+			<p:selectOneRadio id="situacao" required="true"
+				requiredMessage="Campo 'Situação' é obrigatório!"
+				value="#{patrimonioMB.patrimonio.situacao}">
+				<f:selectItems itemLabel="#{situacao.descricao}" var="situacao"
+					value="#{utilMB.listarSituacao()}" itemValue="#{situacao}" />
+			</p:selectOneRadio>
+			<p:message for="situacao" />
+			
+			
+			<p:outputLabel for="data" styleClass="my-label" value="Data de aquisição " />
+			<p:calendar pattern="dd/MM/yyyy" id="data" required="true" navigator="true"
+				requiredMessage="Campo 'Data de aquisição' é obrigatório!" maskSlotChar=" "
+				value="#{patrimonioMB.patrimonio.dataAquisicao}" mask="99/99/9999"/>
+			<p:message for="data" />
+			
+			
+			<p:outputLabel for="observacao" styleClass="my-label" value="Observação " />
+			<p:inputTextarea id="observacao" required="true"
+				requiredMessage="Campo 'Observação' é obrigatório!"
+				value="#{patrimonioMB.patrimonio.observacao}" />
+			<p:message for="observacao" />
+
+
+			<p:outputLabel for="status" styleClass="my-label" value="Status" />
+			<p:selectOneRadio id="status" required="true"
+				requiredMessage="Campo 'Status' é obrigatório!"
+				value="#{patrimonioMB.patrimonio.status}">
+				<f:selectItems itemLabel="#{status.descricao}" var="status"
+					value="#{utilMB.listarStatus()}" itemValue="#{status}" />
+			</p:selectOneRadio>
+			<p:message for="status" />
+			
+			
+			<p:outputLabel value="Avaliações" styleClass="my-label"/>
+			<h:panelGrid>
+			<p:commandButton styleClass="btn-grey" icon="fa fa-plus" title="Adicionar avaliação" 
+				process="@this"	oncomplete="PF('cad-avaliacao-patrimonio').show();" 
+				action="#{patrimonioMB.resetarAvaliacao()}" update="grid-avaliacao-patrimonio, botoes-avaliacao"/>
+			</h:panelGrid>
+			
+
+		</p:panelGrid>
+		
+		
+		<p:panelGrid columns="1" styleClass="ui-panelgrid-blank"
+			columnClasses="ui-grid-col-12"
+			layout="grid">
+			
+			<p:dataTable id="avaliacoes" var="avaliacao" value="#{patrimonioMB.patrimonio.avaliacoes}" rowHover="true"
+				reflow="true" paginator="true" rows="10" paginatorAlwaysVisible="false" emptyMessage="Este patrimônio não possui avaliação!">
+				
+				<p:column headerText="Observação" colspan="4">
+					<div class="text-overflow">
+						<p:outputLabel value="#{avaliacao.observacao}"/>
+					</div>
+				</p:column>
+				
+				<p:column headerText="Valor" colspan="1">
+					<p:outputLabel value="#{avaliacao.valorAtual}">
+						<f:convertNumber type="currency"/>
+					</p:outputLabel>
+				</p:column>
+				<p:column headerText="Data" colspan="1" styleClass="center">
+					<p:outputLabel value="#{avaliacao.dataAvaliacao}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</p:outputLabel>
+				</p:column>
+
+				<p:column headerText="Ações" styleClass="center" colspan="1">
+
+					<p:panelGrid columns="2" layout="grid">
+						<p:commandButton styleClass="btn-green" icon="fa fa-edit"
+							title="Adicionar avaliação" process="@this"
+							update="grid-avaliacao-patrimonio, botoes-avaliacao"
+							oncomplete="PF('cad-avaliacao-patrimonio').show();">
+							<f:setPropertyActionListener value="#{avaliacao}"
+								target="#{patrimonioMB.avaliacao}" />
+						</p:commandButton>
+
+						<p:commandButton styleClass="btn-red" icon="fa fa-close"
+							action="#{patrimonioMB.removerAvaliacao()}" update="avaliacoes"
+							process="@this">
+							<f:setPropertyActionListener value="#{avaliacao}"
+								target="#{patrimonioMB.avaliacao}" />
+						</p:commandButton>
+					</p:panelGrid>
+				</p:column>
+
+			</p:dataTable>
+			
+			<p:spacer height="30"/>
+		</p:panelGrid>
+ 
+
+
+
+
+
+		<p:panelGrid layout="grid" columns="2"
+			columnClasses="ui-grid-col-3,ui-grid-col-3"
+			styleClass="ui-panelgrid-blank">
+			<p:commandButton value="Cadastrar" action="#{patrimonioMB.salvar()}"
+				update="group, avaliacoes" validateClient="false" icon="fa fa-save"
+				rendered="#{patrimonioMB.patrimonio.id == null}" styleClass="btn-blue">
+			</p:commandButton>
+
+			<p:commandButton value="Editar" action="#{patrimonioMB.atualizar()}"
+				update="group, avaliacoes" validateClient="false" icon="fa fa-edit"
+				rendered="#{patrimonioMB.patrimonio.id != null}" styleClass="btn-green">
+			</p:commandButton>
+
+			<p:button value="Cancelar" outcome="/list/patrimonio" icon="fa fa-close"
+				styleClass="btn-red ">
+			</p:button>
+
+		</p:panelGrid>
+
+	</div>
+	<p:tooltip />
+</h:form>
+
+<ui:include src="/fragmentos/cad-avaliacao-patrimonio.xhtml" />
+<ui:include src="/fragmentos/cad-tipo-patrimonio.xhtml" />
+<ui:include src="/fragmentos/list-tipo-patrimonio.xhtml" />
+
+</html>

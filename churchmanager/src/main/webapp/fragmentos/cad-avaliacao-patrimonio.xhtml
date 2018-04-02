@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form prependId="false">
+
+	<div class="ui-fluid">
+
+		<p:growl life="5000" id="avaliacao-msg" />
+		<p:dialog header="Cadastrar avaliação" modal="true" resizable="false"
+			draggable="false" closable="true" closeOnEscape="true" dynamic="true"
+			responsive="true" id="cad-avaliacao-patrimonio"
+			widgetVar="cad-avaliacao-patrimonio" visible="false" width="800"
+			fitViewport="true" positionType="fixed">
+
+			<p:panelGrid id="grid-avaliacao-patrimonio" columns="2" layout="grid"
+				columnClasses="ui-grid-col-3, ui-grid-col-7"
+				styleClass="ui-panelgrid-blank">
+
+				<p:outputLabel for="observacao-av" styleClass="my-label"
+					value="Observação " />
+				<p:inputTextarea id="observacao-av" required="true"
+					requiredMessage="Campo 'Observação' é obrigatório!"
+					value="#{patrimonioMB.avaliacao.observacao}" />
+				<div />
+				<p:message for="observacao-av" />
+
+
+				<p:outputLabel for="valor-atual-av" styleClass="my-label"
+					value="Valor atual" />
+				<p:inputText id="valor-atual-av" required="true" styleClass="moeda "
+					requiredMessage="Campo 'Valor atual' é obrigatório!" maxlength="10"
+					value="#{patrimonioMB.avaliacao.valorAtual}"
+					converter="javax.faces.BigDecimal">
+					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+				</p:inputText><div />
+				<p:message for="valor-atual-av" />
+
+
+				<p:outputLabel for="data-av" styleClass="my-label"
+					value="Data da avaliação " />
+				<p:calendar pattern="dd/MM/yyyy" id="data-av" required="true"
+					navigator="true"
+					requiredMessage="Campo 'Data de aquisição' é obrigatório!"
+					maskSlotChar=" " value="#{patrimonioMB.avaliacao.dataAvaliacao}"
+					mask="99/99/9999" />
+					<div />
+				<p:message for="data-av" />
+
+			</p:panelGrid>
+
+			<f:facet name="footer">
+
+				<p:panelGrid id="botoes-avaliacao" layout="grid" columns="2"
+					columnClasses="ui-grid-col-3, ui-grid-col-3"
+					styleClass="ui-panelgrid-blank">
+
+					<p:commandButton value="Cadastrar" action="#{patrimonioMB.adicionarAvaliacao()}"
+						update="avaliacoes, grid-avaliacao-patrimonio" icon="fa fa-save" 
+						rendered="#{empty patrimonioMB.avaliacao.observacao}"/> 
+
+					<p:commandButton value="Atualizar" action="#{patrimonioMB.atualizarAvaliacao()}"
+						update="avaliacoes, grid-avaliacao-patrimonio" icon="fa fa-edit" styleClass="btn-green" 
+						rendered="#{not empty patrimonioMB.avaliacao.observacao}" /> 
+
+					<p:commandButton value="Cancelar" process="@none"
+						icon="fa fa-close" styleClass="btn-red"
+						oncomplete="PF('cad-avaliacao-patrimonio').hide()" />
+				</p:panelGrid>
+			</f:facet>
+
+
+		</p:dialog>
+	</div>
+</h:form>
+</html>

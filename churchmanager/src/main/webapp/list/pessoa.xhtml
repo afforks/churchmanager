@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/layout.xhtml">
+
+	<ui:define name="page-name">
+		List. Pessoa
+	</ui:define>
+
+	<ui:define name="page-menu">
+		<ui:include src="/WEB-INF/template/links-funcionais.xhtml" />
+	</ui:define>
+
+	<ui:define name="page-image">
+		<p:graphicImage library="img" name="pessoa.svg" />
+	</ui:define>
+
+	<ui:define name="page-title">Pessoas</ui:define>
+	<ui:define name="page-subtitle">Lista de Pessoas</ui:define>
+	<ui:define name="content">
+		<h:form prependId="false">
+		
+			<p:growl id="pessoa-msg" life="7000" showDetail="true"
+				showSummary="true" />
+				
+			<div class="ui-fluid">
+
+				<p:toolbar style="padding: 10px">
+					<f:facet name="left">
+						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
+							layout="grid"
+							columnClasses="ui-grid-col-3, ui-grid-col-6, ui-grid-col-3">
+
+							<p:outputLabel value="Filtrar por: " />
+
+							<p:inputText id="filtro" styleClass="ui-grid-col-6"
+								placeholder="Nome da pessoa"
+								value="#{pessoaMB.pessoaFilter.nome}" />
+
+							<h:panelGrid columns="2">
+								<p:commandButton action="#{pessoaMB.filtrar()}"
+									process="@this filtro" update="table" icon="fa fa-search"
+									styleClass="btn-grey" />
+
+								<p:button icon="fa fa-plus" styleClass="btn-green"
+									outcome="/cad/pessoa" />
+							</h:panelGrid>
+
+						</p:panelGrid>
+					</f:facet>
+				</p:toolbar>
+
+				<br />
+
+				<p:dataTable id="table" var="pessoa" lazy="true"
+					value="#{pessoaMB.pessoasLazy}" reflow="true" rowHover="true"
+					pessoatorPosition="bottom" pessoator="true"
+					pessoatorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
+					emptyMessage="Nenhum registro foi encontrado!"
+					pessoatorTemplate="{CurrentPageReport} {FirstPageLink} 
+						{PreviousPageLink} {PageLinks} {NextPageLink} 
+							{LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Pessoa {currentPage} de {totalPages})">
+
+					<f:facet name="header" />
+
+<!-- 					<p:column headerText="Status" colspan="1" priority="6"> -->
+<!-- 						<p:outputLabel value="#{pessoa.status.descricao}" /> -->
+<!-- 					</p:column> -->
+
+					<p:column headerText="Nome" colspan="4">
+						<div class="text-overflow">
+							<p:link outcome="/edit/pessoa" styleClass="my-link"
+								value="#{pessoa.nome}">
+								<f:param name="id" value="#{pessoa.idCriptografado()}" />
+							</p:link>
+						</div>
+					</p:column>
+					
+					<p:column headerText="Matr." styleClass="center" colspan="2">
+						<p:outputLabel value="#{pessoa.matricula}"/>
+					</p:column>
+					
+					<p:column headerText="Cel." styleClass="center" colspan="2">
+						<p:outputLabel value="#{pessoa.celular}"/>
+					</p:column>
+
+					<p:column headerText="E-mail" colspan="2">
+						<p:outputLabel value="#{pessoa.email}"/>
+					</p:column>
+
+					<p:column headerText="Dt. Nasc." styleClass="center" colspan="2">
+						<p:outputLabel value="#{pessoa.dataNascimento}">
+							<f:convertDateTime pattern="dd/MM/yy"/>
+						</p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Idade" styleClass="center" colspan="1">
+						<p:outputLabel value="#{pessoa.idade}"/>
+					</p:column>
+					
+					<p:column headerText="Detalhes" styleClass="center" colspan="1">
+						<p:commandButton styleClass="btn-grey" icon="fa fa-list-alt" style="width:50px"
+						 oncomplete="PF('detalhe-pessoa').show()" update="detalhe-pessoa" process="@this">
+							<f:setPropertyActionListener value="#{pessoa}" target="#{pessoaMB.pessoa}"/>
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+			</div>
+		</h:form>
+		<ui:include src="/fragmentos/detalhe-pessoa.xhtml" />
+	</ui:define>
+</ui:composition>

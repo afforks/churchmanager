@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form prependId="false">
+
+	<div class="ui-fluid">
+
+		<p:growl life="5000" id="msg" />
+		<p:dialog header="Detalhes" modal="true" resizable="false"
+			draggable="false" closable="true" closeOnEscape="true" dynamic="true"
+			responsive="true" id="detalhes" widgetVar="detalhes" visible="false"
+			width="#{movimentacaoMB.tamanhoDaTelaDeDetalhes()}"  fitViewport="true" positionType="fixed">
+
+			<p:panelGrid id="grid-detalhes" columns="2" layout="grid"
+				columnClasses="ui-grid-col-3, ui-grid-col-9"
+				styleClass="ui-panelgrid-blank">
+
+				<p:outputLabel styleClass="my-label" value="Nome" />
+				<p:outputLabel value="#{movimentacaoMB.movimentacao.nome}" />
+
+				<p:outputLabel styleClass="my-label" value="Descrição" />
+				<p:outputLabel value="#{movimentacaoMB.movimentacao.descricao}" />
+				
+				<p:outputLabel styleClass="my-label" value="Categoria" />
+				<p:outputLabel
+					value="#{movimentacaoMB.movimentacao.categoriaMovimentacao.nome}" />
+
+				<p:outputLabel styleClass="my-label" value="Data base" />
+				<p:outputLabel value="#{movimentacaoMB.movimentacao.dataBase}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:outputLabel>
+
+				<p:outputLabel styleClass="my-label" value="Data de vencimento" />
+				<p:outputLabel value="#{movimentacaoMB.movimentacao.dataVencimento}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:outputLabel>
+				
+				<p:outputLabel styleClass="my-label" value="Status da movimentação" />
+				<p:outputLabel styleClass="destaque" style="#{movimentacaoMB.movimentacao.statusMovimentacao.cor}"
+					value="#{movimentacaoMB.movimentacao.statusMovimentacao.descricao}" />
+
+				<p:outputLabel styleClass="my-label" value="Tipo" />
+				<p:outputLabel styleClass="destaque" style="#{movimentacaoMB.movimentacao.tipoMovimentacao.cor}"
+					value="#{movimentacaoMB.movimentacao.tipoMovimentacao.descricao}" />
+
+				<p:outputLabel styleClass="my-label" value="Valor" />
+				<p:outputLabel value="#{movimentacaoMB.movimentacao.valor}">
+					<f:convertNumber type="currency" />
+				</p:outputLabel>
+
+				<p:outputLabel styleClass="my-label" value="Parcelado?" />
+				<p:outputLabel
+					value="#{movimentacaoMB.movimentacao.parcelado ? 'Sim':'Não'}" />
+
+				<p:outputLabel styleClass="my-label" value="Número de parcelas"
+					rendered="#{movimentacaoMB.movimentacao.parcelado}" />
+				<p:outputLabel value="#{movimentacaoMB.movimentacao.numeroParcelas}"
+					rendered="#{movimentacaoMB.movimentacao.parcelado}" />
+
+				<p:outputLabel styleClass="my-label" value="Parcelas"
+					rendered="#{movimentacaoMB.movimentacao.parcelado}" />
+				<p:dataTable var="parcela" scrollable="true" scrollHeight="110"
+					value="#{movimentacaoMB.movimentacao.parcelas}"
+					rendered="#{movimentacaoMB.movimentacao.parcelado}">
+
+					<p:column headerText="Descrição">
+						<p:outputLabel value="#{parcela.descricao}" />
+					</p:column>
+
+					<p:column headerText="Valor">
+						<p:outputLabel value="#{parcela.valorParcela}" >
+							<f:convertNumber type="currency"/>
+						</p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Dt. vencimento" styleClass="center">
+						<p:outputLabel value="#{parcela.dataVencimento}" >
+							<f:convertDateTime pattern="dd/MM/yy" />
+						</p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Dt. pagamento" styleClass="center">
+						<p:outputLabel value="#{parcela.dataPagamento}" >
+							<f:convertDateTime pattern="dd/MM/yy" />
+						</p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Status" styleClass="center">
+						<p:outputLabel value="#{parcela.statusMovimentacao.descricao}" 
+							styleClass="destaque" style="#{parcela.statusMovimentacao.cor}"/>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panelGrid>
+		</p:dialog>
+	</div>
+</h:form>
+</html>

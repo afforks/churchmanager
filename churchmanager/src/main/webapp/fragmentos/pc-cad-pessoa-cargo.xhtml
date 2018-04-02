@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form prependId="false">
+
+	<div class="ui-fluid">
+
+		<p:growl life="5000" id="msg-cad-pessoa-cargo" />
+
+
+		<p:dialog header="Membros da diretoria executiva" modal="true"
+			resizable="false" draggable="false" closable="true"
+			closeOnEscape="true" dynamic="true" responsive="true"
+			id="cad-pessoa-cargo" widgetVar="cad-pessoa-cargo" visible="false"
+			width="800" fitViewport="true" positionType="fixed">
+
+			<p:panelGrid id="grid-cad-pessoa-cargo" columns="1" layout="grid"
+				styleClass="ui-panelgrid-blank">
+
+				<p:panelGrid id="grid-pessoa-selecionada"
+					columnClasses="ui-grid-col-2, ui-grid-col-1, ui-grid-col-9"
+					columns="3" layout="grid">
+					<p:outputLabel value="Membro" styleClass="my-label" />
+
+					<p:commandButton icon="fa fa-search" process="@this"
+						update="@this membros" oncomplete="PF('membros').show()"
+						rendered="#{pessoaCargoMB.pessoaCargo.pessoa == null}" />
+					
+					<p:commandButton icon="fa fa-close" process="@this"
+						rendered="#{pessoaCargoMB.pessoaCargo.pessoa != null}"
+						update="grid-pessoa-selecionada" styleClass="btn-red" 
+						action="#{pessoaCargoMB.removerPessoa()}" />
+						
+					<p:outputLabel rendered="#{pessoaCargoMB.pessoaCargo.pessoa != null}"
+						styleClass="destaque bg-green centralizado" id="pessoa"
+						value="#{pessoaCargoMB.pessoaCargo.pessoa.nome}" title="Pessoa selecionada"
+						 />
+				</p:panelGrid>
+
+
+				<p:spacer />
+
+
+				<p:panelGrid id="grid-cargo-selecionado"
+					columnClasses="ui-grid-col-2, ui-grid-col-1, ui-grid-col-9"
+					columns="3" layout="grid">
+					<p:outputLabel value="Cargo" styleClass="my-label" />
+
+					<p:commandButton icon="fa fa-search" process="@this"
+						update="@this cargos" oncomplete="PF('cargos').show()"
+						rendered="#{pessoaCargoMB.pessoaCargo.cargo == null}" />
+				
+					<p:commandButton icon="fa fa-close" process="@this"
+						rendered="#{pessoaCargoMB.pessoaCargo.cargo != null}"
+						update="grid-cargo-selecionado" styleClass="btn-red" 
+						action="#{pessoaCargoMB.removerCargo()}" />
+				
+					<p:outputLabel rendered="#{pessoaCargoMB.pessoaCargo.cargo != null}"
+						styleClass="destaque bg-green centralizado" id="cargo"
+						value="#{pessoaCargoMB.pessoaCargo.cargo.nome}" title="Cargo selecionado" />
+				</p:panelGrid>
+
+
+			</p:panelGrid>
+			
+			
+			<p:spacer />
+
+
+		<p:panelGrid layout="grid" columns="2"
+			columnClasses="ui-grid-col-3,ui-grid-col-3"
+			styleClass="ui-panelgrid-blank">
+			<p:commandButton value="Cadastrar" action="#{pessoaCargoMB.salvar()}"
+				validateClient="true" icon="fa fa-save" styleClass="btn-blue" update="grid-cad-pessoa-cargo">
+			</p:commandButton>
+
+			<p:commandButton value="Cancelar" oncomplete="PF('cad-pessoa-cargo').hide()" process="@none" 
+				icon="fa fa-close" styleClass="btn-red ">
+			</p:commandButton>
+
+		</p:panelGrid>
+		
+		
+		</p:dialog>
+	</div>
+</h:form>
+<ui:include src="/fragmentos/pc-selecionar-cargo.xhtml" />
+<ui:include src="/fragmentos/pc-selecionar-pessoa.xhtml" />
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form prependId="false">
+
+	<div class="ui-fluid">
+
+		<p:growl life="5000" id="list-pessoa-cargo" />
+
+
+		<p:dialog header="Relação Pessoa/Cargo" modal="true" resizable="false"
+			draggable="false" closable="true" closeOnEscape="true" dynamic="true"
+			responsive="true" id="pessoa-cargo" widgetVar="pessoa-cargo"
+			visible="false" width="800" fitViewport="true" positionType="fixed">
+
+			<p:panelGrid id="grid-pessoa-cargo" columns="1" layout="grid"
+				styleClass="ui-panelgrid-blank">
+
+
+
+				<p:toolbar style="padding: 10px">
+					<f:facet name="left">
+						<p:panelGrid columns="4" styleClass="ui-panelgrid-blank"
+							layout="grid"
+							columnClasses="ui-grid-col-3, ui-grid-col-4, ui-grid-col-4, ui-grid-col-3">
+
+							<p:outputLabel value="Filtrar por: " />
+
+							<p:inputText id="filtro-pessoa-cargo-p"
+								styleClass="ui-grid-col-6" placeholder="Nome da pessoa"
+								value="#{pessoaCargoMB.pessoaCargoFilter.nomePessoa}" />
+
+							<p:inputText id="filtro-pessoa-cargo-c"
+								styleClass="ui-grid-col-6" placeholder="Nome do cargo"
+								value="#{pessoaCargoMB.pessoaCargoFilter.nomeCargo}" />
+
+							<h:panelGrid columns="2">
+								<p:commandButton action="#{pessoaCargoMB.filtrar()}"
+									process="@this filtro-pessoa-cargo-p filtro-pessoa-cargo-c"
+									update="table-pessoa-cargo" icon="fa fa-search"
+									styleClass="btn-grey" />
+							</h:panelGrid>
+
+						</p:panelGrid>
+					</f:facet>
+				</p:toolbar>
+
+
+				<p:dataTable id="table-pessoa-cargo" var="pc" lazy="true"
+					value="#{pessoaCargoMB.pessoaCargosLazy}" reflow="true"
+					rowHover="true" paginatorPosition="bottom" paginator="true"
+					paginatorAlwaysVisible="false" rows="10" rowsPerPageLabel="de"
+					scrollable="true" scrollHeight="250"
+					emptyMessage="Nenhum registro foi encontrado!"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+						{PreviousPageLink} {PageLinks} {NextPageLink} 
+							{LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
+
+					<f:facet name="header" />
+
+					<p:column headerText="Membro" colspan="3">
+						<div class="text-overflow">
+							<p:outputLabel value="#{pc.pessoa.nome}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Cargo" colspan="3">
+						<div class="text-overflow">
+							<p:outputLabel value="#{pc.cargo.nome}" />
+						</div>
+					</p:column>
+
+					<p:column id="col-selecionar" headerText="Selecionar" colspan="1"
+						styleClass="center">
+
+						<p:commandButton icon="fa fa-check" process="@this"
+							update="table-diretoria col-selecionar  @this"
+							title="Clique para selecionar a relação"
+							rendered="#{!diretoriaMB.diretoria.pessoaCargos.contains(pc)}">
+							<p:collector unique="true" value="#{pc}"
+								addTo="#{diretoriaMB.diretoria.pessoaCargos}" />
+						</p:commandButton>
+
+						<p:commandButton  icon="fa fa-close" styleClass="btn-red"
+							process="@this"
+							rendered="#{diretoriaMB.diretoria.pessoaCargos.contains(pc)}"
+							update="@this table-diretoria">
+							<p:collector value="#{pc}"
+								removeFrom="#{diretoriaMB.diretoria.pessoaCargos}" />
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panelGrid>
+		</p:dialog>
+	</div>
+</h:form>
+</html>

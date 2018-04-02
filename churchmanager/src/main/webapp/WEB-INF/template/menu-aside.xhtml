@@ -1,0 +1,213 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+	<aside class="aw-sidebar  js-sidebar ">
+		<nav class="aw-menu">
+			<div id='cssmenu'>
+				<ul>
+					<li><p:link href="/home.xhtml">
+							<i class="fa fa-fw fa-home" />
+							Início
+						</p:link></li>
+
+					<li><p:link href="#">
+							<i class="fa fa-fw fa-bell" />
+							Notificações
+						</p:link></li>
+
+					<li class="has-sub"><p:link href="">
+							<i class="fa  fa-fw  fa-desktop" />
+					Cadastrar
+					<i class="fa  fa-fw  fa-angle-down right" />
+						</p:link>
+
+						<ul>
+
+
+							<li jsf:rendered="#{seguranca.cadastrarAtividadeEclesiastica}"><p:link
+									href="/cad/atividade.xhtml">
+									<i class="fa fa-fw fa-cubes" />
+								Atividade
+						</p:link></li>
+
+							<li jsf:rendered="#{seguranca.cadastrarCargo}"><p:link
+									href="/cad/cargo.xhtml">
+									<i class="fa fa-fw  fa-certificate" />
+								Cargo
+						</p:link></li>
+
+							<li jsf:rendered="#{seguranca.cadastrarCategoriaMovimentacao}"><p:link
+									href="/cad/categoria.xhtml">
+									<i class="fa fa-fw  fa-sitemap" />
+								Categoria
+						</p:link></li>
+
+
+							<li jsf:rendered="#{seguranca.cadastrarDiretoria}"><p:link
+									href="/cad/diretoria.xhtml">
+									<i class="fa fa-fw fa-group" />
+								Diretoria
+						</p:link></li>
+						
+
+							<li jsf:rendered="#{seguranca.cadastrarDizimo}"><p:link
+									href="/cad/dizimo.xhtml">
+									<i class="fa fa-fw fa-file" />
+								Dízimo
+						</p:link></li>
+						
+						
+							<li jsf:rendered="#{seguranca.cadastrarEvento}"><p:link
+									href="/cad/evento.xhtml">
+									<i class="fa fa-fw fa-star" />
+								Evento
+						</p:link></li>
+
+
+
+							<li jsf:rendered="#{seguranca.cadastrarMovimentacao}"><p:link
+									href="/cad/movimentacao.xhtml">
+									<i class="fa fa-fw fa-money" />
+								Movimentação
+						</p:link></li>
+						
+							<li jsf:rendered="#{seguranca.cadastrarPagina}"><p:link
+									href="/cad/pagina.xhtml">
+									<i class="fa fa-fw fa-file-o" />
+								Página
+						</p:link></li>
+
+							<li jsf:rendered="#{seguranca.cadastrarPatrimonio}"><p:link
+									href="/cad/patrimonio.xhtml">
+									<i class="fa fa-fw fa-cube" />
+								Patrimônio
+						</p:link></li>
+
+
+							<li jsf:rendered="#{seguranca.cadastrarPerfil}"><p:link
+									href="/cad/perfil.xhtml">
+									<i class="fa fa-fw fa-list" />
+								Perfil
+						</p:link></li>
+
+
+							<li jsf:rendered="#{seguranca.cadastrarPessoa}"><p:link
+									href="/cad/pessoa.xhtml">
+									<i class="fa fa-fw fa-user" />
+								Pessoa
+						</p:link></li>
+
+
+							<li jsf:rendered="#{seguranca.cadastrarUsuario}"><p:link
+									href="/cad/usuario.xhtml">
+									<i class="fa fa-fw fa-user-secret" />
+								Usuário
+						</p:link></li>
+
+						</ul></li>
+
+					<li class="has-sub"><p:link href="">
+							<i class="fa  fa-fw  fa-list-alt" />
+					Listar
+					<i class="fa  fa-fw  fa-angle-down right" />
+						</p:link>
+
+						<ul>
+
+
+							<li jsf:rendered="#{seguranca.listarAtividadeEclesiastica}"><p:link
+									href="/list/atividade.xhtml">
+									<i class="fa fa-fw fa-cubes" />
+								Atividade
+						</p:link></li>
+
+
+
+							<li jsf:rendered="#{seguranca.listarCargo}"><p:link
+									href="/list/cargo.xhtml">
+									<i class="fa fa-fw fa-certificate" />
+								Cargo
+						</p:link></li>
+
+
+							<li jsf:rendered="#{seguranca.listarCategoriaMovimentacao}"><p:link
+									href="/list/categoria.xhtml">
+									<i class="fa fa-fw fa-sitemap" />
+								Categoria
+						</p:link></li>
+
+
+							<li jsf:rendered="#{seguranca.listarDiretoria}"><p:link
+									href="/list/diretoria.xhtml">
+									<i class="fa fa-fw fa-group" />
+								Diretoria
+						</p:link></li>
+
+
+							<li jsf:rendered="#{seguranca.listarDizimo}"><p:link
+									href="/list/dizimo.xhtml">
+									<i class="fa fa-fw fa-file" />
+								Dízimo
+						</p:link></li>
+
+
+							<li jsf:rendered="#{seguranca.listarEvento}"><p:link
+									href="/list/evento.xhtml">
+									<i class="fa fa-fw fa-star" />
+								Evento
+						</p:link></li>
+
+							<li jsf:rendered="#{seguranca.listarMovimentacao}"><p:link
+									href="/list/movimentacao.xhtml">
+									<i class="fa fa-fw fa-money" />
+								Movimentação
+						</p:link></li>
+
+							<li jsf:rendered="#{seguranca.listarPagina}"><p:link
+									href="/list/pagina.xhtml">
+									<i class="fa fa-fw fa-file-o" />
+								Página
+						</p:link></li>
+
+							<li jsf:rendered="#{seguranca.listarPatrimonio}"><p:link
+									href="/list/patrimonio.xhtml">
+									<i class="fa fa-fw fa-cube" />
+								Patrimônio
+						</p:link></li>
+
+							<li jsf:rendered="#{seguranca.listarPerfil}"><p:link
+									href="/list/perfil.xhtml">
+									<i class="fa fa-fw fa-list" />
+								Perfil
+						</p:link></li>
+
+							<li jsf:rendered="#{seguranca.listarPessoa}"><p:link
+									href="/list/pessoa.xhtml">
+									<i class="fa fa-fw fa-user" />
+								Pessoa
+						</p:link></li>
+
+
+							<li jsf:rendered="#{seguranca.listarUsuario}"><p:link
+									href="/list/usuario.xhtml">
+									<i class="fa fa-fw fa-user-secret" />
+								Usuário
+						</p:link></li>
+
+						</ul></li>
+
+					<li><p:link href="/configuracao.xhtml">
+							<i class="fa fa-fw fa-cog" />
+							Configuracao
+						</p:link></li>
+
+
+				</ul>
+			</div>
+		</nav>
+	</aside>
+</ui:composition>

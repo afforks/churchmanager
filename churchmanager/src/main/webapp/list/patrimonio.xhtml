@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/layout.xhtml">
+
+	<ui:define name="page-name">
+		List. Patrimônio
+	</ui:define>
+
+	<ui:define name="page-menu">
+		<ui:include src="/WEB-INF/template/links-funcionais.xhtml" />
+	</ui:define>
+
+	<ui:define name="page-image">
+		<p:graphicImage library="img" name="patrimonio.svg" />
+	</ui:define>
+
+	<ui:define name="page-title">Patrimônio</ui:define>
+	<ui:define name="page-subtitle">Lista de Patrimônios</ui:define>
+	<ui:define name="content">
+		<h:form prependId="false">
+			<p:growl id="patrimonio-msg" life="7000" showDetail="true"
+				showSummary="true" />
+			<div class="ui-fluid">
+
+				<p:toolbar style="padding: 10px">
+					<f:facet name="left">
+						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
+							layout="grid"
+							columnClasses="ui-grid-col-3, ui-grid-col-6, ui-grid-col-3">
+
+							<p:outputLabel value="Filtrar por: " />
+
+							<p:inputText id="filtro" styleClass="ui-grid-col-6"
+								placeholder="Nome do patrimônio"
+								value="#{patrimonioMB.patrimonioFilter.nome}" />
+
+							<h:panelGrid columns="2">
+								<p:commandButton action="#{patrimonioMB.filtrar()}"
+									process="@this filtro" update="table" icon="fa fa-search"
+									styleClass="btn-grey" />
+
+								<p:button icon="fa fa-plus" styleClass="btn-green"
+									outcome="/cad/patrimonio" />
+							</h:panelGrid>
+
+						</p:panelGrid>
+					</f:facet>
+				</p:toolbar>
+
+				<br />
+
+				<p:dataTable id="table" var="patrimonio" lazy="true"
+					value="#{patrimonioMB.patrimoniosLazy}" reflow="true" rowHover="true"
+					patrimoniotorPosition="bottom" patrimoniotor="true"
+					patrimoniotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
+					emptyMessage="Nenhum registro foi encontrado!"
+					patrimoniotorTemplate="{CurrentPageReport} {FirstPageLink} 
+						{PreviousPageLink} {PageLinks} {NextPageLink} 
+							{LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
+
+					<f:facet name="header" />
+
+					<p:column headerText="Nome" colspan="3">
+						<div class="text-overflow">
+							<p:link outcome="/edit/patrimonio" styleClass="my-link"
+								value="#{patrimonio.nome}">
+								<f:param name="id" value="#{patrimonio.idCriptografado()}" />
+							</p:link>
+						</div>
+					</p:column>
+					
+					<p:column headerText="Situação" colspan="1" styleClass="center">
+						<p:outputLabel value="#{patrimonio.situacao.descricao}" style="#{patrimonio.situacao.cor}" styleClass="destaque"/>
+					</p:column>
+
+					<p:column headerText="Estado" colspan="1" styleClass="center">
+						<p:outputLabel value="#{patrimonio.estado.descricao}" style="#{patrimonio.estado.cor}" styleClass="destaque"/>
+					</p:column>
+
+					<p:column headerText="Valor aquisição" colspan="1" >
+						<p:outputLabel value="#{patrimonio.valorAquisicao}" >
+							<f:convertNumber type="currency" />
+						</p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Valor atual" colspan="1" >
+						<p:outputLabel value="#{patrimonio.valorAtual}" >
+							<f:convertNumber type="currency" />
+						</p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Dt. aquisição" colspan="1" styleClass="center">
+						<p:outputLabel value="#{patrimonio.dataAquisicao}" >
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</p:outputLabel>
+					</p:column>
+
+				</p:dataTable>
+			</div>
+
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

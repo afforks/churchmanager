@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	template="/WEB-INF/template/layout.xhtml">
+
+	<ui:define name="page-name">
+		Configuração
+	</ui:define>
+
+	<ui:define name="page-title">
+		Configuração
+	</ui:define>
+
+	<ui:define name="page-subtitle">
+		Configurações do sistema
+	</ui:define>
+
+	<ui:define name="page-menu">
+		<ui:include src="/WEB-INF/template/links-funcionais.xhtml" />
+	</ui:define>
+
+	<ui:define name="page-image">
+		<p:graphicImage library="img" name="configuracao.svg" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form prependId="false">
+
+			<p:focus for="nome" />
+			<div class="ui-fluid">
+				<p:messages id="msg" life="7000" showDetail="true"
+					showSummary="true" />
+				<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank"
+					columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
+					layout="grid">
+
+					<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
+					<p:inputText id="nome" required="true"
+						requiredMessage="Campo 'Nome' é obrigatório!"
+						value="#{categoriaMovimentacaoMB.categoriaMovimentacao.nome}"
+						placeholder="Casa de Oração da Igreja de Cristo no Brasil em Morada Nova">
+					</p:inputText>
+					<p:message for="nome" />
+
+					<p:outputLabel for="cnpj" styleClass="my-label" value="CNPJ " />
+					<p:inputText id="cnpj" required="true"
+						requiredMessage="Campo 'CNPJ' é obrigatório!"
+						value="" placeholder="Ex.: 15.206.686/0001-49">
+					</p:inputText>
+					<p:message for="cnpj" />
+
+					 
+					<p:outputLabel for="banco" styleClass="my-label" value="Banco " />
+					<p:inputText id="banco" required="true"
+						requiredMessage="Campo 'Banco' é obrigatório!"
+						value="" placeholder="Banco do Brasil">
+					</p:inputText>
+					<p:message for="banco" />
+					
+					
+					<p:outputLabel for="ag" styleClass="my-label" value="Agência " />
+					<p:inputText id="ag" required="true"
+						requiredMessage="Campo 'Agência' é obrigatório!"
+						value="" placeholder="0863-x">
+					</p:inputText>
+					<p:message for="ag" />
+					 
+					<p:outputLabel for="conta" styleClass="my-label" value="Conta " />
+					<p:inputText id="conta" required="true"
+						requiredMessage="Campo 'Conta' é obrigatório!"
+						value="" placeholder="12345-6">
+					</p:inputText>
+					<p:message for="conta" />
+
+					 
+					<p:outputLabel for="pp" styleClass="my-label" value="Pastor Presidente" />
+					<p:inputText id="pp" required="true"
+						requiredMessage="Campo 'Pastor Presidente' é obrigatório!"
+						value="" placeholder="Digite o nome do pastor">
+					</p:inputText>
+					<p:message for="pp" />
+
+					 
+					<p:outputLabel for="tel" styleClass="my-label" value="Telefone " />
+					<p:inputText id="tel" required="true"
+						requiredMessage="Campo 'Telefone' é obrigatório!"
+						value="" placeholder="(88)3422-1234">
+					</p:inputText>
+					<p:message for="tel" />
+
+					 
+					<p:outputLabel for="logradouro" styleClass="my-label"
+						value="Logradouro " />
+					<p:inputText id="logradouro" required="true"
+						requiredMessage="Campo 'Logradouro' é obrigatório!"
+						value="#{pessoaMB.pessoa.endereco.logradouro}" 
+						placeholder="Av. Ce. Tibúrcio, Nº 56"/>
+					<p:message for="logradouro" />
+
+
+					<p:outputLabel for="referencia" styleClass="my-label"
+						value="Referência " />
+					<p:inputText id="referencia" required="true"
+						requiredMessage="Campo 'Referência' é obrigatório!"
+						value="#{pessoaMB.pessoa.endereco.referencia}" 
+						placeholder="Próximo ao Sindicato dos Trabalhadores de Morada Nova"/>
+					<p:message for="referencia" />
+
+
+					<p:outputLabel for="bairro" styleClass="my-label" value="Bairro " />
+					<p:inputText id="bairro" required="true"
+						requiredMessage="Campo 'Bairro' é obrigatório!"
+						value="#{pessoaMB.pessoa.endereco.bairro}" 
+						placeholder="Girilândia"/>
+					<p:message for="bairro" />
+
+					<p:outputLabel for="cep" styleClass="my-label" value="CEP " />
+					<p:inputMask mask="99999-999" id="cep" required="true"
+						requiredMessage="Campo 'CEP' é obrigatório!"
+						value="#{pessoaMB.pessoa.endereco.cep}" 
+						placeholder="62.940-000"/>
+					<p:message for="cep" />
+
+
+
+					<p:outputLabel for="cidade" styleClass="my-label" value="Cidade " />
+					<p:inputText id="cidade" required="true"
+						requiredMessage="Campo 'Cidade' é obrigatório!"
+						value="#{pessoaMB.pessoa.endereco.cidade}" 
+						placeholder="Morada Nova	"/>
+					<p:message for="cidade" />
+
+
+
+					<p:outputLabel for="estado" styleClass="my-label" value="Estado " />
+					<p:selectOneMenu id="estado"
+						value="#{pessoaMB.pessoa.endereco.estado}" filter="true" 
+						converterMessage="Não foi possível converter o objeto (Estado)"
+						required="true" requiredMessage="Campo 'Estado' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+						<f:selectItems value="#{utilMB.listarEstados()}"
+							itemLabel="#{estado.descricao}" itemValue="#{estado}"
+							var="estado" />
+					</p:selectOneMenu>
+					<p:message for="estado" />
+
+
+
+					<p:outputLabel for="pais" styleClass="my-label" value="País " />
+					<p:inputText id="pais" required="true"
+						requiredMessage="Campo 'País' é obrigatório!"
+						value="#{pessoaMB.pessoa.endereco.pais}" 
+						placeholder="Brasil"/>
+					<p:message for="pais" />
+ 
+
+					 
+
+				</p:panelGrid>
+
+				<p:panelGrid layout="grid" columns="2"
+					columnClasses="ui-grid-col-3,ui-grid-col-3"
+					styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Cadastrar"
+						action="#{categoriaMovimentacaoMB.salvar()}" update="group"
+						validateClient="true" icon="fa fa-save"
+						rendered="#{categoriaMovimentacaoMB.categoriaMovimentacao.id == null}"
+						styleClass="btn-blue">
+					</p:commandButton>
+
+					<p:commandButton value="Editar"
+						action="#{categoriaMovimentacaoMB.atualizar()}" update="group"
+						validateClient="true" icon="fa fa-edit"
+						rendered="#{categoriaMovimentacaoMB.categoriaMovimentacao.id != null}"
+						styleClass="btn-green">
+					</p:commandButton>
+
+					<p:button value="Cancelar" outcome="/home"
+						icon="fa fa-close" styleClass="btn-red ">
+					</p:button>
+
+				</p:panelGrid>
+
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

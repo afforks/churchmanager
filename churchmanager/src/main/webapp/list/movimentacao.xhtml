@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/layout.xhtml">
+
+	<ui:define name="page-name">
+		List. Movimentação
+	</ui:define>
+
+	<ui:define name="page-menu">
+		<ui:include src="/WEB-INF/template/links-funcionais.xhtml" />
+	</ui:define>
+
+	<ui:define name="page-image">
+		<p:graphicImage library="img" name="movimentacao.svg" />
+	</ui:define>
+
+	<ui:define name="page-title">Movimentação</ui:define>
+	<ui:define name="page-subtitle">Lista de Movimentações</ui:define>
+	<ui:define name="content">
+
+		<h:form prependId="false">
+
+			<p:growl id="movimentacao-msg" life="7000" showDetail="true"
+				showSummary="true" />
+
+
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" style="margin-bottom: 15px;"
+				layout="grid" columnClasses="ui-grid-col-9, ui-grid-col-3">
+				
+				<h:panelGroup>
+				<p:outputLabel value="Mês " styleClass="my-label"/><br/>
+				<p:selectOneButton id="mes" value="#{movimentacaoMB.movimentacaoFilter.mes}" styleClass="font-12">
+					<f:selectItems var="mes" itemLabel="#{mes.abreviacao}"
+						itemValue="#{mes.numero}" value="#{movimentacaoMB.meses()}" />
+						<p:ajax process="mes" listener="#{movimentacaoMB.filtrar()}" update="table"/>
+				</p:selectOneButton>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				<p:outputLabel value="Ano " styleClass="my-label"/><br/>
+				<p:selectOneButton id="ano" value="#{movimentacaoMB.movimentacaoFilter.ano}"  styleClass="font-12">
+					<f:selectItems var="ano" itemLabel="#{ano}" itemValue="#{ano}"
+						value="#{movimentacaoMB.anos()}" />
+						<p:ajax process="ano" listener="#{movimentacaoMB.filtrar()}" update="table"/>
+				</p:selectOneButton>
+				</h:panelGroup>
+
+			</p:panelGrid>
+
+			<div class="ui-fluid">
+				<p:toolbar style="padding: 10px">
+					<f:facet name="left">
+
+						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
+							layout="grid"
+							columnClasses="ui-grid-col-3, ui-grid-col-6, ui-grid-col-3">
+
+							<p:outputLabel value="Filtrar por: " />
+
+							<p:inputText id="filtro" styleClass="ui-grid-col-6"
+								placeholder="Nome da movimentação"
+								value="#{movimentacaoMB.movimentacaoFilter.nome}" />
+
+							<h:panelGrid columns="2">
+								<p:commandButton action="#{movimentacaoMB.filtrar()}"
+									process="@this filtro" update="table" icon="fa fa-search"
+									styleClass="btn-grey" />
+
+								<p:button icon="fa fa-plus" styleClass="btn-green"
+									outcome="/cad/movimentacao" />
+							</h:panelGrid>
+
+						</p:panelGrid>
+					</f:facet>
+				</p:toolbar>
+
+				<br />
+
+<h2 class="center">Lista de movimentações</h2>
+				<p:dataTable id="table" var="movimentacao" lazy="true"
+					value="#{movimentacaoMB.movimentacaosLazy}" reflow="true"
+					rowHover="true"  
+					paginator="true" paginatorAlwaysVisible="false"
+					rows="50" rowsPerPageLabel="de"
+					emptyMessage="Nenhum registro foi encontrado!"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+						{PreviousPageLink} {PageLinks} {NextPageLink} 
+							{LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
+
+					<f:facet name="header" />
+						
+ 					<p:column headerText="#" colspan="1">
+ 					
+	 					<p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+	 						<p:commandButton icon="fa fa-arrow-down" styleClass="btn-yellow"
+								title="Receber" rendered="#{movimentacaoMB.isReceber(movimentacao)}"
+								oncomplete="PF('pagar-receber').show()" update="pagar-receber" 
+								action="#{movimentacaoMB.buscarParcelas()}">
+									<f:setPropertyActionListener value="#{movimentacao}"
+										target="#{movimentacaoMB.movimentacao}" />
+							</p:commandButton>
+						
+							<p:commandButton icon="fa fa-arrow-up" styleClass="btn-red"
+								title="Pagar" rendered="#{movimentacaoMB.isPagar(movimentacao)}"
+								oncomplete="PF('pagar-receber').show()" update="pagar-receber" 
+								action="#{movimentacaoMB.buscarParcelas()}">
+									<f:setPropertyActionListener value="#{movimentacao}"
+										target="#{movimentacaoMB.movimentacao}" />
+							</p:commandButton>
+	
+							<p:commandButton icon="fa fa-check" styleClass="btn-blue"
+								title="Editar" rendered="#{movimentacaoMB.isEntradaOuSaidaComStatusPago(movimentacao)}"
+								oncomplete="PF('pagar-receber').show()" update="pagar-receber" 
+								action="#{movimentacaoMB.buscarParcelas()}">
+									<f:setPropertyActionListener value="#{movimentacao}"
+										target="#{movimentacaoMB.movimentacao}" />
+							</p:commandButton>
+						</p:panelGrid>
+ 					
+ 					</p:column>
+ 					
+					<p:column headerText="Nome" colspan="2">
+						<div class="text-overflow">
+							<p:link outcome="/edit/movimentacao" styleClass="my-link"
+								value="#{movimentacao.nome}">
+								<f:param name="id" value="#{movimentacao.idCriptografado()}" />
+							</p:link>
+						</div>
+					</p:column>
+
+					<p:column headerText="Valor" colspan="1" >
+						<p:outputLabel value="#{movimentacao.valor}" >
+							<f:convertNumber type="currency"/>
+						</p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Vencimento" colspan="1" styleClass="center">
+						<p:outputLabel value="#{movimentacao.dataVencimento}" >
+							<f:convertDateTime pattern="dd/MM/yy"/>
+						</p:outputLabel>
+					</p:column>
+					
+					<p:column headerText="Forma" colspan="1" styleClass="center">
+						<p:outputLabel value="#{movimentacao.formaMovimentacao.descricao}"
+						rendered="#{movimentacao.formaMovimentacao.descricao ne null}" 
+							styleClass="destaque" style="#{movimentacao.formaMovimentacao.cor}"/>
+					</p:column>
+					
+					<p:column headerText="Status" colspan="1" styleClass="center">
+						<p:outputLabel value="#{movimentacao.statusMovimentacao.descricao}"
+							styleClass="destaque" style="#{movimentacao.statusMovimentacao.cor}"/>
+					</p:column>
+
+					<p:column headerText="Tipo" colspan="1" styleClass="center">
+						<p:outputLabel value="#{movimentacao.tipoMovimentacao.descricao}" 
+							styleClass="destaque" style="#{movimentacao.tipoMovimentacao.cor}"/>
+					</p:column>
+					
+<!-- 					<p:column headerText="Descrição" colspan="3" priority="5"> -->
+<!-- 						<p:outputLabel value="#{movimentacao.descricao}" /> -->
+<!-- 					</p:column> -->
+
+					<p:column headerText="Detalhes" colspan="1">
+					
+						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+							<p:commandButton icon="fa fa-list-alt" styleClass="btn-grey"
+								oncomplete="PF('detalhes').show()"
+								title="Visualizar detalhes" 
+								action="#{movimentacaoMB.buscarParcelas()}" update="detalhes">
+								<f:setPropertyActionListener value="#{movimentacao}"
+									target="#{movimentacaoMB.movimentacao}" />
+							</p:commandButton>
+							
+						</p:panelGrid>
+					</p:column>
+
+				</p:dataTable>
+			</div>
+
+		</h:form>
+
+		<ui:include src="/fragmentos/detalhe-movimentacao.xhtml" />
+		<ui:include src="/fragmentos/receberpagar-movimentacao.xhtml" />
+
+	</ui:define>
+</ui:composition>
