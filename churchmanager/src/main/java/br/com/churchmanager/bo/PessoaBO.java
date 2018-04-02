@@ -68,8 +68,8 @@ public class PessoaBO implements Serializable, Buscador<Pessoa> {
 		return this.dao.membresiaFaixaEtaria(filter);
 	}
 
-	public List<PessoaAtividaEclesiastica> pessoasPorAtividadeEclesiastica() {
-		return this.dao.pessoasPorAtividadeEclesiastica();
+	public List<PessoaAtividaEclesiastica> pessoasPorAtividadeEclesiastica(PessoaFilter filter) {
+		return this.dao.pessoasPorAtividadeEclesiastica(filter);
 	}
 
 	public String gerarMatricula(Date dataCadastro) {

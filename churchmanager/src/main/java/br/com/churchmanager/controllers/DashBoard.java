@@ -2,7 +2,6 @@ package br.com.churchmanager.controllers;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -76,19 +75,18 @@ public class DashBoard implements Serializable {
 
 	public void loginSucesso() {
 		if ("true".equals(this.request.getParameter("logado"))) {
-			FacesUtil.informacao("msg", "Bem-vindo!",
-					this.seguranca.getUsuarioLogado().getUsuario().getNomeCompleto());
+			FacesUtil.informacao("msg", "Bem-vindo!", this.seguranca.getUsuarioLogado().getUsuario().getNomeCompleto());
 		}
 
 	}
 
 	@PostConstruct
 	public void init() {
-//		if (FacesUtil.isNotPostback()) {
-			this.mes = DataUtil.mes();
-			this.ano = DataUtil.ano();
-			atualizarDados();
-//		}
+		// if (FacesUtil.isNotPostback()) {
+		this.mes = DataUtil.mes();
+		this.ano = DataUtil.ano();
+		atualizarDados();
+		// }
 
 	}
 
@@ -112,7 +110,7 @@ public class DashBoard implements Serializable {
 		ChartSeries boys = new ChartSeries("Homens");
 		ChartSeries girls = new ChartSeries("Mulheres");
 		List<MembrosPorFaixaEtaria> membresia = this.membresiaFaixaEtaria();
-		Iterator arg4 = membresia.iterator();
+		Iterator<MembrosPorFaixaEtaria> arg4 = membresia.iterator();
 
 		while (arg4.hasNext()) {
 			MembrosPorFaixaEtaria m = (MembrosPorFaixaEtaria) arg4.next();
@@ -130,7 +128,7 @@ public class DashBoard implements Serializable {
 	private void criarGraficoPessoasPorAtividadesEclesiasticas() {
 		this.pessoasPorAtividadesEclesiasticas = new BarChartModel();
 		List<PessoaAtividaEclesiastica> pessoasPorAtividadeEclesiastica = this.pessoasPorAtividadeEclesiastica();
-		Iterator it = pessoasPorAtividadeEclesiastica.iterator();
+		Iterator<PessoaAtividaEclesiastica> it = pessoasPorAtividadeEclesiastica.iterator();
 
 		while (it.hasNext()) {
 			PessoaAtividaEclesiastica pessoaAtividade = (PessoaAtividaEclesiastica) it.next();
@@ -190,7 +188,7 @@ public class DashBoard implements Serializable {
 	private void criarGraficoCustoPorCategoria() {
 		this.custosPorCategoria = new PieChartModel();
 		List<MovimentacaoCategoria> custosPorCategoria2 = this.custosPorCategoria();
-		Iterator arg2 = custosPorCategoria2.iterator();
+		Iterator<MovimentacaoCategoria> arg2 = custosPorCategoria2.iterator();
 
 		while (arg2.hasNext()) {
 			MovimentacaoCategoria movimentacaoCategoria = (MovimentacaoCategoria) arg2.next();
@@ -210,10 +208,7 @@ public class DashBoard implements Serializable {
 		ParcelaMovimentacaoFilter parcelaFilter = new ParcelaMovimentacaoFilter();
 		parcelaFilter.setMes(this.mes);
 		parcelaFilter.setAno(this.ano);
-//		if (this.ultimosLancamentos == null) {
 		this.ultimosLancamentos = this.parcelasBO.ultimosLancamentos(parcelaFilter);
-//		}
-
 	}
 
 	public List<DetalheMovimentacao> ultimosLancamentosEmConta() {
@@ -273,12 +268,12 @@ public class DashBoard implements Serializable {
 	public double totalSaidasPagas() {
 		return this.getTotais().getPagas();
 	}
-	
-	public double saldoFaturado () {
+
+	public double saldoFaturado() {
 		return totalEntradasPagas() - totalSaidasPagas();
 	}
 
-	public double saldoAFaturar(){
+	public double saldoAFaturar() {
 		return totalEntradasEmAberto() - totalSaidasEmAberto();
 	}
 
@@ -303,13 +298,10 @@ public class DashBoard implements Serializable {
 	}
 
 	private void atualizarContadores() {
-//		if (this.totalizadores == null) {
 		PessoaFilter filter = new PessoaFilter();
 		filter.setAno(getAno());
 		filter.setMes(getMes());
 		this.totalizadores = this.pessoaBO.quantidadeDeMembros(filter);
-//		}
-
 	}
 
 	public List<MovimentacaoCategoria> custosPorCategoria() {
@@ -341,7 +333,10 @@ public class DashBoard implements Serializable {
 	}
 
 	public List<PessoaAtividaEclesiastica> pessoasPorAtividadeEclesiastica() {
-		return this.pessoaBO.pessoasPorAtividadeEclesiastica();
+		PessoaFilter filter = new PessoaFilter();
+		filter.setMes(this.mes);
+		filter.setAno(this.ano);
+		return this.pessoaBO.pessoasPorAtividadeEclesiastica(filter);
 	}
 
 	public Meses mesAtual() {
@@ -383,7 +378,7 @@ public class DashBoard implements Serializable {
 	}
 
 	public Totais getTotais() {
-		if(totais == null) {
+		if (totais == null) {
 			totais = new Totais(Integer.parseInt(mes), Integer.parseInt(ano), 0d, 0d, 0d, 0d);
 		}
 		return totais;
@@ -404,5 +399,5 @@ public class DashBoard implements Serializable {
 	public void setAno(String ano) {
 		this.ano = ano;
 	}
-	
+
 }

@@ -1,10 +1,12 @@
 package br.com.churchmanager.dao;
 
-import static br.com.churchmanager.util.DataUtil.*;
+import static br.com.churchmanager.util.DataUtil.ano;
+import static br.com.churchmanager.util.DataUtil.semestre;
+import static br.com.churchmanager.util.DataUtil.stringParaDate;
+import static br.com.churchmanager.util.DataUtil.ultimoDiaDoMes;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -39,16 +41,16 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 		Session session = (Session) this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-		
+
 		String mes = filter.getMes();
 		String ano = filter.getAno();
-		int dia = ultimoDiaDoMes(stringParaDate("01"+"/"+mes+"/"+ano));
-		
-		query.setParameter("data", stringParaDate(dia+"/"+mes+"/"+ano));
-		
+		int dia = ultimoDiaDoMes(stringParaDate("01" + "/" + mes + "/" + ano));
+
+		query.setParameter("data", stringParaDate(dia + "/" + mes + "/" + ano));
+
 		Map dados = (Map) query.uniqueResult();
-		BigDecimal[] totais = new BigDecimal[]{(BigDecimal) dados.get("total"), (BigDecimal) dados.get("M"),
-				(BigDecimal) dados.get("F")};
+		BigDecimal[] totais = new BigDecimal[] { (BigDecimal) dados.get("total"), (BigDecimal) dados.get("M"),
+				(BigDecimal) dados.get("F") };
 		return totais;
 	}
 
@@ -79,13 +81,13 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 		Session session = (Session) this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-		
+
 		String mes = filter.getMes();
 		String ano = filter.getAno();
-		int dia = ultimoDiaDoMes(stringParaDate("01"+"/"+mes+"/"+ano));
-		
-		query.setParameter("data", stringParaDate(dia+"/"+mes+"/"+ano));
-		
+		int dia = ultimoDiaDoMes(stringParaDate("01" + "/" + mes + "/" + ano));
+
+		query.setParameter("data", stringParaDate(dia + "/" + mes + "/" + ano));
+
 		List data = query.list();
 		Iterator arg7 = data.iterator();
 
@@ -99,12 +101,19 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 		return resultList;
 	}
 
-	public List<PessoaAtividaEclesiastica> pessoasPorAtividadeEclesiastica() {
-		String sql = "select * from pessoas_por_atividade_eclesiastica";
+	public List<PessoaAtividaEclesiastica> pessoasPorAtividadeEclesiastica(PessoaFilter filter) {
+		String sql = "SELECT distinct categoria, sum(quantidade) as quantidade FROM pessoas_por_atividade_eclesiastica where data < :data group by categoria";
 		ArrayList resultList = new ArrayList();
 		Session session = (Session) this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+
+		String mes = filter.getMes();
+		String ano = filter.getAno();
+		int dia = ultimoDiaDoMes(stringParaDate("01" + "/" + mes + "/" + ano));
+
+		query.setParameter("data", stringParaDate(dia + "/" + mes + "/" + ano));
+
 		List data = query.list();
 		Iterator arg6 = data.iterator();
 
@@ -112,7 +121,7 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 			Object o = arg6.next();
 			Map map = (Map) o;
 			resultList.add(
-					new PessoaAtividaEclesiastica((String) map.get("categoria"), (BigInteger) map.get("quantidade")));
+					new PessoaAtividaEclesiastica((String) map.get("categoria"), (BigDecimal) map.get("quantidade")));
 		}
 
 		return resultList;
@@ -123,9 +132,9 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 		Session session = (Session) this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-		
+
 		query.setParameter("data", dataCadastro);
-		
+
 		Map dados = (Map) query.uniqueResult();
 		String qtdPorPeriodo = (String) dados.get("qtd_registros");
 		String matricula = ano() + semestre() + qtdPorPeriodo;
