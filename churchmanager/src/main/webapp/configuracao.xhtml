@@ -34,113 +34,140 @@
 
 			<p:focus for="nome" />
 			<div class="ui-fluid">
+
 				<p:messages id="msg" life="7000" showDetail="true"
 					showSummary="true" />
-				<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank"
-					columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
-					layout="grid">
 
+
+				<div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12 ">
 					<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
 					<p:inputText id="nome" required="true"
 						requiredMessage="Campo 'Nome' é obrigatório!"
 						value="#{categoriaMovimentacaoMB.categoriaMovimentacao.nome}"
 						placeholder="Casa de Oração da Igreja de Cristo no Brasil em Morada Nova">
 					</p:inputText>
-					<p:message for="nome" />
+					<!-- 					<p:message for="nome" /> -->
+				</div>
 
+
+				<div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12  ">
 					<p:outputLabel for="cnpj" styleClass="my-label" value="CNPJ " />
 					<p:inputText id="cnpj" required="true"
-						requiredMessage="Campo 'CNPJ' é obrigatório!"
-						value="" placeholder="Ex.: 15.206.686/0001-49">
+						requiredMessage="Campo 'CNPJ' é obrigatório!" value=""
+						placeholder="Ex.: 15.206.686/0001-49">
 					</p:inputText>
-					<p:message for="cnpj" />
+					<!-- 					<p:message for="cnpj" /> -->
+				</div>
 
-					 
+
+
+				<div class="ui-g-4 ui-md-4 ui-sm-12  ">
 					<p:outputLabel for="banco" styleClass="my-label" value="Banco " />
 					<p:inputText id="banco" required="true"
-						requiredMessage="Campo 'Banco' é obrigatório!"
-						value="" placeholder="Banco do Brasil">
+						requiredMessage="Campo 'Banco' é obrigatório!" value=""
+						placeholder="Banco do Brasil">
 					</p:inputText>
-					<p:message for="banco" />
-					
-					
+					<!-- 					<p:message for="banco" /> -->
+				</div>
+
+
+				<div class="ui-g-4 ui-md-4 ui-sm-12  ">
 					<p:outputLabel for="ag" styleClass="my-label" value="Agência " />
 					<p:inputText id="ag" required="true"
-						requiredMessage="Campo 'Agência' é obrigatório!"
-						value="" placeholder="0863-x">
+						requiredMessage="Campo 'Agência' é obrigatório!" value=""
+						placeholder="0863-x">
 					</p:inputText>
-					<p:message for="ag" />
-					 
+					<!-- 					<p:message for="ag" /> -->
+				</div>
+
+				<div class="ui-g-4 ui-md-4 ui-sm-12  ">
 					<p:outputLabel for="conta" styleClass="my-label" value="Conta " />
 					<p:inputText id="conta" required="true"
-						requiredMessage="Campo 'Conta' é obrigatório!"
-						value="" placeholder="12345-6">
+						requiredMessage="Campo 'Conta' é obrigatório!" value=""
+						placeholder="12345-6">
 					</p:inputText>
-					<p:message for="conta" />
+					<!-- 					<p:message for="conta" /> -->
+				</div>
 
-					 
-					<p:outputLabel for="pp" styleClass="my-label" value="Pastor Presidente" />
+
+
+				<div class="ui-g-8 ui-md-8 ui-sm-12  ">
+					<p:outputLabel for="pp" styleClass="my-label"
+						value="Pastor Presidente" />
 					<p:inputText id="pp" required="true"
 						requiredMessage="Campo 'Pastor Presidente' é obrigatório!"
 						value="" placeholder="Digite o nome do pastor">
 					</p:inputText>
-					<p:message for="pp" />
+					<!-- 					<p:message for="pp" /> -->
+				</div>
 
-					 
+				<div class="ui-g-4 ui-md-4 ui-sm-12  ">
 					<p:outputLabel for="tel" styleClass="my-label" value="Telefone " />
 					<p:inputText id="tel" required="true"
-						requiredMessage="Campo 'Telefone' é obrigatório!"
-						value="" placeholder="(88)3422-1234">
+						requiredMessage="Campo 'Telefone' é obrigatório!" value=""
+						placeholder="(88)3422-1234">
 					</p:inputText>
-					<p:message for="tel" />
+					<!-- 					<p:message for="tel" /> -->
+				</div>
 
-					 
+
+
+				<div class="ui-g-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="logradouro" styleClass="my-label"
 						value="Logradouro " />
 					<p:inputText id="logradouro" required="true"
 						requiredMessage="Campo 'Logradouro' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.logradouro}" 
-						placeholder="Av. Ce. Tibúrcio, Nº 56"/>
-					<p:message for="logradouro" />
+						value="#{pessoaMB.pessoa.endereco.logradouro}"
+						placeholder="Av. Ce. Tibúrcio, Nº 56" />
+					<!-- 					<p:message for="logradouro" /> -->
+				</div>
 
-
+				<div class="ui-g-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="referencia" styleClass="my-label"
 						value="Referência " />
 					<p:inputText id="referencia" required="true"
 						requiredMessage="Campo 'Referência' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.referencia}" 
-						placeholder="Próximo ao Sindicato dos Trabalhadores de Morada Nova"/>
-					<p:message for="referencia" />
+						value="#{pessoaMB.pessoa.endereco.referencia}"
+						placeholder="Próximo ao Sindicato dos Trabalhadores" />
+					<!-- 					<p:message for="referencia" /> -->
+				</div>
 
 
+				<div class="ui-g-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="bairro" styleClass="my-label" value="Bairro " />
 					<p:inputText id="bairro" required="true"
 						requiredMessage="Campo 'Bairro' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.bairro}" 
-						placeholder="Girilândia"/>
-					<p:message for="bairro" />
+						value="#{pessoaMB.pessoa.endereco.bairro}"
+						placeholder="Girilândia" />
+					<!-- 					<p:message for="bairro" /> -->
+				</div>
 
+
+
+				<div class="ui-g-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="cep" styleClass="my-label" value="CEP " />
 					<p:inputMask mask="99999-999" id="cep" required="true"
 						requiredMessage="Campo 'CEP' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.cep}" 
-						placeholder="62.940-000"/>
-					<p:message for="cep" />
+						value="#{pessoaMB.pessoa.endereco.cep}" placeholder="62.940-000" />
+					<!-- 					<p:message for="cep" /> -->
+				</div>
 
 
 
+				<div class="ui-g-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="cidade" styleClass="my-label" value="Cidade " />
 					<p:inputText id="cidade" required="true"
 						requiredMessage="Campo 'Cidade' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.cidade}" 
-						placeholder="Morada Nova	"/>
-					<p:message for="cidade" />
+						value="#{pessoaMB.pessoa.endereco.cidade}"
+						placeholder="Morada Nova	" />
+					<!-- 					<p:message for="cidade" /> -->
+				</div>
 
 
-
+				<div class="ui-g-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="estado" styleClass="my-label" value="Estado " />
 					<p:selectOneMenu id="estado"
-						value="#{pessoaMB.pessoa.endereco.estado}" filter="true" 
+						value="#{pessoaMB.pessoa.endereco.estado}" filter="true"
 						converterMessage="Não foi possível converter o objeto (Estado)"
 						required="true" requiredMessage="Campo 'Estado' é obrigatório">
 						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
@@ -148,27 +175,29 @@
 							itemLabel="#{estado.descricao}" itemValue="#{estado}"
 							var="estado" />
 					</p:selectOneMenu>
-					<p:message for="estado" />
+					<!-- 					<p:message for="estado" /> -->
+				</div>
 
 
-
+				<div class="ui-g-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="pais" styleClass="my-label" value="País " />
 					<p:inputText id="pais" required="true"
 						requiredMessage="Campo 'País' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.pais}" 
-						placeholder="Brasil"/>
-					<p:message for="pais" />
- 
+						value="#{pessoaMB.pessoa.endereco.pais}" placeholder="Brasil" />
+					<!-- 					<p:message for="pais" /> -->
+				</div>
 
-					 
 
-				</p:panelGrid>
+
+
+
+
 
 				<p:panelGrid layout="grid" columns="2"
 					columnClasses="ui-grid-col-3,ui-grid-col-3"
 					styleClass="ui-panelgrid-blank">
 					<p:commandButton value="Cadastrar"
-						action="#{categoriaMovimentacaoMB.salvar()}" update="group"
+						action="#{categoriaMovimentacaoMB.salvar()}" update="msg"
 						validateClient="true" icon="fa fa-save"
 						rendered="#{categoriaMovimentacaoMB.categoriaMovimentacao.id == null}"
 						styleClass="btn-blue">
@@ -181,8 +210,8 @@
 						styleClass="btn-green">
 					</p:commandButton>
 
-					<p:button value="Cancelar" outcome="/home"
-						icon="fa fa-close" styleClass="btn-red ">
+					<p:button value="Cancelar" outcome="/home" icon="fa fa-close"
+						styleClass="btn-red ">
 					</p:button>
 
 				</p:panelGrid>

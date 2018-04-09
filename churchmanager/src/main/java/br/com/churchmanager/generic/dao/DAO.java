@@ -55,21 +55,6 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 		try {
 			this.entityManager.persist(entity);
 		} catch (PersistenceException e) {
-			System.out.println("------------------ STACKTRACE");
-			e.printStackTrace();
-
-			System.out.println("------------------ MENSAGEM");
-			System.out.println(e.getMessage());
-
-			System.out.println("------------------ LOCALIZED MENSAGEM");
-			System.out.println(e.getLocalizedMessage());
-
-			System.out.println("------------------ CAUSE MENSAGEM");
-			System.out.println(e.getCause().getMessage());
-
-			System.out.println("------------------ GET STACKTRACE");
-			System.out.println(e.getCause().getStackTrace()[0]);
-
 			if (e.getCause().toString().contains("ConstraintViolationException")) {
 				throw new ViolacaoDeRestricaoException(
 						"A operação DML solicitada resultou em uma violação de uma restrição de integridade definida.");
