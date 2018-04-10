@@ -10,37 +10,45 @@
 	<p:focus for="nome" />
 	<div class="ui-fluid">
 		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
-		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank"
-			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
-			layout="grid">
+		<!-- 		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank" -->
+		<!-- 			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4" -->
+		<!-- 			layout="grid"> -->
 
+		<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
 			<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
 			<p:inputText id="nome" required="true"
 				requiredMessage="Campo 'Nome' é obrigatório!"
-				value="#{eventoMB.evento.nome}" />
+				value="#{eventoMB.evento.nome}" placeholder="Nome do evento" />
 			<p:message for="nome" />
+		</div>
 
-			<p:outputLabel for="dia" styleClass="my-label"
-				value="Dia" />
+
+		<div class="ui-g-3 ui-lg-3 ui-md-2 ui-sm-6">
+			<p:outputLabel for="dia" styleClass="my-label" value="Dia" />
 			<p:inputText id="dia" required="true"
 				requiredMessage="Campo 'Dia' é obrigatório!"
-				value="#{eventoMB.evento.dia}" />
+				value="#{eventoMB.evento.dia}" placeholder="Dia. Ex.: 25" />
 			<p:message for="dia" />
-			
-			<p:outputLabel for="mes" styleClass="my-label"
-				value="Mês" />
+		</div>
+
+		<div class="ui-g-3 ui-lg-3 ui-md-2 ui-sm-6">
+			<p:outputLabel for="mes" styleClass="my-label" value="Mês" />
 			<p:inputText id="mes" required="true"
 				requiredMessage="Campo 'Mês' é obrigatório!"
-				value="#{eventoMB.evento.mes}" />
+				value="#{eventoMB.evento.mes}" placeholder="Mês. Ex.: 10" />
 			<p:message for="mes" />
+		</div>
 
+		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
 			<p:outputLabel for="descricao" styleClass="my-label"
 				value="Descrição" />
 			<p:inputTextarea id="descricao" required="true"
 				requiredMessage="Campo 'Descrição' é obrigatório!"
-				value="#{eventoMB.evento.descricao}" />
+				value="#{eventoMB.evento.descricao}" placeholder="Descreva o evento" />
 			<p:message for="descricao" />
+		</div>
 
+		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
 			<p:outputLabel for="status" styleClass="my-label" value="Status" />
 			<p:selectOneRadio id="status" required="true"
 				requiredMessage="Campo 'Status' é obrigatório!"
@@ -49,21 +57,24 @@
 					value="#{eventoMB.listarStatus()}" itemValue="#{status}" />
 			</p:selectOneRadio>
 			<p:message for="status" />
+		</div>
 
-			<p:outputLabel />
-		</p:panelGrid>
- 
+
+
+		<!-- 			<p:outputLabel /> -->
+		<!-- 		</p:panelGrid> -->
+
 
 		<p:panelGrid layout="grid" columns="2"
 			columnClasses="ui-grid-col-3,ui-grid-col-3"
 			styleClass="ui-panelgrid-blank">
 			<p:commandButton value="Cadastrar" action="#{eventoMB.salvar()}"
-				update="group" validateClient="true" icon="fa fa-save"
+				update="msg" validateClient="true" icon="fa fa-save"
 				rendered="#{eventoMB.evento.id == null}" styleClass="btn-blue">
 			</p:commandButton>
 
 			<p:commandButton value="Editar" action="#{eventoMB.atualizar()}"
-				update="group" validateClient="true" icon="fa fa-edit"
+				update="msg" validateClient="true" icon="fa fa-edit"
 				rendered="#{eventoMB.evento.id != null}" styleClass="btn-green">
 			</p:commandButton>
 

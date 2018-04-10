@@ -10,55 +10,68 @@
 	<p:focus for="nome" />
 	<div class="ui-fluid">
 		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
-		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank"
-			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
-			layout="grid">
 
+		<!-- 		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank" -->
+		<!-- 			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4" -->
+		<!-- 			layout="grid"> -->
+
+		<div class="ui-lg-6 ui-md-8 ui-sm-12">
 			<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
 			<p:inputText id="nome" required="true"
 				requiredMessage="Campo 'Nome' é obrigatório!"
-				value="#{atividadeEclesiasticaMB.atividadeEclesiastica.nome}" />
-			<p:message for="nome" />
+				value="#{atividadeEclesiasticaMB.atividadeEclesiastica.nome}" 
+				placeholder="Digite o nome da atividade"/>
+			<!-- 			<p:message for="nome" /> -->
+		</div>
 
 
+		<div class="ui-lg-6 ui-md-8 ui-sm-12">
 			<p:outputLabel for="descricao" styleClass="my-label"
 				value="Descrição" />
 			<p:inputTextarea id="descricao" required="false"
 				requiredMessage="Campo 'Descrição' é obrigatório!"
-				value="#{atividadeEclesiasticaMB.atividadeEclesiastica.descricao}" />
-			<p:message for="descricao" />
+				value="#{atividadeEclesiasticaMB.atividadeEclesiastica.descricao}" 
+				placeholder="Descreva a atividade"/>
+			<!-- 		<p:message for="descricao" /> -->
+		</div>
 
+		<div class="ui-lg-6 ui-md-8 ui-sm-12">
 			<p:outputLabel for="status" styleClass="my-label" value="Status" />
 			<p:selectOneRadio id="status" required="true"
 				requiredMessage="Campo 'Status' é obrigatório!"
 				value="#{atividadeEclesiasticaMB.atividadeEclesiastica.status}">
 				<f:selectItems itemLabel="#{status.descricao}" var="status"
-					value="#{atividadeEclesiasticaMB.listarStatus()}" itemValue="#{status}" />
+					value="#{atividadeEclesiasticaMB.listarStatus()}"
+					itemValue="#{status}" />
 			</p:selectOneRadio>
-			<p:message for="status" />
+			<!-- 		<p:message for="status" /> -->
+		</div>
 
-			<p:outputLabel />
 
-		</p:panelGrid>
+		<!-- 		</p:panelGrid> -->
+
+
+
 
 		<p:panelGrid layout="grid" columns="2"
 			columnClasses="ui-grid-col-3,ui-grid-col-3"
 			styleClass="ui-panelgrid-blank">
-			<p:commandButton value="Cadastrar" action="#{atividadeEclesiasticaMB.salvar()}"
-				update="group" validateClient="true" icon="fa fa-save"
+			<p:commandButton value="Cadastrar"
+				action="#{atividadeEclesiasticaMB.salvar()}" update="msg"
+				validateClient="true" icon="fa fa-save"
 				rendered="#{atividadeEclesiasticaMB.atividadeEclesiastica.id == null}"
 				styleClass="btn-blue">
 			</p:commandButton>
 
 			<p:commandButton value="Editar"
-				action="#{atividadeEclesiasticaMB.atualizar()}" update="group"
+				action="#{atividadeEclesiasticaMB.atualizar()}" update="msg"
 				validateClient="true" icon="fa fa-edit"
 				rendered="#{atividadeEclesiasticaMB.atividadeEclesiastica.id != null}"
 				styleClass="btn-green">
 			</p:commandButton>
 
-			<p:button value="Cancelar" outcome="/list/atividade" icon="fa fa-close"
-				styleClass="btn-red ">
+			<p:button value="Cancelar" outcome="/list/atividade"
+				icon="fa fa-close" styleClass="btn-red ">
 			</p:button>
 
 		</p:panelGrid>

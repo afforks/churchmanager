@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.churchmanager.bo.DiretoriaBO;
+import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.model.Cargo;
 import br.com.churchmanager.model.Diretoria;
 import br.com.churchmanager.model.Pessoa;
@@ -39,19 +40,30 @@ public class DiretoriaMB implements Serializable {
 	}
 
 	public String salvar() {
-		this.bo.salvar(this.diretoria);
-		FacesUtil.informacao("msg", "Cadastro com sucesso!", this.diretoria.toString());
-		FacesUtil.atualizaComponente("msg");
-		this.diretoria = null;
+		try {
+			this.bo.salvar(this.diretoria);
+			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.diretoria.toString());
+			this.diretoria = null;
+		}catch (NegocioException e) {
+			FacesUtil.erro("msg", "Erro ao tentar cadastrar a diretoria!", e.getMessage());
+		}
+		finally {
+			FacesUtil.atualizaComponente("msg");
+		}
 		return null;
 	}
 
 	public String atualizar() {
-		this.bo.atualizar(this.diretoria);
-		FacesUtil.informacao("msg", "Editado com sucesso!", this.diretoria.toString());
-		FacesUtil.atualizaComponente("msg");
-		FacesUtil.manterMensagem();
-		this.diretoria = null;
+		try {
+			this.bo.atualizar(this.diretoria);
+			FacesUtil.informacao("msg", "Editado com sucesso!", this.diretoria.toString());
+			FacesUtil.manterMensagem();
+			this.diretoria = null;
+		}catch(NegocioException e) {
+			FacesUtil.erro("msg", "Erro ao tentar editar a diretoria!", e.getMessage());
+		}finally {
+			FacesUtil.atualizaComponente("msg");
+		}
 		return "/list/diretoria?faces-redirect=true";
 	}
 

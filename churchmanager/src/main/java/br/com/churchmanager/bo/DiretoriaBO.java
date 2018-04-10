@@ -1,6 +1,7 @@
 package br.com.churchmanager.bo;
 
 import br.com.churchmanager.dao.DiretoriaDAO;
+import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.Diretoria;
 import br.com.churchmanager.model.filter.DiretoriaFilter;
@@ -15,12 +16,12 @@ public class DiretoriaBO implements Serializable, Buscador<Diretoria> {
 	@Inject
 	DiretoriaDAO dao;
 
-	public void salvar(Diretoria evento) {
+	public void salvar(Diretoria evento) throws NegocioException {
 		this.validar(evento);
 		this.dao.salvar(evento);
 	}
 
-	public void atualizar(Diretoria evento) {
+	public void atualizar(Diretoria evento) throws NegocioException {
 		this.validar(evento);
 		this.dao.atualizar(evento);
 	}
@@ -33,7 +34,11 @@ public class DiretoriaBO implements Serializable, Buscador<Diretoria> {
 		return this.dao.listar(true, new String[0]);
 	}
 
-	public void validar(Diretoria evento) {
+	public void validar(Diretoria evento) throws NegocioException {
+		if(evento.getPessoaCargos() == null
+				|| evento.getPessoaCargos().isEmpty()) {
+			throw new NegocioException("É necessário selecionar os membros da diretoria");
+		}
 	}
 
 	public Diretoria buscarPorId(Serializable id) {

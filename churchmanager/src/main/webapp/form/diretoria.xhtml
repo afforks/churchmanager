@@ -12,49 +12,61 @@
 	<div class="ui-fluid">
 		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
 
-		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank"
-			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
-			layout="grid">
+		<!-- 		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank" -->
+		<!-- 			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4" -->
+		<!-- 			layout="grid"> -->
 
-			<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
-			<p:inputText id="nome" required="true"
-				requiredMessage="Campo 'Nome' é obrigatório!"
-				value="#{diretoriaMB.diretoria.nome}">
-			</p:inputText>
-			<p:message for="nome" />
-
-
-
-			<p:outputLabel for="inicio" styleClass="my-label"
-				value="Dt. de início" />
-			<p:calendar id="inicio" required="true" mask="99/99/9999"
-				requiredMessage="Campo 'Dt. de início' é obrigatório!"
-				value="#{diretoriaMB.diretoria.inicio}" navigator="true"
-				pattern="dd/MM/yyyy" placeholder="Data de início" maskSlotChar="" />
-			<p:message for="inicio" />
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
+				<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
+				<p:inputText id="nome" required="true"
+					requiredMessage="Campo 'Nome' é obrigatório!"
+					value="#{diretoriaMB.diretoria.nome}"
+					placeholder="Digite o nome da diretoria">
+				</p:inputText>
+				<!-- 			<p:message for="nome" /> -->
+			</div>
+		</div>
 
 
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-12">
+				<p:outputLabel for="inicio" styleClass="my-label"
+					value="Dt. de início" />
+				<p:calendar id="inicio" required="true" mask="99/99/9999"
+					requiredMessage="Campo 'Dt. de início' é obrigatório!"
+					value="#{diretoriaMB.diretoria.inicio}" navigator="true"
+					pattern="dd/MM/yyyy" placeholder="Data de início" maskSlotChar="" />
+				<!-- 			<p:message for="inicio" /> -->
+			</div>
 
-			<p:outputLabel for="fim" styleClass="my-label" value="Dt. de término" />
-			<p:calendar id="fim" required="true" mask="99/99/9999"
-				requiredMessage="Campo 'Dt. de término' é obrigatório!"
-				value="#{diretoriaMB.diretoria.termino}" navigator="true"
-				pattern="dd/MM/yyyy" placeholder="Data de término" maskSlotChar="" />
-			<p:message for="fim" />
+
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-12">
+				<p:outputLabel for="fim" styleClass="my-label"
+					value="Dt. de término" />
+				<p:calendar id="fim" required="true" mask="99/99/9999"
+					requiredMessage="Campo 'Dt. de término' é obrigatório!"
+					value="#{diretoriaMB.diretoria.termino}" navigator="true"
+					pattern="dd/MM/yyyy" placeholder="Data de término" maskSlotChar="" />
+				<!-- 			<p:message for="fim" /> -->
+			</div>
+		</div>
 
 
 
 
-
+		<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
 			<p:outputLabel for="descricao" styleClass="my-label"
 				value="Descrição" />
 			<p:inputTextarea id="descricao" required="false"
 				requiredMessage="Campo 'Descrição' é obrigatório!"
-				value="#{diretoriaMB.diretoria.descricao}" />
-			<p:message for="descricao" />
+				value="#{diretoriaMB.diretoria.descricao}"
+				placeholder="Descreva a diretoria" />
+			<!-- 			<p:message for="descricao" /> -->
+		</div>
 
 
-
+		<div class="ui-lg-6 ui-md-8 ui-sm-12">
 			<p:outputLabel for="status" styleClass="my-label" value="Status" />
 			<p:selectOneRadio id="status" required="true"
 				requiredMessage="Campo 'Status' é obrigatório!"
@@ -62,61 +74,74 @@
 				<f:selectItems itemLabel="#{status.descricao}" var="status"
 					value="#{diretoriaMB.listarStatus()}" itemValue="#{status}" />
 			</p:selectOneRadio>
-			<p:message for="status" />
+			<!-- 			<p:message for="status" /> -->
+		</div>
 
 
-			<p:outputLabel />
 
-		</p:panelGrid>
+		<!-- 		</p:panelGrid> -->
 
 
 		<p:separator />
 
 
 
-		<p:defaultCommand target="buscar-pessoa"/>
-		<p:panelGrid id="group2" columns="1" styleClass="ui-panelgrid-blank"
-			columnClasses="ui-grid-col-12" layout="grid">
+		<p:defaultCommand target="buscar-pessoa" />
+		<!-- 		<p:panelGrid id="group2" columns="1" styleClass="ui-panelgrid-blank" -->
+		<!-- 			columnClasses="ui-grid-col-12" layout="grid"> -->
 
-			<p:panelGrid layout="grid"
-				columnClasses="ui-grid-col-2, ui-grid-col-1, ui-grid-col-1"
-				columns="3">
+		<!-- 			<p:panelGrid layout="grid" -->
+		<!-- 				columnClasses="ui-grid-col-2, ui-grid-col-1, ui-grid-col-1" -->
+		<!-- 				columns="3"> -->
 
+
+		<div class="ui-g-12 ui-g-nopad">
+
+			<div class="ui-g-3 ui-lg-3 ui-md-5 ui-sm-5">
 				<p:outputLabel value="Selecionar componentes" styleClass="my-label" />
+			</div>
 
-				<p:commandButton id="buscar-pessoa" title="Clique para listar componentes"
-					update="pessoa-cargo" icon="fa fa-list-alt" process="@this"
-					styleClass="btn-grey" oncomplete="PF('pessoa-cargo').show();" />
+			<div class="ui-g-2">
+				<p:commandButton id="buscar-pessoa"
+					title="Clique para listar componentes" update="pessoa-cargo"
+					icon="fa fa-list-alt" process="@this" styleClass="btn-grey"
+					oncomplete="PF('pessoa-cargo').show();" />
+			</div>
+			<div class="ui-g-2">
+				<p:commandButton title="Clique para cadastrar relações"
+					action="#{pessoaCargoMB.resetarCampos()}" update="cad-pessoa-cargo"
+					icon="fa fa-plus" process="@this" styleClass="btn-green"
+					oncomplete="PF('cad-pessoa-cargo').show();" />
 
-				<p:commandButton title="Clique para cadastrar relações" action="#{pessoaCargoMB.resetarCampos()}"
-					update="cad-pessoa-cargo" icon="fa fa-plus" process="@this"
-					styleClass="btn-green" oncomplete="PF('cad-pessoa-cargo').show();" />
+			</div>
+		</div>
+		<!-- 			</p:panelGrid> -->
 
-			</p:panelGrid>
+		<p:dataTable id="table-diretoria"
+			value="#{diretoriaMB.diretoria.pessoaCargos}" var="pessoa"
+			emptyMessage="Nenhum registro foi adicionado à lista!"
+			paginatorPosition="bottom" paginator="true"
+			paginatorAlwaysVisible="false" rows="20" rowHover="false"
+			reflow="true">
 
-			<p:dataTable id="table-diretoria"
-				value="#{diretoriaMB.diretoria.pessoaCargos}" var="pessoa"
-				emptyMessage="Nenhum registro foi adicionado à lista!"
-				paginatorPosition="bottom" paginator="true"
-				paginatorAlwaysVisible="false" rows="20" rowHover="false"
-				reflow="true" >
+			<p:column headerText="Nome" colspan="4">
+				<p:outputLabel value="#{pessoa.pessoa.nome}" />
+			</p:column>
 
-				<p:column headerText="Nome" colspan="4">
-					<p:outputLabel value="#{pessoa.pessoa.nome}" />
-				</p:column>
+			<p:column headerText="Cargo" colspan="4">
+				<p:outputLabel value="#{pessoa.cargo.nome}" />
+			</p:column>
 
-				<p:column headerText="Cargo" colspan="4">
-					<p:outputLabel value="#{pessoa.cargo.nome}" />
-				</p:column>
+			<p:column headerText="Remover" colspan="1">
+				<p:commandButton icon="fa fa-close" styleClass="btn-red"
+					process="@this" update="table-diretoria">
+					<p:collector value="#{pessoa}"
+						removeFrom="#{diretoriaMB.diretoria.pessoaCargos}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
 
-				<p:column headerText="Remover" colspan="1">
-					<p:commandButton icon="fa fa-close" styleClass="btn-red" process="@this" update="table-diretoria">
-						<p:collector value="#{pessoa}" removeFrom="#{diretoriaMB.diretoria.pessoaCargos}"/>
-					</p:commandButton>
-				</p:column>
-			</p:dataTable>
-
-		</p:panelGrid>
+		<!-- 		</p:panelGrid> -->
 
 
 		<p:spacer />
@@ -126,12 +151,12 @@
 			columnClasses="ui-grid-col-3,ui-grid-col-3"
 			styleClass="ui-panelgrid-blank">
 			<p:commandButton value="Cadastrar" action="#{diretoriaMB.salvar()}"
-				update="group" validateClient="true" icon="fa fa-save"
+				update="msg" validateClient="true" icon="fa fa-save"
 				rendered="#{diretoriaMB.diretoria.id == null}" styleClass="btn-blue">
 			</p:commandButton>
 
 			<p:commandButton value="Editar" action="#{diretoriaMB.atualizar()}"
-				update="group" validateClient="true" icon="fa fa-edit"
+				update="msg" validateClient="true" icon="fa fa-edit"
 				rendered="#{diretoriaMB.diretoria.id != null}"
 				styleClass="btn-green">
 			</p:commandButton>

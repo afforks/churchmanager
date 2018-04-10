@@ -4,27 +4,33 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 <h:form prependId="false">
 
-	<p:focus id="focus" context="group" />
+	<p:focus id="focus" for="nome" />
 
-	<div class="ui-fluid">
-		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
-		
-		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank"
-			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
-			layout="grid">
+	<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
 
+	<div class="ui-fluid" jsf:id="group">
 
-			<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
-			<p:inputText id="nome" required="true" placeholder="Nome da movimentação"
-				requiredMessage="Campo 'Nome' é obrigatório!"
-				value="#{movimentacaoMB.movimentacao.nome}" />
-			<p:message for="nome" />
+		<!-- 		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank" -->
+		<!-- 			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4" -->
+		<!-- 			layout="grid"> -->
 
+		<div class="ui-g-12 uig-g-nopad">
+			<div class="ui-g-8 ui-lg-8 ui-md-8 ui-sm-12">
+				<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
+				<p:inputText id="nome" required="true"
+					placeholder="Nome da movimentação"
+					requiredMessage="Campo 'Nome' é obrigatório!"
+					value="#{movimentacaoMB.movimentacao.nome}" />
+				<p:message for="nome" />
+			</div>
+		</div>
 
+		<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-12">
 			<p:outputLabel for="tipoMovimentacao" styleClass="my-label"
 				value="Tipo" />
 			<p:selectOneRadio id="tipoMovimentacao" required="true"
@@ -33,12 +39,13 @@
 				<f:selectItems itemLabel="#{tipoMovimentacao.descricao}"
 					itemValue="#{tipoMovimentacao}"
 					value="#{utilMB.listarTipoMovimentacao()}" var="tipoMovimentacao" />
- 
+
 			</p:selectOneRadio>
 			<p:message for="tipoMovimentacao" />
-			
-			
-			
+		</div>
+
+
+		<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-12">
 			<p:outputLabel for="statusMovimentacao" styleClass="my-label"
 				value="Status da movimentação" />
 			<p:selectOneRadio id="statusMovimentacao" required="true"
@@ -48,124 +55,126 @@
 					itemValue="#{statusMovimentacao}"
 					value="#{utilMB.listarStatusMovimentacao()}"
 					var="statusMovimentacao" />
-<!-- 				<p:ajax process="@this" update="labelForma, compoenenteForma, msgForma "/> -->
+				<!-- 				<p:ajax process="@this" update="labelForma, compoenenteForma, msgForma "/> -->
 			</p:selectOneRadio>
 			<p:message for="statusMovimentacao" />
+		</div>
 
-			
-			
+
+		<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-12">
 			<h:panelGroup id="labelForma">
 				<p:outputLabel for="formaMovimentacao" styleClass="my-label"
 					value="Forma" />
 			</h:panelGroup>
-			
+
 			<h:panelGroup id="compoenenteForma">
 				<p:selectOneRadio id="formaMovimentacao" required="true"
 					requiredMessage="Campo 'Forma de movimentação' é obrigatório!"
-					value="#{movimentacaoMB.movimentacao.formaMovimentacao}"
-					 >
+					value="#{movimentacaoMB.movimentacao.formaMovimentacao}">
 					<f:selectItems itemLabel="#{formaMovimentacao.descricao}"
 						itemValue="#{formaMovimentacao}"
-						value="#{utilMB.listarFormaMovimentacao()}" var="formaMovimentacao" />
+						value="#{utilMB.listarFormaMovimentacao()}"
+						var="formaMovimentacao" />
 				</p:selectOneRadio>
 			</h:panelGroup>
-			
+
 			<h:panelGroup id="msgForma">
-				<p:message for="tipoMovimentacao"  />
+				<p:message for="tipoMovimentacao" />
 			</h:panelGroup>
-			
-			
-			
-			
-
-			<p:outputLabel for="descricao" styleClass="my-label"
-				value="Descrição" />
-			<p:inputTextarea id="descricao" required="true" placeholder="Descreva a movimentação"
-				requiredMessage="Campo 'Descrição' é obrigatório!"
-				value="#{movimentacaoMB.movimentacao.descricao}" />
-			<p:message for="descricao" />
+		</div>
 
 
-			<p:outputLabel for="valor" styleClass="my-label" value="Valor " />
-			
-			<p:inputText id="valor" required="true" styleClass="moeda " 
-				requiredMessage="Campo 'Valor' é obrigatório!" maxlength="10"
-				value="#{movimentacaoMB.movimentacao.valor}"
-				converter="javax.faces.BigDecimal">
-				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-			</p:inputText>
-			<p:message for="valor" />
+		<div class="ui-g-12 uig-g-nopad">
+			<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-12">
+				<p:outputLabel for="valor" styleClass="my-label" value="Valor " />
 
-
-			<p:outputLabel for="parcelado" styleClass="my-label"
-				value="É parcelado?" />
-			<p:selectOneRadio id="parcelado" required="true"
-				requiredMessage="Campo 'É Parcelado?' é obrigatório!"
-				value="#{movimentacaoMB.movimentacao.parcelado}">
-				<f:selectItem itemLabel="Sim" itemValue="true" />
-				<f:selectItem itemLabel="Não" itemValue="false" />
-				<p:ajax process="@this"
-					update="renderNumeroParcelasLabel, renderNumeroParcelasCampo, renderNumeroParcelasMsg" />
-			</p:selectOneRadio>
-			<p:message for="parcelado" />
-
-
-			<h:panelGroup id="renderNumeroParcelasLabel">
-				<p:outputLabel for="numeroParcelas" styleClass="my-label"
-					value="Núm. Parcelas "
-					rendered="#{movimentacaoMB.movimentacao.parcelado}" />
-			</h:panelGroup>
-
-			<h:panelGroup id="renderNumeroParcelasCampo">
-				<p:inputText id="numeroParcelas" required="true"
-					placeholder="Número de parcelas" min="1" 
-					styleClass="inteiro" type="number" max="20"
-					rendered="#{movimentacaoMB.movimentacao.parcelado}"
-					readonly="#{!movimentacaoMB.movimentacao.parcelado}"
-					requiredMessage="Campo 'Núm. Parcelas' é obrigatório!"
-					value="#{movimentacaoMB.movimentacao.numeroParcelas}">
+				<p:inputText id="valor" required="true" styleClass="moeda "
+					requiredMessage="Campo 'Valor' é obrigatório!" maxlength="10"
+					value="#{movimentacaoMB.movimentacao.valor}"
+					converter="javax.faces.BigDecimal">
+					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
 				</p:inputText>
-<!-- 				<p:spinner id="numeroParcelas" required="true" -->
-<!-- 					placeholder="Número de parcelas" min="1"  -->
-<!-- 					styleClass="inteiro" type="number" max="20" -->
-<!-- 					rendered="#{movimentacaoMB.movimentacao.parcelado}" -->
-<!-- 					readonly="#{!movimentacaoMB.movimentacao.parcelado}" -->
-<!-- 					requiredMessage="Campo 'Núm. Parcelas' é obrigatório!" -->
-<!-- 					value="#{movimentacaoMB.movimentacao.numeroParcelas}"> -->
-<!-- 				</p:spinner> -->
-			</h:panelGroup>
-
-			<h:panelGroup id="renderNumeroParcelasMsg">
-				<p:message for="numeroParcelas"
-					rendered="#{movimentacaoMB.movimentacao.parcelado}" />
-			</h:panelGroup>
+				<p:message for="valor" />
+			</div>
 
 
 
-				<p:outputLabel for="categoria" styleClass="my-label"
-					value="Categoria"/>
-			
-			<p:autoComplete value="#{movimentacaoMB.movimentacao.categoriaMovimentacao}" id="categoria"
-				autocomplete="true" scrollHeight="300" 
-				completeMethod="#{categoriaMovimentacaoMB.categoriasAutoComplete}" forceSelection="true"
-				minQueryLength="3" maxResults="30" dropdown="true" required="true"
+			<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-12">
+				<p:outputLabel for="parcelado" styleClass="my-label"
+					value="É parcelado?" />
+				<p:selectOneRadio id="parcelado" required="true"
+					requiredMessage="Campo 'É Parcelado?' é obrigatório!"
+					value="#{movimentacaoMB.movimentacao.parcelado}">
+					<f:selectItem itemLabel="Sim" itemValue="true" />
+					<f:selectItem itemLabel="Não" itemValue="false" />
+					<p:ajax process="@this"
+						update="renderNumeroParcelasLabel, renderNumeroParcelasCampo, renderNumeroParcelasMsg" />
+				</p:selectOneRadio>
+				<p:message for="parcelado" />
+			</div>
+
+
+			<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-12">
+				<h:panelGroup id="renderNumeroParcelasLabel">
+					<p:outputLabel for="numeroParcelas" styleClass="my-label"
+						value="Núm. Parcelas "
+						rendered="#{movimentacaoMB.movimentacao.parcelado}" />
+				</h:panelGroup>
+
+				<h:panelGroup id="renderNumeroParcelasCampo">
+					<p:inputText id="numeroParcelas" required="true"
+						placeholder="Número de parcelas" min="1" styleClass="inteiro"
+						type="number" max="20"
+						rendered="#{movimentacaoMB.movimentacao.parcelado}"
+						readonly="#{!movimentacaoMB.movimentacao.parcelado}"
+						requiredMessage="Campo 'Núm. Parcelas' é obrigatório!"
+						value="#{movimentacaoMB.movimentacao.numeroParcelas}">
+					</p:inputText>
+
+				</h:panelGroup>
+
+				<h:panelGroup id="renderNumeroParcelasMsg">
+					<p:message for="numeroParcelas"
+						rendered="#{movimentacaoMB.movimentacao.parcelado}" />
+				</h:panelGroup>
+			</div>
+		</div>
+
+
+		<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">
+			<p:outputLabel for="categoria" styleClass="my-label"
+				value="Categoria" />
+
+			<p:autoComplete
+				value="#{movimentacaoMB.movimentacao.categoriaMovimentacao}"
+				id="categoria" autocomplete="true" scrollHeight="300"
+				completeMethod="#{categoriaMovimentacaoMB.categoriasAutoComplete}"
+				forceSelection="true" minQueryLength="3" maxResults="30"
+				dropdown="true" required="true"
 				requiredMessage="Campo 'Categoria' é obrigatório!"
 				converterMessage="Não foi possível selecionar a categoria (Erro ao converter o objeto)"
 				converter="genericConverter" var="categoria"
 				itemLabel="#{categoria.nome}" itemValue="#{categoria}"
 				placeholder="Nome da categoria">
 			</p:autoComplete>
-			<p:message for="categoria"  />
+			<p:message for="categoria" />
+		</div>
 
 
 
+
+		<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-12">
 			<p:outputLabel for="dataBase" styleClass="my-label" value="Dt. base " />
 			<p:calendar id="dataBase" required="true" mask="99/99/9999"
 				requiredMessage="Campo 'Dt. base' é obrigatório!"
 				value="#{movimentacaoMB.movimentacao.dataBase}" navigator="true"
-				pattern="dd/MM/yyyy" placeholder="Data base" maskSlotChar=""/>
+				pattern="dd/MM/yyyy" placeholder="Data base" maskSlotChar="" />
 			<p:message for="dataBase" />
+		</div>
 
+
+
+		<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-12">
 			<p:outputLabel for="dataVencimento" styleClass="my-label"
 				value="Dt. vencimento " />
 			<p:calendar id="dataVencimento" required="true" mask="99/99/9999"
@@ -174,9 +183,22 @@
 				value="#{movimentacaoMB.movimentacao.dataVencimento}"
 				navigator="true" pattern="dd/MM/yyyy" />
 			<p:message for="dataVencimento" />
+		</div>
 
 
 
+		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+			<p:outputLabel for="descricao" styleClass="my-label"
+				value="Descrição" />
+			<p:inputTextarea id="descricao" required="true"
+				placeholder="Descreva a movimentação"
+				requiredMessage="Campo 'Descrição' é obrigatório!"
+				value="#{movimentacaoMB.movimentacao.descricao}" />
+			<p:message for="descricao" />
+		</div>
+
+
+		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
 			<p:outputLabel for="status" styleClass="my-label" value="Status" />
 			<p:selectOneRadio id="status" required="true"
 				requiredMessage="Campo 'Status' é obrigatório!"
@@ -185,22 +207,31 @@
 					value="#{movimentacaoMB.listarStatus()}" itemValue="#{status}" />
 			</p:selectOneRadio>
 			<p:message for="status" />
+		</div>
 
-			<p:outputLabel />
-		</p:panelGrid>
+
+		<!-- 			<p:outputLabel /> -->
+		<!-- 		</p:panelGrid> -->
+
+
+
+
+
+
+
 
 		<p:panelGrid layout="grid" columns="2"
 			columnClasses="ui-grid-col-3,ui-grid-col-3"
 			styleClass="ui-panelgrid-blank">
 			<p:commandButton value="Cadastrar"
-				action="#{movimentacaoMB.salvar()}" update="focus group"
+				action="#{movimentacaoMB.salvar()}" update="msg group"
 				validateClient="false" icon="fa fa-save" oncomplete="goToTop()"
 				rendered="#{movimentacaoMB.movimentacao.id == null}"
 				styleClass="btn-blue">
 			</p:commandButton>
 
 			<p:commandButton value="Editar"
-				action="#{movimentacaoMB.atualizar()}" update="group"
+				action="#{movimentacaoMB.atualizar()}" update="group msg"
 				validateClient="false" icon="fa fa-edit"
 				rendered="#{movimentacaoMB.movimentacao.id != null}"
 				styleClass="btn-green">
