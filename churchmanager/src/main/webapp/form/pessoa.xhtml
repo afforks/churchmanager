@@ -8,321 +8,315 @@
 <h:form prependId="false">
 
 	<p:focus for="nome" />
+
 	<div class="ui-fluid">
-		<p:messages id="pessoa-msg" life="7000" showDetail="true" showSummary="true" />
-
-
-		<p:tabView id="tabview" prependId="false">
+		<p:messages id="pessoa-msg" life="7000" showDetail="true"
+			showSummary="true" />
+
+
+		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+			<h2>Dados pessoais</h2>
+		</div>
+
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
+			<p:inputText id="nome" required="true"
+				requiredMessage="Campo 'Nome' é obrigatório!"
+				value="#{pessoaMB.pessoa.nome}" />
+			<p:message for="nome" />
+		</div>
+
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="apelido" styleClass="my-label" value="Apelido " />
+			<p:inputText id="apelido" required="true"
+				requiredMessage="Campo 'Apelido' é obrigatório!"
+				value="#{pessoaMB.pessoa.apelido}" />
+			<p:message for="apelido" />
+		</div>
+
+		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+			<p:outputLabel for="dataNascimento" styleClass="my-label"
+				value="Dt. nascimento " />
+			<p:calendar id="dataNascimento" required="true" mask="99/99/9999"
+				placeholder=" "
+				requiredMessage="Campo 'Dt. nascimento' é obrigatório!"
+				value="#{pessoaMB.pessoa.dataNascimento}" navigator="true"
+				pattern="dd/MM/yyyy" />
+			<p:message for="dataNascimento" />
+		</div>
+
+
+		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+			<p:outputLabel for="estadoCivil" styleClass="my-label"
+				value="Estado civil" />
+			<p:selectOneMenu id="estadoCivil"
+				value="#{pessoaMB.pessoa.estadoCivil}"
+				converterMessage="Não foi possível converter o objeto (EstadoCivil)"
+				required="true" requiredMessage="Campo 'Estado civil' é obrigatório">
+				<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+				<f:selectItems value="#{utilMB.listarEstadoCivil()}"
+					itemLabel="#{estacoCivil.descricao}" itemValue="#{estacoCivil}"
+					var="estacoCivil" />
+			</p:selectOneMenu>
+			<p:message for="estadoCivil" />
+		</div>
+
+
+		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+			<p:outputLabel for="sexo" styleClass="my-label" value="Sexo" />
+			<p:selectOneRadio id="sexo" required="true"
+				requiredMessage="Campo 'Sexo' é obrigatório!"
+				value="#{pessoaMB.pessoa.sexo}">
+				<f:selectItems itemLabel="#{sexo.descricao}" var="sexo"
+					value="#{utilMB.listarSexo()}" itemValue="#{sexo}" />
+			</p:selectOneRadio>
+			<p:message for="sexo" />
+		</div>
+
+
+		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+			<p:outputLabel for="escolaridade" styleClass="my-label"
+				value="Escolaridade" />
+			<p:selectOneMenu id="escolaridade"
+				value="#{pessoaMB.pessoa.escolaridade}"
+				converterMessage="Não foi possível converter o objeto (Escolaridade)"
+				required="true" requiredMessage="Campo 'Escolaridade' é obrigatório">
+				<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+				<f:selectItems value="#{utilMB.listarPerfilEscolaridade()}"
+					itemLabel="#{escolaridade.descricao}" itemValue="#{escolaridade}"
+					var="escolaridade" />
+			</p:selectOneMenu>
+			<p:message for="escolaridade" />
+		</div>
+
+
+		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+			<p:outputLabel for="profissao" styleClass="my-label"
+				value="Profissão " />
+			<p:inputText id="profissao" required="true"
+				requiredMessage="Campo 'Profissão' é obrigatório!"
+				value="#{pessoaMB.pessoa.profissao}" />
+			<p:message for="profissao" />
+		</div>
+
+
+		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+			<p:outputLabel for="status" styleClass="my-label" value="Status" />
+			<p:selectOneRadio id="status" required="true"
+				requiredMessage="Campo 'Status' é obrigatório!"
+				value="#{pessoaMB.pessoa.status}">
+				<f:selectItems itemLabel="#{status.descricao}" var="status"
+					value="#{utilMB.listarStatus()}" itemValue="#{status}" />
+			</p:selectOneRadio>
+			<p:message for="status" />
+		</div>
+
 
-			<p:tab title="Dados Pessoais">
 
-				<p:panelGrid id="dadosPessoais" columns="3"
-					styleClass="ui-panelgrid-blank"
-					columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
-					layout="grid">
 
-					<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
-					<p:inputText id="nome" required="true"
-						requiredMessage="Campo 'Nome' é obrigatório!"
-						value="#{pessoaMB.pessoa.nome}" />
-					<p:message for="nome" />
 
-					<p:outputLabel for="apelido" styleClass="my-label" value="Apelido " />
-					<p:inputText id="apelido" required="true"
-						requiredMessage="Campo 'Apelido' é obrigatório!"
-						value="#{pessoaMB.pessoa.apelido}" />
-					<p:message for="apelido" />
+		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+			<h2>Endereço</h2>
+		</div>
 
+
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="logradouro" styleClass="my-label"
+				value="Logradouro " />
+			<p:inputText id="logradouro" required="true"
+				requiredMessage="Campo 'Logradouro' é obrigatório!"
+				value="#{pessoaMB.pessoa.endereco.logradouro}" />
+			<p:message for="logradouro" />
+		</div>
 
 
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="referencia" styleClass="my-label"
+				value="Referência " />
+			<p:inputText id="referencia" required="true"
+				requiredMessage="Campo 'Referência' é obrigatório!"
+				value="#{pessoaMB.pessoa.endereco.referencia}" />
+			<p:message for="referencia" />
+		</div>
 
-					<p:outputLabel for="dataNascimento" styleClass="my-label"
-						value="Dt. nascimento " />
-					<p:calendar id="dataNascimento" required="true" mask="99/99/9999"
-						placeholder=" "
-						requiredMessage="Campo 'Dt. nascimento' é obrigatório!"
-						value="#{pessoaMB.pessoa.dataNascimento}" navigator="true"
-						pattern="dd/MM/yyyy" />
-					<p:message for="dataNascimento" />
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="bairro" styleClass="my-label" value="Bairro " />
+			<p:inputText id="bairro" required="true"
+				requiredMessage="Campo 'Bairro' é obrigatório!"
+				value="#{pessoaMB.pessoa.endereco.bairro}" />
+			<p:message for="bairro" />
+		</div>
 
 
-
-					<p:outputLabel for="estadoCivil" styleClass="my-label"
-						value="Estado civil" />
-					<p:selectOneMenu id="estadoCivil"
-						value="#{pessoaMB.pessoa.estadoCivil}"
-						converterMessage="Não foi possível converter o objeto (EstadoCivil)"
-						required="true"
-						requiredMessage="Campo 'Estado civil' é obrigatório">
-						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-						<f:selectItems value="#{utilMB.listarEstadoCivil()}"
-							itemLabel="#{estacoCivil.descricao}" itemValue="#{estacoCivil}"
-							var="estacoCivil" />
-					</p:selectOneMenu>
-					<p:message for="estadoCivil" />
-					
-					
-					<p:outputLabel for="sexo" styleClass="my-label" value="Sexo" />
-					<p:selectOneRadio id="sexo" required="true"
-						requiredMessage="Campo 'Sexo' é obrigatório!"
-						value="#{pessoaMB.pessoa.sexo}">
-						<f:selectItems itemLabel="#{sexo.descricao}" var="sexo"
-							value="#{utilMB.listarSexo()}" itemValue="#{sexo}" />
-					</p:selectOneRadio>
-					<p:message for="sexo" />
-
-
-					<p:outputLabel for="escolaridade" styleClass="my-label"
-						value="Escolaridade" />
-					<p:selectOneMenu id="escolaridade"
-						value="#{pessoaMB.pessoa.escolaridade}"
-						converterMessage="Não foi possível converter o objeto (Escolaridade)"
-						required="true"
-						requiredMessage="Campo 'Escolaridade' é obrigatório">
-						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-						<f:selectItems value="#{utilMB.listarPerfilEscolaridade()}"
-							itemLabel="#{escolaridade.descricao}" itemValue="#{escolaridade}"
-							var="escolaridade" />
-					</p:selectOneMenu>
-					<p:message for="escolaridade" />
-
-
-
-					<p:outputLabel for="profissao" styleClass="my-label"
-						value="Profissão " />
-					<p:inputText id="profissao" required="true"
-						requiredMessage="Campo 'Profissão' é obrigatório!"
-						value="#{pessoaMB.pessoa.profissao}" />
-					<p:message for="profissao" />
-
-
-
-					<p:outputLabel for="status" styleClass="my-label" value="Status" />
-					<p:selectOneRadio id="status" required="true"
-						requiredMessage="Campo 'Status' é obrigatório!"
-						value="#{pessoaMB.pessoa.status}">
-						<f:selectItems itemLabel="#{status.descricao}" var="status"
-							value="#{utilMB.listarStatus()}" itemValue="#{status}" />
-					</p:selectOneRadio>
-					<p:message for="status" />
-
-				</p:panelGrid>
-
-			</p:tab>
-
-
-
-
-
-
-
-
-			<p:tab title="Endereço">
-
-				<p:panelGrid id="endereco" columns="3"
-					styleClass="ui-panelgrid-blank"
-					columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
-					layout="grid">
-
-					<p:outputLabel for="logradouro" styleClass="my-label"
-						value="Logradouro " />
-					<p:inputText id="logradouro" required="true"
-						requiredMessage="Campo 'Logradouro' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.logradouro}" />
-					<p:message for="logradouro" />
-
-
-					<p:outputLabel for="referencia" styleClass="my-label"
-						value="Referência " />
-					<p:inputText id="referencia" required="true"
-						requiredMessage="Campo 'Referência' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.referencia}" />
-					<p:message for="referencia" />
-
-
-					<p:outputLabel for="bairro" styleClass="my-label" value="Bairro " />
-					<p:inputText id="bairro" required="true"
-						requiredMessage="Campo 'Bairro' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.bairro}" />
-					<p:message for="bairro" />
-
-					<p:outputLabel for="cep" styleClass="my-label" value="CEP " />
-					<p:inputMask mask="99999-999" id="cep" required="true"
-						requiredMessage="Campo 'CEP' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.cep}" />
-					<p:message for="cep" />
-
-
-
-					<p:outputLabel for="cidade" styleClass="my-label" value="Cidade " />
-					<p:inputText id="cidade" required="true"
-						requiredMessage="Campo 'Cidade' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.cidade}" />
-					<p:message for="cidade" />
-
-
-
-					<p:outputLabel for="estado" styleClass="my-label" value="Estado " />
-					<p:selectOneMenu id="estado"
-						value="#{pessoaMB.pessoa.endereco.estado}"
-						converterMessage="Não foi possível converter o objeto (Estado)"
-						required="true" requiredMessage="Campo 'Estado' é obrigatório">
-						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-						<f:selectItems value="#{utilMB.listarEstados()}"
-							itemLabel="#{estado.descricao}" itemValue="#{estado}"
-							var="estado" />
-					</p:selectOneMenu>
-					<p:message for="estado" />
-
-
-
-					<p:outputLabel for="pais" styleClass="my-label" value="País " />
-					<p:inputText id="pais" required="true"
-						requiredMessage="Campo 'País' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.pais}" />
-					<p:message for="pais" />
-
-
-				</p:panelGrid>
-
-			</p:tab>
-
-
-
-
-
-			<p:tab title="Contato">
-
-				<p:panelGrid id="contato" columns="3"
-					styleClass="ui-panelgrid-blank"
-					columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
-					layout="grid">
-
-					<p:outputLabel for="celular" styleClass="my-label" value="Celular " />
-					<p:inputMask mask="(99)9?9999-9999" placeholder=" " id="celular"
-						required="true" requiredMessage="Campo 'Celular' é obrigatório!"
-						value="#{pessoaMB.pessoa.celular}" />
-					<p:message for="celular" />
-
-					<p:outputLabel for="telefone" styleClass="my-label"
-						value="Telefone " />
-					<p:inputMask mask="(99)9999-9999" placeholder=" " id="telefone"
-						required="true" requiredMessage="Campo 'Telefone' é obrigatório!"
-						value="#{pessoaMB.pessoa.telefone}" />
-					<p:message for="telefone" />
-
-					<p:outputLabel for="telefoneEmergencia" styleClass="my-label"
-						value="Emergência " />
-					<p:inputMask mask="(99)99999-9999" placeholder=" "
-						id="telefoneEmergencia" required="true"
-						requiredMessage="Campo 'Emergência' é obrigatório!"
-						value="#{pessoaMB.pessoa.telefoneEmergencia}" />
-					<p:message for="telefoneEmergencia" />
-
-
-					<p:outputLabel for="email1" styleClass="my-label" value="E-mail " />
-					<p:inputText id="email1" required="true"
-						requiredMessage="Campo 'E-mail' é obrigatório!"
-						value="#{pessoaMB.pessoa.email}" />
-					<p:message for="email1" />
-
-					<p:outputLabel for="email2" styleClass="my-label" value="E-mail 2 " />
-					<p:inputText id="email2" required="true"
-						requiredMessage="Campo 'E-mail 2' é obrigatório!"
-						value="#{pessoaMB.pessoa.email2}" />
-					<p:message for="email2" />
-
-				</p:panelGrid>
-
-			</p:tab>
-
-
-
-
-
-
-
-
-
-
-			<p:tab title="Dados Eclesiásticos">
-
-				<p:panelGrid id="dadosEclesiasticos" columns="3"
-					styleClass="ui-panelgrid-blank"
-					columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
-					layout="grid">
-
-					<p:outputLabel for="dataConversao" styleClass="my-label"
-						value="Dt. de conversão " />
-					<p:calendar id="dataConversao" required="true" mask="99/99/9999"
-						placeholder=" "
-						requiredMessage="Campo 'Dt. de conversão' é obrigatório!"
-						value="#{pessoaMB.pessoa.dataConversao}" navigator="true"
-						pattern="dd/MM/yyyy" />
-					<p:message for="dataConversao" />
-
-					<p:outputLabel for="dataBatismo" styleClass="my-label"
-						value="Dt. de batismo " />
-					<p:calendar id="dataBatismo" required="true" mask="99/99/9999"
-						placeholder=" "
-						requiredMessage="Campo 'Dt. debatismo' é obrigatório!"
-						value="#{pessoaMB.pessoa.dataBatismo}" navigator="true"
-						pattern="dd/MM/yyyy" />
-					<p:message for="dataBatismo" />
-
-
-					<p:outputLabel for="observacao" styleClass="my-label"
-						value="Observação " />
-					<p:inputTextarea id="observacao" required="true"
-						requiredMessage="Campo 'Observação' é obrigatório!"
-						value="#{pessoaMB.pessoa.observacao}" />
-					<p:message for="observacao" />
- 
- 
- 
-					<p:outputLabel for="atividade" value="Atividades Eclesiásticas"
-						styleClass="my-label" />
-					<p:selectManyCheckbox id="atividade" required="true"
-						requiredMessage="Campo 'Atividades Eclesiástica' é obrigatório!"
-						converter="genericConverter" value="#{pessoaMB.pessoa.atividadesEclesiastica}"
-						columns="3" layout="responsive">
-						<f:attribute name="collectionType" value="java.util.ArrayList" />
-						<f:selectItems var="atividade" itemValue="#{atividade}"
-							itemLabel="#{atividade.nome}" value="#{atividadeEclesiasticaMB.atividades()}" />
-					</p:selectManyCheckbox>
-					<p:message for="atividade" />
-
-				</p:panelGrid>
-
-
-
-			</p:tab>
-
-
-		</p:tabView>
-
-
-		<p:panelGrid layout="grid" columns="2"
-			columnClasses="ui-grid-col-3,ui-grid-col-3"
-			styleClass="ui-panelgrid-blank">
-			<p:commandButton value="Cadastrar" action="#{pessoaMB.salvar()}"
-				update="dadosPessoais, endereco, contato, dadosEclesiasticos"
-				validateClient="true" icon="fa fa-save"
-				rendered="#{pessoaMB.pessoa.id == null}" styleClass="btn-blue">
-			</p:commandButton>
-
-			<p:commandButton value="Editar" action="#{pessoaMB.atualizar()}"
-				update="dadosPessoais, endereco, contato, dadosEclesiasticos"
-				validateClient="true" icon="fa fa-edit"
-				rendered="#{pessoaMB.pessoa.id != null}" styleClass="btn-green">
-			</p:commandButton>
-
-			<p:button value="Cancelar" outcome="/list/pessoa" icon="fa fa-close"
-				styleClass="btn-red ">
-			</p:button>
-
-		</p:panelGrid>
-
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="cep" styleClass="my-label" value="CEP " />
+			<p:inputMask mask="99999-999" id="cep" required="true"
+				requiredMessage="Campo 'CEP' é obrigatório!"
+				value="#{pessoaMB.pessoa.endereco.cep}" />
+			<p:message for="cep" />
+		</div>
+
+
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="cidade" styleClass="my-label" value="Cidade " />
+			<p:inputText id="cidade" required="true"
+				requiredMessage="Campo 'Cidade' é obrigatório!"
+				value="#{pessoaMB.pessoa.endereco.cidade}" />
+			<p:message for="cidade" />
+		</div>
+
+
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="estado" styleClass="my-label" value="Estado " />
+			<p:selectOneMenu id="estado"
+				value="#{pessoaMB.pessoa.endereco.estado}"
+				converterMessage="Não foi possível converter o objeto (Estado)"
+				required="true" requiredMessage="Campo 'Estado' é obrigatório">
+				<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+				<f:selectItems value="#{utilMB.listarEstados()}"
+					itemLabel="#{estado.descricao}" itemValue="#{estado}" var="estado" />
+			</p:selectOneMenu>
+			<p:message for="estado" />
+		</div>
+
+
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="pais" styleClass="my-label" value="País " />
+			<p:inputText id="pais" required="true"
+				requiredMessage="Campo 'País' é obrigatório!"
+				value="#{pessoaMB.pessoa.endereco.pais}" />
+			<p:message for="pais" />
+		</div>
+
+
+
+		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+			<h2>Contato</h2>
+		</div>
+
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="celular" styleClass="my-label" value="Celular " />
+			<p:inputMask mask="(99)9?9999-9999" placeholder=" " id="celular"
+				required="true" requiredMessage="Campo 'Celular' é obrigatório!"
+				value="#{pessoaMB.pessoa.celular}" />
+			<p:message for="celular" />
+		</div>
+
+
+
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="telefone" styleClass="my-label" value="Telefone " />
+			<p:inputMask mask="(99)9999-9999" placeholder=" " id="telefone"
+				required="true" requiredMessage="Campo 'Telefone' é obrigatório!"
+				value="#{pessoaMB.pessoa.telefone}" />
+			<p:message for="telefone" />
+		</div>
+
+
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="telefoneEmergencia" styleClass="my-label"
+				value="Emergência " />
+			<p:inputMask mask="(99)99999-9999" placeholder=" "
+				id="telefoneEmergencia" required="true"
+				requiredMessage="Campo 'Emergência' é obrigatório!"
+				value="#{pessoaMB.pessoa.telefoneEmergencia}" />
+			<p:message for="telefoneEmergencia" />
+		</div>
+
+
+
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="email1" styleClass="my-label" value="E-mail " />
+			<p:inputText id="email1" required="true"
+				requiredMessage="Campo 'E-mail' é obrigatório!"
+				value="#{pessoaMB.pessoa.email}" />
+			<p:message for="email1" />
+		</div>
+
+
+		<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<p:outputLabel for="email2" styleClass="my-label" value="E-mail 2 " />
+			<p:inputText id="email2" required="true"
+				requiredMessage="Campo 'E-mail 2' é obrigatório!"
+				value="#{pessoaMB.pessoa.email2}" />
+			<p:message for="email2" />
+		</div>
+
+
+		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+			<h2>Dados eclesiásticos</h2>
+		</div>
+
+
+		<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-12">
+			<p:outputLabel for="dataConversao" styleClass="my-label"
+				value="Dt. de conversão " />
+			<p:calendar id="dataConversao" required="true" mask="99/99/9999"
+				placeholder=" "
+				requiredMessage="Campo 'Dt. de conversão' é obrigatório!"
+				value="#{pessoaMB.pessoa.dataConversao}" navigator="true"
+				pattern="dd/MM/yyyy" />
+			<p:message for="dataConversao" />
+		</div>
+
+		<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-12">
+			<p:outputLabel for="dataBatismo" styleClass="my-label"
+				value="Dt. de batismo " />
+			<p:calendar id="dataBatismo" required="true" mask="99/99/9999"
+				placeholder=" "
+				requiredMessage="Campo 'Dt. debatismo' é obrigatório!"
+				value="#{pessoaMB.pessoa.dataBatismo}" navigator="true"
+				pattern="dd/MM/yyyy" />
+			<p:message for="dataBatismo" />
+		</div>
+
+		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+			<p:outputLabel for="observacao" styleClass="my-label"
+				value="Observação " />
+			<p:inputTextarea id="observacao" required="true"
+				requiredMessage="Campo 'Observação' é obrigatório!"
+				value="#{pessoaMB.pessoa.observacao}" />
+			<p:message for="observacao" />
+		</div>
+
+
+		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+			<p:outputLabel for="atividade" value="Atividades Eclesiásticas"
+				styleClass="my-label" />
+			<p:selectManyCheckbox id="atividade" required="true"
+				requiredMessage="Campo 'Atividades Eclesiástica' é obrigatório!"
+				converter="genericConverter"
+				value="#{pessoaMB.pessoa.atividadesEclesiastica}" columns="3"
+				layout="responsive">
+				<f:attribute name="collectionType" value="java.util.ArrayList" />
+				<f:selectItems var="atividade" itemValue="#{atividade}"
+					itemLabel="#{atividade.nome}"
+					value="#{atividadeEclesiasticaMB.atividades()}" />
+			</p:selectManyCheckbox>
+			<p:message for="atividade" />
+		</div>
+
+
+
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
+				<p:commandButton value="Cadastrar" action="#{pessoaMB.salvar()}"
+					update="" validateClient="true" icon="fa fa-save"
+					rendered="#{pessoaMB.pessoa.id == null}" styleClass="btn-blue">
+				</p:commandButton>
+
+				<p:commandButton value="Editar" action="#{pessoaMB.atualizar()}"
+					update="" validateClient="true" icon="fa fa-edit"
+					rendered="#{pessoaMB.pessoa.id != null}" styleClass="btn-green">
+				</p:commandButton>
+			</div>
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
+				<p:button value="Cancelar" outcome="/list/pessoa" icon="fa fa-close"
+					styleClass="btn-red ">
+				</p:button>
+			</div>
+
+		</div>
 	</div>
 </h:form>
 </html>
