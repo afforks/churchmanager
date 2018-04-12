@@ -5,11 +5,11 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/template/layout.xhtml">
-	
+
 	<ui:define name="page-name">
 		List. Perfil
 	</ui:define>
-	
+
 	<ui:define name="page-menu">
 		<ui:include src="/WEB-INF/template/links-funcionais.xhtml" />
 	</ui:define>
@@ -26,33 +26,42 @@
 				showSummary="true" />
 			<div class="ui-fluid">
 
-				<p:toolbar style="padding: 10px">
-					<f:facet name="left">
-						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank" layout="grid" 
-							columnClasses="ui-grid-col-3, ui-grid-col-6, ui-grid-col-3">
-						
-							<p:outputLabel value="Filtrar por: " />
-						
-							<p:inputText id="filtro" styleClass="ui-grid-col-6"
-								placeholder="Nome da perfil" value="#{perfilMB.perfilFilter.nome}"/>
-						
-							<h:panelGrid columns="2">
-								<p:commandButton action="#{perfilMB.filtrar()}"
-									process="@this filtro" update="table" icon="fa fa-search"
-									styleClass="btn-grey" />
-								
-								<p:button icon="fa fa-plus" styleClass="btn-green" 
-									outcome="/cad/perfil"/>
-							</h:panelGrid>
-						
-						</p:panelGrid>
-					</f:facet>
-				</p:toolbar>
+				<p:defaultCommand target="buscar" />
+				<p:focus for="filtro" />
 
-				<br />
+				<p:fieldset styleClass="my-fieldset">
+
+					<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-10">
+						<p:outputLabel value="Filtrar por: " styleClass="my-label" />
+					</div>
+
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+						<p:button icon="fa fa-plus" styleClass="btn-green"
+							outcome="/cad/perfil" />
+					</div>
+
+					<div class="ui-g-8 ui-lg-8 ui-md-8 ui-sm-10">
+						<p:inputText id="filtro" styleClass="ui-grid-col-6"
+							placeholder="Nome da perfil"
+							value="#{perfilMB.perfilFilter.nome}" />
+					</div>
+
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+						<p:commandButton action="#{perfilMB.filtrar()}"
+							process="@this filtro" update="table" icon="fa fa-search"
+							styleClass="btn-grey" id="buscar" />
+					</div>
+				</p:fieldset>
+			</div>
+		</h:form>
+
+		<br />
+
+		<h:form prependId="false">
+			<div class="ui-fluid">
 
 				<p:dataTable id="table" var="perfil" lazy="true"
-					value="#{perfilMB.perfilsLazy}" reflow="true" rowHover="true"
+					value="#{perfilMB.perfilsLazy}" rowHover="true"
 					perfiltorPosition="bottom" perfiltor="true"
 					perfiltorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
 					emptyMessage="Nenhum registro foi encontrado!"
@@ -62,20 +71,17 @@
 					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
 
 					<f:facet name="header" />
-					
-					<p:column headerText="Status" colspan="1" priority="6">
-						<p:outputLabel value="#{perfil.status.descricao}" />
-					</p:column>
 
-					<p:column headerText="Nome" colspan="2">
+					<p:column headerText="Nome" colspan="2" priority="1">
 						<div class="text-overflow">
-							<p:link outcome="/edit/perfil" styleClass="my-link"  value="#{perfil.nome}" >
+							<p:link outcome="/edit/perfil" styleClass="my-link"
+								value="#{perfil.nome}">
 								<f:param name="id" value="#{perfil.idCriptografado()}" />
 							</p:link>
 						</div>
 					</p:column>
-					 
-					<p:column headerText="Descrição" colspan="4" priority="5">
+
+					<p:column headerText="Descrição" colspan="4" priority="3">
 						<p:outputLabel value="#{perfil.descricao}" />
 					</p:column>
 

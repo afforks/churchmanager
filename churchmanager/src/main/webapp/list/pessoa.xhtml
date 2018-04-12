@@ -22,41 +22,50 @@
 	<ui:define name="page-subtitle">Lista de Pessoas</ui:define>
 	<ui:define name="content">
 		<h:form prependId="false">
-		
+
 			<p:growl id="pessoa-msg" life="7000" showDetail="true"
 				showSummary="true" />
-				
+
+			<p:defaultCommand target="buscar" />
+			<p:focus for="filtro" />
+
 			<div class="ui-fluid">
 
-				<p:toolbar style="padding: 10px">
-					<f:facet name="left">
-						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
-							layout="grid"
-							columnClasses="ui-grid-col-3, ui-grid-col-6, ui-grid-col-3">
+				<p:fieldset styleClass="my-fieldset">
 
-							<p:outputLabel value="Filtrar por: " />
+					<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-10">
+						<p:outputLabel value="Filtrar por: " styleClass="my-label" />
+					</div>
 
-							<p:inputText id="filtro" styleClass="ui-grid-col-6"
-								placeholder="Nome da pessoa"
-								value="#{pessoaMB.pessoaFilter.nome}" />
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+						<p:button icon="fa fa-plus" styleClass="btn-green"
+							outcome="/cad/pessoa" />
+					</div>
 
-							<h:panelGrid columns="2">
-								<p:commandButton action="#{pessoaMB.filtrar()}"
-									process="@this filtro" update="table" icon="fa fa-search"
-									styleClass="btn-grey" />
+					<div class="ui-g-8 ui-lg-8 ui-md-8 ui-sm-10">
+						<p:inputText id="filtro" styleClass="ui-grid-col-6"
+							placeholder="Nome da pessoa"
+							value="#{pessoaMB.pessoaFilter.nome}" />
+					</div>
 
-								<p:button icon="fa fa-plus" styleClass="btn-green"
-									outcome="/cad/pessoa" />
-							</h:panelGrid>
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+						<p:commandButton action="#{pessoaMB.filtrar()}"
+							process="@this filtro" update="table" icon="fa fa-search"
+							styleClass="btn-grey" id="buscar" />
+					</div>
 
-						</p:panelGrid>
-					</f:facet>
-				</p:toolbar>
+				</p:fieldset>
 
-				<br />
+			</div>
+		</h:form>
+
+		<br />
+
+		<h:form prependId="false">
+			<div class="ui-fluid">
 
 				<p:dataTable id="table" var="pessoa" lazy="true"
-					value="#{pessoaMB.pessoasLazy}" reflow="true" rowHover="true"
+					value="#{pessoaMB.pessoasLazy}" rowHover="true"
 					pessoatorPosition="bottom" pessoator="true"
 					pessoatorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
 					emptyMessage="Nenhum registro foi encontrado!"
@@ -67,11 +76,7 @@
 
 					<f:facet name="header" />
 
-<!-- 					<p:column headerText="Status" colspan="1" priority="6"> -->
-<!-- 						<p:outputLabel value="#{pessoa.status.descricao}" /> -->
-<!-- 					</p:column> -->
-
-					<p:column headerText="Nome" colspan="4">
+					<p:column headerText="Nome" colspan="4" priority="1">
 						<div class="text-overflow">
 							<p:link outcome="/edit/pessoa" styleClass="my-link"
 								value="#{pessoa.nome}">
@@ -79,33 +84,40 @@
 							</p:link>
 						</div>
 					</p:column>
-					
-					<p:column headerText="Matr." styleClass="center" colspan="2">
-						<p:outputLabel value="#{pessoa.matricula}"/>
-					</p:column>
-					
-					<p:column headerText="Cel." styleClass="center" colspan="2">
-						<p:outputLabel value="#{pessoa.celular}"/>
+
+					<p:column headerText="Matr." styleClass="center" colspan="2"
+						priority="4">
+						<p:outputLabel value="#{pessoa.matricula}" />
 					</p:column>
 
-					<p:column headerText="E-mail" colspan="2">
-						<p:outputLabel value="#{pessoa.email}"/>
+					<p:column headerText="Cel." styleClass="center" colspan="2"
+						priority="2">
+						<p:outputLabel value="#{pessoa.celular}" />
 					</p:column>
 
-					<p:column headerText="Dt. Nasc." styleClass="center" colspan="2">
+					<p:column headerText="E-mail" colspan="2" priority="4">
+						<p:outputLabel value="#{pessoa.email}" />
+					</p:column>
+
+					<p:column headerText="Dt. Nasc." styleClass="center" colspan="2"
+						priority="5">
 						<p:outputLabel value="#{pessoa.dataNascimento}">
-							<f:convertDateTime pattern="dd/MM/yy"/>
+							<f:convertDateTime pattern="dd/MM/yy" />
 						</p:outputLabel>
 					</p:column>
 
-					<p:column headerText="Idade" styleClass="center" colspan="1">
-						<p:outputLabel value="#{pessoa.idade}"/>
+					<p:column headerText="Idade" styleClass="center" colspan="1"
+						priority="5">
+						<p:outputLabel value="#{pessoa.idade}" />
 					</p:column>
-					
-					<p:column headerText="Detalhes" styleClass="center" colspan="1">
-						<p:commandButton styleClass="btn-grey" icon="fa fa-list-alt" style="width:50px"
-						 oncomplete="PF('detalhe-pessoa').show()" update="detalhe-pessoa" process="@this">
-							<f:setPropertyActionListener value="#{pessoa}" target="#{pessoaMB.pessoa}"/>
+
+					<p:column headerText="Detalhes" styleClass="center" colspan="1"
+						priority="3">
+						<p:commandButton styleClass="btn-grey" icon="fa fa-list-alt"
+							style="width:50px" oncomplete="PF('detalhe-pessoa').show()"
+							update="detalhe-pessoa" process="@this">
+							<f:setPropertyActionListener value="#{pessoa}"
+								target="#{pessoaMB.pessoa}" />
 						</p:commandButton>
 					</p:column>
 

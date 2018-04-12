@@ -26,42 +26,49 @@
 				showSummary="true" />
 			<div class="ui-fluid">
 
-				<p:toolbar style="padding: 10px">
-					<f:facet name="left">
-						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
-							layout="grid"
-							columnClasses="ui-grid-col-3, ui-grid-col-6, ui-grid-col-3">
+				<p:defaultCommand target="buscar" />
+				<p:focus for="filtro" />
 
-							<p:outputLabel value="Filtrar por: " />
+				<p:fieldset styleClass="my-fieldset">
 
-							<p:inputText id="filtro" styleClass="ui-grid-col-6"
-								placeholder="Nome do evento"
-								value="#{eventoMB.eventoFilter.nome}" />
+					<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-8">
+						<p:outputLabel value="Filtrar por: " styleClass="my-label" />
+					</div>
 
-							<h:panelGrid columns="3">
-								<p:commandButton action="#{eventoMB.filtrar()}"
-									process="@this filtro" update="table" icon="fa fa-search"
-									styleClass="btn-grey" />
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+						<p:button icon="fa fa-plus" styleClass="btn-green"
+							outcome="/cad/evento" />
+					</div>
 
-								<p:button icon="fa fa-plus" styleClass="btn-green"
-									outcome="/cad/evento" />
-								
-								<p:commandButton styleClass="my-link" 
-									action="#{eventoMB.relatorioDeEventos()}" ajax="false"
-									target="_blank" icon="fa fa-file" >
-								
-								</p:commandButton>
-									
-							</h:panelGrid>
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+						<p:commandButton styleClass="my-link"
+							action="#{eventoMB.relatorioDeEventos()}" ajax="false"
+							target="_blank" icon="fa fa-file" />
+					</div>
 
-						</p:panelGrid>
-					</f:facet>
-				</p:toolbar>
+					<div class="ui-g-7 ui-lg-7 ui-md-7 ui-sm-10">
+						<p:inputText id="filtro" placeholder="Nome do evento"
+							value="#{eventoMB.eventoFilter.nome}" />
+					</div>
 
-				<br />
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+						<p:commandButton action="#{eventoMB.filtrar()}"
+							process="@this filtro" update="table" icon="fa fa-search"
+							styleClass="btn-grey" id="buscar" />
+					</div>
+
+				</p:fieldset>
+
+			</div>
+		</h:form>
+
+		<br />
+
+		<h:form prependId="false">
+			<div class="ui-fluid">
 
 				<p:dataTable id="table" var="evento" lazy="true"
-					value="#{eventoMB.eventosLazy}" reflow="true" rowHover="true"
+					value="#{eventoMB.eventosLazy}" rowHover="true"
 					eventotorPosition="bottom" eventotor="true"
 					eventotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
 					emptyMessage="Nenhum registro foi encontrado!"
@@ -71,10 +78,6 @@
 					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
 
 					<f:facet name="header" />
-
-					<p:column headerText="Status" colspan="1" priority="6">
-						<p:outputLabel value="#{evento.status.descricao}" />
-					</p:column>
 
 					<p:column headerText="Nome" colspan="2">
 						<div class="text-overflow">

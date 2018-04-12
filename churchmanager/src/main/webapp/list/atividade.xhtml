@@ -22,20 +22,19 @@
 	<ui:define name="page-subtitle">Lista de Atividade Eclesiásticas</ui:define>
 	<ui:define name="content">
 		<h:form prependId="false">
+
 			<p:growl id="atividade-msg" life="7000" showDetail="true"
 				showSummary="true" />
+
+			<p:defaultCommand target="buscar" />
+			<p:focus for="filtro" />
+
 			<div class="ui-fluid">
 
 				<p:fieldset styleClass="my-fieldset">
 
-					<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-8">
+					<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-10">
 						<p:outputLabel value="Filtrar por: " styleClass="my-label" />
-					</div>
-
-					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
-						<p:commandButton action="#{atividadeEclesiasticaMB.filtrar()}"
-							process="@this filtro" update="table" icon="fa fa-search"
-							styleClass="btn-grey" />
 					</div>
 
 					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
@@ -43,13 +42,25 @@
 							outcome="/cad/atividade" />
 					</div>
 
-					<div class="ui-g-8 ui-lg-8 ui-md-8 ui-sm-12">
+					<div class="ui-g-8 ui-lg-8 ui-md-8 ui-sm-10">
 						<p:inputText id="filtro" placeholder="Nome da atividade"
 							value="#{atividadeEclesiasticaMB.atividadeEclesiasticaFilter.nome}" />
 					</div>
-				</p:fieldset>
 
-				<br />
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+						<p:commandButton action="#{atividadeEclesiasticaMB.filtrar()}"
+							process="@this filtro" update="table "
+							icon="fa fa-search" styleClass="btn-grey" id="buscar" />
+					</div>
+
+				</p:fieldset>
+			</div>
+		</h:form>
+
+		<p:spacer width="0" height="20" />
+
+		<h:form prependId="false">
+			<div class="ui-fluid">
 
 				<p:dataTable id="table" var="atividadeEclesiastica" lazy="true"
 					value="#{atividadeEclesiasticaMB.atividadeEclesiasticasLazy}"

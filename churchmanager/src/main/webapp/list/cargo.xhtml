@@ -26,40 +26,43 @@
 				showSummary="true" />
 			<div class="ui-fluid">
 
-				<p:toolbar style="padding: 10px">
-					<f:facet name="left">
-						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
-							layout="grid"
-							columnClasses="ui-grid-col-3, ui-grid-col-6, ui-grid-col-3">
+				<p:defaultCommand target="buscar" />
+				<p:focus for="filtro" />
 
-							<p:outputLabel value="Filtrar por: " />
+				<p:fieldset styleClass="my-fieldset">
 
-							<p:inputText id="filtro" styleClass="ui-grid-col-6"
-								placeholder="Nome do cargo"
-								value="#{cargoMB.cargoFilter.nome}" />
+					<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-10">
+						<p:outputLabel value="Filtrar por: " styleClass="my-label" />
+					</div>
 
-							<h:panelGrid columns="2">
-								<p:commandButton action="#{cargoMB.filtrar()}"
-									process="@this filtro" update="table" icon="fa fa-search"
-									styleClass="btn-grey" />
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+						<p:button icon="fa fa-plus" styleClass="btn-green"
+							outcome="/cad/cargo" />
+					</div>
 
-								<p:button icon="fa fa-plus" styleClass="btn-green"
-									outcome="/cad/cargo" />
-							</h:panelGrid>
+					<div class="ui-g-8 ui-lg-8 ui-md-8 ui-sm-10">
+						<p:inputText id="filtro" styleClass="ui-grid-col-6"
+							placeholder="Nome do cargo" value="#{cargoMB.cargoFilter.nome}" />
+					</div>
 
-						</p:panelGrid>
-					</f:facet>
-				</p:toolbar>
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+						<p:commandButton action="#{cargoMB.filtrar()}"
+							process="@this filtro" update="table" icon="fa fa-search"
+							styleClass="btn-grey" id="buscar" />
+					</div>
 
-				<br />
+				</p:fieldset>
+
+			</div>
+		</h:form>
+		<br />
+		<h:form prependId="false">
+			<div class="ui-fluid">
 
 				<p:dataTable id="table" var="cargo" lazy="true"
-					value="#{cargoMB.cargosLazy}"
-					reflow="true" rowHover="true"
-					cargotorPosition="bottom"
-					cargotor="true"
-					cargotorAlwaysVisible="false" rows="20"
-					rowsPerPageLabel="de"
+					value="#{cargoMB.cargosLazy}" rowHover="true"
+					cargotorPosition="bottom" cargotor="true" scrollWidth="1000"
+					cargotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
 					emptyMessage="Nenhum registro foi encontrado!"
 					cargotorTemplate="{CurrentPageReport} {FirstPageLink} 
 						{PreviousPageLink} {PageLinks} {NextPageLink} 
@@ -68,21 +71,16 @@
 
 					<f:facet name="header" />
 
-					<p:column headerText="Status" colspan="1" priority="6">
-						<p:outputLabel value="#{cargo.status.descricao}" />
-					</p:column>
-
 					<p:column headerText="Nome" colspan="2">
 						<div class="text-overflow">
 							<p:link outcome="/edit/cargo" styleClass="my-link"
 								value="#{cargo.nome}">
-								<f:param name="id"
-									value="#{cargo.idCriptografado()}" />
+								<f:param name="id" value="#{cargo.idCriptografado()}" />
 							</p:link>
 						</div>
 					</p:column>
 
-					<p:column headerText="Descrição" colspan="4" priority="5">
+					<p:column headerText="Descrição" colspan="4" priority="3">
 						<p:outputLabel value="#{cargo.descricao}" />
 					</p:column>
 

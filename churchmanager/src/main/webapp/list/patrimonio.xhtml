@@ -26,35 +26,45 @@
 				showSummary="true" />
 			<div class="ui-fluid">
 
-				<p:toolbar style="padding: 10px">
-					<f:facet name="left">
-						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
-							layout="grid"
-							columnClasses="ui-grid-col-3, ui-grid-col-6, ui-grid-col-3">
+				<p:defaultCommand target="buscar" />
+				<p:focus for="filtro" />
 
-							<p:outputLabel value="Filtrar por: " />
+				<p:fieldset styleClass="my-fieldset">
 
-							<p:inputText id="filtro" styleClass="ui-grid-col-6"
-								placeholder="Nome do patrimônio"
-								value="#{patrimonioMB.patrimonioFilter.nome}" />
+					<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-10">
+						<p:outputLabel value="Filtrar por: " styleClass="my-label" />
+					</div>
 
-							<h:panelGrid columns="2">
-								<p:commandButton action="#{patrimonioMB.filtrar()}"
-									process="@this filtro" update="table" icon="fa fa-search"
-									styleClass="btn-grey" />
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+						<p:button icon="fa fa-plus" styleClass="btn-green"
+							outcome="/cad/patrimonio" />
 
-								<p:button icon="fa fa-plus" styleClass="btn-green"
-									outcome="/cad/patrimonio" />
-							</h:panelGrid>
+					</div>
 
-						</p:panelGrid>
-					</f:facet>
-				</p:toolbar>
+					<div class="ui-g-8 ui-lg-8 ui-md-8 ui-sm-10">
+						<p:inputText id="filtro" styleClass="ui-grid-col-6"
+							placeholder="Nome do patrimônio"
+							value="#{patrimonioMB.patrimonioFilter.nome}" />
+					</div>
 
-				<br />
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+						<p:commandButton action="#{patrimonioMB.filtrar()}"
+							process="@this filtro" update="table" icon="fa fa-search"
+							styleClass="btn-grey" id="buscar" />
+					</div>
+
+				</p:fieldset>
+
+			</div>
+		</h:form>
+
+		<br />
+
+		<h:form prependId="false">
+			<div class="ui-fluid">
 
 				<p:dataTable id="table" var="patrimonio" lazy="true"
-					value="#{patrimonioMB.patrimoniosLazy}" reflow="true" rowHover="true"
+					value="#{patrimonioMB.patrimoniosLazy}" rowHover="true"
 					patrimoniotorPosition="bottom" patrimoniotor="true"
 					patrimoniotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
 					emptyMessage="Nenhum registro foi encontrado!"
@@ -65,7 +75,7 @@
 
 					<f:facet name="header" />
 
-					<p:column headerText="Nome" colspan="3">
+					<p:column headerText="Nome" colspan="3" priority="1">
 						<div class="text-overflow">
 							<p:link outcome="/edit/patrimonio" styleClass="my-link"
 								value="#{patrimonio.nome}">
@@ -73,30 +83,35 @@
 							</p:link>
 						</div>
 					</p:column>
-					
-					<p:column headerText="Situação" colspan="1" styleClass="center">
-						<p:outputLabel value="#{patrimonio.situacao.descricao}" style="#{patrimonio.situacao.cor}" styleClass="destaque"/>
+
+					<p:column headerText="Situação" colspan="1" styleClass="center"
+						priority="3">
+						<p:outputLabel value="#{patrimonio.situacao.descricao}"
+							style="#{patrimonio.situacao.cor}" styleClass="destaque" />
 					</p:column>
 
-					<p:column headerText="Estado" colspan="1" styleClass="center">
-						<p:outputLabel value="#{patrimonio.estado.descricao}" style="#{patrimonio.estado.cor}" styleClass="destaque"/>
+					<p:column headerText="Estado" colspan="1" styleClass="center"
+						priority="2">
+						<p:outputLabel value="#{patrimonio.estado.descricao}"
+							style="#{patrimonio.estado.cor}" styleClass="destaque" />
 					</p:column>
 
-					<p:column headerText="Valor aquisição" colspan="1" >
-						<p:outputLabel value="#{patrimonio.valorAquisicao}" >
+					<p:column headerText="Valor aquisição" colspan="1" priority="5">
+						<p:outputLabel value="#{patrimonio.valorAquisicao}">
 							<f:convertNumber type="currency" />
 						</p:outputLabel>
 					</p:column>
 
-					<p:column headerText="Valor atual" colspan="1" >
-						<p:outputLabel value="#{patrimonio.valorAtual}" >
+					<p:column headerText="Valor atual" colspan="1" priority="5">
+						<p:outputLabel value="#{patrimonio.valorAtual}">
 							<f:convertNumber type="currency" />
 						</p:outputLabel>
 					</p:column>
 
-					<p:column headerText="Dt. aquisição" colspan="1" styleClass="center">
-						<p:outputLabel value="#{patrimonio.dataAquisicao}" >
-							<f:convertDateTime pattern="dd/MM/yyyy"/>
+					<p:column headerText="Dt. aquisição" colspan="1"
+						styleClass="center" priority="5">
+						<p:outputLabel value="#{patrimonio.dataAquisicao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</p:outputLabel>
 					</p:column>
 
@@ -104,6 +119,6 @@
 			</div>
 
 		</h:form>
-		
+
 	</ui:define>
 </ui:composition>
