@@ -170,3 +170,9 @@ h3 {
     background: #f5f5f5 !important;
     
 }
+
+.ui-fieldset-legend  {
+	background: #3192cd !important;
+    color: #fff !important;
+    font-weight: bold !important;
+}

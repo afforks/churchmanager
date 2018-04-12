@@ -652,3 +652,6 @@ h1, h2, h3, h4, h5 {
 .color-black {
 	color:#000;
 }
+.my-fieldset{
+	background: #ebedf0 !important;
+}
