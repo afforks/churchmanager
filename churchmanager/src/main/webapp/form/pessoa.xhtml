@@ -3,20 +3,20 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 <h:form prependId="false">
 
 	<p:focus for="nome" />
-
-	<div class="ui-fluid">
+	<div class="ui-g-12 ui-g-nopad">
 		<p:messages id="pessoa-msg" life="7000" showDetail="true"
 			showSummary="true" />
+	</div>
 
-
+	<div class="ui-fluid" jsf:id="group">
 
 		<p:fieldset legend="Dados pessoais">
-			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">
 				<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
 				<p:inputText id="nome" required="true"
 					requiredMessage="Campo 'Nome' é obrigatório!"
@@ -25,7 +25,7 @@
 				<p:message for="nome" />
 			</div>
 
-			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
+			<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">
 				<p:outputLabel for="apelido" styleClass="my-label" value="Apelido " />
 				<p:inputText id="apelido" required="true"
 					requiredMessage="Campo 'Apelido' é obrigatório!"
@@ -47,19 +47,21 @@
 
 
 			<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
-				<p:outputLabel for="estadoCivil" styleClass="my-label"
-					value="Estado civil" />
-				<p:selectOneMenu id="estadoCivil"
-					value="#{pessoaMB.pessoa.estadoCivil}"
-					converterMessage="Não foi possível converter o objeto (EstadoCivil)"
-					required="true"
-					requiredMessage="Campo 'Estado civil' é obrigatório">
-					<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-					<f:selectItems value="#{utilMB.listarEstadoCivil()}"
-						itemLabel="#{estacoCivil.descricao}" itemValue="#{estacoCivil}"
-						var="estacoCivil" />
-				</p:selectOneMenu>
-				<p:message for="estadoCivil" />
+				<div class="ui-g-12 ui-g-nopad">
+					<p:outputLabel for="estadoCivil" styleClass="my-label"
+						value="Estado civil" />
+					<p:selectOneMenu id="estadoCivil" styleClass="min-size-correcao"
+						value="#{pessoaMB.pessoa.estadoCivil}"
+						converterMessage="Não foi possível converter o objeto (EstadoCivil)"
+						required="true"
+						requiredMessage="Campo 'Estado civil' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+						<f:selectItems value="#{utilMB.listarEstadoCivil()}"
+							itemLabel="#{estacoCivil.descricao}" itemValue="#{estacoCivil}"
+							var="estacoCivil" />
+					</p:selectOneMenu>
+					<p:message for="estadoCivil" />
+				</div>
 			</div>
 
 
@@ -81,7 +83,7 @@
 				<p:selectOneMenu id="escolaridade"
 					value="#{pessoaMB.pessoa.escolaridade}"
 					converterMessage="Não foi possível converter o objeto (Escolaridade)"
-					required="true"
+					required="true" styleClass="min-size-correcao"
 					requiredMessage="Campo 'Escolaridade' é obrigatório">
 					<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
 					<f:selectItems value="#{utilMB.listarPerfilEscolaridade()}"
@@ -113,6 +115,7 @@
 				</p:selectOneRadio>
 				<p:message for="status" />
 			</div>
+
 		</p:fieldset>
 
 
@@ -312,15 +315,14 @@
 
 
 		<div class="ui-g-12 ui-g-nopad">
-			<p:spacer width="0" height="20" />
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 				<p:commandButton value="Cadastrar" action="#{pessoaMB.salvar()}"
-					update="" validateClient="true" icon="fa fa-save"
+					update="group" validateClient="true" icon="fa fa-save"
 					rendered="#{pessoaMB.pessoa.id == null}" styleClass="btn-blue">
 				</p:commandButton>
 
 				<p:commandButton value="Editar" action="#{pessoaMB.atualizar()}"
-					update="" validateClient="true" icon="fa fa-edit"
+					update="group" validateClient="true" icon="fa fa-edit"
 					rendered="#{pessoaMB.pessoa.id != null}" styleClass="btn-green">
 				</p:commandButton>
 			</div>
@@ -329,7 +331,6 @@
 					styleClass="btn-red ">
 				</p:button>
 			</div>
-
 		</div>
 	</div>
 </h:form>

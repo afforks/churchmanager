@@ -29,40 +29,43 @@
 				<p:defaultCommand target="buscar" />
 				<p:focus for="filtro" />
 
-				<p:fieldset styleClass="my-fieldset">
 
-					<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-8">
-						<p:outputLabel value="Filtrar por: " styleClass="my-label" />
-					</div>
+				<div class="ui-g-12 ui-g-nopad">
+					<p:fieldset styleClass="my-fieldset">
 
-					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
-						<p:button icon="fa fa-plus" styleClass="btn-green"
-							outcome="/cad/evento" />
-					</div>
+						<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-8">
+							<p:outputLabel value="Filtrar por: " styleClass="my-label" />
+						</div>
 
-					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
-						<p:commandButton styleClass="my-link"
-							action="#{eventoMB.relatorioDeEventos()}" ajax="false"
-							target="_blank" icon="fa fa-file" />
-					</div>
+						<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+							<p:button icon="fa fa-plus" styleClass="btn-green"
+								outcome="/cad/evento" />
+						</div>
 
-					<div class="ui-g-7 ui-lg-7 ui-md-7 ui-sm-10">
-						<p:inputText id="filtro" placeholder="Nome do evento"
-							value="#{eventoMB.eventoFilter.nome}" />
-					</div>
+						<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+							<p:commandButton styleClass="my-link"
+								action="#{eventoMB.relatorioDeEventos()}" ajax="false"
+								target="_blank" icon="fa fa-file" />
+						</div>
 
-					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
-						<p:commandButton action="#{eventoMB.filtrar()}"
-							process="@this filtro" update="table" icon="fa fa-search"
-							styleClass="btn-grey" id="buscar" />
-					</div>
+						<div class="ui-g-7 ui-lg-7 ui-md-7 ui-sm-10">
+							<p:inputText id="filtro" placeholder="Nome do evento"
+								value="#{eventoMB.eventoFilter.nome}" />
+						</div>
 
-				</p:fieldset>
+						<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
+							<p:commandButton action="#{eventoMB.filtrar()}"
+								process="@this filtro" update="table" icon="fa fa-search"
+								styleClass="btn-grey" id="buscar" />
+						</div>
 
+					</p:fieldset>
+				</div>
+				<p:spacer />
 			</div>
 		</h:form>
 
-		<br />
+		<p:spacer />
 
 		<h:form prependId="false">
 			<div class="ui-fluid">

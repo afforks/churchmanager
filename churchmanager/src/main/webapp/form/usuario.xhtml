@@ -8,15 +8,20 @@
 <h:form prependId="false">
 
 	<p:focus for="nome" />
-	<div class="ui-fluid">
+
+	<div class="ui-g-12 ui-g-nopad">
 		<p:messages id="msg" life="7000" showDetail="false" showSummary="true" />
+	</div>
+
+	<div class="ui-fluid" jsf:id="group">
 
 		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
 			<p:outputLabel for="nome" styleClass="my-label" value="Nome" />
 			<p:inputText id="nome" required="true"
 				requiredMessage="Campo 'Nome' é obrigatório!"
-				value="#{usuarioMB.usuario.nomeCompleto}" 
-				placeholder="Digite o nome do usuário"/>
+				value="#{usuarioMB.usuario.nomeCompleto}"
+				placeholder="Digite o nome do usuário" />
+			<p:message for="nome" />
 		</div>
 
 		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
@@ -25,6 +30,7 @@
 				requiredMessage="Campo 'E-mail' é obrigatório!"
 				value="#{usuarioMB.usuario.email}"
 				placeholder="Digite o e-mail do usuário" />
+			<p:message for="email" />
 		</div>
 
 		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
@@ -40,6 +46,7 @@
 				<f:selectItems id="item" value="#{perfilMB.perfis()}" var="perfil"
 					itemLabel="#{perfil.nome}" itemValue="#{perfil}" />
 			</p:selectOneMenu>
+			<p:message for="perfil" />
 		</div>
 
 		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12"
@@ -66,8 +73,9 @@
 					value="#{usuarioMB.usuario.senha}" goodLabel="Média"
 					strongLabel="Forte" required="true"
 					requiredMessage="Campo 'Senha' é obrigatório!"
-					validatorMessage="As senhas informadas são diferentes, digite novamente!" 
-					placeholder="Digite uma senha forte"/>
+					validatorMessage="As senhas informadas são diferentes, digite novamente!"
+					placeholder="Digite uma senha forte" />
+				<p:message for="senha" />
 			</div>
 
 			<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12"
@@ -77,8 +85,9 @@
 					styleClass="my-label" />
 				<p:password id="confirmar-senha" required="true"
 					value="#{usuarioMB.usuario.senha}"
-					requiredMessage="Campo 'Confirmar Senha' é obrigatório!" 
-					placeholder="Repita a senha"/>
+					requiredMessage="Campo 'Confirmar Senha' é obrigatório!"
+					placeholder="Repita a senha" />
+				<p:message for="confirmar-senha" />
 			</div>
 
 		</div>
@@ -118,13 +127,13 @@
 			styleClass="ui-panelgrid-blank">
 
 			<p:commandButton value="Cadastrar" action="#{usuarioMB.salvar()}"
-				id="btn-salvar" update=" msg mudarsenharender" validateClient="true"
-				icon="fa fa-save" rendered="#{usuarioMB.usuario.id == null}"
-				styleClass="btn-blue">
+				id="btn-salvar" update="group mudarsenharender"
+				validateClient="true" icon="fa fa-save"
+				rendered="#{usuarioMB.usuario.id == null}" styleClass="btn-blue">
 			</p:commandButton>
 
 			<p:commandButton value="Editar" action="#{usuarioMB.atualizar()}"
-				update=" msg" validateClient="true" icon="fa fa-edit"
+				update="group" validateClient="true" icon="fa fa-edit"
 				rendered="#{usuarioMB.usuario.id != null}" styleClass="btn-green">
 			</p:commandButton>
 

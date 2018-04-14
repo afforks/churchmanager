@@ -16,7 +16,7 @@
 
 	<title><ui:insert name="page-name" /></title>
 
-<!-- 	<h:outputStylesheet library="primefaces" name="grid/grid.css" /> -->
+	<!-- 	<h:outputStylesheet library="primefaces" name="grid/grid.css" /> -->
 	<h:outputStylesheet library="css" name="custom.css" />
 	<h:outputStylesheet library="css" name="menu.css" />
 	<h:outputStylesheet library="css" name="layout.css" />
@@ -30,9 +30,10 @@
 	<h:outputScript target="body" library="js" name="locale.js" />
 	<h:outputScript target="body" library="js" name="menu.js" />
 	<h:outputScript target="body" library="js" name="jquery.maskMoney.js" />
-	
-	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
-	
+
+	<link href='http://fonts.googleapis.com/css?family=Roboto'
+		rel='stylesheet' type='text/css' />
+
 
 </h:head>
 
@@ -63,40 +64,45 @@
 
 		<ui:insert name="full-content">
 
-			<div class="ui-g padding" >
+			<div class="ui-g padding">
 				<div class="ui-g-12 card shadow-effect">
 
-					<h:form prependId="false">
-						<ui:insert name="breadcrumb" />
-					</h:form>
-
 					<ui:insert name="page-data">
-						<div class="padding">
-							<div class="my-head">
-								<div class="my-head-title">
-									<div class="page-image">
+						<div class="my-head-title">
+
+							<div class="ui-g-12">
+
+								<div class="ui-g-1 ui-lg-1 ui-md-2 ui-sm-12 ui-g-nopad">
+									<div class="page-image centralizado">
 										<ui:insert name="page-image" />
 									</div>
+								</div>
 
-									<h1 class="aw-page-title">
-										<ui:insert name="page-title" />
-									</h1>
+								<div class="ui-g-10 ui-lg-10 ui-md-10 ui-sm-12 ui-g-nopad ">
+									<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 ui-g-nopad">
+										<h1 class="aw-page-title">
+											<ui:insert name="page-title" />
+										</h1>
+									</div>
 
-									<h3 class="aw-page-subtitle">
-										<ui:insert name="page-subtitle" />
-									</h3>
-
-									<div class="my-head-menu">
-										<ui:insert name="page-menu" />
+									<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 ui-g-nopad">
+										<h3 class="aw-page-subtitle">
+											<ui:insert name="page-subtitle" />
+										</h3>
 									</div>
 								</div>
 							</div>
+
+							<div class="ui-g-12 ui-g-nopad">
+								<div class="my-head" />
+							</div>
+
+								<div class="my-head-menu">
+									<ui:insert name="page-menu" />
+								</div>
 						</div>
 
-						<div class="padding">
-							<ui:insert name="content" />
-						</div>
-
+						<ui:insert name="content" />
 					</ui:insert>
 
 					<ui:insert name="footer">

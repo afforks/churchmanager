@@ -12,12 +12,10 @@
 	<p:focus id="focus" for="codigo-dizimista" />
 	<p:defaultCommand target="buscar-dizimista" />
 
-	<div class="ui-fluid">
+<div class="ui-g-12 ui-g-nopad">
 		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
-
-		<!-- 		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank" -->
-		<!-- 			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4" -->
-		<!-- 			layout="grid"> -->
+		</div>
+	<div class="ui-fluid" jsf:id="group">
 
 
 		<div class="ui-g-12 ui-g-nopad" jsf:id="grid-pessoa-selecionada">
@@ -27,7 +25,6 @@
 					for="dizimista" />
 			</div>
 
-			<!-- 			<p:panelGrid columns="3" id="grid-pessoa-selecionada" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-10"> -->
 
 			<div class="ui-g-1 ui-lg-2 ui-md-2 ui-sm-3">
 				<p:commandButton icon="fa fa-list-alt" styleClass="btn-grey"
@@ -51,6 +48,7 @@
 					requiredMessage="O campo de busca deve ser preenchido!"
 					value="#{dizimoMB.idPessoa}" id="codigo-dizimista">
 				</p:inputText>
+				<p:message id="id-codigo-dizimista" for="codigo-dizimista" />
 			</div>
 
 			<div class="ui-g-1 ui-lg-2 ui-md-2 ui-sm-3"
@@ -69,16 +67,6 @@
 					title="Dizimista selecionado" />
 			</div>
 		</div>
-
-
-
-		<!-- 			</p:panelGrid> -->
-
-		<p:message id="id-codigo-dizimista" for="codigo-dizimista" />
-
-
-
-
 
 
 
@@ -177,13 +165,13 @@
 			columnClasses="ui-grid-col-3,ui-grid-col-3"
 			styleClass="ui-panelgrid-blank">
 			<p:commandButton value="Cadastrar" action="#{dizimoMB.salvar()}"
-				update="focus msg" validateClient="false" icon="fa fa-save"
+				update="group" validateClient="false" icon="fa fa-save"
 				oncomplete="goToTop()" rendered="#{dizimoMB.dizimo.id == null}"
 				styleClass="btn-blue">
 			</p:commandButton>
 
 			<p:commandButton value="Editar" action="#{dizimoMB.atualizar()}"
-				update="msg" validateClient="false" icon="fa fa-edit"
+				update="group" validateClient="false" icon="fa fa-edit"
 				rendered="#{dizimoMB.dizimo.id != null}" styleClass="btn-green">
 			</p:commandButton>
 

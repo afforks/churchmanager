@@ -2,17 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
 <h:form prependId="false">
 
-	<div class="ui-fluid">
+	<div class="ui-g-12 ui-g-nopad">
 		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
+	</div>
+	<div class="ui-fluid" jsf:id="group">
 		<p:focus for="nome" />
-		<!-- 		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank" -->
-		<!-- 			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4" -->
-		<!-- 			layout="grid"> -->
 
 		<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
 			<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
@@ -56,20 +56,16 @@
 			<p:message for="status" />
 		</div>
 
-		<!-- 			<p:outputLabel /> -->
-
-		<!-- 			</p:panelGrid> -->
-
 		<p:panelGrid layout="grid" columns="2"
 			columnClasses="ui-grid-col-3,ui-grid-col-3"
 			styleClass="ui-panelgrid-blank">
 			<p:commandButton value="Cadastrar" action="#{paginaMB.salvar()}"
-				update="msg" validateClient="true" icon="fa fa-save"
+				update="group" validateClient="true" icon="fa fa-save"
 				rendered="#{paginaMB.pagina.id == null}" styleClass="btn-blue">
 			</p:commandButton>
 
 			<p:commandButton value="Editar" action="#{paginaMB.atualizar()}"
-				update="msg" validateClient="true" icon="fa fa-edit"
+				update="group" validateClient="true" icon="fa fa-edit"
 				rendered="#{paginaMB.pagina.id != null}" styleClass="btn-green">
 			</p:commandButton>
 

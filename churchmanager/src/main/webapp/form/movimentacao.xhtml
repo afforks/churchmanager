@@ -10,14 +10,11 @@
 <h:form prependId="false">
 
 	<p:focus id="focus" for="nome" />
-
-	<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
-
+	<div class="ui-g-12 ui-g-nopad">
+		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
+	</div>
+	
 	<div class="ui-fluid" jsf:id="group">
-
-		<!-- 		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank" -->
-		<!-- 			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4" -->
-		<!-- 			layout="grid"> -->
 
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-8 ui-lg-8 ui-md-8 ui-sm-12">
@@ -224,14 +221,14 @@
 			columnClasses="ui-grid-col-3,ui-grid-col-3"
 			styleClass="ui-panelgrid-blank">
 			<p:commandButton value="Cadastrar"
-				action="#{movimentacaoMB.salvar()}" update="msg group"
+				action="#{movimentacaoMB.salvar()}" update="group"
 				validateClient="false" icon="fa fa-save" oncomplete="goToTop()"
 				rendered="#{movimentacaoMB.movimentacao.id == null}"
 				styleClass="btn-blue">
 			</p:commandButton>
 
 			<p:commandButton value="Editar"
-				action="#{movimentacaoMB.atualizar()}" update="group msg"
+				action="#{movimentacaoMB.atualizar()}" update="group"
 				validateClient="false" icon="fa fa-edit"
 				rendered="#{movimentacaoMB.movimentacao.id != null}"
 				styleClass="btn-green">

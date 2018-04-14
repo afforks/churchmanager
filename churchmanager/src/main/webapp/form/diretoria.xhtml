@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
@@ -9,12 +10,11 @@
 
 	<p:focus for="nome" />
 
-	<div class="ui-fluid">
+	<div class="ui-g-12 ui-g-nopad">
 		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
+	</div>
 
-		<!-- 		<p:panelGrid id="group" columns="3" styleClass="ui-panelgrid-blank" -->
-		<!-- 			columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4" -->
-		<!-- 			layout="grid"> -->
+	<div class="ui-fluid" jsf:id="group">
 
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
@@ -24,9 +24,10 @@
 					value="#{diretoriaMB.diretoria.nome}"
 					placeholder="Digite o nome da diretoria">
 				</p:inputText>
-				<!-- 			<p:message for="nome" /> -->
+				<p:message for="nome" />
 			</div>
 		</div>
+
 
 
 		<div class="ui-g-12 ui-g-nopad">
@@ -37,7 +38,7 @@
 					requiredMessage="Campo 'Dt. de início' é obrigatório!"
 					value="#{diretoriaMB.diretoria.inicio}" navigator="true"
 					pattern="dd/MM/yyyy" placeholder="Data de início" maskSlotChar="" />
-				<!-- 			<p:message for="inicio" /> -->
+				<p:message for="inicio" />
 			</div>
 
 
@@ -48,52 +49,41 @@
 					requiredMessage="Campo 'Dt. de término' é obrigatório!"
 					value="#{diretoriaMB.diretoria.termino}" navigator="true"
 					pattern="dd/MM/yyyy" placeholder="Data de término" maskSlotChar="" />
-				<!-- 			<p:message for="fim" /> -->
+				<p:message for="fim" />
 			</div>
 		</div>
 
 
 
-
-		<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
-			<p:outputLabel for="descricao" styleClass="my-label"
-				value="Descrição" />
-			<p:inputTextarea id="descricao" required="false"
-				requiredMessage="Campo 'Descrição' é obrigatório!"
-				value="#{diretoriaMB.diretoria.descricao}"
-				placeholder="Descreva a diretoria" />
-			<!-- 			<p:message for="descricao" /> -->
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
+				<p:outputLabel for="descricao" styleClass="my-label"
+					value="Descrição" />
+				<p:inputTextarea id="descricao" required="false"
+					requiredMessage="Campo 'Descrição' é obrigatório!"
+					value="#{diretoriaMB.diretoria.descricao}"
+					placeholder="Descreva a diretoria" />
+				<p:message for="descricao" />
+			</div>
 		</div>
 
 
-		<div class="ui-lg-6 ui-md-8 ui-sm-12">
-			<p:outputLabel for="status" styleClass="my-label" value="Status" />
-			<p:selectOneRadio id="status" required="true"
-				requiredMessage="Campo 'Status' é obrigatório!"
-				value="#{diretoriaMB.diretoria.status}">
-				<f:selectItems itemLabel="#{status.descricao}" var="status"
-					value="#{diretoriaMB.listarStatus()}" itemValue="#{status}" />
-			</p:selectOneRadio>
-			<!-- 			<p:message for="status" /> -->
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-lg-6 ui-md-8 ui-sm-12">
+				<p:outputLabel for="status" styleClass="my-label" value="Status" />
+				<p:selectOneRadio id="status" required="true"
+					requiredMessage="Campo 'Status' é obrigatório!"
+					value="#{diretoriaMB.diretoria.status}">
+					<f:selectItems itemLabel="#{status.descricao}" var="status"
+						value="#{diretoriaMB.listarStatus()}" itemValue="#{status}" />
+				</p:selectOneRadio>
+				<p:message for="status" />
+			</div>
 		</div>
 
-
-
-		<!-- 		</p:panelGrid> -->
-
-
-		<p:separator />
-
-
+ 
 
 		<p:defaultCommand target="buscar-pessoa" />
-		<!-- 		<p:panelGrid id="group2" columns="1" styleClass="ui-panelgrid-blank" -->
-		<!-- 			columnClasses="ui-grid-col-12" layout="grid"> -->
-
-		<!-- 			<p:panelGrid layout="grid" -->
-		<!-- 				columnClasses="ui-grid-col-2, ui-grid-col-1, ui-grid-col-1" -->
-		<!-- 				columns="3"> -->
-
 
 		<div class="ui-g-12 ui-g-nopad">
 
@@ -115,7 +105,6 @@
 
 			</div>
 		</div>
-		<!-- 			</p:panelGrid> -->
 
 		<p:dataTable id="table-diretoria"
 			value="#{diretoriaMB.diretoria.pessoaCargos}" var="pessoa"
@@ -151,12 +140,12 @@
 			columnClasses="ui-grid-col-3,ui-grid-col-3"
 			styleClass="ui-panelgrid-blank">
 			<p:commandButton value="Cadastrar" action="#{diretoriaMB.salvar()}"
-				update="msg" validateClient="true" icon="fa fa-save"
+				update="group" validateClient="true" icon="fa fa-save"
 				rendered="#{diretoriaMB.diretoria.id == null}" styleClass="btn-blue">
 			</p:commandButton>
 
 			<p:commandButton value="Editar" action="#{diretoriaMB.atualizar()}"
-				update="msg" validateClient="true" icon="fa fa-edit"
+				update="group" validateClient="true" icon="fa fa-edit"
 				rendered="#{diretoriaMB.diretoria.id != null}"
 				styleClass="btn-green">
 			</p:commandButton>
