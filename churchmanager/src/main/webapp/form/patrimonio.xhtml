@@ -4,7 +4,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" >
+	xmlns:p="http://primefaces.org/ui">
 
 <h:form prependId="false">
 
@@ -16,14 +16,14 @@
 	<div class="ui-fluid" jsf:id="group">
 
 		<div class="ui-g-12 ui-g-nopad">
-		<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
-			<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
-			<p:inputText id="nome" required="true"
-				requiredMessage="Campo 'Nome' é obrigatório!"
-				value="#{patrimonioMB.patrimonio.nome}"
-				placeholder="Nome do patrimônio" />
-			<p:message for="nome" />
-		</div>
+			<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
+				<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
+				<p:inputText id="nome" required="true"
+					requiredMessage="Campo 'Nome' é obrigatório!"
+					value="#{patrimonioMB.patrimonio.nome}"
+					placeholder="Nome do patrimônio" />
+				<p:message for="nome" />
+			</div>
 		</div>
 
 		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
@@ -225,29 +225,27 @@
 
 			</p:dataTable>
 		</div>
- 
 
-		<p:panelGrid layout="grid" columns="2"
-			columnClasses="ui-grid-col-3,ui-grid-col-3"
-			styleClass="ui-panelgrid-blank">
-			<p:commandButton value="Cadastrar" action="#{patrimonioMB.salvar()}"
-				update="group" validateClient="false" icon="fa fa-save"
-				rendered="#{patrimonioMB.patrimonio.id == null}"
-				styleClass="btn-blue">
-			</p:commandButton>
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
+				<p:commandButton value="Cadastrar" action="#{patrimonioMB.salvar()}"
+					update="group" validateClient="false" icon="fa fa-save"
+					rendered="#{patrimonioMB.patrimonio.id == null}"
+					styleClass="btn-blue">
+				</p:commandButton>
 
-			<p:commandButton value="Editar" action="#{patrimonioMB.atualizar()}"
-				update="group" validateClient="false" icon="fa fa-edit"
-				rendered="#{patrimonioMB.patrimonio.id != null}"
-				styleClass="btn-green">
-			</p:commandButton>
-
-			<p:button value="Cancelar" outcome="/list/patrimonio"
-				icon="fa fa-close" styleClass="btn-red ">
-			</p:button>
-
-		</p:panelGrid>
-
+				<p:commandButton value="Editar" action="#{patrimonioMB.atualizar()}"
+					update="group" validateClient="false" icon="fa fa-edit"
+					rendered="#{patrimonioMB.patrimonio.id != null}"
+					styleClass="btn-green">
+				</p:commandButton>
+			</div>
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
+				<p:button value="Cancelar" outcome="/list/patrimonio"
+					icon="fa fa-close" styleClass="btn-red ">
+				</p:button>
+			</div>
+		</div>
 	</div>
 	<p:tooltip />
 </h:form>

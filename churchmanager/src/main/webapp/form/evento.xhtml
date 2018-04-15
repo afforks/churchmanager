@@ -59,26 +59,27 @@
 			<p:message for="status" />
 		</div>
 
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 
-		<p:panelGrid layout="grid" columns="2"
-			columnClasses="ui-grid-col-3,ui-grid-col-3"
-			styleClass="ui-panelgrid-blank">
-			<p:commandButton value="Cadastrar" action="#{eventoMB.salvar()}"
-				update="group" validateClient="true" icon="fa fa-save"
-				rendered="#{eventoMB.evento.id == null}" styleClass="btn-blue">
-			</p:commandButton>
+				<p:commandButton value="Cadastrar" action="#{eventoMB.salvar()}"
+					update="group" validateClient="true" icon="fa fa-save"
+					rendered="#{eventoMB.evento.id == null}" styleClass="btn-blue">
+				</p:commandButton>
 
-			<p:commandButton value="Editar" action="#{eventoMB.atualizar()}"
-				update="group" validateClient="true" icon="fa fa-edit"
-				rendered="#{eventoMB.evento.id != null}" styleClass="btn-green">
-			</p:commandButton>
+				<p:commandButton value="Editar" action="#{eventoMB.atualizar()}"
+					update="group" validateClient="true" icon="fa fa-edit"
+					rendered="#{eventoMB.evento.id != null}" styleClass="btn-green">
+				</p:commandButton>
 
-			<p:button value="Cancelar" outcome="/list/evento" icon="fa fa-close"
-				styleClass="btn-red ">
-			</p:button>
+			</div>
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 
-		</p:panelGrid>
-
+				<p:button value="Cancelar" outcome="/list/evento" icon="fa fa-close"
+					styleClass="btn-red ">
+				</p:button>
+			</div>
+		</div>
 	</div>
 </h:form>
 </html>

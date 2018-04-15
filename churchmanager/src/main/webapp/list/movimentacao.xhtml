@@ -64,7 +64,7 @@
 
 			<div class="ui-fluid">
 
-				<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12">
 					<p:fieldset styleClass="my-fieldset">
 
 						<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-10">
@@ -88,126 +88,123 @@
 							<p:commandButton action="#{movimentacaoMB.filtrar()}"
 								process="@this filtro" update="table" icon="fa fa-search"
 								styleClass="btn-grey" id="buscar" />
-
-
 						</div>
-
 					</p:fieldset>
 				</div>
-				<p:spacer />
 			</div>
 		</h:form>
- 
 
 		<h:form prependId="false">
 			<div class="ui-fluid">
-
-				<h2 class="center">Lista de movimentações</h2>
-				<p:dataTable id="table" var="movimentacao" lazy="true"
-					value="#{movimentacaoMB.movimentacaosLazy}" rowHover="true"
-					paginator="true" paginatorAlwaysVisible="false" rows="50"
-					rowsPerPageLabel="de"
-					emptyMessage="Nenhum registro foi encontrado!"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+				<div class="ui-g-12 ">
+					<h2 class="center">Lista de movimentações</h2>
+					<p:dataTable id="table" var="movimentacao" lazy="true"
+						value="#{movimentacaoMB.movimentacaosLazy}" rowHover="true"
+						paginator="true" paginatorAlwaysVisible="false" rows="50"
+						rowsPerPageLabel="de"
+						emptyMessage="Nenhum registro foi encontrado!"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
 						{PreviousPageLink} {PageLinks} {NextPageLink} 
 							{LastPageLink} {RowsPerPageDropdown}"
-					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
+						currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
 
-					<f:facet name="header" />
+						<f:facet name="header" />
 
-					<p:column headerText="#" colspan="1" priority="1">
+						<p:column headerText="#" colspan="1" priority="1">
 
-						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
-							<p:commandButton icon="fa fa-arrow-down" styleClass="btn-yellow"
-								title="Receber"
-								rendered="#{movimentacaoMB.isReceber(movimentacao)}"
-								oncomplete="PF('pagar-receber').show()" update="pagar-receber"
-								action="#{movimentacaoMB.buscarParcelas()}">
-								<f:setPropertyActionListener value="#{movimentacao}"
-									target="#{movimentacaoMB.movimentacao}" />
-							</p:commandButton>
+							<p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+								<p:commandButton icon="fa fa-arrow-down" styleClass="btn-yellow"
+									title="Receber"
+									rendered="#{movimentacaoMB.isReceber(movimentacao)}"
+									oncomplete="PF('pagar-receber').show()" update="pagar-receber"
+									action="#{movimentacaoMB.buscarParcelas()}">
+									<f:setPropertyActionListener value="#{movimentacao}"
+										target="#{movimentacaoMB.movimentacao}" />
+								</p:commandButton>
 
-							<p:commandButton icon="fa fa-arrow-up" styleClass="btn-red"
-								title="Pagar" rendered="#{movimentacaoMB.isPagar(movimentacao)}"
-								oncomplete="PF('pagar-receber').show()" update="pagar-receber"
-								action="#{movimentacaoMB.buscarParcelas()}">
-								<f:setPropertyActionListener value="#{movimentacao}"
-									target="#{movimentacaoMB.movimentacao}" />
-							</p:commandButton>
+								<p:commandButton icon="fa fa-arrow-up" styleClass="btn-red"
+									title="Pagar"
+									rendered="#{movimentacaoMB.isPagar(movimentacao)}"
+									oncomplete="PF('pagar-receber').show()" update="pagar-receber"
+									action="#{movimentacaoMB.buscarParcelas()}">
+									<f:setPropertyActionListener value="#{movimentacao}"
+										target="#{movimentacaoMB.movimentacao}" />
+								</p:commandButton>
 
-							<p:commandButton icon="fa fa-check" styleClass="btn-blue"
-								title="Editar"
-								rendered="#{movimentacaoMB.isEntradaOuSaidaComStatusPago(movimentacao)}"
-								oncomplete="PF('pagar-receber').show()" update="pagar-receber"
-								action="#{movimentacaoMB.buscarParcelas()}">
-								<f:setPropertyActionListener value="#{movimentacao}"
-									target="#{movimentacaoMB.movimentacao}" />
-							</p:commandButton>
-						</p:panelGrid>
+								<p:commandButton icon="fa fa-check" styleClass="btn-blue"
+									title="Editar"
+									rendered="#{movimentacaoMB.isEntradaOuSaidaComStatusPago(movimentacao)}"
+									oncomplete="PF('pagar-receber').show()" update="pagar-receber"
+									action="#{movimentacaoMB.buscarParcelas()}">
+									<f:setPropertyActionListener value="#{movimentacao}"
+										target="#{movimentacaoMB.movimentacao}" />
+								</p:commandButton>
+							</p:panelGrid>
 
-					</p:column>
+						</p:column>
 
-					<p:column headerText="Nome" colspan="2" priority="1">
-						<div class="text-overflow">
-							<p:link outcome="/edit/movimentacao" styleClass="my-link"
-								value="#{movimentacao.nome}">
-								<f:param name="id" value="#{movimentacao.idCriptografado()}" />
-							</p:link>
-						</div>
-					</p:column>
+						<p:column headerText="Nome" colspan="2" priority="1">
+							<div class="text-overflow">
+								<p:link outcome="/edit/movimentacao" styleClass="my-link"
+									value="#{movimentacao.nome}">
+									<f:param name="id" value="#{movimentacao.idCriptografado()}" />
+								</p:link>
+							</div>
+						</p:column>
 
-					<p:column headerText="Valor" colspan="1" priority="2">
-						<p:outputLabel value="#{movimentacao.valor}">
-							<f:convertNumber type="currency" />
-						</p:outputLabel>
-					</p:column>
+						<p:column headerText="Valor" colspan="1" priority="2">
+							<p:outputLabel value="#{movimentacao.valor}">
+								<f:convertNumber type="currency" />
+							</p:outputLabel>
+						</p:column>
 
-					<p:column headerText="Vencimento" colspan="1" styleClass="center"
-						priority="3">
-						<p:outputLabel value="#{movimentacao.dataVencimento}">
-							<f:convertDateTime pattern="dd/MM/yy" />
-						</p:outputLabel>
-					</p:column>
+						<p:column headerText="Vencimento" colspan="1" styleClass="center"
+							priority="3">
+							<p:outputLabel value="#{movimentacao.dataVencimento}">
+								<f:convertDateTime pattern="dd/MM/yy" />
+							</p:outputLabel>
+						</p:column>
 
-					<p:column headerText="Forma" colspan="1" styleClass="center"
-						priority="4">
-						<p:outputLabel value="#{movimentacao.formaMovimentacao.descricao}"
-							rendered="#{movimentacao.formaMovimentacao.descricao ne null}"
-							styleClass="destaque"
-							style="#{movimentacao.formaMovimentacao.cor}" />
-					</p:column>
+						<p:column headerText="Forma" colspan="1" styleClass="center"
+							priority="4">
+							<p:outputLabel
+								value="#{movimentacao.formaMovimentacao.descricao}"
+								rendered="#{movimentacao.formaMovimentacao.descricao ne null}"
+								styleClass="destaque"
+								style="#{movimentacao.formaMovimentacao.cor}" />
+						</p:column>
 
-					<p:column headerText="Status" colspan="1" styleClass="center"
-						priority="4">
-						<p:outputLabel
-							value="#{movimentacao.statusMovimentacao.descricao}"
-							styleClass="destaque"
-							style="#{movimentacao.statusMovimentacao.cor}" />
-					</p:column>
+						<p:column headerText="Status" colspan="1" styleClass="center"
+							priority="4">
+							<p:outputLabel
+								value="#{movimentacao.statusMovimentacao.descricao}"
+								styleClass="destaque"
+								style="#{movimentacao.statusMovimentacao.cor}" />
+						</p:column>
 
-					<p:column headerText="Tipo" colspan="1" styleClass="center"
-						priority="5">
-						<p:outputLabel value="#{movimentacao.tipoMovimentacao.descricao}"
-							styleClass="destaque"
-							style="#{movimentacao.tipoMovimentacao.cor}" />
-					</p:column>
+						<p:column headerText="Tipo" colspan="1" styleClass="center"
+							priority="5">
+							<p:outputLabel value="#{movimentacao.tipoMovimentacao.descricao}"
+								styleClass="destaque"
+								style="#{movimentacao.tipoMovimentacao.cor}" />
+						</p:column>
 
-					<p:column headerText="Detalhes" colspan="1" priority="5">
+						<p:column headerText="Detalhes" colspan="1" priority="5">
 
-						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
-							<p:commandButton icon="fa fa-list-alt" styleClass="btn-grey"
-								oncomplete="PF('detalhes').show()" title="Visualizar detalhes"
-								action="#{movimentacaoMB.buscarParcelas()}" update="detalhes">
-								<f:setPropertyActionListener value="#{movimentacao}"
-									target="#{movimentacaoMB.movimentacao}" />
-							</p:commandButton>
+							<p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+								<p:commandButton icon="fa fa-list-alt" styleClass="btn-grey"
+									oncomplete="PF('detalhes').show()" title="Visualizar detalhes"
+									action="#{movimentacaoMB.buscarParcelas()}" update="detalhes">
+									<f:setPropertyActionListener value="#{movimentacao}"
+										target="#{movimentacaoMB.movimentacao}" />
+								</p:commandButton>
 
-						</p:panelGrid>
-					</p:column>
+							</p:panelGrid>
+						</p:column>
 
-				</p:dataTable>
+					</p:dataTable>
+				</div>
 			</div>
-
 		</h:form>
 
 		<ui:include src="/fragmentos/detalhe-movimentacao.xhtml" />

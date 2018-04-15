@@ -67,27 +67,25 @@
 			</p:selectManyCheckbox>
 		</div>
 
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 
+				<p:commandButton value="Cadastrar" action="#{perfilMB.salvar()}"
+					update="group" validateClient="true" icon="fa fa-save"
+					rendered="#{perfilMB.perfil.id == null}" styleClass="btn-blue">
+				</p:commandButton>
 
-		<p:panelGrid layout="grid" columns="2"
-			columnClasses="ui-grid-col-3,ui-grid-col-3"
-			styleClass="ui-panelgrid-blank">
-			<p:commandButton value="Cadastrar" action="#{perfilMB.salvar()}"
-				update="group" validateClient="true" icon="fa fa-save"
-				rendered="#{perfilMB.perfil.id == null}" styleClass="btn-blue">
-			</p:commandButton>
-
-			<p:commandButton value="Editar" action="#{perfilMB.atualizar()}"
-				update="group" validateClient="true" icon="fa fa-edit"
-				rendered="#{perfilMB.perfil.id != null}" styleClass="btn-green">
-			</p:commandButton>
-
-			<p:button value="Cancelar" outcome="/list/perfil" icon="fa fa-close"
-				styleClass="btn-red ">
-			</p:button>
-
-		</p:panelGrid>
-
+				<p:commandButton value="Editar" action="#{perfilMB.atualizar()}"
+					update="group" validateClient="true" icon="fa fa-edit"
+					rendered="#{perfilMB.perfil.id != null}" styleClass="btn-green">
+				</p:commandButton>
+			</div>
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
+				<p:button value="Cancelar" outcome="/list/perfil" icon="fa fa-close"
+					styleClass="btn-red ">
+				</p:button>
+			</div>
+		</div>
 	</div>
 </h:form>
 </html>

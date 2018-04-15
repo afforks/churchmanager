@@ -31,7 +31,7 @@
 
 			<div class="ui-fluid">
 
-				<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12">
 					<p:fieldset styleClass="my-fieldset">
 
 						<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-10">
@@ -57,74 +57,71 @@
 
 					</p:fieldset>
 				</div>
-				<p:spacer width="0" height="20" />
 			</div>
 		</h:form>
 
-		<p:spacer width="0" height="20" />
-
-
 		<h:form prependId="false">
 			<div class="ui-fluid">
-
-				<p:dataTable id="table" var="pessoa" lazy="true"
-					value="#{pessoaMB.pessoasLazy}" rowHover="true"
-					pessoatorPosition="bottom" pessoator="true"
-					pessoatorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
-					emptyMessage="Nenhum registro foi encontrado!"
-					pessoatorTemplate="{CurrentPageReport} {FirstPageLink} 
+				<div class="ui-g-12 ">
+					<p:dataTable id="table" var="pessoa" lazy="true"
+						value="#{pessoaMB.pessoasLazy}" rowHover="true"
+						pessoatorPosition="bottom" pessoator="true"
+						pessoatorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
+						emptyMessage="Nenhum registro foi encontrado!"
+						pessoatorTemplate="{CurrentPageReport} {FirstPageLink} 
 						{PreviousPageLink} {PageLinks} {NextPageLink} 
 							{LastPageLink} {RowsPerPageDropdown}"
-					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Pessoa {currentPage} de {totalPages})">
+						currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Pessoa {currentPage} de {totalPages})">
 
-					<f:facet name="header" />
+						<f:facet name="header" />
 
-					<p:column headerText="Nome" colspan="4" priority="1">
-						<div class="text-overflow">
-							<p:link outcome="/edit/pessoa" styleClass="my-link"
-								value="#{pessoa.nome}">
-								<f:param name="id" value="#{pessoa.idCriptografado()}" />
-							</p:link>
-						</div>
-					</p:column>
+						<p:column headerText="Nome" colspan="4" priority="1">
+							<div class="text-overflow">
+								<p:link outcome="/edit/pessoa" styleClass="my-link"
+									value="#{pessoa.nome}">
+									<f:param name="id" value="#{pessoa.idCriptografado()}" />
+								</p:link>
+							</div>
+						</p:column>
 
-					<p:column headerText="Matr." styleClass="center" colspan="2"
-						priority="4">
-						<p:outputLabel value="#{pessoa.matricula}" />
-					</p:column>
+						<p:column headerText="Matr." styleClass="center" colspan="2"
+							priority="4">
+							<p:outputLabel value="#{pessoa.matricula}" />
+						</p:column>
 
-					<p:column headerText="Cel." styleClass="center" colspan="2"
-						priority="2">
-						<p:outputLabel value="#{pessoa.celular}" />
-					</p:column>
+						<p:column headerText="Cel." styleClass="center" colspan="2"
+							priority="2">
+							<p:outputLabel value="#{pessoa.celular}" />
+						</p:column>
 
-					<p:column headerText="E-mail" colspan="2" priority="4">
-						<p:outputLabel value="#{pessoa.email}" />
-					</p:column>
+						<p:column headerText="E-mail" colspan="2" priority="4">
+							<p:outputLabel value="#{pessoa.email}" />
+						</p:column>
 
-					<p:column headerText="Dt. Nasc." styleClass="center" colspan="2"
-						priority="5">
-						<p:outputLabel value="#{pessoa.dataNascimento}">
-							<f:convertDateTime pattern="dd/MM/yy" />
-						</p:outputLabel>
-					</p:column>
+						<p:column headerText="Dt. Nasc." styleClass="center" colspan="2"
+							priority="5">
+							<p:outputLabel value="#{pessoa.dataNascimento}">
+								<f:convertDateTime pattern="dd/MM/yy" />
+							</p:outputLabel>
+						</p:column>
 
-					<p:column headerText="Idade" styleClass="center" colspan="1"
-						priority="5">
-						<p:outputLabel value="#{pessoa.idade}" />
-					</p:column>
+						<p:column headerText="Idade" styleClass="center" colspan="1"
+							priority="5">
+							<p:outputLabel value="#{pessoa.idade}" />
+						</p:column>
 
-					<p:column headerText="Detalhes" styleClass="center" colspan="1"
-						priority="3">
-						<p:commandButton styleClass="btn-grey" icon="fa fa-list-alt"
-							style="width:50px" oncomplete="PF('detalhe-pessoa').show()"
-							update="detalhe-pessoa" process="@this">
-							<f:setPropertyActionListener value="#{pessoa}"
-								target="#{pessoaMB.pessoa}" />
-						</p:commandButton>
-					</p:column>
+						<p:column headerText="Detalhes" styleClass="center" colspan="1"
+							priority="3">
+							<p:commandButton styleClass="btn-grey" icon="fa fa-list-alt"
+								style="width:50px" oncomplete="PF('detalhe-pessoa').show()"
+								update="detalhe-pessoa" process="@this">
+								<f:setPropertyActionListener value="#{pessoa}"
+									target="#{pessoaMB.pessoa}" />
+							</p:commandButton>
+						</p:column>
 
-				</p:dataTable>
+					</p:dataTable>
+				</div>
 			</div>
 		</h:form>
 		<ui:include src="/fragmentos/detalhe-pessoa.xhtml" />

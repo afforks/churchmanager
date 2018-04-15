@@ -12,9 +12,9 @@
 	<p:focus id="focus" for="codigo-dizimista" />
 	<p:defaultCommand target="buscar-dizimista" />
 
-<div class="ui-g-12 ui-g-nopad">
+	<div class="ui-g-12 ui-g-nopad">
 		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
-		</div>
+	</div>
 	<div class="ui-fluid" jsf:id="group">
 
 
@@ -154,33 +154,29 @@
 			<p:message for="status" />
 		</div>
 
-
-
 		<p:spacer height="20" width="0" />
 
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
+				<p:commandButton value="Cadastrar" action="#{dizimoMB.salvar()}"
+					update="group" validateClient="false" icon="fa fa-save"
+					oncomplete="goToTop()" rendered="#{dizimoMB.dizimo.id == null}"
+					styleClass="btn-blue">
+				</p:commandButton>
 
-		<!-- 		</p:panelGrid> -->
+				<p:commandButton value="Editar" action="#{dizimoMB.atualizar()}"
+					update="group" validateClient="false" icon="fa fa-edit"
+					rendered="#{dizimoMB.dizimo.id != null}" styleClass="btn-green">
+				</p:commandButton>
 
-		<p:panelGrid layout="grid" columns="2"
-			columnClasses="ui-grid-col-3,ui-grid-col-3"
-			styleClass="ui-panelgrid-blank">
-			<p:commandButton value="Cadastrar" action="#{dizimoMB.salvar()}"
-				update="group" validateClient="false" icon="fa fa-save"
-				oncomplete="goToTop()" rendered="#{dizimoMB.dizimo.id == null}"
-				styleClass="btn-blue">
-			</p:commandButton>
+			</div>
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 
-			<p:commandButton value="Editar" action="#{dizimoMB.atualizar()}"
-				update="group" validateClient="false" icon="fa fa-edit"
-				rendered="#{dizimoMB.dizimo.id != null}" styleClass="btn-green">
-			</p:commandButton>
-
-			<p:button value="Cancelar" outcome="/list/dizimo" icon="fa fa-close"
-				styleClass="btn-red ">
-			</p:button>
-
-		</p:panelGrid>
-
+				<p:button value="Cancelar" outcome="/list/dizimo" icon="fa fa-close"
+					styleClass="btn-red ">
+				</p:button>
+			</div>
+		</div>
 	</div>
 </h:form>
 

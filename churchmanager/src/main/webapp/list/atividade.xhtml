@@ -31,7 +31,7 @@
 
 			<div class="ui-fluid">
 
-				<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ">
 					<p:fieldset styleClass="my-fieldset">
 
 						<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-10">
@@ -56,42 +56,41 @@
 
 					</p:fieldset>
 				</div>
-				<p:spacer width="0" height="20" />
 			</div>
 		</h:form>
 
-		<p:spacer width="0" height="20" />
-
 		<h:form prependId="false">
 			<div class="ui-fluid">
+				<div class="ui-g-12 ">
 
-				<p:dataTable id="table" var="atividadeEclesiastica" lazy="true"
-					value="#{atividadeEclesiasticaMB.atividadeEclesiasticasLazy}"
-					rowHover="true" paginatorPosition="bottom" paginator="true"
-					paginatorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
-					emptyMessage="Nenhum registro foi encontrado!"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+					<p:dataTable id="table" var="atividadeEclesiastica" lazy="true"
+						value="#{atividadeEclesiasticaMB.atividadeEclesiasticasLazy}"
+						rowHover="true" paginatorPosition="bottom" paginator="true"
+						paginatorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
+						emptyMessage="Nenhum registro foi encontrado!"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
 						{PreviousPageLink} {PageLinks} {NextPageLink} 
 							{LastPageLink} {RowsPerPageDropdown}"
-					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, página {currentPage} de {totalPages})">
+						currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, página {currentPage} de {totalPages})">
 
-					<f:facet name="header" />
+						<f:facet name="header" />
 
-					<p:column headerText="Nome" colspan="2">
-						<div class="text-overflow">
-							<p:link outcome="/edit/atividade" styleClass="my-link"
-								value="#{atividadeEclesiastica.nome}">
-								<f:param name="id"
-									value="#{atividadeEclesiastica.idCriptografado()}" />
-							</p:link>
-						</div>
-					</p:column>
+						<p:column headerText="Nome" colspan="2">
+							<div class="text-overflow">
+								<p:link outcome="/edit/atividade" styleClass="my-link"
+									value="#{atividadeEclesiastica.nome}">
+									<f:param name="id"
+										value="#{atividadeEclesiastica.idCriptografado()}" />
+								</p:link>
+							</div>
+						</p:column>
 
-					<p:column headerText="Descrição" colspan="4" priority="3">
-						<p:outputLabel value="#{atividadeEclesiastica.descricao}" />
-					</p:column>
+						<p:column headerText="Descrição" colspan="4" priority="3">
+							<p:outputLabel value="#{atividadeEclesiastica.descricao}" />
+						</p:column>
 
-				</p:dataTable>
+					</p:dataTable>
+				</div>
 			</div>
 
 		</h:form>

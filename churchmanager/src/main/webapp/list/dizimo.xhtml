@@ -61,7 +61,7 @@
 
 			<div class="ui-fluid">
 
-				<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12">
 					<p:fieldset styleClass="my-fieldset">
 
 						<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-10">
@@ -83,101 +83,96 @@
 							<p:commandButton action="#{dizimoMB.filtrar()}"
 								process="@this filtro" update="table" icon="fa fa-search"
 								styleClass="btn-grey" id="buscar" />
-
 						</div>
-
 					</p:fieldset>
 				</div>
-				<p:spacer />
 			</div>
 		</h:form>
 
-		<br />
-
 		<h:form prependId="false">
 			<div class="ui-fluid">
-
-				<p:dataTable id="table" var="dizimo" lazy="true"
-					value="#{dizimoMB.dizimosLazy}" rowHover="true"
-					dizimotorPosition="bottom" dizimotor="true"
-					dizimotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
-					emptyMessage="Nenhum registro foi encontrado!"
-					dizimotorTemplate="{CurrentPageReport} {FirstPageLink} 
+				<div class="ui-g-12 ">
+					<p:dataTable id="table" var="dizimo" lazy="true"
+						value="#{dizimoMB.dizimosLazy}" rowHover="true"
+						dizimotorPosition="bottom" dizimotor="true"
+						dizimotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
+						emptyMessage="Nenhum registro foi encontrado!"
+						dizimotorTemplate="{CurrentPageReport} {FirstPageLink} 
 						{PreviousPageLink} {PageLinks} {NextPageLink} 
 							{LastPageLink} {RowsPerPageDropdown}"
-					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
+						currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
 
-					<f:facet name="header" />
+						<f:facet name="header" />
 
 
-					<p:column headerText="Dizimista" colspan="3" priority="1">
-						<div class="text-overflow">
-							<p:link outcome="/edit/dizimo" styleClass="my-link"
-								value="#{dizimo.pessoa.nome}">
-								<f:param name="id" value="#{dizimo.idCriptografado()}" />
-							</p:link>
-						</div>
-					</p:column>
+						<p:column headerText="Dizimista" colspan="3" priority="1">
+							<div class="text-overflow">
+								<p:link outcome="/edit/dizimo" styleClass="my-link"
+									value="#{dizimo.pessoa.nome}">
+									<f:param name="id" value="#{dizimo.idCriptografado()}" />
+								</p:link>
+							</div>
+						</p:column>
 
-					<p:column headerText="13º" styleClass="center" colspan="1"
-						priority="3">
-						<p:outputLabel rendered="#{dizimo.is13}"
-							value="#{dizimo.is13 ? 'Sim' : 'Não'}"
-							styleClass="destaque bg-green" />
+						<p:column headerText="13º" styleClass="center" colspan="1"
+							priority="3">
+							<p:outputLabel rendered="#{dizimo.is13}"
+								value="#{dizimo.is13 ? 'Sim' : 'Não'}"
+								styleClass="destaque bg-green" />
 
-						<p:outputLabel rendered="#{!dizimo.is13}"
-							value="#{dizimo.is13 ? 'Sim' : 'Não'}"
-							styleClass="destaque bg-red" />
-					</p:column>
+							<p:outputLabel rendered="#{!dizimo.is13}"
+								value="#{dizimo.is13 ? 'Sim' : 'Não'}"
+								styleClass="destaque bg-red" />
+						</p:column>
 
-					<p:column headerText="Referência" styleClass="center" colspan="1"
-						priority="1">
-						<p:outputLabel value="#{dizimo.dataReferencia}">
-							<f:convertDateTime pattern="dd/MM" />
-						</p:outputLabel>
-					</p:column>
+						<p:column headerText="Referência" styleClass="center" colspan="1"
+							priority="1">
+							<p:outputLabel value="#{dizimo.dataReferencia}">
+								<f:convertDateTime pattern="dd/MM" />
+							</p:outputLabel>
+						</p:column>
 
-					<p:column headerText="Recebimento" styleClass="center" colspan="1"
-						priority="2">
-						<p:outputLabel value="#{dizimo.dataRecebimento}">
-							<f:convertDateTime pattern="dd/MM" />
-						</p:outputLabel>
-					</p:column>
+						<p:column headerText="Recebimento" styleClass="center" colspan="1"
+							priority="2">
+							<p:outputLabel value="#{dizimo.dataRecebimento}">
+								<f:convertDateTime pattern="dd/MM" />
+							</p:outputLabel>
+						</p:column>
 
-					<p:column headerText="Dízimo" styleClass="center" colspan="1"
-						priority="4">
-						<p:outputLabel value="#{dizimo.valorDizimo}">
-							<f:convertNumber type="currency" />
-						</p:outputLabel>
-					</p:column>
+						<p:column headerText="Dízimo" styleClass="center" colspan="1"
+							priority="4">
+							<p:outputLabel value="#{dizimo.valorDizimo}">
+								<f:convertNumber type="currency" />
+							</p:outputLabel>
+						</p:column>
 
-					<p:column headerText="Oferta" styleClass="center" colspan="1"
-						priority="4">
-						<p:outputLabel value="#{dizimo.valorOferta}">
-							<f:convertNumber type="currency" />
-						</p:outputLabel>
-					</p:column>
+						<p:column headerText="Oferta" styleClass="center" colspan="1"
+							priority="4">
+							<p:outputLabel value="#{dizimo.valorOferta}">
+								<f:convertNumber type="currency" />
+							</p:outputLabel>
+						</p:column>
 
-					<p:column headerText="Total" styleClass="center" colspan="1"
-						priority="3">
-						<p:outputLabel value="#{dizimo.valorTotal}">
-							<f:convertNumber type="currency" />
-						</p:outputLabel>
-					</p:column>
+						<p:column headerText="Total" styleClass="center" colspan="1"
+							priority="3">
+							<p:outputLabel value="#{dizimo.valorTotal}">
+								<f:convertNumber type="currency" />
+							</p:outputLabel>
+						</p:column>
 
-					<p:column headerText="Envelope" styleClass="center" colspan="1"
-						priority="5">
-						<p:commandButton styleClass="btn-grey" icon="fa fa-file"
-							action="#{dizimoMB.gerarEnvelopeDizimo}" ajax="false"
-							process="@this">
-							<f:setPropertyActionListener value="#{dizimo}"
-								target="#{dizimoMB.dizimo}" />
-						</p:commandButton>
-					</p:column>
+						<p:column headerText="Envelope" styleClass="center" colspan="1"
+							priority="5">
+							<p:commandButton styleClass="btn-grey" icon="fa fa-file"
+								action="#{dizimoMB.gerarEnvelopeDizimo}" ajax="false"
+								process="@this">
+								<f:setPropertyActionListener value="#{dizimo}"
+									target="#{dizimoMB.dizimo}" />
+							</p:commandButton>
+						</p:column>
 
-				</p:dataTable>
+					</p:dataTable>
+				</div>
 			</div>
-
 		</h:form>
 	</ui:define>
 </ui:composition>

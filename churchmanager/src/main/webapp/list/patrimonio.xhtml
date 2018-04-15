@@ -29,7 +29,7 @@
 				<p:defaultCommand target="buscar" />
 				<p:focus for="filtro" />
 
-				<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12">
 					<p:fieldset styleClass="my-fieldset">
 
 						<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-10">
@@ -55,72 +55,70 @@
 						</div>
 
 					</p:fieldset>
-					<p:spacer width="0" height="20" />
+
 				</div>
 			</div>
 		</h:form>
 
-		<p:spacer width="0" height="20" />
-
 		<h:form prependId="false">
 			<div class="ui-fluid">
+				<div class="ui-g-12 ">
 
-				<p:dataTable id="table" var="patrimonio" lazy="true"
-					value="#{patrimonioMB.patrimoniosLazy}" rowHover="true"
-					patrimoniotorPosition="bottom" patrimoniotor="true"
-					patrimoniotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
-					emptyMessage="Nenhum registro foi encontrado!"
-					patrimoniotorTemplate="{CurrentPageReport} {FirstPageLink} 
+					<p:dataTable id="table" var="patrimonio" lazy="true"
+						value="#{patrimonioMB.patrimoniosLazy}" rowHover="true"
+						patrimoniotorPosition="bottom" patrimoniotor="true"
+						patrimoniotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
+						emptyMessage="Nenhum registro foi encontrado!"
+						patrimoniotorTemplate="{CurrentPageReport} {FirstPageLink} 
 						{PreviousPageLink} {PageLinks} {NextPageLink} 
 							{LastPageLink} {RowsPerPageDropdown}"
-					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
+						currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
 
-					<f:facet name="header" />
+						<f:facet name="header" />
 
-					<p:column headerText="Nome" colspan="3" priority="1">
-						<div class="text-overflow">
-							<p:link outcome="/edit/patrimonio" styleClass="my-link"
-								value="#{patrimonio.nome}">
-								<f:param name="id" value="#{patrimonio.idCriptografado()}" />
-							</p:link>
-						</div>
-					</p:column>
+						<p:column headerText="Nome" colspan="3" priority="1">
+							<div class="text-overflow">
+								<p:link outcome="/edit/patrimonio" styleClass="my-link"
+									value="#{patrimonio.nome}">
+									<f:param name="id" value="#{patrimonio.idCriptografado()}" />
+								</p:link>
+							</div>
+						</p:column>
 
-					<p:column headerText="Situação" colspan="1" styleClass="center"
-						priority="3">
-						<p:outputLabel value="#{patrimonio.situacao.descricao}"
-							style="#{patrimonio.situacao.cor}" styleClass="destaque" />
-					</p:column>
+						<p:column headerText="Situação" colspan="1" styleClass="center"
+							priority="3">
+							<p:outputLabel value="#{patrimonio.situacao.descricao}"
+								style="#{patrimonio.situacao.cor}" styleClass="destaque" />
+						</p:column>
 
-					<p:column headerText="Estado" colspan="1" styleClass="center"
-						priority="2">
-						<p:outputLabel value="#{patrimonio.estado.descricao}"
-							style="#{patrimonio.estado.cor}" styleClass="destaque" />
-					</p:column>
+						<p:column headerText="Estado" colspan="1" styleClass="center"
+							priority="2">
+							<p:outputLabel value="#{patrimonio.estado.descricao}"
+								style="#{patrimonio.estado.cor}" styleClass="destaque" />
+						</p:column>
 
-					<p:column headerText="Valor aquisição" colspan="1" priority="5">
-						<p:outputLabel value="#{patrimonio.valorAquisicao}">
-							<f:convertNumber type="currency" />
-						</p:outputLabel>
-					</p:column>
+						<p:column headerText="Valor aquisição" colspan="1" priority="5">
+							<p:outputLabel value="#{patrimonio.valorAquisicao}">
+								<f:convertNumber type="currency" />
+							</p:outputLabel>
+						</p:column>
 
-					<p:column headerText="Valor atual" colspan="1" priority="5">
-						<p:outputLabel value="#{patrimonio.valorAtual}">
-							<f:convertNumber type="currency" />
-						</p:outputLabel>
-					</p:column>
+						<p:column headerText="Valor atual" colspan="1" priority="5">
+							<p:outputLabel value="#{patrimonio.valorAtual}">
+								<f:convertNumber type="currency" />
+							</p:outputLabel>
+						</p:column>
 
-					<p:column headerText="Dt. aquisição" colspan="1"
-						styleClass="center" priority="5">
-						<p:outputLabel value="#{patrimonio.dataAquisicao}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</p:outputLabel>
-					</p:column>
+						<p:column headerText="Dt. aquisição" colspan="1"
+							styleClass="center" priority="5">
+							<p:outputLabel value="#{patrimonio.dataAquisicao}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:outputLabel>
+						</p:column>
 
-				</p:dataTable>
+					</p:dataTable>
+				</div>
 			</div>
-
 		</h:form>
-
 	</ui:define>
 </ui:composition>

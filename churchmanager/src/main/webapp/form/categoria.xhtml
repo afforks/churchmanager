@@ -9,9 +9,9 @@
 <h:form prependId="false">
 
 	<p:focus for="nome" />
-		<div class="ui-g-12 ui-g-nopad">
-			<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
-		</div>
+	<div class="ui-g-12 ui-g-nopad">
+		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
+	</div>
 	<div class="ui-fluid" jsf:id="group">
 
 		<div class="ui-g-12 ui-g-nopad">
@@ -40,43 +40,41 @@
 
 
 		<div class="ui-g-12 ui-g-nopad">
-		<div class="ui-lg-6 ui-md-8 ui-sm-12">
-			<p:outputLabel for="status" styleClass="my-label" value="Status" />
-			<p:selectOneRadio id="status" required="true"
-				requiredMessage="Campo 'Status' é obrigatório!"
-				value="#{categoriaMovimentacaoMB.categoriaMovimentacao.status}">
-				<f:selectItems itemLabel="#{status.descricao}" var="status"
-					value="#{categoriaMovimentacaoMB.listarStatus()}"
-					itemValue="#{status}" />
-			</p:selectOneRadio>
-			<p:message for="status" />
+			<div class="ui-lg-6 ui-md-8 ui-sm-12">
+				<p:outputLabel for="status" styleClass="my-label" value="Status" />
+				<p:selectOneRadio id="status" required="true"
+					requiredMessage="Campo 'Status' é obrigatório!"
+					value="#{categoriaMovimentacaoMB.categoriaMovimentacao.status}">
+					<f:selectItems itemLabel="#{status.descricao}" var="status"
+						value="#{categoriaMovimentacaoMB.listarStatus()}"
+						itemValue="#{status}" />
+				</p:selectOneRadio>
+				<p:message for="status" />
+			</div>
 		</div>
+
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
+				<p:commandButton value="Cadastrar"
+					action="#{categoriaMovimentacaoMB.salvar()}" update="group"
+					validateClient="true" icon="fa fa-save"
+					rendered="#{categoriaMovimentacaoMB.categoriaMovimentacao.id == null}"
+					styleClass="btn-blue">
+				</p:commandButton>
+
+				<p:commandButton value="Editar"
+					action="#{categoriaMovimentacaoMB.atualizar()}" update="group"
+					validateClient="true" icon="fa fa-edit"
+					rendered="#{categoriaMovimentacaoMB.categoriaMovimentacao.id != null}"
+					styleClass="btn-green">
+				</p:commandButton>
+			</div>
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
+				<p:button value="Cancelar" outcome="/list/categoria"
+					icon="fa fa-close" styleClass="btn-red ">
+				</p:button>
+			</div>
 		</div>
-
-
-		<p:panelGrid layout="grid" columns="2"
-			columnClasses="ui-grid-col-3,ui-grid-col-3"
-			styleClass="ui-panelgrid-blank">
-			<p:commandButton value="Cadastrar"
-				action="#{categoriaMovimentacaoMB.salvar()}" update="group"
-				validateClient="true" icon="fa fa-save"
-				rendered="#{categoriaMovimentacaoMB.categoriaMovimentacao.id == null}"
-				styleClass="btn-blue">
-			</p:commandButton>
-
-			<p:commandButton value="Editar"
-				action="#{categoriaMovimentacaoMB.atualizar()}" update="group"
-				validateClient="true" icon="fa fa-edit"
-				rendered="#{categoriaMovimentacaoMB.categoriaMovimentacao.id != null}"
-				styleClass="btn-green">
-			</p:commandButton>
-
-			<p:button value="Cancelar" outcome="/list/categoria"
-				icon="fa fa-close" styleClass="btn-red ">
-			</p:button>
-
-		</p:panelGrid>
-
 	</div>
 </h:form>
 </html>

@@ -29,7 +29,7 @@
 				<p:defaultCommand target="buscar" />
 				<p:focus for="filtro" />
 
-				<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12">
 					<p:fieldset styleClass="my-fieldset">
 
 						<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-10">
@@ -54,40 +54,39 @@
 
 					</p:fieldset>
 				</div>
-				<p:spacer />
 			</div>
 		</h:form>
 
-		<p:spacer />
 		<h:form prependId="false">
 			<div class="ui-fluid">
-
-				<p:dataTable id="table" var="cargo" lazy="true"
-					value="#{cargoMB.cargosLazy}" rowHover="true"
-					cargotorPosition="bottom" cargotor="true" scrollWidth="1000"
-					cargotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
-					emptyMessage="Nenhum registro foi encontrado!"
-					cargotorTemplate="{CurrentPageReport} {FirstPageLink} 
+				<div class="ui-g-12 ">
+					<p:dataTable id="table" var="cargo" lazy="true"
+						value="#{cargoMB.cargosLazy}" rowHover="true"
+						cargotorPosition="bottom" cargotor="true" scrollWidth="1000"
+						cargotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
+						emptyMessage="Nenhum registro foi encontrado!"
+						cargotorTemplate="{CurrentPageReport} {FirstPageLink} 
 						{PreviousPageLink} {PageLinks} {NextPageLink} 
 							{LastPageLink} {RowsPerPageDropdown}"
-					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
+						currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
 
-					<f:facet name="header" />
+						<f:facet name="header" />
 
-					<p:column headerText="Nome" colspan="2">
-						<div class="text-overflow">
-							<p:link outcome="/edit/cargo" styleClass="my-link"
-								value="#{cargo.nome}">
-								<f:param name="id" value="#{cargo.idCriptografado()}" />
-							</p:link>
-						</div>
-					</p:column>
+						<p:column headerText="Nome" colspan="2">
+							<div class="text-overflow">
+								<p:link outcome="/edit/cargo" styleClass="my-link"
+									value="#{cargo.nome}">
+									<f:param name="id" value="#{cargo.idCriptografado()}" />
+								</p:link>
+							</div>
+						</p:column>
 
-					<p:column headerText="Descrição" colspan="4" priority="3">
-						<p:outputLabel value="#{cargo.descricao}" />
-					</p:column>
+						<p:column headerText="Descrição" colspan="4" priority="3">
+							<p:outputLabel value="#{cargo.descricao}" />
+						</p:column>
 
-				</p:dataTable>
+					</p:dataTable>
+				</div>
 			</div>
 
 		</h:form>

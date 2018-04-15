@@ -13,7 +13,7 @@
 	<div class="ui-g-12 ui-g-nopad">
 		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
 	</div>
-	
+
 	<div class="ui-fluid" jsf:id="group">
 
 		<div class="ui-g-12 ui-g-nopad">
@@ -206,40 +206,30 @@
 			<p:message for="status" />
 		</div>
 
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 
-		<!-- 			<p:outputLabel /> -->
-		<!-- 		</p:panelGrid> -->
+				<p:commandButton value="Cadastrar"
+					action="#{movimentacaoMB.salvar()}" update="group"
+					validateClient="false" icon="fa fa-save" oncomplete="goToTop()"
+					rendered="#{movimentacaoMB.movimentacao.id == null}"
+					styleClass="btn-blue">
+				</p:commandButton>
 
+				<p:commandButton value="Editar"
+					action="#{movimentacaoMB.atualizar()}" update="group"
+					validateClient="false" icon="fa fa-edit"
+					rendered="#{movimentacaoMB.movimentacao.id != null}"
+					styleClass="btn-green">
+				</p:commandButton>
 
-
-
-
-
-
-
-		<p:panelGrid layout="grid" columns="2"
-			columnClasses="ui-grid-col-3,ui-grid-col-3"
-			styleClass="ui-panelgrid-blank">
-			<p:commandButton value="Cadastrar"
-				action="#{movimentacaoMB.salvar()}" update="group"
-				validateClient="false" icon="fa fa-save" oncomplete="goToTop()"
-				rendered="#{movimentacaoMB.movimentacao.id == null}"
-				styleClass="btn-blue">
-			</p:commandButton>
-
-			<p:commandButton value="Editar"
-				action="#{movimentacaoMB.atualizar()}" update="group"
-				validateClient="false" icon="fa fa-edit"
-				rendered="#{movimentacaoMB.movimentacao.id != null}"
-				styleClass="btn-green">
-			</p:commandButton>
-
-			<p:button value="Cancelar" outcome="/list/movimentacao"
-				icon="fa fa-close" styleClass="btn-red ">
-			</p:button>
-
-		</p:panelGrid>
-
+			</div>
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
+				<p:button value="Cancelar" outcome="/list/movimentacao"
+					icon="fa fa-close" styleClass="btn-red ">
+				</p:button>
+			</div>
+		</div>
 	</div>
 </h:form>
 </html>

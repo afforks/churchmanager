@@ -29,7 +29,7 @@
 				<p:defaultCommand target="buscar" />
 				<p:focus for="filtro" />
 
-				<div class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-12 ">
 					<p:fieldset styleClass="my-fieldset">
 
 						<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-10">
@@ -52,49 +52,44 @@
 								process="@this filtro" update="table" icon="fa fa-search"
 								styleClass="btn-grey" id="buscar" />
 						</div>
-
 					</p:fieldset>
-
-					<p:spacer width="0" height="20" />
 				</div>
 			</div>
 		</h:form>
 
-		<p:spacer width="0" height="20"/>
-
 		<h:form prependId="false">
 			<div class="ui-fluid">
-
-				<p:dataTable id="table" var="usuario" lazy="true"
-					value="#{usuarioMB.usuariosLazy}" rowHover="true"
-					usuariotorPosition="bottom" usuariotor="true"
-					usuariotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
-					emptyMessage="Nenhum registro foi encontrado!"
-					usuariotorTemplate="{CurrentPageReport} {FirstPageLink} 
+				<div class="ui-g-12 ">
+					<p:dataTable id="table" var="usuario" lazy="true"
+						value="#{usuarioMB.usuariosLazy}" rowHover="true"
+						usuariotorPosition="bottom" usuariotor="true"
+						usuariotorAlwaysVisible="false" rows="20" rowsPerPageLabel="de"
+						emptyMessage="Nenhum registro foi encontrado!"
+						usuariotorTemplate="{CurrentPageReport} {FirstPageLink} 
 						{PreviousPageLink} {PageLinks} {NextPageLink} 
 							{LastPageLink} {RowsPerPageDropdown}"
-					currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
+						currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">
 
-					<f:facet name="header" />
+						<f:facet name="header" />
 
-					<p:column headerText="Nome" colspan="2" priority="1">
-						<div class="text-overflow">
-							<p:link outcome="/edit/usuario" styleClass="my-link"
-								value="#{usuario.nomeCompleto}">
-								<f:param name="id" value="#{usuario.idCriptografado()}" />
-							</p:link>
-						</div>
-					</p:column>
+						<p:column headerText="Nome" colspan="2" priority="1">
+							<div class="text-overflow">
+								<p:link outcome="/edit/usuario" styleClass="my-link"
+									value="#{usuario.nomeCompleto}">
+									<f:param name="id" value="#{usuario.idCriptografado()}" />
+								</p:link>
+							</div>
+						</p:column>
 
-					<p:column headerText="E-mail" colspan="2" priority="3">
-						<div class="text-overflow">
-							<p:outputLabel value="#{usuario.email}" />
-						</div>
-					</p:column>
+						<p:column headerText="E-mail" colspan="2" priority="3">
+							<div class="text-overflow">
+								<p:outputLabel value="#{usuario.email}" />
+							</div>
+						</p:column>
 
-				</p:dataTable>
+					</p:dataTable>
+				</div>
 			</div>
-
 		</h:form>
 	</ui:define>
 </ui:composition>
