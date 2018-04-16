@@ -12,6 +12,9 @@ import javax.inject.Inject;
 
 public class UsuarioBO implements Serializable, Buscador<Usuario> {
 	private static final long serialVersionUID = 1L;
+
+	private static final boolean ORDER_ASC = true;
+
 	@Inject
 	private UsuarioDAO dao;
 
@@ -30,7 +33,7 @@ public class UsuarioBO implements Serializable, Buscador<Usuario> {
 	}
 
 	public List<Usuario> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(Usuario usuario) {

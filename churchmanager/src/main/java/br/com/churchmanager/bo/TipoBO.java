@@ -12,6 +12,9 @@ import javax.inject.Inject;
 
 public class TipoBO implements Serializable, Buscador<Tipo> {
 	private static final long serialVersionUID = 11236782348L;
+
+	private static final boolean ORDER_ASC = true;
+
 	@Inject
 	private TipoDAO dao;
 
@@ -30,7 +33,7 @@ public class TipoBO implements Serializable, Buscador<Tipo> {
 	}
 
 	public List<Tipo> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(Tipo tipo) {

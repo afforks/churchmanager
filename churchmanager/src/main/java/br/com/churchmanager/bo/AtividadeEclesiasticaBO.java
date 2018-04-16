@@ -11,7 +11,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class AtividadeEclesiasticaBO implements Serializable, Buscador<AtividadeEclesiastica> {
+	
 	private static final long serialVersionUID = 1L;
+
+	private static final boolean ORDER_ASC = true;
+
+	
 	@Inject
 	private AtividadeEclesiasticaDAO dao;
 
@@ -30,7 +35,7 @@ public class AtividadeEclesiasticaBO implements Serializable, Buscador<Atividade
 	}
 
 	public List<AtividadeEclesiastica> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(AtividadeEclesiastica pagina) {

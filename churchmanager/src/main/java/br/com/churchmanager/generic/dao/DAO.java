@@ -37,8 +37,11 @@ import br.com.churchmanager.util.MyLazyDataModel;
 import br.com.churchmanager.util.Transacional;
 
 public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
+
 	private static final long serialVersionUID = -3812355503300426470L;
+
 	@Inject
+
 	private EntityManager entityManager;
 	private Class<T> clazz;
 
@@ -132,11 +135,11 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 		CriteriaQuery<T> cq = builder.createQuery(this.clazz);
 		Root<T> root = cq.from(this.clazz);
 		ArrayList<javax.persistence.criteria.Order> orders = new ArrayList<javax.persistence.criteria.Order>();
-		String[] arg9 = propertiersOrders;
-		int arg8 = propertiersOrders.length;
+		String[] campos = propertiersOrders;
+		int qtdPropriedades = propertiersOrders.length;
 
-		for (int arg7 = 0; arg7 < arg8; ++arg7) {
-			String p = arg9[arg7];
+		for (int i = 0; i < qtdPropriedades; ++i) {
+			String p = campos[i];
 			if (ordemAscendente) {
 				orders.add(builder.asc(root.get(p)));
 			} else {

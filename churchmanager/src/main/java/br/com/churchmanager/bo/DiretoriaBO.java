@@ -13,6 +13,9 @@ import javax.inject.Inject;
 
 public class DiretoriaBO implements Serializable, Buscador<Diretoria> {
 	private static final long serialVersionUID = 1L;
+
+	private static final boolean ORDER_ASC = true;
+
 	@Inject
 	DiretoriaDAO dao;
 
@@ -31,7 +34,7 @@ public class DiretoriaBO implements Serializable, Buscador<Diretoria> {
 	}
 
 	public List<Diretoria> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(Diretoria evento) throws NegocioException {

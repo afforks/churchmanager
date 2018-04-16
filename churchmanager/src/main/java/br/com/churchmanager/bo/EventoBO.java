@@ -12,6 +12,9 @@ import javax.inject.Inject;
 
 public class EventoBO implements Serializable, Buscador<Evento> {
 	private static final long serialVersionUID = 1L;
+
+	private static final boolean ORDER_ASC = true;
+
 	@Inject
 	EventoDAO dao;
 
@@ -30,7 +33,7 @@ public class EventoBO implements Serializable, Buscador<Evento> {
 	}
 
 	public List<Evento> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(Evento evento) {

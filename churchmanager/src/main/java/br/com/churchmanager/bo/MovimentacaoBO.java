@@ -12,6 +12,9 @@ import javax.inject.Inject;
 
 public class MovimentacaoBO implements Serializable, Buscador<Movimentacao> {
 	private static final long serialVersionUID = 1L;
+
+	private static final boolean ORDER_ASC = true;
+
 	@Inject
 	private MovimentacaoDAO dao;
 
@@ -30,7 +33,7 @@ public class MovimentacaoBO implements Serializable, Buscador<Movimentacao> {
 	}
 
 	public List<Movimentacao> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(Movimentacao movimentacao) {

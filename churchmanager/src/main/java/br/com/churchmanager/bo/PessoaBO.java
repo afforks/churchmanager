@@ -19,6 +19,9 @@ import br.com.churchmanager.util.MyLazyDataModel;
 public class PessoaBO implements Serializable, Buscador<Pessoa> {
 	
 	private static final long serialVersionUID = 1L;
+
+	private static final boolean ORDER_ASC = true;
+
 	
 	@Inject
 	PessoaDAO dao;
@@ -38,7 +41,7 @@ public class PessoaBO implements Serializable, Buscador<Pessoa> {
 	}
 
 	public List<Pessoa> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(Pessoa pessoa) {

@@ -17,6 +17,9 @@ import javax.inject.Inject;
 
 public class ParcelaMovimentacaoBO implements Serializable, Buscador<ParcelaMovimentacao> {
 	private static final long serialVersionUID = 1L;
+
+	private static final boolean ORDER_ASC = true;
+
 	@Inject
 	private ParcelaMovimentacaoDAO dao;
 
@@ -35,7 +38,7 @@ public class ParcelaMovimentacaoBO implements Serializable, Buscador<ParcelaMovi
 	}
 
 	public List<ParcelaMovimentacao> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(ParcelaMovimentacao parcela) {

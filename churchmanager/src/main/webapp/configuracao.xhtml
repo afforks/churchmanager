@@ -54,10 +54,10 @@
 
 				<div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12  ">
 					<p:outputLabel for="cnpj" styleClass="my-label" value="CNPJ " />
-					<p:inputText id="cnpj" required="true"
-						requiredMessage="Campo 'CNPJ' é obrigatório!" value=""
+					<p:inputMask id="cnpj" required="true" mask="99.999.999/9999-99"
+						requiredMessage="Campo 'CNPJ' é obrigatório!" value="" 
 						placeholder="Ex.: 15.206.686/0001-49">
-					</p:inputText>
+					</p:inputMask>
 					<p:message for="cnpj" />
 				</div>
 

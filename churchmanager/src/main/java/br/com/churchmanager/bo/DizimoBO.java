@@ -13,6 +13,9 @@ import javax.inject.Inject;
 
 public class DizimoBO implements Serializable, Buscador<Dizimo> {
 	private static final long serialVersionUID = 1L;
+
+	private static final boolean ORDER_ASC = true;
+
 	@Inject
 	private DizimoDAO dao;
 
@@ -31,7 +34,7 @@ public class DizimoBO implements Serializable, Buscador<Dizimo> {
 	}
 
 	public List<Dizimo> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(Dizimo dizimo) {

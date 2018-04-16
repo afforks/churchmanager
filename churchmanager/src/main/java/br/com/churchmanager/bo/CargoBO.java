@@ -15,6 +15,8 @@ import javax.inject.Inject;
 
 public class CargoBO implements Serializable, Buscador<Cargo> {
 	
+	private static final boolean ORDER_ASC = true;
+
 	private static final long serialVersionUID = 322432123432121L;
 	
 	@Inject
@@ -35,7 +37,7 @@ public class CargoBO implements Serializable, Buscador<Cargo> {
 	}
 
 	public List<Cargo> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(Cargo cargo) throws NegocioException {

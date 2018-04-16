@@ -12,6 +12,9 @@ import javax.inject.Inject;
 
 public class PessoaCargoBO implements Serializable, Buscador<PessoaCargo> {
 	private static final long serialVersionUID = 1L;
+
+	private static final boolean ORDER_ASC = true;
+
 	@Inject
 	PessoaCargoDAO dao;
 
@@ -30,7 +33,7 @@ public class PessoaCargoBO implements Serializable, Buscador<PessoaCargo> {
 	}
 
 	public List<PessoaCargo> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(PessoaCargo pc) throws Exception {

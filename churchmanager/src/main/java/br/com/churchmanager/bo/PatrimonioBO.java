@@ -12,6 +12,9 @@ import javax.inject.Inject;
 
 public class PatrimonioBO implements Serializable, Buscador<Patrimonio> {
 	private static final long serialVersionUID = 1L;
+
+	private static final boolean ORDER_ASC = true;
+
 	@Inject
 	private PatrimonioDAO dao;
 
@@ -30,7 +33,7 @@ public class PatrimonioBO implements Serializable, Buscador<Patrimonio> {
 	}
 
 	public List<Patrimonio> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(Patrimonio patrimonio) {

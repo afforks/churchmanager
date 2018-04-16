@@ -12,6 +12,9 @@ import javax.inject.Inject;
 
 public class PaginaBO implements Serializable, Buscador<Pagina> {
 	private static final long serialVersionUID = 1L;
+
+	private static final boolean ORDER_ASC = true;
+
 	@Inject
 	private PaginaDAO dao;
 
@@ -30,7 +33,7 @@ public class PaginaBO implements Serializable, Buscador<Pagina> {
 	}
 
 	public List<Pagina> listar() {
-		return this.dao.listar(true, new String[0]);
+		return this.dao.listar(ORDER_ASC);
 	}
 
 	public void validar(Pagina pagina) {
