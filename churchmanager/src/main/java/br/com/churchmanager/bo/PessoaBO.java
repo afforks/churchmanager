@@ -8,6 +8,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.churchmanager.dao.PessoaDAO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.filter.PessoaFilter;
@@ -17,21 +20,20 @@ import br.com.churchmanager.model.group.PessoaAtividaEclesiastica;
 import br.com.churchmanager.util.MyLazyDataModel;
 
 public class PessoaBO implements Serializable, Buscador<Pessoa> {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private static final boolean ORDER_ASC = true;
 
-	
 	@Inject
 	PessoaDAO dao;
 
-	public void salvar(Pessoa pessoa) {
+	public void salvar(Pessoa pessoa) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(pessoa);
 		this.dao.salvar(pessoa);
 	}
 
-	public void atualizar(Pessoa pessoa) {
+	public void atualizar(Pessoa pessoa) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(pessoa);
 		this.dao.atualizar(pessoa);
 	}
@@ -44,7 +46,7 @@ public class PessoaBO implements Serializable, Buscador<Pessoa> {
 		return this.dao.listar(ORDER_ASC);
 	}
 
-	public void validar(Pessoa pessoa) {
+	public void validar(Pessoa pessoa) throws NegocioException {
 	}
 
 	public Pessoa buscarPorId(Serializable id) {

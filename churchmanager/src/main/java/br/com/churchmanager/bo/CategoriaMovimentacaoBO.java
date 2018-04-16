@@ -1,6 +1,9 @@
 package br.com.churchmanager.bo;
 
 import br.com.churchmanager.dao.CategoriaMovimentacaoDAO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.CategoriaMovimentacao;
 import br.com.churchmanager.model.filter.CategoriaMovimentacaoFilter;
@@ -18,12 +21,14 @@ public class CategoriaMovimentacaoBO implements Serializable, Buscador<Categoria
 	@Inject
 	private CategoriaMovimentacaoDAO dao;
 
-	public void salvar(CategoriaMovimentacao categoria) {
+	public void salvar(CategoriaMovimentacao categoria)
+			throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(categoria);
 		this.dao.salvar(categoria);
 	}
 
-	public void atualizar(CategoriaMovimentacao categoria) {
+	public void atualizar(CategoriaMovimentacao categoria)
+			throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(categoria);
 		this.dao.atualizar(categoria);
 	}
@@ -36,7 +41,7 @@ public class CategoriaMovimentacaoBO implements Serializable, Buscador<Categoria
 		return this.dao.listar(ORDER_ASC);
 	}
 
-	public void validar(CategoriaMovimentacao categoria) {
+	public void validar(CategoriaMovimentacao categoria) throws NegocioException {
 	}
 
 	public CategoriaMovimentacao buscarPorId(Serializable id) {

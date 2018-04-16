@@ -1,6 +1,9 @@
 package br.com.churchmanager.bo;
 
 import br.com.churchmanager.dao.MovimentacaoDAO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.Movimentacao;
 import br.com.churchmanager.model.filter.MovimentacaoFilter;
@@ -18,12 +21,14 @@ public class MovimentacaoBO implements Serializable, Buscador<Movimentacao> {
 	@Inject
 	private MovimentacaoDAO dao;
 
-	public void salvar(Movimentacao movimentacao) {
+	public void salvar(Movimentacao movimentacao)
+			throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(movimentacao);
 		this.dao.salvar(movimentacao);
 	}
 
-	public Movimentacao atualizar(Movimentacao movimentacao) {
+	public Movimentacao atualizar(Movimentacao movimentacao)
+			throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(movimentacao);
 		return (Movimentacao) this.dao.atualizar(movimentacao);
 	}
@@ -36,7 +41,7 @@ public class MovimentacaoBO implements Serializable, Buscador<Movimentacao> {
 		return this.dao.listar(ORDER_ASC);
 	}
 
-	public void validar(Movimentacao movimentacao) {
+	public void validar(Movimentacao movimentacao) throws NegocioException {
 	}
 
 	public Movimentacao buscarPorId(Serializable id) {

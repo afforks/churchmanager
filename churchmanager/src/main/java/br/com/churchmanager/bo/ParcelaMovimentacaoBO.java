@@ -1,6 +1,9 @@
 package br.com.churchmanager.bo;
 
 import br.com.churchmanager.dao.ParcelaMovimentacaoDAO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.Movimentacao;
 import br.com.churchmanager.model.ParcelaMovimentacao;
@@ -23,12 +26,14 @@ public class ParcelaMovimentacaoBO implements Serializable, Buscador<ParcelaMovi
 	@Inject
 	private ParcelaMovimentacaoDAO dao;
 
-	public void salvar(ParcelaMovimentacao parcela) {
+	public void salvar(ParcelaMovimentacao parcela)
+			throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(parcela);
 		this.dao.salvar(parcela);
 	}
 
-	public ParcelaMovimentacao atualizar(ParcelaMovimentacao parcela) {
+	public ParcelaMovimentacao atualizar(ParcelaMovimentacao parcela)
+			throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(parcela);
 		return (ParcelaMovimentacao) this.dao.atualizar(parcela);
 	}
@@ -41,7 +46,7 @@ public class ParcelaMovimentacaoBO implements Serializable, Buscador<ParcelaMovi
 		return this.dao.listar(ORDER_ASC);
 	}
 
-	public void validar(ParcelaMovimentacao parcela) {
+	public void validar(ParcelaMovimentacao parcela) throws NegocioException {
 	}
 
 	public ParcelaMovimentacao buscarPorId(Serializable id) {

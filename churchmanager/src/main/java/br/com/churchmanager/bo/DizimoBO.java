@@ -1,6 +1,9 @@
 package br.com.churchmanager.bo;
 
 import br.com.churchmanager.dao.DizimoDAO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.Dizimo;
 import br.com.churchmanager.model.filter.DizimoFilter;
@@ -19,12 +22,12 @@ public class DizimoBO implements Serializable, Buscador<Dizimo> {
 	@Inject
 	private DizimoDAO dao;
 
-	public void salvar(Dizimo dizimo) {
+	public void salvar(Dizimo dizimo) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(dizimo);
 		this.dao.salvar(dizimo);
 	}
 
-	public void atualizar(Dizimo dizimo) {
+	public void atualizar(Dizimo dizimo) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(dizimo);
 		this.dao.atualizar(dizimo);
 	}
@@ -37,7 +40,7 @@ public class DizimoBO implements Serializable, Buscador<Dizimo> {
 		return this.dao.listar(ORDER_ASC);
 	}
 
-	public void validar(Dizimo dizimo) {
+	public void validar(Dizimo dizimo) throws NegocioException {
 	}
 
 	public Dizimo buscarPorId(Serializable id) {

@@ -33,14 +33,14 @@ public class CargoMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		if(FacesUtil.isNotPostback()) {
+		if (FacesUtil.isNotPostback()) {
 			Cargo cargo = (Cargo) BuscaObjeto.comParametroGET(Cargo.class, "id", this.bo);
 			this.cargo = cargo;
 		}
 	}
 
 	public String salvar() {
-		try {	
+		try {
 			this.bo.salvar(this.cargo);
 			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.cargo.toString());
 			this.cargo = null;
@@ -48,7 +48,7 @@ public class CargoMB implements Serializable {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
 			e.printStackTrace();
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			FacesUtil.atencao("msg", "Atenção!", "O nome '"+cargo.getNome()+"' está duplicado, por favor, informe outro!");
 			e.printStackTrace();
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
@@ -66,15 +66,22 @@ public class CargoMB implements Serializable {
 			FacesUtil.atualizaComponente("msg");
 			FacesUtil.manterMensagem();
 			this.cargo = null;
-		
-		} catch (ViolacaoDeRestricaoException | DadosException | NegocioException e) {
+		} catch (NegocioException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} catch (ViolacaoDeRestricaoException e) {
+			FacesUtil.atencao("msg", "Atenção!", "O nome '"+cargo.getNome()+"' está duplicado, por favor, informe outro!");
+			e.printStackTrace();
+			return null;
+		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
 			e.printStackTrace();
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
+			FacesUtil.manterMensagem();
 		}
-	 
 		return "/list/cargo?faces-redirect=true";
 	}
 

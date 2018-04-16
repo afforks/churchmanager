@@ -1,6 +1,9 @@
 package br.com.churchmanager.bo;
 
 import br.com.churchmanager.dao.EventoDAO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.Evento;
 import br.com.churchmanager.model.filter.EventoFilter;
@@ -18,12 +21,12 @@ public class EventoBO implements Serializable, Buscador<Evento> {
 	@Inject
 	EventoDAO dao;
 
-	public void salvar(Evento evento) {
+	public void salvar(Evento evento) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(evento);
 		this.dao.salvar(evento);
 	}
 
-	public void atualizar(Evento evento) {
+	public void atualizar(Evento evento) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(evento);
 		this.dao.atualizar(evento);
 	}
@@ -36,7 +39,7 @@ public class EventoBO implements Serializable, Buscador<Evento> {
 		return this.dao.listar(ORDER_ASC);
 	}
 
-	public void validar(Evento evento) {
+	public void validar(Evento evento) throws NegocioException {
 	}
 
 	public Evento buscarPorId(Serializable id) {

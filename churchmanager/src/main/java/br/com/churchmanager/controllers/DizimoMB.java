@@ -14,6 +14,9 @@ import javax.validation.constraints.Pattern;
 
 import br.com.churchmanager.bo.DizimoBO;
 import br.com.churchmanager.bo.PessoaBO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Dizimo;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.Status;
@@ -51,21 +54,49 @@ public class DizimoMB implements Serializable {
 	}
 
 	public String salvar() {
-		this.bo.salvar(this.dizimo);
-		FacesUtil.informacao("msg", "Cadastro com sucesso!", this.dizimo.toString());
-		FacesUtil.atualizaComponente("msg");
-		this.dizimo = null;
-		this.idPessoa = null;
+		try {
+			this.bo.salvar(this.dizimo);
+			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.dizimo.toString());
+			FacesUtil.atualizaComponente("msg");
+			this.dizimo = null;
+			this.idPessoa = null;
+		} catch (NegocioException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} catch (ViolacaoDeRestricaoException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} catch (DadosException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} finally {
+			FacesUtil.atualizaComponente("msg");
+		}
 		return null;
 	}
 
 	public String atualizar() {
-		this.bo.atualizar(this.dizimo);
-		FacesUtil.informacao("msg", "Editado com sucesso!", this.dizimo.toString());
-		FacesUtil.atualizaComponente("msg");
-		FacesUtil.manterMensagem();
-		this.dizimo = null;
-		this.idPessoa = null;
+		try {
+			this.bo.atualizar(this.dizimo);
+			FacesUtil.informacao("msg", "Editado com sucesso!", this.dizimo.toString());
+			this.dizimo = null;
+			this.idPessoa = null;
+		} catch (NegocioException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} catch (ViolacaoDeRestricaoException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} catch (DadosException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} finally {
+			FacesUtil.atualizaComponente("msg");
+			FacesUtil.manterMensagem();
+		}
 		return "/list/dizimo?faces-redirect=true";
 	}
 

@@ -1,6 +1,9 @@
 package br.com.churchmanager.bo;
 
 import br.com.churchmanager.dao.PaginaDAO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.Pagina;
 import br.com.churchmanager.model.filter.PaginaFilter;
@@ -18,12 +21,12 @@ public class PaginaBO implements Serializable, Buscador<Pagina> {
 	@Inject
 	private PaginaDAO dao;
 
-	public void salvar(Pagina pagina) {
+	public void salvar(Pagina pagina) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(pagina);
 		this.dao.salvar(pagina);
 	}
 
-	public void atualizar(Pagina pagina) {
+	public void atualizar(Pagina pagina) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(pagina);
 		this.dao.atualizar(pagina);
 	}
@@ -36,7 +39,7 @@ public class PaginaBO implements Serializable, Buscador<Pagina> {
 		return this.dao.listar(ORDER_ASC);
 	}
 
-	public void validar(Pagina pagina) {
+	public void validar(Pagina pagina) throws NegocioException {
 	}
 
 	public Pagina buscarPorId(Serializable id) {

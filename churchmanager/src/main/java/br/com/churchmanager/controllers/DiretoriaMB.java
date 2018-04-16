@@ -10,7 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.churchmanager.bo.DiretoriaBO;
+import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Cargo;
 import br.com.churchmanager.model.Diretoria;
 import br.com.churchmanager.model.Pessoa;
@@ -44,10 +46,16 @@ public class DiretoriaMB implements Serializable {
 			this.bo.salvar(this.diretoria);
 			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.diretoria.toString());
 			this.diretoria = null;
-		}catch (NegocioException e) {
-			FacesUtil.erro("msg", "Erro ao tentar cadastrar a diretoria!", e.getMessage());
-		}
-		finally {
+		} catch (NegocioException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} catch (ViolacaoDeRestricaoException e) {
+			FacesUtil.atencao("msg", "Atenção!", "O nome '"+diretoria.getNome()+"' está duplicado, por favor, informe outro!");
+			e.printStackTrace();
+		} catch (DadosException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
 		return null;
@@ -59,10 +67,21 @@ public class DiretoriaMB implements Serializable {
 			FacesUtil.informacao("msg", "Editado com sucesso!", this.diretoria.toString());
 			FacesUtil.manterMensagem();
 			this.diretoria = null;
-		}catch(NegocioException e) {
-			FacesUtil.erro("msg", "Erro ao tentar editar a diretoria!", e.getMessage());
-		}finally {
+		} catch (NegocioException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} catch (ViolacaoDeRestricaoException e) {
+			FacesUtil.atencao("msg", "Atenção!", "O nome '"+diretoria.getNome()+"' está duplicado, por favor, informe outro!");
+			e.printStackTrace();
+			return null;
+		} catch (DadosException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} finally {
 			FacesUtil.atualizaComponente("msg");
+			FacesUtil.manterMensagem();
 		}
 		return "/list/diretoria?faces-redirect=true";
 	}

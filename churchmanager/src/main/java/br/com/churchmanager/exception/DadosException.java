@@ -1,6 +1,6 @@
 package br.com.churchmanager.exception;
 
-public class DadosException extends RuntimeException {
+public class DadosException extends Exception {
 
 	/**
 	 * 

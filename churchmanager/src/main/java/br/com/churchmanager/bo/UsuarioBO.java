@@ -1,6 +1,9 @@
 package br.com.churchmanager.bo;
 
 import br.com.churchmanager.dao.UsuarioDAO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.Usuario;
 import br.com.churchmanager.model.filter.UsuarioFilter;
@@ -18,12 +21,12 @@ public class UsuarioBO implements Serializable, Buscador<Usuario> {
 	@Inject
 	private UsuarioDAO dao;
 
-	public void salvar(Usuario usuario) {
+	public void salvar(Usuario usuario) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(usuario);
 		this.dao.salvar(usuario);
 	}
 
-	public void atualizar(Usuario usuario) {
+	public void atualizar(Usuario usuario) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(usuario);
 		this.dao.atualizar(usuario);
 	}
@@ -36,7 +39,7 @@ public class UsuarioBO implements Serializable, Buscador<Usuario> {
 		return this.dao.listar(ORDER_ASC);
 	}
 
-	public void validar(Usuario usuario) {
+	public void validar(Usuario usuario) throws NegocioException {
 	}
 
 	public Usuario buscarPorId(Serializable id) {

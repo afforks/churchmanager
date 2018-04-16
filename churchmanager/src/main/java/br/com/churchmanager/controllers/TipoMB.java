@@ -10,6 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.churchmanager.bo.TipoBO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.Tipo;
 import br.com.churchmanager.model.filter.TipoFilter;
@@ -35,19 +38,47 @@ public class TipoMB implements Serializable {
 	}
 
 	public String salvar() {
-		this.bo.salvar(this.tipo);
-		FacesUtil.informacao("tipo-msg", "Cadastro com sucesso!", this.tipo.toString());
-		FacesUtil.atualizaComponente("tipo-msg");
-		this.tipo = null;
+		try {
+			this.bo.salvar(this.tipo);
+			FacesUtil.informacao("tipo-msg", "Cadastro com sucesso!", this.tipo.toString());
+			FacesUtil.atualizaComponente("tipo-msg");
+			this.tipo = null;
+		} catch (NegocioException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} catch (ViolacaoDeRestricaoException e) {
+			FacesUtil.atencao("msg", "Atenção!", "O nome '"+tipo.getNome()+"' está duplicado, por favor, informe outro!");
+			e.printStackTrace();
+		} catch (DadosException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} finally {
+			FacesUtil.atualizaComponente("msg");
+		}
 		return null;
 	}
 
 	public String atualizar() {
-		this.bo.atualizar(this.tipo);
-		FacesUtil.informacao("tipo-msg", "Editado com sucesso!", this.tipo.toString());
-		FacesUtil.atualizaComponente("tipo-msg");
-		FacesUtil.manterMensagem();
-		this.tipo = null;
+		try {
+			this.bo.atualizar(this.tipo);
+			FacesUtil.informacao("tipo-msg", "Editado com sucesso!", this.tipo.toString());
+			this.tipo = null;
+		} catch (NegocioException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} catch (ViolacaoDeRestricaoException e) {
+			FacesUtil.atencao("msg", "Atenção!", "O nome '"+tipo.getNome()+"' está duplicado, por favor, informe outro!");
+			e.printStackTrace();
+			return null;
+		} catch (DadosException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} finally {
+			FacesUtil.atualizaComponente("msg");
+			FacesUtil.manterMensagem();
+		}
 		return "/list/tipo?faces-redirect=true";
 	}
 

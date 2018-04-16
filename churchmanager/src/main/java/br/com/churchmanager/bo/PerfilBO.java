@@ -1,6 +1,9 @@
 package br.com.churchmanager.bo;
 
 import br.com.churchmanager.dao.PerfilDAO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.Perfil;
 import br.com.churchmanager.model.filter.PerfilFilter;
@@ -18,12 +21,12 @@ public class PerfilBO implements Serializable, Buscador<Perfil> {
 	@Inject
 	PerfilDAO dao;
 
-	public void salvar(Perfil perfil) {
+	public void salvar(Perfil perfil) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(perfil);
 		this.dao.salvar(perfil);
 	}
 
-	public void atualizar(Perfil perfil) {
+	public void atualizar(Perfil perfil) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(perfil);
 		this.dao.atualizar(perfil);
 	}
@@ -36,7 +39,7 @@ public class PerfilBO implements Serializable, Buscador<Perfil> {
 		return this.dao.listar(ORDER_ASC);
 	}
 
-	public void validar(Perfil perfil) {
+	public void validar(Perfil perfil) throws NegocioException {
 	}
 
 	public Perfil buscarPorId(Serializable id) {

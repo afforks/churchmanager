@@ -10,6 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.churchmanager.bo.PessoaCargoBO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Cargo;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.PessoaCargo;
@@ -42,10 +45,17 @@ public class PessoaCargoMB implements Serializable {
 			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.pessoaCargo.toString());
 			FacesUtil.atualizaComponente("msg-cad-pessoa-cargo");
 			this.pessoaCargo = null;
-		} catch (Exception arg1) {
-			FacesUtil.atencao("msg-cad-pessoa-cargo", arg1.getMessage(), "");
-			FacesUtil.atualizaComponente("msg-cad-pessoa-cargo");
-			arg1.printStackTrace();
+		} catch (NegocioException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} catch (ViolacaoDeRestricaoException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} catch (DadosException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} finally {
+			FacesUtil.atualizaComponente("msg");
 		}
 
 		return null;
@@ -55,13 +65,22 @@ public class PessoaCargoMB implements Serializable {
 		try {
 			this.bo.atualizar(this.pessoaCargo);
 			FacesUtil.informacao("msg", "Editado com sucesso!", this.pessoaCargo.toString());
+			pessoaCargo = null;
+		} catch (NegocioException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} catch (ViolacaoDeRestricaoException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} catch (DadosException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} finally {
 			FacesUtil.atualizaComponente("msg");
 			FacesUtil.manterMensagem();
-			this.pessoaCargo = null;
-		} catch (Exception arg1) {
-			FacesUtil.atencao("msg-cad-pessoa-cargo", arg1.getMessage(), "");
-			FacesUtil.atualizaComponente("msg-cad-pessoa-cargo");
-			arg1.printStackTrace();
 		}
 
 		return "/list/pessoaCargo?faces-redirect=true";
@@ -141,7 +160,7 @@ public class PessoaCargoMB implements Serializable {
 	public void removerCargo() {
 		this.getPessoaCargo().setCargo((Cargo) null);
 	}
-	
+
 	public void resetarCampos() {
 		removerCargo();
 		removerPessoa();

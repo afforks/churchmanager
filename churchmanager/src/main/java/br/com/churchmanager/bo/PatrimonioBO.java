@@ -1,6 +1,9 @@
 package br.com.churchmanager.bo;
 
 import br.com.churchmanager.dao.PatrimonioDAO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.Patrimonio;
 import br.com.churchmanager.model.filter.PatrimonioFilter;
@@ -18,12 +21,12 @@ public class PatrimonioBO implements Serializable, Buscador<Patrimonio> {
 	@Inject
 	private PatrimonioDAO dao;
 
-	public void salvar(Patrimonio patrimonio) {
+	public void salvar(Patrimonio patrimonio) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(patrimonio);
 		this.dao.salvar(patrimonio);
 	}
 
-	public void atualizar(Patrimonio patrimonio) {
+	public void atualizar(Patrimonio patrimonio) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(patrimonio);
 		this.dao.atualizar(patrimonio);
 	}
@@ -36,7 +39,7 @@ public class PatrimonioBO implements Serializable, Buscador<Patrimonio> {
 		return this.dao.listar(ORDER_ASC);
 	}
 
-	public void validar(Patrimonio patrimonio) {
+	public void validar(Patrimonio patrimonio) throws NegocioException {
 	}
 
 	public Patrimonio buscarPorId(Serializable id) {

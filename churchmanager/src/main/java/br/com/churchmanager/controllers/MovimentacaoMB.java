@@ -12,6 +12,9 @@ import javax.inject.Named;
 
 import br.com.churchmanager.bo.MovimentacaoBO;
 import br.com.churchmanager.bo.ParcelaMovimentacaoBO;
+import br.com.churchmanager.exception.DadosException;
+import br.com.churchmanager.exception.NegocioException;
+import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Movimentacao;
 import br.com.churchmanager.model.ParcelaMovimentacao;
 import br.com.churchmanager.model.Status;
@@ -57,20 +60,48 @@ public class MovimentacaoMB implements Serializable {
 
 	public String salvar() {
 		this.movimentacao.gerarParcelas();
-		this.bo.salvar(this.movimentacao);
-		FacesUtil.informacao("msg", "Cadastro com sucesso!", this.movimentacao.toString());
-		FacesUtil.atualizaComponente("msg");
-		this.movimentacao = null;
+		try {
+			this.bo.salvar(this.movimentacao);
+			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.movimentacao.toString());
+			FacesUtil.atualizaComponente("msg");
+			this.movimentacao = null;
+		} catch (NegocioException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} catch (ViolacaoDeRestricaoException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} catch (DadosException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} finally {
+			FacesUtil.atualizaComponente("msg");
+		}
 		return null;
 	}
 
 	public String atualizar() {
-		this.movimentacao.gerarParcelas();
-		this.bo.atualizar(this.movimentacao);
-		FacesUtil.informacao("msg", "Editado com sucesso!", this.movimentacao.toString());
-		FacesUtil.atualizaComponente("msg");
-		FacesUtil.manterMensagem();
-		this.movimentacao = null;
+		try {
+			this.movimentacao.gerarParcelas();
+			this.bo.atualizar(this.movimentacao);
+			FacesUtil.informacao("msg", "Editado com sucesso!", this.movimentacao.toString());
+			this.movimentacao = null;
+		} catch (NegocioException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} catch (ViolacaoDeRestricaoException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} catch (DadosException e) {
+			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			e.printStackTrace();
+			return null;
+		} finally {
+			FacesUtil.atualizaComponente("msg");
+			FacesUtil.manterMensagem();
+		}
 		return "/list/movimentacao?faces-redirect=true";
 	}
 
@@ -138,7 +169,7 @@ public class MovimentacaoMB implements Serializable {
 	}
 
 	public ParcelaMovimentacao getParcela() {
-		if(parcela == null) {
+		if (parcela == null) {
 			parcela = new ParcelaMovimentacao();
 		}
 		return this.parcela;
@@ -215,11 +246,17 @@ public class MovimentacaoMB implements Serializable {
 				movimentacao.setStatusMovimentacao(StatusMovimentacao.PAGO);
 			}
 
-			this.movimentacao = this.bo.atualizar(movimentacao);
-			this.parcela = this.parcelasBO.atualizar(this.parcela);
-			this.movimentacao.atualizaParcela(this.parcela);
-			FacesUtil.informacao("msg-pagar-receber", "Editado com sucesso!", this.parcela.toString());
-			FacesUtil.atualizaComponente("msg-pagar-receber");
+			try {
+				this.movimentacao = this.bo.atualizar(movimentacao);
+				this.parcela = this.parcelasBO.atualizar(this.parcela);
+				this.movimentacao.atualizaParcela(this.parcela);
+				FacesUtil.informacao("msg-pagar-receber", "Editado com sucesso!", this.parcela.toString());
+			} catch (Exception e) {
+				FacesUtil.atencao("msg-pagar-receber", "Atenção!", e.getMessage());
+				e.printStackTrace();
+			} finally {
+				FacesUtil.atualizaComponente("msg-pagar-receber");
+			}
 		} else {
 			FacesUtil.atencao("msg-pagar-receber", "É necessário informar a data!", "");
 			FacesUtil.atualizaComponente("msg-pagar-receber");
@@ -248,12 +285,17 @@ public class MovimentacaoMB implements Serializable {
 		if (parcelasPagas == 0L) {
 			movimentacao.setStatusMovimentacao(StatusMovimentacao.EM_ABERTO);
 		}
-
-		this.movimentacao = this.bo.atualizar(movimentacao);
-		this.parcela = this.parcelasBO.atualizar(this.parcela);
-		this.movimentacao.atualizaParcela(this.parcela);
-		FacesUtil.informacao("msg-pagar-receber", "Editado com sucesso!", this.parcela.toString());
-		FacesUtil.atualizaComponente("msg-pagar-receber");
+		try {
+			this.movimentacao = this.bo.atualizar(movimentacao);
+			this.parcela = this.parcelasBO.atualizar(this.parcela);
+			this.movimentacao.atualizaParcela(this.parcela);
+			FacesUtil.informacao("msg-pagar-receber", "Editado com sucesso!", this.parcela.toString());
+		} catch (Exception e) {
+			FacesUtil.atencao("msg-pagar-receber", "Atenção!", e.getMessage());
+			e.printStackTrace();
+		} finally {
+			FacesUtil.atualizaComponente("msg-pagar-receber");
+		}
 		return null;
 	}
 }
