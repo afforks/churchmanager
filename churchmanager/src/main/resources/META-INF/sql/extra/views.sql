@@ -94,13 +94,14 @@ m.tipo_movimentacao as tipo
     
 /*  */
 create view pessoas_por_atividade_eclesiastica as
-select ae.nome as categoria, count(ae.nome) as quantidade
+select max(p.data_cadastro) as data,
+ae.nome as categoria, count(ae.id) as quantidade
 from pessoa p
 	inner join pessoa_atividade_eclesiastica pae
 		on pae.pessoa_id = p.id
 	inner join atividade_eclesiastica ae
 		on ae.id = pae.atividade_eclesiastica_id
-	group by categoria;
+	group by year(p.data_cadastro), month(p.data_cadastro), categoria;
 
 
 
