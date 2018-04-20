@@ -10,21 +10,25 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import br.com.churchmanager.cadastro.model.Chrome;
-import br.com.churchmanager.cadastro.util.WebDriverUtil;
+import br.com.churchmanager.util.Chrome;
+import br.com.churchmanager.util.ContextoDaAplicacao;
+import br.com.churchmanager.util.WebDriverUtil;
 
 public class TestarTelaLogin {
 
 	private static WebDriver driver;
+	private static String URL;
 
 	@BeforeClass
 	public static void inicializa() {
 		driver = WebDriverUtil.driver(new Chrome());
+		URL = ContextoDaAplicacao.login();
+		driver.get(URL);
 	}
 
 	@Before
 	public void setUp() {
-		driver.get("localhost:8080/churchmanager/login.xhtml");
+
 	}
 
 	@AfterClass
@@ -43,12 +47,6 @@ public class TestarTelaLogin {
 
 		WebElement btnLogar = driver.findElement(By.id("btn-logar"));
 		btnLogar.click();
-
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 
 		assertTrue(driver.getCurrentUrl().contains("/home.xhtml"));
 	}

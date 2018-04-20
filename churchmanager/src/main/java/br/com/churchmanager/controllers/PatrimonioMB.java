@@ -42,7 +42,7 @@ public class PatrimonioMB implements Serializable {
 	public String salvar() {
 		try {
 			this.bo.salvar(this.patrimonio);
-			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.patrimonio.toString());
+			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.patrimonio.toString());
 			FacesUtil.atualizaComponente("msg");
 			this.patrimonio = null;
 		} catch (NegocioException e) {

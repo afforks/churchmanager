@@ -41,7 +41,7 @@ public class AtividadeEclesiasticaMB implements Serializable {
 	public String salvar() {
 		try {
 			this.bo.salvar(this.pagina);
-			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.pagina.toString());
+			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.pagina.toString());
 			this.pagina = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());

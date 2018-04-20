@@ -49,11 +49,11 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	@Column(name = "apelido")
 	private String apelido;
 
-	@Column(name = "matricula")
+	@Column(name = "matricula", unique = true)
 	private String matricula;
 
 	@Pattern(regexp = "\\(\\d{2}\\)\\d{5}\\-\\d{4}")
-	@Column(name = "celular")
+	@Column(name = "celular", unique = true)
 	private String celular;
 
 	@Pattern(regexp = "\\(\\d{2}\\)\\d{4}\\-\\d{4}")
@@ -65,7 +65,7 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	private String telefoneEmergencia;
 
 	@Email
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
 
 	@Email
@@ -293,11 +293,11 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	public void atualizarIdMD5() {
 		this.idMD5 = (new Md5PasswordEncoder()).encodePassword((new Date()).toString(), this.getNome());
 	}
-	
+
 	public String getMatricula() {
 		return matricula;
 	}
-	
+
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
 	}

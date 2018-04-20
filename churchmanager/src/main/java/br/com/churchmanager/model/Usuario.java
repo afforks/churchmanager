@@ -24,29 +24,29 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name = "usuario")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Usuario extends EntidadeGenerica implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@NotEmpty
 	@NotBlank
 	@Column(name = "nome_completo", nullable = false)
 	private String nomeCompleto;
-	
+
 	@Email
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
-	
+
 	@Column(name = "senha", nullable = false)
 	private String senha;
-	
+
 	@OneToOne
 	@JoinColumn(name = "perfil_id", nullable = false)
 	private Perfil perfil;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
-	@JoinTable(name = "usuario_pagina", joinColumns = {@JoinColumn(name = "usuario_id")}, inverseJoinColumns = {
-			@JoinColumn(name = "pagina_id")})
+	@JoinTable(name = "usuario_pagina", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "pagina_id") })
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	private List<Pagina> paginas;
 

@@ -1,4 +1,4 @@
-package br.com.churchmanager.cadastro.model;
+package br.com.churchmanager.util;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -8,7 +8,7 @@ public class Firefox implements DriverStrategy {
 
 	@Override
 	public WebDriver getDriver() {
-		System.setProperty("webdriver.gecko.driver", "//home/junior/webdriver/chromedriver");
+		System.setProperty("webdriver.gecko.driver", "//home/junior/webdriver/geckodriver");
 		DesiredCapabilities dc = DesiredCapabilities.firefox();
 		dc.setCapability("marionette", true);
 		return new FirefoxDriver(dc);

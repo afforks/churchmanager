@@ -40,7 +40,7 @@ public class PaginaMB implements Serializable {
 	public String salvar() {
 		try {
 			this.bo.salvar(this.pagina);
-			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.pagina.toString());
+			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.pagina.toString());
 			FacesUtil.atualizaComponente("msg");
 			this.pagina = null;
 		} catch (NegocioException e) {

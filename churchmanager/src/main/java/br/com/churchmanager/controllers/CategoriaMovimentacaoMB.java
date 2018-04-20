@@ -41,7 +41,7 @@ public class CategoriaMovimentacaoMB implements Serializable {
 	public String salvar() {
 		try {
 			this.bo.salvar(this.categoria);
-			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.categoria.toString());
+			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.categoria.toString());
 			this.categoria = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());

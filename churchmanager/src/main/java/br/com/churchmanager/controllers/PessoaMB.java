@@ -47,7 +47,7 @@ public class PessoaMB implements Serializable {
 			String matricula = bo.gerarMatricula(pessoa.getDataCadastro());
 			this.pessoa.setMatricula(matricula);
 			this.bo.salvar(this.pessoa);
-			FacesUtil.informacao("pessoa-msg", "Cadastro com sucesso!", this.pessoa.toString());
+			FacesUtil.informacao("pessoa-msg", "Cadastrado com sucesso!", this.pessoa.toString());
 			FacesUtil.atualizaComponente("pessoa-msg");
 			this.pessoa = null;
 		} catch (NegocioException e) {

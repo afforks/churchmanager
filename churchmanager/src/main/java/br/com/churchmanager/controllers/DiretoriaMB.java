@@ -44,7 +44,7 @@ public class DiretoriaMB implements Serializable {
 	public String salvar() {
 		try {
 			this.bo.salvar(this.diretoria);
-			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.diretoria.toString());
+			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.diretoria.toString());
 			this.diretoria = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());

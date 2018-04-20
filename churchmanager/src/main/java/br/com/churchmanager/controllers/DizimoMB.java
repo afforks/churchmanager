@@ -56,7 +56,7 @@ public class DizimoMB implements Serializable {
 	public String salvar() {
 		try {
 			this.bo.salvar(this.dizimo);
-			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.dizimo.toString());
+			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.dizimo.toString());
 			FacesUtil.atualizaComponente("msg");
 			this.dizimo = null;
 			this.idPessoa = null;

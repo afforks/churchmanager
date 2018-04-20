@@ -40,7 +40,7 @@ public class TipoMB implements Serializable {
 	public String salvar() {
 		try {
 			this.bo.salvar(this.tipo);
-			FacesUtil.informacao("tipo-msg", "Cadastro com sucesso!", this.tipo.toString());
+			FacesUtil.informacao("tipo-msg", "Cadastrado com sucesso!", this.tipo.toString());
 			FacesUtil.atualizaComponente("tipo-msg");
 			this.tipo = null;
 		} catch (NegocioException e) {

@@ -1,4 +1,4 @@
-package br.com.churchmanager.cadastro.dao;
+package br.com.churchmanager.dao;
 
 import static org.junit.Assert.assertEquals;
 

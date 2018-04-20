@@ -62,7 +62,7 @@ public class MovimentacaoMB implements Serializable {
 		this.movimentacao.gerarParcelas();
 		try {
 			this.bo.salvar(this.movimentacao);
-			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.movimentacao.toString());
+			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.movimentacao.toString());
 			FacesUtil.atualizaComponente("msg");
 			this.movimentacao = null;
 		} catch (NegocioException e) {

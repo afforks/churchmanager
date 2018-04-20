@@ -42,7 +42,7 @@ public class PessoaCargoMB implements Serializable {
 	public String salvar() {
 		try {
 			this.bo.salvar(this.pessoaCargo);
-			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.pessoaCargo.toString());
+			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.pessoaCargo.toString());
 			FacesUtil.atualizaComponente("msg-cad-pessoa-cargo");
 			this.pessoaCargo = null;
 		} catch (NegocioException e) {

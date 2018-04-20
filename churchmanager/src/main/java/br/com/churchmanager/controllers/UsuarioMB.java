@@ -41,7 +41,7 @@ public class UsuarioMB implements Serializable {
 	public String salvar() {
 		try {
 			this.bo.salvar(this.usuario);
-			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.usuario.toString());
+			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.usuario.toString());
 			this.usuario = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());

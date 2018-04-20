@@ -40,7 +40,7 @@ public class PerfilMB implements Serializable {
 	public String salvar() {
 		try {
 			this.bo.salvar(this.perfil);
-			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.perfil.toString());
+			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.perfil.toString());
 			FacesUtil.atualizaComponente("msg");
 			this.perfil = null;
 		} catch (NegocioException e) {

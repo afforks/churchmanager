@@ -44,7 +44,7 @@ public class EventoMB implements Serializable {
 	public String salvar() {
 		try {
 			this.bo.salvar(this.evento);
-			FacesUtil.informacao("msg", "Cadastro com sucesso!", this.evento.toString());
+			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.evento.toString());
 			FacesUtil.atualizaComponente("msg");
 			this.evento = null;
 		} catch (NegocioException e) {

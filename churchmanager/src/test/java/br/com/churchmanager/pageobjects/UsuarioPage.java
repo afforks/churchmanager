@@ -1,4 +1,4 @@
-package pageobjects;
+package br.com.churchmanager.pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -26,6 +26,7 @@ public class UsuarioPage {
 
 	public boolean contemMensagem(String msg) {
 		WebElement mensagens = driver.findElement(By.id("msg"));
+		System.out.println(mensagens.getText());
 		return mensagens.getText().contains(msg);
 
 	}

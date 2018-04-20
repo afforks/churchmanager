@@ -1,9 +1,9 @@
-package pageobjects;
+package br.com.churchmanager.pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
+import static br.com.churchmanager.util.Util.aguardar;
 public class NovoUsuarioPage {
 
 	private WebDriver driver;
@@ -61,13 +61,4 @@ public class NovoUsuarioPage {
 		botao.click();
 		aguardar(5);
 	}
-	
-	public void aguardar(int segundos){
-		try {
-			Thread.sleep(segundos * 1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
 }

@@ -1,4 +1,4 @@
-package br.com.churchmanager.cadastro.model;
+package br.com.churchmanager.util;
 
 import org.openqa.selenium.WebDriver;
 
