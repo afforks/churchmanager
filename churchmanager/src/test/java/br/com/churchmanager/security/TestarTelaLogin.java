@@ -1,4 +1,4 @@
-package br.com.churchmanager.cadastro.security;
+package br.com.churchmanager.security;
 
 import static org.junit.Assert.assertTrue;
 

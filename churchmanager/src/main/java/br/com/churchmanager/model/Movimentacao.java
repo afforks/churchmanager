@@ -1,18 +1,10 @@
 package br.com.churchmanager.model;
 
-import br.com.churchmanager.model.CategoriaMovimentacao;
-import br.com.churchmanager.model.EntidadeGenerica;
-import br.com.churchmanager.model.FormaMovimentacao;
-import br.com.churchmanager.model.ParcelaMovimentacao;
-import br.com.churchmanager.model.StatusMovimentacao;
-import br.com.churchmanager.model.TipoMovimentacao;
-import br.com.churchmanager.util.DataUtil;
-import br.com.churchmanager.util.MonetarioUtil;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,44 +18,63 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
 
+import br.com.churchmanager.exception.NumeroParcelasInvalidoException;
+import br.com.churchmanager.exception.ValorInvalidoException;
+import br.com.churchmanager.util.DataUtil;
+import br.com.churchmanager.util.MonetarioUtil;
+
 @Entity(name = "movimentacao")
 @Table(name = "movimentacao")
 public class Movimentacao extends EntidadeGenerica implements Serializable {
+
 	private static final long serialVersionUID = 2815844645996443651L;
+
 	@Column(name = "nome", nullable = false)
 	private String nome;
+
 	@Column(name = "descricao")
 	private String descricao;
+
 	@Column(name = "valor", nullable = false)
 	private float valor;
+
 	@Column(name = "numero_parcelas")
 	@Min(1L)
 	private int numeroParcelas = 1;
+
 	@Column(name = "parcelado")
 	@Type(type = "true_false")
 	private boolean parcelado = false;
+
 	@Column(name = "tipo_movimentacao", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TipoMovimentacao tipoMovimentacao;
+
 	@Column(name = "forma_movimentacao")
 	@Enumerated(EnumType.STRING)
 	private FormaMovimentacao formaMovimentacao;
+
 	@Column(name = "data_base", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dataBase = new Date();
+
 	@Column(name = "data_vencimento", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dataVencimento;
+
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private CategoriaMovimentacao categoriaMovimentacao;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_movimentacao", nullable = false)
 	private StatusMovimentacao statusMovimentacao;
+
 	@OneToMany(mappedBy = "movimentacao", cascade = {
 			CascadeType.ALL }, targetEntity = ParcelaMovimentacao.class, orphanRemoval = true)
 	@Fetch(FetchMode.SUBSELECT)
@@ -121,6 +132,9 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	}
 
 	public void setValor(float valor) {
+		if (valor <= 0) {
+			throw new ValorInvalidoException("O valor deve ser maior que zero!");
+		}
 		this.valor = valor;
 	}
 
@@ -129,6 +143,9 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	}
 
 	public void setNumeroParcelas(int numeroParcelas) {
+		if (numeroParcelas <= 0) {
+			throw new NumeroParcelasInvalidoException("O número de parcelas deve ser maior que zero!");
+		}
 		this.numeroParcelas = numeroParcelas;
 	}
 
@@ -211,7 +228,7 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 
 	public void atualizaParcela(ParcelaMovimentacao parcela) {
 		for (int i = 0; i < this.getParcelas().size(); ++i) {
-			if (((ParcelaMovimentacao) this.getParcelas().get(i)).equals(parcela)) {
+			if (this.getParcelas().get(i).equals(parcela)) {
 				this.getParcelas().set(i, parcela);
 				break;
 			}
