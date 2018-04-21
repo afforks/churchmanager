@@ -7,6 +7,13 @@ import org.primefaces.PrimeFaces;
 
 public class FacesUtil {
 
+	public static boolean falhouNaValidacao() {
+		return FacesContext.getCurrentInstance().isValidationFailed();
+	}
+	public static boolean naoFalhouNaValidacao() {
+		return !falhouNaValidacao();
+	}
+
 	public static boolean isPostback() {
 		return FacesContext.getCurrentInstance().isPostback();
 	}

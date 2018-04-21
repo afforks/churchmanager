@@ -186,7 +186,7 @@ m.forma_movimentacao forma
 
 /*	*/
 create view relatorio_dizimos as
-select p.id as 'PID', md5(p.id) as 'ID', p.nome as 'Nome', year(d.data_recebimento) as 'Ano',
+select p.id as 'PID', matricula as 'ID', p.nome as 'Nome', year(d.data_recebimento) as 'Ano',
 max(case when month(d.data_recebimento) = 1 and d.is_13 = 0 then date_format(d.data_recebimento, '%d/%m') else '' end) as 'd1',
 max(case when month(d.data_recebimento) = 2 and d.is_13 = 0 then date_format(d.data_recebimento, '%d/%m') else '' end) as 'd2',
 max(case when month(d.data_recebimento) = 3 and d.is_13 = 0 then date_format(d.data_recebimento, '%d/%m') else '' end) as 'd3',

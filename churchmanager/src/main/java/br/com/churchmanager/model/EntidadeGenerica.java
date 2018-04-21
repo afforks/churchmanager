@@ -15,14 +15,18 @@ import br.com.churchmanager.util.AES;
 
 @MappedSuperclass
 public class EntidadeGenerica implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
+
 	@Version
 	@Column(name = "versao", nullable = false)
 	private int versao;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false)
 	private Status status;

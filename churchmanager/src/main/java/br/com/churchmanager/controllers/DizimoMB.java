@@ -42,7 +42,8 @@ public class DizimoMB implements Serializable {
 	private DizimoBO bo;
 	@Inject
 	PessoaBO pessoaBO;
-	@Pattern(regexp = "[a-f0-9]{32}")
+	
+	@Pattern(regexp = "[0-9]{17}")
 	private String idPessoa;
 
 	@PostConstruct
@@ -120,7 +121,7 @@ public class DizimoMB implements Serializable {
 	}
 
 	public void buscarPessoa() {
-		Pessoa pessoa = this.pessoaBO.buscarPorId(this.getIdPessoa());
+		Pessoa pessoa = this.pessoaBO.buscarPorMatricula(this.getIdPessoa());
 		this.getDizimo().setPessoa(pessoa);
 		FacesUtil.atualizaComponente("grid-pessoa-selecionada");
 	}

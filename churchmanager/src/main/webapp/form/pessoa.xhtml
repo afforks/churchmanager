@@ -204,54 +204,116 @@
 
 
 		<p:fieldset legend="Contato">
-			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
-				<p:outputLabel for="celular" styleClass="my-label" value="Celular " />
-				<p:inputMask mask="(99)9?9999-9999" placeholder=" " id="celular"
-					required="true" requiredMessage="Campo 'Celular' é obrigatório!"
-					value="#{pessoaMB.pessoa.celular}" />
-				<p:message for="celular" />
+
+			<div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12">
+				<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-3 ui-g-nopad">
+					<p:outputLabel for="telefones" styleClass="my-label"
+						value="Telefone(s) " />
+				</div>
+				<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2 ui-g-nopad">
+					<p:commandButton icon="fa fa-plus" update="dlg-telefones"
+						resetValues="true" process="@this" styleClass="btn-green"
+						title="Adicionar telefone"
+						oncomplete="PF('dlg-telefones').show();" />
+				</div>
+
+				<p:dataTable id="telefones" var="telefone"
+					value="#{pessoaMB.pessoa.telefones}"
+					emptyMessage="Nenhum telefone foi cadastrado!">
+					<p:column headerText="Telefone" colspan="4">
+						#{telefone}
+					</p:column>
+
+					<p:column headerText="#">
+						<p:commandButton icon="fa fa-remove" styleClass="btn-red"
+							process="@this" update="telefones">
+							<p:collector value="#{telefone}"
+								removeFrom="#{pessoaMB.pessoa.telefones}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
 			</div>
 
 
+			<div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12">
+				<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-3 ui-g-nopad">
+					<p:outputLabel for="emails" styleClass="my-label"
+						value="E-mail(s) " />
+				</div>
+				<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2 ui-g-nopad">
+					<p:commandButton icon="fa fa-plus" update="dlg-emails"
+						resetValues="true" process="@this" styleClass="btn-green"
+						title="Adicionar e-mail" oncomplete="PF('dlg-emails').show();" />
+				</div>
 
-			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
-				<p:outputLabel for="telefone" styleClass="my-label"
-					value="Telefone " />
-				<p:inputMask mask="(99)9999-9999" placeholder=" " id="telefone"
-					required="true" requiredMessage="Campo 'Telefone' é obrigatório!"
-					value="#{pessoaMB.pessoa.telefone}" />
-				<p:message for="telefone" />
+				<p:dataTable id="emails" var="email"
+					value="#{pessoaMB.pessoa.emails}"
+					emptyMessage="Nenhum e-mail foi cadastrado!">
+					<p:column headerText="E-mail" colspan="4">
+						#{email}
+					</p:column>
+
+					<p:column headerText="#">
+						<p:commandButton icon="fa fa-remove" styleClass="btn-red"
+							process="@this" update="emails">
+							<p:collector value="#{email}"
+								removeFrom="#{pessoaMB.pessoa.emails}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
 			</div>
 
 
-			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
-				<p:outputLabel for="telefoneEmergencia" styleClass="my-label"
-					value="Emergência " />
-				<p:inputMask mask="(99)99999-9999" placeholder=" "
-					id="telefoneEmergencia" required="true"
-					requiredMessage="Campo 'Emergência' é obrigatório!"
-					value="#{pessoaMB.pessoa.telefoneEmergencia}" />
-				<p:message for="telefoneEmergencia" />
-			</div>
+			<!-- 			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12"> -->
+			<!-- 				<p:outputLabel for="celular" styleClass="my-label" value="Celular " /> -->
+			<!-- 				<p:inputMask mask="(99)9?9999-9999" placeholder=" " id="celular" -->
+			<!-- 					required="true" requiredMessage="Campo 'Celular' é obrigatório!" -->
+			<!-- 					value="#{pessoaMB.pessoa.celular}" /> -->
+			<!-- 				<p:message for="celular" /> -->
+			<!-- 			</div> -->
 
 
 
-			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
-				<p:outputLabel for="email1" styleClass="my-label" value="E-mail " />
-				<p:inputText id="email1" required="true"
-					requiredMessage="Campo 'E-mail' é obrigatório!"
-					value="#{pessoaMB.pessoa.email}" />
-				<p:message for="email1" />
-			</div>
+			<!-- 			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12"> -->
+			<!-- 				<p:outputLabel for="telefone" styleClass="my-label" -->
+			<!-- 					value="Telefone " /> -->
+			<!-- 				<p:inputMask mask="(99)9999-9999" placeholder=" " id="telefone" -->
+			<!-- 					required="true" requiredMessage="Campo 'Telefone' é obrigatório!" -->
+			<!-- 					value="#{pessoaMB.pessoa.telefone}" /> -->
+			<!-- 				<p:message for="telefone" /> -->
+			<!-- 			</div> -->
 
 
-			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
-				<p:outputLabel for="email2" styleClass="my-label" value="E-mail 2 " />
-				<p:inputText id="email2" required="true"
-					requiredMessage="Campo 'E-mail 2' é obrigatório!"
-					value="#{pessoaMB.pessoa.email2}" />
-				<p:message for="email2" />
-			</div>
+			<!-- 			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12"> -->
+			<!-- 				<p:outputLabel for="telefoneEmergencia" styleClass="my-label" -->
+			<!-- 					value="Emergência " /> -->
+			<!-- 				<p:inputMask mask="(99)99999-9999" placeholder=" " -->
+			<!-- 					id="telefoneEmergencia" required="true" -->
+			<!-- 					requiredMessage="Campo 'Emergência' é obrigatório!" -->
+			<!-- 					value="#{pessoaMB.pessoa.telefoneEmergencia}" /> -->
+			<!-- 				<p:message for="telefoneEmergencia" /> -->
+			<!-- 			</div> -->
+
+
+
+			<!-- 			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12"> -->
+			<!-- 				<p:outputLabel for="email1" styleClass="my-label" value="E-mail " /> -->
+			<!-- 				<p:inputText id="email1" required="true" -->
+			<!-- 					requiredMessage="Campo 'E-mail' é obrigatório!" -->
+			<!-- 					value="#{pessoaMB.pessoa.email}" /> -->
+			<!-- 				<p:message for="email1" /> -->
+			<!-- 			</div> -->
+
+
+			<!-- 			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12"> -->
+			<!-- 				<p:outputLabel for="email2" styleClass="my-label" value="E-mail 2 " /> -->
+			<!-- 				<p:inputText id="email2" required="true" -->
+			<!-- 					requiredMessage="Campo 'E-mail 2' é obrigatório!" -->
+			<!-- 					value="#{pessoaMB.pessoa.email2}" /> -->
+			<!-- 				<p:message for="email2" /> -->
+			<!-- 			</div> -->
 
 
 		</p:fieldset>
@@ -262,7 +324,7 @@
 
 		<p:fieldset legend="Dados eclesiásticos">
 
-			<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-12">
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-12">
 				<p:outputLabel for="dataConversao" styleClass="my-label"
 					value="Dt. de conversão " />
 				<p:calendar id="dataConversao" required="true" mask="99/99/9999"
@@ -273,7 +335,7 @@
 				<p:message for="dataConversao" />
 			</div>
 
-			<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-12">
+			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-12">
 				<p:outputLabel for="dataBatismo" styleClass="my-label"
 					value="Dt. de batismo " />
 				<p:calendar id="dataBatismo" required="true" mask="99/99/9999"
@@ -332,6 +394,76 @@
 				</p:button>
 			</div>
 		</div>
+	</div>
+</h:form>
+
+<p:growl id="msg-tel-email" autoUpdate="false" life="7000"
+	showDetail="true" showSummary="true" />
+<h:form prependId="false">
+	<div class="ui-fluid">
+		<p:dialog id="dlg-telefones" header="Telefone" closeOnEscape="true"
+			draggable="false" dynamic="true" modal="true" focus="dlg-telefone"
+			widgetVar="dlg-telefones" fitViewport="true" resizable="false">
+
+			<p:outputLabel value="Número" for="dlg-telefone"
+				styleClass="my-label" />
+			<p:inputMask id="dlg-telefone" mask="(99)9999-9999?9" required="true"
+				value="#{pessoaMB.telefone}">
+			</p:inputMask>
+			<p:message id="msg-telefone" for="dlg-telefone" />
+
+			<f:facet name="footer">
+				<div class="ui-g-12 ui-g-nopad">
+					<div class="ui-g-6">
+						<p:commandButton icon="fa fa-save" value="Adicionar"
+							action="#{pessoaMB.resetarTelefone()}"
+							update="msg-telefone dlg-telefone telefones">
+							<p:collector unique="true" value="#{pessoaMB.telefone}"
+								addTo="#{pessoaMB.pessoa.telefones}" />
+						</p:commandButton>
+					</div>
+					<div class="ui-g-6">
+						<p:commandButton icon="fa fa-close" process="@this"
+							styleClass="btn-red" oncomplete="PF('dlg-telefones').hide();"
+							value="Cancelar" />
+					</div>
+				</div>
+			</f:facet>
+		</p:dialog>
+	</div>
+</h:form>
+
+
+<h:form prependId="false">
+	<div class="ui-fluid">
+		<p:dialog id="dlg-emails" header="E-mail" closeOnEscape="true"
+			draggable="false" dynamic="true" modal="true" focus="dlg-email"
+			widgetVar="dlg-emails" fitViewport="true" resizable="false">
+
+			<p:outputLabel value="E-mail" for="dlg-email" styleClass="my-label" />
+			<p:inputText id="dlg-email" required="true" value="#{pessoaMB.email}"
+				type="email">
+			</p:inputText>
+			<p:message id="msg-email" for="dlg-email" />
+
+			<f:facet name="footer">
+				<div class="ui-g-12 ui-g-nopad">
+					<div class="ui-g-6">
+						<p:commandButton icon="fa fa-save" value="Adicionar"
+							action="#{pessoaMB.resetarEmail()}"
+							update="msg-email dlg-email emails">
+							<p:collector unique="true" value="#{pessoaMB.email}"
+								addTo="#{pessoaMB.pessoa.emails}" />
+						</p:commandButton>
+					</div>
+					<div class="ui-g-6">
+						<p:commandButton icon="fa fa-close" process="@this"
+							styleClass="btn-red" oncomplete="PF('dlg-emails').hide();"
+							value="Cancelar" />
+					</div>
+				</div>
+			</f:facet>
+		</p:dialog>
 	</div>
 </h:form>
 </html>

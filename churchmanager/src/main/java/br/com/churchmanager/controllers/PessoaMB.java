@@ -30,6 +30,9 @@ public class PessoaMB implements Serializable {
 	private List<Pessoa> pessoas;
 	private MyLazyDataModel<Pessoa> pessoasLazy;
 	private PessoaFilter pessoaFilter;
+	
+	private String telefone;
+	private String email;
 
 	@Inject
 	private PessoaBO bo;
@@ -42,25 +45,26 @@ public class PessoaMB implements Serializable {
 
 	public String salvar() {
 		try {
-			this.pessoa.atualizarIdMD5();
+//			this.pessoa.atualizarIdMD5();
 			this.pessoa.setDataCadastro(new Date());
-			String matricula = bo.gerarMatricula(pessoa.getDataCadastro());
-			this.pessoa.setMatricula(matricula);
+//			String matricula = bo.gerarMatricula(pessoa.getDataCadastro());
+//			this.pessoa.setMatricula(matricula);
+			this.pessoa.gerarMatricula();
 			this.bo.salvar(this.pessoa);
 			FacesUtil.informacao("pessoa-msg", "Cadastrado com sucesso!", this.pessoa.toString());
 			FacesUtil.atualizaComponente("pessoa-msg");
 			this.pessoa = null;
 		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
 			e.printStackTrace();
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
 			e.printStackTrace();
 		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
 			e.printStackTrace();
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			FacesUtil.atualizaComponente("pessoa-msg");
 		}
 		return null;
 	}
@@ -71,19 +75,19 @@ public class PessoaMB implements Serializable {
 			FacesUtil.informacao("pessoa-msg", "Editado com sucesso!", this.pessoa.toString());
 			this.pessoa = null;
 		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
 			e.printStackTrace();
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
 			e.printStackTrace();
 			return null;
 		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
 			e.printStackTrace();
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			FacesUtil.atualizaComponente("pessoa-msg");
 			FacesUtil.manterMensagem();
 		}
 		return "/list/pessoa?faces-redirect=true";
@@ -151,4 +155,38 @@ public class PessoaMB implements Serializable {
 	public void setPessoaFilter(PessoaFilter pessoaFilter) {
 		this.pessoaFilter = pessoaFilter;
 	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public void resetarTelefone() {
+		if(FacesUtil.naoFalhouNaValidacao()) {
+			FacesUtil.informacao("msg-tel-email", "Telefone adicionado!", "Número: "+this.telefone);
+			FacesUtil.atualizaComponente("msg-tel-email");
+			this.telefone = null;
+		}
+	}
+
+	public void resetarEmail() {
+		if(FacesUtil.naoFalhouNaValidacao()) {
+			FacesUtil.informacao("msg-tel-email", "E-mail adicionado!", "E-mail: "+this.email);
+			FacesUtil.atualizaComponente("msg-tel-email");
+			this.email = null;
+		}
+	}
+	
+	
 }
