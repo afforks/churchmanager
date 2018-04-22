@@ -29,7 +29,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 import br.com.churchmanager.util.DataUtil;
 
@@ -46,7 +45,7 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	@Column(name = "apelido")
 	private String apelido;
 
-	@Column(name = "matricula", unique = true, nullable=false)
+	@Column(name = "matricula", unique = true, nullable = false)
 	private String matricula;
 
 	@ElementCollection
@@ -58,26 +57,6 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	@CollectionTable(name = "emails", joinColumns = { @JoinColumn(name = "pessoa_id") })
 	@Column(name = "email")
 	private List<String> emails;
-
-	// @Pattern(regexp = "\\(\\d{2}\\)\\d{5}\\-\\d{4}")
-	// @Column(name = "celular", unique = true)
-	// private String celular;
-	//
-	// @Pattern(regexp = "\\(\\d{2}\\)\\d{4}\\-\\d{4}")
-	// @Column(name = "telefone")
-	// private String telefone;
-	//
-	// @Pattern(regexp = "\\(\\d{2}\\)\\d{5}\\-\\d{4}")
-	// @Column(name = "telefone_emergencial")
-	// private String telefoneEmergencia;
-
-	// @Email
-	// @Column(name = "email", unique = true)
-	// private String email;
-	//
-	// @Email
-	// @Column(name = "email2")
-	// private String email2;
 
 	@Column(name = "data_nascimento")
 	@Temporal(TemporalType.DATE)
@@ -130,9 +109,6 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataCadastro;
 
-//	@Column(name = "id_md5", nullable = false, unique = true)
-//	private String idMD5;
-
 	public String getNome() {
 		return this.nome;
 	}
@@ -149,53 +125,13 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 		this.apelido = apelido;
 	}
 
-	// public String getCelular() {
-	// return this.celular;
-	// }
-	//
-	// public void setCelular(String celular) {
-	// this.celular = celular;
-	// }
-	//
-	// public String getTelefone() {
-	// return this.telefone;
-	// }
-	//
-	// public void setTelefone(String telefone) {
-	// this.telefone = telefone;
-	// }
-	//
-	// public String getTelefoneEmergencia() {
-	// return this.telefoneEmergencia;
-	// }
-	//
-	// public void setTelefoneEmergencia(String telefoneEmergencia) {
-	// this.telefoneEmergencia = telefoneEmergencia;
-	// }
-	//
-	// public String getEmail() {
-	// return this.email;
-	// }
-	//
-	// public void setEmail(String email) {
-	// this.email = email;
-	// }
-	//
-	// public String getEmail2() {
-	// return this.email2;
-	// }
-	//
-	// public void setEmail2(String email2) {
-	// this.email2 = email2;
-	// }
-	
-
 	public Date getDataNascimento() {
 		return this.dataNascimento;
 	}
 
 	public List<String> getTelefones() {
-		if(telefones == null) telefones = new ArrayList<String>();
+		if (telefones == null)
+			telefones = new ArrayList<String>();
 		return telefones;
 	}
 
@@ -204,7 +140,8 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	}
 
 	public List<String> getEmails() {
-		if(emails == null) emails = new ArrayList<String>();
+		if (emails == null)
+			emails = new ArrayList<String>();
 		return emails;
 	}
 
@@ -312,14 +249,6 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 		this.dataCadastro = dataCadastro;
 	}
 
-//	public String getIdMD5() {
-//		return this.idMD5;
-//	}
-
-//	public void atualizarIdMD5() {
-//		this.idMD5 = (new Md5PasswordEncoder()).encodePassword((new Date()).toString(), this.getNome());
-//	}
-
 	public String getMatricula() {
 		return matricula;
 	}
@@ -327,10 +256,6 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
 	}
-
-//	public void setIdMD5(String idMD5) {
-//		this.idMD5 = idMD5;
-//	}
 
 	public String toString() {
 		return this.nome;
