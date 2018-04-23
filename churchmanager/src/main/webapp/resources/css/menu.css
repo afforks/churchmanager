@@ -1,6 +1,6 @@
-[genuitec-file-id="wc2-36"],[genuitec-lp-path="/contratos/src/main/webapp/resources/css/menu.css"],[genuitec-lp-enabled=false]{
+/*[genuitec-file-id="wc2-36"],[genuitec-lp-path="/contratos/src/main/webapp/resources/css/menu.css"],[genuitec-lp-enabled=false]{
   /* for codelive */
-}
+}*/
 
 
 ul.menu-user {
@@ -54,7 +54,7 @@ ul.menu-user {
 	z-index: 2;
 	font-size: 14px;
 	text-decoration: none;
-	color: #fbfbfb !important;
+	color: #888888 !important;
 	background: #0b0b0b;
 	-webkit-transition: color .2s ease;
 	-o-transition: color .2s ease;
@@ -64,7 +64,7 @@ ul.menu-user {
 
 #cssmenu>ul>li>a>i {
 	margin-right: 5px;
-	transition: 0.5s;
+	/*transition: 0.5s;*/
 }
 
 #cssmenu>ul>li>a:hover {
@@ -120,7 +120,7 @@ ul.menu-user {
 }
 
 #cssmenu a:hover {
-    background: #00111b !important;
+    background: #000000 !important;
     color: #fff !important;
 }
 
