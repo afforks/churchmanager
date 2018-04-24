@@ -10,9 +10,21 @@ import br.com.churchmanager.model.EntidadeGenerica;
 @Entity(name = "atividade_eclesiastica")
 @Table(name = "atividade_eclesiastica")
 public class AtividadeEclesiastica extends EntidadeGenerica implements Serializable {
+
 	private static final long serialVersionUID = 361521832597715321L;
+
+	public AtividadeEclesiastica() {
+	}
+
+	public AtividadeEclesiastica(String nome, String descricao) {
+		super();
+		this.nome = nome;
+		this.descricao = descricao;
+	}
+
 	@Column(name = "nome", nullable = false, unique = true)
 	private String nome;
+
 	@Column(name = "descricao")
 	private String descricao;
 

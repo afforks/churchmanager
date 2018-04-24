@@ -17,7 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-import br.com.churchmanager.generic.dao.DAO;
+import br.com.churchmanager.dao.generic.DAO;
 import br.com.churchmanager.model.Movimentacao;
 import br.com.churchmanager.model.ParcelaMovimentacao;
 import br.com.churchmanager.model.filter.ParcelaMovimentacaoFilter;

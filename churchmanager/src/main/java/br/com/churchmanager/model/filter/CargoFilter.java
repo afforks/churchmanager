@@ -10,7 +10,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Restrictions;
 
-import br.com.churchmanager.generic.dao.Alias;
+import br.com.churchmanager.dao.generic.Alias;
 
 public class CargoFilter implements Filter, Serializable {
 	private static final long serialVersionUID = 11043712329577L;

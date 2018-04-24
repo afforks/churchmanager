@@ -1,10 +1,10 @@
 package br.com.churchmanager.bo;
 
 import br.com.churchmanager.dao.PessoaCargoDAO;
+import br.com.churchmanager.dao.generic.Buscador;
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
-import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.PessoaCargo;
 import br.com.churchmanager.model.filter.PessoaCargoFilter;
 import br.com.churchmanager.util.MyLazyDataModel;

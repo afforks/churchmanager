@@ -1,6 +1,6 @@
 package br.com.churchmanager.dao;
 
-import br.com.churchmanager.generic.dao.DAO;
+import br.com.churchmanager.dao.generic.DAO;
 import br.com.churchmanager.model.Dizimo;
 import br.com.churchmanager.model.filter.DizimoFilter;
 import br.com.churchmanager.model.group.PercentualDizimista;

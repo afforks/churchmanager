@@ -8,10 +8,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.churchmanager.dao.PessoaDAO;
+import br.com.churchmanager.dao.generic.Buscador;
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
-import br.com.churchmanager.generic.dao.Buscador;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.filter.PessoaFilter;
 import br.com.churchmanager.model.group.Aniversariante;

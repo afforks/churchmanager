@@ -1,6 +1,6 @@
 package br.com.churchmanager.util;
 
-import br.com.churchmanager.generic.dao.Buscador;
+import br.com.churchmanager.dao.generic.Buscador;
 import br.com.churchmanager.util.AES;
 
 import javax.faces.context.FacesContext;

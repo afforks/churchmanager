@@ -1,6 +1,6 @@
 package br.com.churchmanager.model.filter;
 
-import br.com.churchmanager.generic.dao.Alias;
+import br.com.churchmanager.dao.generic.Alias;
 import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.StatusMovimentacao;
 import br.com.churchmanager.model.TipoMovimentacao;

@@ -41,12 +41,12 @@
 	
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Development</param-value>
+		<param-value>Development</param-value><!-- Development, UnitTest, SystemTest Production -->
 	</context-param>
 	
 	<context-param>
 		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
-		<param-value>0</param-value><!-- 0 desligado; -1 ligado -->
+		<param-value>1</param-value>
 	</context-param>
 	
 	<context-param>

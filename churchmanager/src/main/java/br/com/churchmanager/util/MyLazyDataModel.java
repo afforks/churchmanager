@@ -1,7 +1,7 @@
 package br.com.churchmanager.util;
 
-import br.com.churchmanager.generic.dao.Alias;
-import br.com.churchmanager.generic.dao.DAO;
+import br.com.churchmanager.dao.generic.Alias;
+import br.com.churchmanager.dao.generic.DAO;
 import br.com.churchmanager.model.EntidadeGenerica;
 
 import java.io.Serializable;

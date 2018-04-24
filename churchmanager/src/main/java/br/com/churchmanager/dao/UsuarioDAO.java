@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-import br.com.churchmanager.generic.dao.DAO;
+import br.com.churchmanager.dao.generic.DAO;
 import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.Usuario;
 

@@ -20,7 +20,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
-import br.com.churchmanager.generic.dao.DAO;
+import br.com.churchmanager.dao.generic.DAO;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.filter.PessoaFilter;
 import br.com.churchmanager.model.group.Aniversariante;

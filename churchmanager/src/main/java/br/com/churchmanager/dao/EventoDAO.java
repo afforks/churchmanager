@@ -3,7 +3,7 @@ package br.com.churchmanager.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import br.com.churchmanager.generic.dao.DAO;
+import br.com.churchmanager.dao.generic.DAO;
 import br.com.churchmanager.model.Evento;
 import br.com.churchmanager.model.filter.EventoFilter;
 

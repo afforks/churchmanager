@@ -1,4 +1,4 @@
-package br.com.churchmanager.generic.dao;
+package br.com.churchmanager.dao.generic;
 
 import java.io.Serializable;
 
