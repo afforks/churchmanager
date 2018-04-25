@@ -3,6 +3,7 @@ package br.com.churchmanager.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -43,10 +44,10 @@ public class Usuario extends EntidadeGenerica implements Serializable {
 	@JoinColumn(name = "perfil_id", nullable = false)
 	private Perfil perfil;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(name = "usuario_pagina", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "pagina_id") })
+			@JoinColumn(name = "pagina_id")})
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	private List<Pagina> paginas;
 

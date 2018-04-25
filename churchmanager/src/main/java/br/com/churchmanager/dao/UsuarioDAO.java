@@ -3,6 +3,8 @@ package br.com.churchmanager.dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.persistence.EntityManager;
+
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
@@ -15,6 +17,10 @@ public class UsuarioDAO extends DAO<Usuario> implements Serializable {
 
 	public UsuarioDAO() {
 		super(Usuario.class);
+	}
+	
+	public UsuarioDAO(EntityManager entityManager) {
+		super(Usuario.class, entityManager);
 	}
 
 	public Usuario porEmail(String email) {

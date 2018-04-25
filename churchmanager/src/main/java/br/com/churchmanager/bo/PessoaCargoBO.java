@@ -47,7 +47,7 @@ public class PessoaCargoBO implements Serializable, Buscador<PessoaCargo> {
 		}
 	}
 
-	public PessoaCargo buscarPorId(Serializable id) {
+	public PessoaCargo buscarPorId(Long id) {
 		return (PessoaCargo) this.dao.buscarPorId(id);
 	}
 

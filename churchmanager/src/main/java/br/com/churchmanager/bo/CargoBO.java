@@ -44,7 +44,7 @@ public class CargoBO implements Serializable, Buscador<Cargo> {
 		
 	}
 
-	public Cargo buscarPorId(Serializable id) {
+	public Cargo buscarPorId(Long id) {
 		return this.dao.buscarPorId(id);
 	}
 

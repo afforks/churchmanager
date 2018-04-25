@@ -44,7 +44,7 @@ public class AtividadeEclesiasticaBO implements Serializable, Buscador<Atividade
 	public void validar(AtividadeEclesiastica atividade) throws NegocioException {
 	}
 
-	public AtividadeEclesiastica buscarPorId(Serializable id) {
+	public AtividadeEclesiastica buscarPorId(Long id) {
 		return (AtividadeEclesiastica) this.dao.buscarPorId(id);
 	}
 

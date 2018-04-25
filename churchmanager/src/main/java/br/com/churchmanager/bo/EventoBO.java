@@ -42,7 +42,7 @@ public class EventoBO implements Serializable, Buscador<Evento> {
 	public void validar(Evento evento) throws NegocioException {
 	}
 
-	public Evento buscarPorId(Serializable id) {
+	public Evento buscarPorId(Long id) {
 		return (Evento) this.dao.buscarPorId(id);
 	}
 

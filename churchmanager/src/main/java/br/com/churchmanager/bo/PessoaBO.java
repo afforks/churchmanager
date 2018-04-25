@@ -49,7 +49,7 @@ public class PessoaBO implements Serializable, Buscador<Pessoa> {
 	public void validar(Pessoa pessoa) throws NegocioException {
 	}
 
-	public Pessoa buscarPorId(Serializable id) {
+	public Pessoa buscarPorId(Long id) {
 		return (Pessoa) this.dao.buscarPorId(id);
 	}
 

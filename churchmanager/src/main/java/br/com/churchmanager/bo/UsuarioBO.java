@@ -42,7 +42,7 @@ public class UsuarioBO implements Serializable, Buscador<Usuario> {
 	public void validar(Usuario usuario) throws NegocioException {
 	}
 
-	public Usuario buscarPorId(Serializable id) {
+	public Usuario buscarPorId(Long id) {
 		return (Usuario) this.dao.buscarPorId(id);
 	}
 

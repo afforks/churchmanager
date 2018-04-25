@@ -41,7 +41,6 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 	private static final long serialVersionUID = -3812355503300426470L;
 
 	@Inject
-
 	private EntityManager entityManager;
 	private Class<T> clazz;
 
@@ -51,6 +50,11 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 
 	public DAO(Class<T> clazz) {
 		this.clazz = clazz;
+	}
+	
+	public DAO(Class<T> clazz, EntityManager entityManager) {
+		this(clazz);
+		this.entityManager = entityManager;
 	}
 
 	@Transacional
@@ -88,13 +92,13 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 	}
 
 	@Transacional
-	public T buscarPorId(Serializable id) {
+	public T buscarPorId(Long id) {
 		return this.entityManager.find(this.clazz, id);
 	}
 
 	@Transacional
-	public void excluir(Serializable id) {
-		T entity = this.buscarPorId(id);
+	public void excluir(T entity) {
+		entity = this.buscarPorId(entity.getId());
 		this.entityManager.remove(entity);
 	}
 

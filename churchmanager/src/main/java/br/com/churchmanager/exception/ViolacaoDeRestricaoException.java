@@ -1,6 +1,6 @@
 package br.com.churchmanager.exception;
 
-public class ViolacaoDeRestricaoException extends Exception {
+public class ViolacaoDeRestricaoException extends RuntimeException {
 
 	/**
 	 * 

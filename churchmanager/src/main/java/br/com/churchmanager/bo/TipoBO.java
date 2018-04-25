@@ -42,7 +42,7 @@ public class TipoBO implements Serializable, Buscador<Tipo> {
 	public void validar(Tipo tipo) throws NegocioException {
 	}
 
-	public Tipo buscarPorId(Serializable id) {
+	public Tipo buscarPorId(Long id) {
 		return (Tipo) this.dao.buscarPorId(id);
 	}
 

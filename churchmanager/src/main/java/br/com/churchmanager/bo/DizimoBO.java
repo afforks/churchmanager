@@ -43,7 +43,7 @@ public class DizimoBO implements Serializable, Buscador<Dizimo> {
 	public void validar(Dizimo dizimo) throws NegocioException {
 	}
 
-	public Dizimo buscarPorId(Serializable id) {
+	public Dizimo buscarPorId(Long id) {
 		return (Dizimo) this.dao.buscarPorId(id);
 	}
 

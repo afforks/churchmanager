@@ -42,7 +42,7 @@ public class PaginaBO implements Serializable, Buscador<Pagina> {
 	public void validar(Pagina pagina) throws NegocioException {
 	}
 
-	public Pagina buscarPorId(Serializable id) {
+	public Pagina buscarPorId(Long id) {
 		return (Pagina) this.dao.buscarPorId(id);
 	}
 

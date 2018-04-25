@@ -20,11 +20,24 @@ import br.com.churchmanager.model.Pagina;
 @Table(name = "perfil")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Perfil extends EntidadeGenerica {
+	
 	private static final long serialVersionUID = 8683670150324870932L;
+	
+	public Perfil() {
+		
+	}
+	
+	public Perfil(String nome) {
+		super();
+		this.nome = nome;
+	}
+
 	@Column(name = "nome", nullable = false, unique = true)
 	private String nome;
+	
 	@Column(name = "descricao")
 	private String descricao;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(name = "perfil_pagina", joinColumns = { @JoinColumn(name = "perfil_id") }, inverseJoinColumns = {

@@ -12,7 +12,7 @@ import br.com.churchmanager.exception.ValorInvalidoException;
 public class MovimentacaoTest {
 
 	@Rule()
-	public ExpectedException exception = ExpectedException.none();
+	public ExpectedException expectedException = ExpectedException.none();
 
 	@Test
 	public void deveCalcularValorDaParcela() {
@@ -24,15 +24,15 @@ public class MovimentacaoTest {
 
 	@Test
 	public void deveValidarNumeroDeParcelasMaiorQueZero() {
-		exception.expect(NumeroParcelasInvalidoException.class);
-		exception.expectMessage("O número de parcelas deve ser maior que zero!");
+		expectedException.expect(NumeroParcelasInvalidoException.class);
+//		expectedException.expectMessage("O número de parcelas deve ser maior que zero!");
 		new MovimentacaoBuilder().comParcelas(0).comValor(127.50f).build();
 	}
 
 	@Test
 	public void deveValidarValorMaiorQueZero() {
-		exception.expect(ValorInvalidoException.class);
-		exception.expectMessage("O valor deve ser maior que zero!");
-		new MovimentacaoBuilder().comParcelas(0).comValor(127.50f).build();
+		expectedException.expect(ValorInvalidoException.class);
+//		expectedException.expectMessage("O valor deve ser maior que zero!");
+		new MovimentacaoBuilder().comParcelas(5).comValor(0f).build();
 	}
 }

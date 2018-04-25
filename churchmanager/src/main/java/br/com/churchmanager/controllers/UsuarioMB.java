@@ -156,4 +156,8 @@ public class UsuarioMB implements Serializable {
 	public void setMudarSenha(Boolean mudarSenha) {
 		this.mudarSenha = mudarSenha;
 	}
+
+	public Usuario porEmail(String email) {
+		return bo.porEmail(email);
+	}
 }

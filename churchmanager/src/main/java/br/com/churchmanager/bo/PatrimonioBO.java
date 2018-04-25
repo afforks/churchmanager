@@ -42,7 +42,7 @@ public class PatrimonioBO implements Serializable, Buscador<Patrimonio> {
 	public void validar(Patrimonio patrimonio) throws NegocioException {
 	}
 
-	public Patrimonio buscarPorId(Serializable id) {
+	public Patrimonio buscarPorId(Long id) {
 		return (Patrimonio) this.dao.buscarPorId(id);
 	}
 

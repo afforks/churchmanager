@@ -45,7 +45,7 @@ public class DiretoriaBO implements Serializable, Buscador<Diretoria> {
 		}
 	}
 
-	public Diretoria buscarPorId(Serializable id) {
+	public Diretoria buscarPorId(Long id) {
 		return (Diretoria) this.dao.buscarPorId(id);
 	}
 

@@ -11,6 +11,16 @@
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
+			
+<!-- 			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/churchmanagerDS" /> -->
+			
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+         <property name="hibernate.connection.username" value="root"/>
+         <property name="hibernate.connection.password" value="root"/>
+         <property name="hibernate.connection.url" value="jdbc:mysql://localhost/churchmanager"/>
+        
+			
+			
 
 <!-- 			<property name="hibernate.hbm2ddl.import_files" value="META-INF/sql/dados-iniciais.sql" /> -->
 
@@ -23,7 +33,6 @@
 			<property name="hibernate.cache.region.factory_class"
 				value="org.hibernate.cache.ehcache.EhCacheRegionFactory" />
 
-			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/churchmanagerDS" />
 
 		</properties>
 	</persistence-unit>

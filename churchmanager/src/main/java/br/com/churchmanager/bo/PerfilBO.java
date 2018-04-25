@@ -42,7 +42,7 @@ public class PerfilBO implements Serializable, Buscador<Perfil> {
 	public void validar(Perfil perfil) throws NegocioException {
 	}
 
-	public Perfil buscarPorId(Serializable id) {
+	public Perfil buscarPorId(Long id) {
 		return (Perfil) this.dao.buscarPorId(id);
 	}
 

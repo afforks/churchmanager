@@ -49,7 +49,7 @@ public class ParcelaMovimentacaoBO implements Serializable, Buscador<ParcelaMovi
 	public void validar(ParcelaMovimentacao parcela) throws NegocioException {
 	}
 
-	public ParcelaMovimentacao buscarPorId(Serializable id) {
+	public ParcelaMovimentacao buscarPorId(Long id) {
 		return (ParcelaMovimentacao) this.dao.buscarPorId(id);
 	}
 

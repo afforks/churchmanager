@@ -44,7 +44,7 @@ public class CategoriaMovimentacaoBO implements Serializable, Buscador<Categoria
 	public void validar(CategoriaMovimentacao categoria) throws NegocioException {
 	}
 
-	public CategoriaMovimentacao buscarPorId(Serializable id) {
+	public CategoriaMovimentacao buscarPorId(Long id) {
 		return (CategoriaMovimentacao) this.dao.buscarPorId(id);
 	}
 

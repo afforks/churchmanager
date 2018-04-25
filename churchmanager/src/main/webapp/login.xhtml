@@ -54,6 +54,8 @@ body .blur {
 						<i class="fa fa-institution" /> ChurchManager
 					</h2>
 				</div>
+				
+				<p:messages id="msg" closable="true" />
 
 				<div class="padding">
 					<p:outputLabel for="username" value="E-mail" styleClass="my-label" />
@@ -72,8 +74,6 @@ body .blur {
 						value="Logar" iconPos="right" update="frm"
 						action="#{loginBean.login}" ajax="false" />
 				</div>
-
-				<p:messages id="msg" closable="true" />
 
 			</div>
 		</div>

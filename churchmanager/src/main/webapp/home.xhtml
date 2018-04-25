@@ -347,57 +347,49 @@
 								style="font-weight: normal; padding-bottom: 10px;">Resumo</div>
 								
 								
-								<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
-									columnClasses="ui-grid-col-12, ui-grid-col-12">
+								<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">
 									
-									<h:outputText value="Valores faturados" styleClass="destaque bg-dark-blue centralizado "/>
-									<h:outputText value="Próximas faturas" styleClass="destaque bg-dark-blue centralizado "/>
-								
-									<p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank"
-										columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-6 ">
-										
-										<div/>
-										<h:outputText value="Entradas" styleClass="my-label"/>
+									
+										<h:outputText value="Valores faturados" styleClass="destaque bg-dark-blue centralizado font-med"/>
+									 
+										<h:outputText value="Entradas" />
 										<h:outputText value="#{dashBoard.totalEntradasPagas()}" styleClass="destaque bg-green centralizado ">
 											<f:convertNumber type="currency"/>
 										</h:outputText>
-										
-										<div/>
-										<h:outputText value="Saídas" styleClass="my-label"/>
+										 
+										<h:outputText value="Saídas" />
 										<h:outputText value="#{dashBoard.totalSaidasPagas()}"  styleClass="destaque bg-red centralizado " >
 											<f:convertNumber type="currency"/>
 										</h:outputText>
-										<div/>
-										<h:outputText value="Saldo" styleClass="my-label"/>
+										
+										<h:outputText value="Saldo" />
 										<h:outputText value="#{dashBoard.saldoFaturado()}"  styleClass="destaque bg-blue my-label font-med centralizado " >
 											<f:convertNumber type="currency"/>
 										</h:outputText>
-										
-									</p:panelGrid>
-								 
-									<p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank"
-										columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-6 ">
-										
-										<div/>
-										<h:outputText value="Entradas" styleClass="my-label"/>
-										<h:outputText value="#{dashBoard.totalEntradasEmAberto()}" styleClass="destaque bg-blue centralizado ">
-											<f:convertNumber type="currency"/>
-										</h:outputText>
-										<div/>
-										<h:outputText value="Saídas" styleClass="my-label"/>
-										<h:outputText value="#{dashBoard.totalSaidasEmAberto()}"  styleClass="destaque bg-yellow centralizado " >
-											<f:convertNumber type="currency"/>
-										</h:outputText>
-										
-										<div/>
-										<h:outputText value="Saldo" styleClass="my-label"/>
-										<h:outputText value="#{dashBoard.saldoAFaturar()}"  styleClass="destaque bg-orange my-label font-med centralizado " >
-											<f:convertNumber type="currency"/>
-										</h:outputText>
-									</p:panelGrid>
-								</p:panelGrid>
+									
+									</div>
+									
 								
-								<br/>
+								<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">	
+									<h:outputText value="Próximas faturas" styleClass="destaque bg-dark-blue centralizado font-med"/>
+								 
+									<h:outputText value="Entradas" styleClass="my-label"/>
+									<h:outputText value="#{dashBoard.totalEntradasEmAberto()}" styleClass="destaque bg-blue centralizado ">
+										<f:convertNumber type="currency"/>
+									</h:outputText>
+							
+									<h:outputText value="Saídas" styleClass="my-label"/>
+									<h:outputText value="#{dashBoard.totalSaidasEmAberto()}"  styleClass="destaque bg-yellow centralizado " >
+										<f:convertNumber type="currency"/>
+									</h:outputText>
+									
+							
+									<h:outputText value="Saldo" styleClass="my-label"/>
+									<h:outputText value="#{dashBoard.saldoAFaturar()}"  styleClass="destaque bg-orange my-label font-med centralizado" >
+										<f:convertNumber type="currency"/>
+									</h:outputText>
+								
+								</div>
 								
 								<blockquote>
 									<i>
