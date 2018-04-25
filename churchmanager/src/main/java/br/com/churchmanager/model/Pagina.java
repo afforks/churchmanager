@@ -13,11 +13,15 @@ import br.com.churchmanager.model.EntidadeGenerica;
 @Table(name = "pagina")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Pagina extends EntidadeGenerica implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
 	@Column(name = "nome", nullable = false, unique = true)
 	private String nome;
+
 	@Column(name = "nome_identificador", nullable = false, unique = true)
 	private String nomeIdentificador;
+
 	@Column(name = "descricao")
 	private String descricao;
 

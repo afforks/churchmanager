@@ -33,7 +33,7 @@ public class PerfilBuilder {
 		this.perfil.setStatus(status);
 		return this;
 	}
-	
+
 	public PerfilBuilder ativo() {
 		this.perfil.setStatus(Status.ATIVO);
 		return this;

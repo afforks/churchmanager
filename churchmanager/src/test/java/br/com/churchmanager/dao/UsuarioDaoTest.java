@@ -16,6 +16,7 @@ import br.com.churchmanager.builder.PerfilBuilder;
 import br.com.churchmanager.builder.UsuarioBuilder;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Perfil;
+import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.Usuario;
 import br.com.churchmanager.util.JPAUtil;
 
@@ -130,9 +131,9 @@ public class UsuarioDaoTest {
 		int tamanhoDaLista = usuarios.size();
 
 		assertEquals(3, tamanhoDaLista);
-		assertEquals("Usuário Dois", usuarios.get(0).getNomeCompleto());
-		assertEquals("Usuário Três", usuarios.get(1).getNomeCompleto());
-		assertEquals("Usuário Um", usuarios.get(2).getNomeCompleto());
+		assertEquals(usuario2.getNomeCompleto(), usuarios.get(0).getNomeCompleto());
+		assertEquals(usuario3.getNomeCompleto(), usuarios.get(1).getNomeCompleto());
+		assertEquals(usuario1.getNomeCompleto(), usuarios.get(2).getNomeCompleto());
 
 	}
 
@@ -182,6 +183,29 @@ public class UsuarioDaoTest {
 		usuarioDAO.salvar(usuario1);
 		usuarioDAO.salvar(usuario2);
 
+	}
+	
+	@Test
+	public void deveAlterarStatus() {
+		Usuario usuario1 = new UsuarioBuilder().comNome("Usuário de Teste 1").comEmail("usuario1@um.com.br")
+				.comPerfil(perfil).comSenha("123").ativo().build();
+
+		Usuario usuario2 = new UsuarioBuilder().comNome("Usuário de Teste 2").comEmail("usuario2@dois.com.br")
+				.comPerfil(perfil).comSenha("456").inativo().build();
+
+		usuarioDAO.salvar(usuario1);
+		usuarioDAO.salvar(usuario2);
+		
+		usuarioDAO.atualizarStatus(usuario1);
+		usuarioDAO.atualizarStatus(usuario2);
+		
+		Usuario usuarioBanco1 = usuarioDAO.buscarPorId(usuario1.getId());
+		Usuario usuarioBanco2 = usuarioDAO.buscarPorId(usuario2.getId());
+		
+		assertEquals(Status.INATIVO, usuarioBanco1.getStatus());
+		assertEquals(Status.ATIVO, usuarioBanco2.getStatus());
+		
+		
 	}
 
 }

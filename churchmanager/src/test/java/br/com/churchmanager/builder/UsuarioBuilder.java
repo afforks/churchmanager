@@ -25,7 +25,7 @@ public class UsuarioBuilder {
 		return this;
 	}
 
-	public UsuarioBuilder comPagina(Pagina... paginas) {
+	public UsuarioBuilder comPaginas(Pagina... paginas) {
 		this.usuario.setPaginas(Arrays.asList(paginas));
 		return this;
 	}
