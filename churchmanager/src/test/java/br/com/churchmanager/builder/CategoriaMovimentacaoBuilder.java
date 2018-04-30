@@ -5,44 +5,44 @@ import br.com.churchmanager.model.Status;
 
 public class CategoriaMovimentacaoBuilder {
 
-	private CategoriaMovimentacao atividade;
+	private CategoriaMovimentacao categoria;
 
 	public CategoriaMovimentacaoBuilder() {
-		this.atividade = new CategoriaMovimentacao();
+		this.categoria = new CategoriaMovimentacao();
 	}
 
 	public CategoriaMovimentacaoBuilder comDescricao(String descricao) {
-		this.atividade.setDescricao(descricao);
+		this.categoria.setDescricao(descricao);
 		return this;
 	}
 
 	public CategoriaMovimentacaoBuilder comId(Long id) {
-		this.atividade.setId(id);
+		this.categoria.setId(id);
 		return this;
 	}
 
 	public CategoriaMovimentacaoBuilder comNome(String nome) {
-		this.atividade.setNome(nome);
+		this.categoria.setNome(nome);
 		return this;
 	}
 
 	public CategoriaMovimentacaoBuilder comStatus(Status status) {
-		this.atividade.setStatus(status);
+		this.categoria.setStatus(status);
 		return this;
 	}
 
 	public CategoriaMovimentacaoBuilder ativo() {
-		this.atividade.setStatus(Status.ATIVO);
+		this.categoria.setStatus(Status.ATIVO);
 		return this;
 	}
 
 	public CategoriaMovimentacaoBuilder inativo() {
-		this.atividade.setStatus(Status.INATIVO);
+		this.categoria.setStatus(Status.INATIVO);
 		return this;
 	}
 
 	public CategoriaMovimentacao build() {
-		return this.atividade;
+		return this.categoria;
 	}
 
 }

@@ -21,16 +21,21 @@ import br.com.churchmanager.model.Patrimonio;
 @Table(name = "avaliacao_patrimonio")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AvaliacaoPatrimonio extends EntidadeGenerica implements Serializable {
+
 	private static final long serialVersionUID = 4287443468273L;
+
 	@ManyToOne(targetEntity = Patrimonio.class)
 	@JoinColumn(name = "patrimonio_id", nullable = false)
 	private Patrimonio patrimonio;
+
 	@Lob
 	@Column(name = "observacao")
 	private String observacao;
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_avaliacao", nullable = false)
 	private Date dataAvaliacao;
+
 	@DecimalMin("0.01")
 	@Column(name = "valor_atual", nullable = false)
 	private double valorAtual;
