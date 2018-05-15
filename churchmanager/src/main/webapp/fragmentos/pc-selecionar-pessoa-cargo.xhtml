@@ -81,7 +81,7 @@
 						<p:commandButton icon="fa fa-check" process="@this"
 							update="table-diretoria col-selecionar  @this"
 							title="Clique para selecionar a relação"
-							rendered="#{!diretoriaMB.diretoria.pessoaCargos.contains(pc)}">
+							rendered="#{diretoriaMB.naoContemPessoaCargo(pc)}">
 							<p:collector unique="true" value="#{pc}"
 								addTo="#{diretoriaMB.diretoria.pessoaCargos}" />
 						</p:commandButton>

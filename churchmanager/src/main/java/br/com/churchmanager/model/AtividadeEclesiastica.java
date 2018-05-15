@@ -1,26 +1,32 @@
 package br.com.churchmanager.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import br.com.churchmanager.model.EntidadeGenerica;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity(name = "atividade_eclesiastica")
 @Table(name = "atividade_eclesiastica")
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode(callSuper = true)
+@Builder
 public class AtividadeEclesiastica extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 361521832597715321L;
-
-	public AtividadeEclesiastica() {
-	}
-
-	public AtividadeEclesiastica(String nome, String descricao) {
-		super();
-		this.nome = nome;
-		this.descricao = descricao;
-	}
 
 	@Column(name = "nome", nullable = false, unique = true)
 	private String nome;
@@ -28,23 +34,4 @@ public class AtividadeEclesiastica extends EntidadeGenerica implements Serializa
 	@Column(name = "descricao")
 	private String descricao;
 
-	public String getNome() {
-		return this.nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getDescricao() {
-		return this.descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public String toString() {
-		return this.nome;
-	}
 }

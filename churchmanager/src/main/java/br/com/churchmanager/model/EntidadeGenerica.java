@@ -12,8 +12,14 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 import br.com.churchmanager.util.AES;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @MappedSuperclass
+@Getter
+@Setter
+@EqualsAndHashCode(of = { "id" })
 public class EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -38,56 +44,5 @@ public class EntidadeGenerica implements Serializable {
 	public String idCriptografado() {
 		AES.encrypt(this.id.toString());
 		return AES.getEncryptedString().replace("/", "@").replace("=", "");
-	}
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public int getVersao() {
-		return this.versao;
-	}
-
-	public void setVersao(int versao) {
-		this.versao = versao;
-	}
-
-	public Status getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public int hashCode() {
-		byte result = 1;
-		int result1 = 31 * result + (this.id == null ? 0 : this.id.hashCode());
-		return result1;
-	}
-
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		} else if (obj == null) {
-			return false;
-		} else if (this.getClass() != obj.getClass()) {
-			return false;
-		} else {
-			EntidadeGenerica other = (EntidadeGenerica) obj;
-			if (this.id == null) {
-				if (other.id != null) {
-					return false;
-				}
-			} else if (!this.id.equals(other.id)) {
-				return false;
-			}
-
-			return true;
-		}
 	}
 }

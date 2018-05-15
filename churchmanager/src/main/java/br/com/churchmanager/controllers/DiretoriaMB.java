@@ -16,6 +16,7 @@ import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Cargo;
 import br.com.churchmanager.model.Diretoria;
 import br.com.churchmanager.model.Pessoa;
+import br.com.churchmanager.model.PessoaCargo;
 import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.DiretoriaFilter;
 import br.com.churchmanager.util.BuscaObjeto;
@@ -151,6 +152,10 @@ public class DiretoriaMB implements Serializable {
 
 	public void setDiretoriaFilter(DiretoriaFilter diretoriaFilter) {
 		this.diretoriaFilter = diretoriaFilter;
+	}
+	
+	public boolean naoContemPessoaCargo(PessoaCargo pc) {
+		return !this.getDiretoria().getPessoaCargos().contains(pc);
 	}
 
 	public Pessoa getPessoa() {

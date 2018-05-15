@@ -1,17 +1,33 @@
 package br.com.churchmanager.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import br.com.churchmanager.model.EntidadeGenerica;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity(name = "pagina")
 @Table(name = "pagina")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode(callSuper = true)
+@Builder
 public class Pagina extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -25,10 +41,6 @@ public class Pagina extends EntidadeGenerica implements Serializable {
 	@Column(name = "descricao")
 	private String descricao;
 
-	public String getNome() {
-		return this.nome;
-	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 		this.setNomeIdentificador(nome.toUpperCase().replaceAll(" ", "_").replaceAll("[ÁÀÂÃ]", "A")
@@ -36,24 +48,4 @@ public class Pagina extends EntidadeGenerica implements Serializable {
 				.replaceAll("Ç", "C").replaceAll("Ñ", "N"));
 	}
 
-	public String getNomeIdentificador() {
-		return this.nomeIdentificador;
-	}
-
-	private void setNomeIdentificador(String nomeIdentificador) {
-		this.nomeIdentificador = nomeIdentificador;
-	}
-
-	public String getDescricao() {
-		return this.descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public String toString() {
-		return "{Nome= " + this.nome + ", Nome Identificador= " + this.nomeIdentificador + ", Descrição= "
-				+ this.descricao + "}";
-	}
 }

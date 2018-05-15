@@ -1,5 +1,5 @@
 <ehcache>
-	<diskStore path="/opt/cache" />
+<!-- 	<diskStore path="/opt/cache" /> -->
 	<defaultCache 
 		maxElementsInMemory="1000" 
 		eternal="false"

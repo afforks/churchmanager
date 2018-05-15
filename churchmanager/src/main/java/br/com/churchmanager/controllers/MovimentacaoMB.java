@@ -232,6 +232,10 @@ public class MovimentacaoMB implements Serializable {
 	public String tituloReceberPagar() {
 		return this.isEntrada() ? "Receber" : "Pagar";
 	}
+	
+	public boolean naoEstaEmAberto(ParcelaMovimentacao parcela) {
+		return !isStatusEmAbeto(parcela);
+	}
 
 	public String alterarStatusDaParcela() {
 		if (this.getParcela().getDataPagamento() != null) {

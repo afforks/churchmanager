@@ -2,7 +2,6 @@ package br.com.churchmanager.model;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,10 +30,25 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import br.com.churchmanager.util.DataUtil;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity(name = "pessoa")
 @Table(name = "pessoa")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode(callSuper = true)
+@Builder
 public class Pessoa extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 2103210206726291934L;
@@ -109,156 +123,8 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataCadastro;
 
-	public String getNome() {
-		return this.nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getApelido() {
-		return this.apelido;
-	}
-
-	public void setApelido(String apelido) {
-		this.apelido = apelido;
-	}
-
-	public Date getDataNascimento() {
-		return this.dataNascimento;
-	}
-
-	public List<String> getTelefones() {
-		if (telefones == null)
-			telefones = new ArrayList<String>();
-		return telefones;
-	}
-
-	public void setTelefones(List<String> telefones) {
-		this.telefones = telefones;
-	}
-
-	public List<String> getEmails() {
-		if (emails == null)
-			emails = new ArrayList<String>();
-		return emails;
-	}
-
-	public void setEmails(List<String> emails) {
-		this.emails = emails;
-	}
-
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
-
-	public Date getDataBatismo() {
-		return this.dataBatismo;
-	}
-
-	public void setDataBatismo(Date dataBatismo) {
-		this.dataBatismo = dataBatismo;
-	}
-
-	public Date getDataConversao() {
-		return this.dataConversao;
-	}
-
-	public void setDataConversao(Date dataConversao) {
-		this.dataConversao = dataConversao;
-	}
-
-	public Endereco getEndereco() {
-		if (this.endereco == null) {
-			this.endereco = new Endereco();
-		}
-
-		return this.endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-
-	public EstadoCivil getEstadoCivil() {
-		return this.estadoCivil;
-	}
-
-	public void setEstadoCivil(EstadoCivil estadoCivil) {
-		this.estadoCivil = estadoCivil;
-	}
-
-	public PerfilEscolaridade getEscolaridade() {
-		return this.escolaridade;
-	}
-
-	public void setEscolaridade(PerfilEscolaridade escolaridade) {
-		this.escolaridade = escolaridade;
-	}
-
-	public String getProfissao() {
-		return this.profissao;
-	}
-
-	public void setProfissao(String profissao) {
-		this.profissao = profissao;
-	}
-
-	public String getObservacao() {
-		return this.observacao;
-	}
-
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
-	}
-
-	public List<AtividadeEclesiastica> getAtividadesEclesiastica() {
-		return this.atividadesEclesiastica;
-	}
-
-	public void setAtividadesEclesiastica(List<AtividadeEclesiastica> atividadesEclesiastica) {
-		this.atividadesEclesiastica = atividadesEclesiastica;
-	}
-
-	public Sexo getSexo() {
-		return this.sexo;
-	}
-
-	public void setSexo(Sexo sexo) {
-		this.sexo = sexo;
-	}
-
 	public int getIdade() {
 		return DataUtil.calcularIdade(this.dataNascimento);
-	}
-
-	public List<Dizimo> getDizimos() {
-		return this.dizimos;
-	}
-
-	public void setDizimos(List<Dizimo> dizimos) {
-		this.dizimos = dizimos;
-	}
-
-	public Date getDataCadastro() {
-		return this.dataCadastro;
-	}
-
-	public void setDataCadastro(Date dataCadastro) {
-		this.dataCadastro = dataCadastro;
-	}
-
-	public String getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
-
-	public String toString() {
-		return this.nome;
 	}
 
 	public void gerarMatricula() {

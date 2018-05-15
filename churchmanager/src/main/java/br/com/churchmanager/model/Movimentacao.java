@@ -1,7 +1,6 @@
 package br.com.churchmanager.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,9 +26,22 @@ import br.com.churchmanager.exception.NumeroParcelasInvalidoException;
 import br.com.churchmanager.exception.ValorInvalidoException;
 import br.com.churchmanager.util.DataUtil;
 import br.com.churchmanager.util.MonetarioUtil;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity(name = "movimentacao")
 @Table(name = "movimentacao")
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@Builder
 public class Movimentacao extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 2815844645996443651L;
@@ -43,10 +55,12 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	@Column(name = "valor", nullable = false)
 	private float valor;
 
+	@Builder.Default
 	@Column(name = "numero_parcelas")
 	@Min(1L)
 	private int numeroParcelas = 1;
 
+	@Builder.Default
 	@Column(name = "parcelado")
 	@Type(type = "true_false")
 	private boolean parcelado = false;
@@ -59,6 +73,7 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private FormaMovimentacao formaMovimentacao;
 
+	@Builder.Default
 	@Column(name = "data_base", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dataBase = new Date();
@@ -71,18 +86,15 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private CategoriaMovimentacao categoriaMovimentacao;
 
+	@Builder.Default
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_movimentacao", nullable = false)
-	private StatusMovimentacao statusMovimentacao;
+	private StatusMovimentacao statusMovimentacao = StatusMovimentacao.EM_ABERTO;
 
 	@OneToMany(mappedBy = "movimentacao", cascade = {
 			CascadeType.ALL }, targetEntity = ParcelaMovimentacao.class, orphanRemoval = true)
 	@Fetch(FetchMode.SUBSELECT)
 	private List<ParcelaMovimentacao> parcelas;
-
-	public Movimentacao() {
-		this.statusMovimentacao = StatusMovimentacao.EM_ABERTO;
-	}
 
 	public void gerarParcelas() {
 		this.getParcelas().clear();
@@ -111,26 +123,6 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 
 	}
 
-	public String getNome() {
-		return this.nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getDescricao() {
-		return this.descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public float getValor() {
-		return this.valor;
-	}
-
 	public void setValor(float valor) {
 		if (valor <= 0) {
 			throw new ValorInvalidoException("O valor deve ser maior que zero!");
@@ -138,87 +130,11 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 		this.valor = valor;
 	}
 
-	public int getNumeroParcelas() {
-		return this.numeroParcelas;
-	}
-
 	public void setNumeroParcelas(int numeroParcelas) {
 		if (numeroParcelas <= 0) {
 			throw new NumeroParcelasInvalidoException("O número de parcelas deve ser maior que zero!");
 		}
 		this.numeroParcelas = numeroParcelas;
-	}
-
-	public boolean isParcelado() {
-		return this.parcelado;
-	}
-
-	public void setParcelado(boolean parcelado) {
-		this.parcelado = parcelado;
-	}
-
-	public TipoMovimentacao getTipoMovimentacao() {
-		return this.tipoMovimentacao;
-	}
-
-	public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
-		this.tipoMovimentacao = tipoMovimentacao;
-	}
-
-	public Date getDataBase() {
-		return this.dataBase;
-	}
-
-	public void setDataBase(Date dataBase) {
-		this.dataBase = dataBase;
-	}
-
-	public CategoriaMovimentacao getCategoriaMovimentacao() {
-		return this.categoriaMovimentacao;
-	}
-
-	public void setCategoriaMovimentacao(CategoriaMovimentacao categoriaMovimentacao) {
-		this.categoriaMovimentacao = categoriaMovimentacao;
-	}
-
-	public StatusMovimentacao getStatusMovimentacao() {
-		return this.statusMovimentacao;
-	}
-
-	public void setStatusMovimentacao(StatusMovimentacao statusMovimentacao) {
-		this.statusMovimentacao = statusMovimentacao;
-	}
-
-	public FormaMovimentacao getFormaMovimentacao() {
-		return this.formaMovimentacao;
-	}
-
-	public void setFormaMovimentacao(FormaMovimentacao formaMovimentacao) {
-		this.formaMovimentacao = formaMovimentacao;
-	}
-
-	public List<ParcelaMovimentacao> getParcelas() {
-		if (this.parcelas == null) {
-			this.parcelas = new ArrayList<>();
-		}
-
-		return this.parcelas;
-	}
-
-	public void setParcelas(List<ParcelaMovimentacao> parcelas) {
-		this.parcelas = parcelas;
-	}
-
-	public Date getDataVencimento() {
-		if (this.dataVencimento == null) {
-			this.dataVencimento = new Date();
-		}
-
-		return this.dataVencimento;
-	}
-
-	public void setDataVencimento(Date dataVencimento) {
-		this.dataVencimento = dataVencimento;
 	}
 
 	public String toString() {

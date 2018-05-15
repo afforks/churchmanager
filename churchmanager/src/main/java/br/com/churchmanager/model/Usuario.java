@@ -21,9 +21,26 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity(name = "usuario")
 @Table(name = "usuario")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode(callSuper=true)
+@Builder
 public class Usuario extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -51,55 +68,9 @@ public class Usuario extends EntidadeGenerica implements Serializable {
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	private List<Pagina> paginas;
 
-	public Usuario() {
-	}
-
+	
 	public Usuario(String nomeCompleto, String email) {
 		this.nomeCompleto = nomeCompleto;
 		this.email = email;
-	}
-
-	public String getSenha() {
-		return this.senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public Perfil getPerfil() {
-		return this.perfil;
-	}
-
-	public void setPerfil(Perfil perfil) {
-		this.perfil = perfil;
-	}
-
-	public List<Pagina> getPaginas() {
-		return this.paginas;
-	}
-
-	public void setPaginas(List<Pagina> paginas) {
-		this.paginas = paginas;
-	}
-
-	public String getNomeCompleto() {
-		return this.nomeCompleto;
-	}
-
-	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String toString() {
-		return "Usuario [nomeCompleto=" + this.nomeCompleto + ", email=" + this.email + "]";
 	}
 }

@@ -1,5 +1,10 @@
 package br.com.churchmanager.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum Estado {
 	AC("Acre", "AC"), 
 	AL("Alagoas", "AL"), 
@@ -33,16 +38,4 @@ public enum Estado {
 	private String descricao;
 	private String abreviacao;
 
-	private Estado(String descricao, String abreviacao) {
-		this.descricao = descricao;
-		this.abreviacao = abreviacao;
-	}
-
-	public String getDescricao() {
-		return this.descricao;
-	}
-
-	public String getAbreviacao() {
-		return this.abreviacao;
-	}
 }

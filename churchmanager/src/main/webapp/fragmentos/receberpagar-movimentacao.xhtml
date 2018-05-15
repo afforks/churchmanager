@@ -80,7 +80,7 @@
 
 					<p:commandButton icon="fa fa-close" styleClass="btn-red"
 						title="Cancelar "
-						rendered="#{!movimentacaoMB.isStatusEmAbeto(parcela)}"
+						rendered="#{movimentacaoMB.naoEstaEmAberto(parcela)}"
 						update="table table-pagar-receber"
 						action="#{movimentacaoMB.cancelarAlterarStatusDaParcela()}">
 						
