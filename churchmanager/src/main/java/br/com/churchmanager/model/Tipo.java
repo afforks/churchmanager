@@ -5,9 +5,12 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Size;
+//
+//import org.hibernate.annotations.Cache;
+//import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,22 +22,24 @@ import lombok.ToString;
 
 @Entity(name = "tipo")
 @Table(name = "tipo")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@EqualsAndHashCode(callSuper = true)
+@ToString(of = { "nome" })
+@EqualsAndHashCode(of= {"id"}, callSuper=true)
 @Builder
 public class Tipo extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 2699793133797449401L;
 
+	@NotNull
+	@Size(min = 3, max = 50)
 	@Column(name = "nome", nullable = false, unique = true)
 	private String nome;
 
+	@Size(max = 250)
 	@Column(name = "descricao")
 	private String descricao;
 }

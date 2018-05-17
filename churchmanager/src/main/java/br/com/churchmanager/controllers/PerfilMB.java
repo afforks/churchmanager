@@ -95,8 +95,12 @@ public class PerfilMB implements Serializable {
 		return null;
 	}
 
+	private List<Perfil> perfis;
 	public List<Perfil> perfis() {
-		return this.bo.listar();
+		if(perfis == null && FacesUtil.isNotPostback()) {
+			perfis = this.bo.listar();
+		}
+		return perfis;
 	}
 
 	public Status[] listarStatus() {

@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,16 +23,19 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@EqualsAndHashCode(callSuper = true)
+@ToString(of = { "nome" })
+@EqualsAndHashCode(of = { "id" }, callSuper = true)
 @Builder
 public class AtividadeEclesiastica extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 361521832597715321L;
 
+	@Size(min = 3, max = 50)
+	@NotNull
 	@Column(name = "nome", nullable = false, unique = true)
 	private String nome;
 
+	@Size(max = 250)
 	@Column(name = "descricao")
 	private String descricao;
 

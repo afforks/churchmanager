@@ -19,7 +19,7 @@ public class TransacionalInterceptor implements Serializable {
 
 	@AroundInvoke
 	public Object invoke(InvocationContext context) throws Exception {
-		EntityTransaction trx = this.manager.getTransaction();
+//		EntityTransaction trx = this.manager.getTransaction();
 //		boolean criador = false;
 //
 //		Object arg5;

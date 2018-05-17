@@ -23,17 +23,19 @@ import br.com.churchmanager.util.faces.FacesUtil;
 @Named
 @ViewScoped
 public class PaginaMB implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 	private Pagina pagina;
 	private List<Pagina> paginas;
 	private MyLazyDataModel<Pagina> paginasLazy;
 	private PaginaFilter paginaFilter;
+	
 	@Inject
 	private PaginaBO bo;
 
 	@PostConstruct
 	public void init() {
-		Pagina pagina = (Pagina) BuscaObjeto.comParametroGET(Pagina.class, "id", this.bo);
+		Pagina pagina = BuscaObjeto.comParametroGET(Pagina.class, "id", this.bo);
 		this.pagina = pagina;
 	}
 
@@ -97,8 +99,12 @@ public class PaginaMB implements Serializable {
 		return Status.values();
 	}
 
-	public List<Pagina> paginas() {
-		return this.bo.listar();
+	private List<Pagina> listarPaginas;
+	public List<Pagina> listarPaginas() {
+		if(listarPaginas == null && FacesUtil.isNotPostback()) {
+			listarPaginas = this.bo.listar();
+		}
+		return listarPaginas;
 	}
 
 	public Pagina getPagina() {

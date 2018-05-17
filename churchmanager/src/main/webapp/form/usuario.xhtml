@@ -3,7 +3,8 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" xmlns:jsf="http://xmlns.jcp.org/jsf">
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 <h:form prependId="false">
 
@@ -18,7 +19,6 @@
 		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
 			<p:outputLabel for="nome" styleClass="my-label" value="Nome" />
 			<p:inputText id="nome" required="true"
-				requiredMessage="Campo 'Nome' é obrigatório!"
 				value="#{usuarioMB.usuario.nomeCompleto}"
 				placeholder="Digite o nome do usuário" />
 			<p:message for="nome" />
@@ -37,14 +37,16 @@
 			<p:outputLabel for="perfil" value="Perfil " styleClass="my-label" />
 			<p:selectOneMenu id="perfil" value="#{usuarioMB.usuario.perfil}"
 				required="true" requiredMessage="Campo 'Perfil' é obrigatório!"
-				converter="genericConverter">
-
-				<p:ajax listener="#{usuarioMB.perfilSelecionado()}" update="pagina"
-					process="perfil" />
+				converter="genericConverter" >
 
 				<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
 				<f:selectItems id="item" value="#{perfilMB.perfis()}" var="perfil"
 					itemLabel="#{perfil.nome}" itemValue="#{perfil}" />
+					
+				<p:ajax listener="#{usuarioMB.perfilSelecionado()}"
+					process="perfil" update="pagina">
+					<f:validateBean for="perfil" disabled="true"/>
+				</p:ajax>
 			</p:selectOneMenu>
 			<p:message for="perfil" />
 		</div>
@@ -99,7 +101,7 @@
 				requiredMessage="Campo 'Status' é obrigatório!"
 				value="#{usuarioMB.usuario.status}">
 				<f:selectItems id="status-item" itemLabel="#{status.descricao}"
-					var="status" value="#{usuarioMB.listarStatus()}"
+					var="status" value="#{utilMB.listarStatus()}"
 					itemValue="#{status}" />
 			</p:selectOneRadio>
 			<p:message for="status" />
@@ -116,7 +118,7 @@
 				columns="3" layout="responsive">
 				<f:attribute name="collectionType" value="java.util.ArrayList" />
 				<f:selectItems var="pagina" itemValue="#{pagina}"
-					itemLabel="#{pagina.nome}" value="#{paginaMB.paginas()}" />
+					itemLabel="#{pagina.nome}" value="#{paginaMB.listarPaginas()}" />
 
 			</p:selectManyCheckbox>
 		</div>

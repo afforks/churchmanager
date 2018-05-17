@@ -8,6 +8,16 @@
 	<aside class="aw-sidebar  js-sidebar ">
 		<nav class="aw-menu">
 			<div id='cssmenu'>
+			
+			
+				<ul class="menu-user">
+					<li class="has-sub img-user">
+						<p:graphicImage name="homem.svg" library="img"/>
+						<h:outputText value="#{seguranca.usuarioLogado.usuario.nomeCompleto}"
+						styleClass="font-white" style="display: grid;text-align: center;padding: 0px 10px 10px 10px;"/>
+					</li>
+				</ul>	
+				
 				<ul>
 					<li><p:link href="/home.xhtml">
 							<i class="fa fa-fw fa-home" />

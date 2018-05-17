@@ -6,7 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum StatusMovimentacao {
-	PAGO("Pago", "background: #2196F3"), EM_ABERTO("Em aberto", "background: #FFEB3B");
+	
+	PAGO("Pago", "background: #2196F3"), 
+	EM_ABERTO("Em aberto", "background: #FFEB3B");
 
 	private String descricao;
 	private String cor;

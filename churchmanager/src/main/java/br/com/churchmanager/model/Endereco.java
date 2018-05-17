@@ -46,7 +46,7 @@ public class Endereco implements Serializable {
 	@Builder.Default
 	@Column(name = "estado")
 	@Enumerated(EnumType.STRING)
-	private Estado estado = Estado.CE;;
+	private Estado estado = Estado.CE;
 
 	@Builder.Default
 	@Column(name = "pais")

@@ -33,8 +33,7 @@ public class AtividadeEclesiasticaMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		AtividadeEclesiastica pagina = (AtividadeEclesiastica) BuscaObjeto.comParametroGET(AtividadeEclesiastica.class,
-				"id", this.bo);
+		AtividadeEclesiastica pagina = BuscaObjeto.comParametroGET(AtividadeEclesiastica.class, "id", this.bo);
 		this.pagina = pagina;
 	}
 

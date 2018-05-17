@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,8 +23,8 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@EqualsAndHashCode(callSuper = true)
+@ToString(of = { "pessoa", "cargo" })
+@EqualsAndHashCode(of= {"id"}, callSuper=true)
 @Builder
 public class PessoaCargo extends EntidadeGenerica implements Serializable {
 
@@ -31,10 +32,12 @@ public class PessoaCargo extends EntidadeGenerica implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "pessoa_id", nullable = false)
+	@NotNull
 	private Pessoa pessoa;
 
 	@OneToOne
 	@JoinColumn(name = "cargo_id", nullable = false)
+	@NotNull
 	private Cargo cargo;
 
 }

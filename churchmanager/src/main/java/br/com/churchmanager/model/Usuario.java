@@ -1,6 +1,7 @@
 package br.com.churchmanager.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,14 +13,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,46 +30,45 @@ import lombok.ToString;
 
 @Entity(name = "usuario")
 @Table(name = "usuario")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@EqualsAndHashCode(callSuper=true)
+@ToString(of = { "nomeCompleto" })
+@EqualsAndHashCode(of= {"id"}, callSuper=true)
 @Builder
 public class Usuario extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty
-	@NotBlank
+	@NotNull
+	@Size(min = 6, max = 50)
 	@Column(name = "nome_completo", nullable = false)
 	private String nomeCompleto;
 
+	@Size(min = 6, max = 50)
 	@Email
+	@NotNull
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
+	@Size(min = 8, max = 50)
+	@NotNull
 	@Column(name = "senha", nullable = false)
 	private String senha;
 
 	@OneToOne
 	@JoinColumn(name = "perfil_id", nullable = false)
-	private Perfil perfil;
+	@NotNull
+	@Builder.Default
+	private Perfil perfil = new Perfil();
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(name = "usuario_pagina", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "pagina_id")})
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	private List<Pagina> paginas;
+			@JoinColumn(name = "pagina_id") })
+	@NotNull
+	@Builder.Default
+	private List<Pagina> paginas = new ArrayList();
 
-	
-	public Usuario(String nomeCompleto, String email) {
-		this.nomeCompleto = nomeCompleto;
-		this.email = email;
-	}
 }

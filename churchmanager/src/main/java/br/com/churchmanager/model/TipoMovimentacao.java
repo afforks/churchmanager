@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TipoMovimentacao {
 	
-	ENTRADA("Entrada", "background: #4CAF50"), SAIDA("Saída", "background: #f44336");
+	ENTRADA("Entrada", "background: #4CAF50"), 
+	SAIDA("Saída", "background: #f44336");
 
 	private String descricao;
 	private String cor;

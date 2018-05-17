@@ -1,6 +1,7 @@
-package br.com.churchmanager.util;
+package br.com.churchmanager.controllers.converter;
 
 import java.util.Map;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -10,6 +11,7 @@ import br.com.churchmanager.model.EntidadeGenerica;
 
 @FacesConverter(forClass = EntidadeGenerica.class, value = "genericConverter")
 public class GenericConverter implements Converter {
+
 	public Object getAsObject(FacesContext ctx, UIComponent componente, String value) {
 		return value != null ? componente.getAttributes().get(value) : null;
 	}
@@ -22,7 +24,6 @@ public class GenericConverter implements Converter {
 				if (entity.getId() != null) {
 					return String.valueOf(entity.getId());
 				}
-
 				return (String) value;
 			}
 		}
@@ -37,4 +38,5 @@ public class GenericConverter implements Converter {
 	private Map<String, Object> getAttributesFrom(UIComponent componente) {
 		return componente.getAttributes();
 	}
+
 }

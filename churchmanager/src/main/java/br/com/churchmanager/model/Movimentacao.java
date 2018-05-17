@@ -16,7 +16,16 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+//import javax.validation.constraints.DecimalMin;
+//import javax.validation.constraints.Max;
+//import javax.validation.constraints.Min;
+//import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Size;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -40,24 +49,31 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(of= {"id"}, callSuper=true)
 @Builder
 public class Movimentacao extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 2815844645996443651L;
 
+	@NotNull
+	@Size(min = 3, max = 50)
 	@Column(name = "nome", nullable = false)
 	private String nome;
 
+	@Size(max = 250)
 	@Column(name = "descricao")
 	private String descricao;
 
+	@NotNull
+	@DecimalMin("0.01")
 	@Column(name = "valor", nullable = false)
 	private float valor;
 
 	@Builder.Default
 	@Column(name = "numero_parcelas")
 	@Min(1L)
+	@Max(12L)
+	@NotNull
 	private int numeroParcelas = 1;
 
 	@Builder.Default
@@ -65,28 +81,34 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	@Type(type = "true_false")
 	private boolean parcelado = false;
 
+	@NotNull
 	@Column(name = "tipo_movimentacao", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TipoMovimentacao tipoMovimentacao;
 
+	@NotNull
 	@Column(name = "forma_movimentacao")
 	@Enumerated(EnumType.STRING)
 	private FormaMovimentacao formaMovimentacao;
 
 	@Builder.Default
+	@NotNull
 	@Column(name = "data_base", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dataBase = new Date();
 
+	@NotNull
 	@Column(name = "data_vencimento", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dataVencimento;
 
+	@NotNull
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private CategoriaMovimentacao categoriaMovimentacao;
 
 	@Builder.Default
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_movimentacao", nullable = false)
 	private StatusMovimentacao statusMovimentacao = StatusMovimentacao.EM_ABERTO;

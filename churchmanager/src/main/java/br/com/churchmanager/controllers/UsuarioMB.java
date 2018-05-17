@@ -13,29 +13,35 @@ import br.com.churchmanager.bo.UsuarioBO;
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
-import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.Usuario;
 import br.com.churchmanager.model.filter.UsuarioFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
 import br.com.churchmanager.util.faces.FacesUtil;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Named
 @ViewScoped
 public class UsuarioMB implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
-	private Usuario usuario;
-	private List<Usuario> usuarios;
+	
+	private Usuario usuario = new Usuario();
+	private List<Usuario> usuarios = new ArrayList<>();
 	private MyLazyDataModel<Usuario> usuariosLazy;
-	private UsuarioFilter usuarioFilter;
+	private UsuarioFilter usuarioFilter = new UsuarioFilter();
 	private Boolean mudarSenha;
+	
 	@Inject
 	private UsuarioBO bo;
 
 	@PostConstruct
 	public void init() {
 		Usuario usuario = (Usuario) BuscaObjeto.comParametroGET(Usuario.class, "id", this.bo);
-		this.usuario = usuario;
+		this.usuario = usuario == null ? new Usuario() : usuario;
 	}
 
 	public String salvar() {
@@ -97,34 +103,12 @@ public class UsuarioMB implements Serializable {
 		return null;
 	}
 
-	public Status[] listarStatus() {
-		return Status.values();
+	public Usuario porEmail(String email) {
+		return bo.porEmail(email);
 	}
-
-	public Usuario getUsuario() {
-		if (this.usuario == null) {
-			this.usuario = new Usuario();
-		}
-
-		return this.usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public List<Usuario> getUsuarios() {
-		if (this.usuarios == null) {
-			this.usuarios = new ArrayList<>();
-		}
-
-		return this.usuarios;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
-
+	
+	//*************************************************************
+	
 	public MyLazyDataModel<Usuario> getUsuariosLazy() {
 		if (this.usuariosLazy == null) {
 			this.usuariosLazy = this.bo.filtrar(this.usuarioFilter);
@@ -133,31 +117,10 @@ public class UsuarioMB implements Serializable {
 		return this.usuariosLazy;
 	}
 
-	public void setUsuariosLazy(MyLazyDataModel<Usuario> usuariosLazy) {
-		this.usuariosLazy = usuariosLazy;
-	}
-
-	public UsuarioFilter getUsuarioFilter() {
-		if (this.usuarioFilter == null) {
-			this.usuarioFilter = new UsuarioFilter();
+	public Usuario getUsuario() {
+		if(usuario == null) {
+			usuario = new Usuario();
 		}
-
-		return this.usuarioFilter;
-	}
-
-	public void setUsuarioFilter(UsuarioFilter usuarioFilter) {
-		this.usuarioFilter = usuarioFilter;
-	}
-
-	public Boolean getMudarSenha() {
-		return this.mudarSenha;
-	}
-
-	public void setMudarSenha(Boolean mudarSenha) {
-		this.mudarSenha = mudarSenha;
-	}
-
-	public Usuario porEmail(String email) {
-		return bo.porEmail(email);
+		return usuario;
 	}
 }
