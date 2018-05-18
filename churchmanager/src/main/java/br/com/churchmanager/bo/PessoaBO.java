@@ -54,7 +54,7 @@ public class PessoaBO implements Serializable, Buscador<Pessoa> {
 	}
 
 	public Pessoa buscarPorMatricula(String matricula) {
-		return (Pessoa) this.dao.buscarPorAtributo("matricula", matricula);
+		return this.dao.buscarPorAtributo("matricula", matricula);
 	}
 
 	public MyLazyDataModel<Pessoa> filtrar(PessoaFilter pessoaFilter) {

@@ -47,6 +47,7 @@
 					required="true"
 					requiredMessage="O campo de busca deve ser preenchido!"
 					value="#{dizimoMB.idPessoa}" id="codigo-dizimista">
+					<p:clientValidator event="keyup"/>
 				</p:inputText>
 				<p:message id="id-codigo-dizimista" for="codigo-dizimista" />
 			</div>

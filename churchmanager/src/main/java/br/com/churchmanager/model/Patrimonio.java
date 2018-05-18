@@ -62,13 +62,13 @@ public class Patrimonio extends EntidadeGenerica implements Serializable {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado", nullable = false)
-	@Builder.Default
+	
 	private EstadoPatrimonio estado = EstadoPatrimonio.REGULAR;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "situacao", nullable = false)
-	@Builder.Default
+	
 	private Situacao situacao = Situacao.QUITADO;
 
 	@NotNull
@@ -92,7 +92,7 @@ public class Patrimonio extends EntidadeGenerica implements Serializable {
 
 	@OneToMany(mappedBy = "patrimonio", orphanRemoval = true, targetEntity = AvaliacaoPatrimonio.class, cascade = {
 			CascadeType.ALL })
-	@Builder.Default
+	
 	private List<AvaliacaoPatrimonio> avaliacoes = new ArrayList();
 
 	

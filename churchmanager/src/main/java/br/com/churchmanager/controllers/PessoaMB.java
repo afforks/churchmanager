@@ -9,6 +9,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
 
 import br.com.churchmanager.bo.PessoaBO;
 import br.com.churchmanager.exception.DadosException;
@@ -19,19 +23,28 @@ import br.com.churchmanager.model.filter.PessoaFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
 import br.com.churchmanager.util.faces.FacesUtil;
+import lombok.Getter;
+import lombok.Setter;
 
 @Named
 @ViewScoped
+@Getter
+@Setter
 public class PessoaMB implements Serializable {
 
 	private static final long serialVersionUID = 1654654455L;
 
 	private Pessoa pessoa;
-	private List<Pessoa> pessoas;
+	private List<Pessoa> pessoas = new ArrayList<>();
 	private MyLazyDataModel<Pessoa> pessoasLazy;
-	private PessoaFilter pessoaFilter;
+	private PessoaFilter pessoaFilter = new PessoaFilter();
 	
+	@NotNull
+	@Pattern(regexp = "\\(\\d{2}\\)\\d{4}\\-\\d{5}")
 	private String telefone;
+	
+	@NotNull
+	@Email
 	private String email;
 
 	@Inject
@@ -39,8 +52,8 @@ public class PessoaMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Pessoa pessoa = (Pessoa) BuscaObjeto.comParametroGET(Pessoa.class, "id", this.bo);
-		this.pessoa = pessoa;
+		Pessoa pessoa = BuscaObjeto.comParametroGET(Pessoa.class, "id", this.bo);
+		this.pessoa = pessoa == null ? new Pessoa() : pessoa;
 	}
 
 	public String salvar() {
@@ -104,73 +117,18 @@ public class PessoaMB implements Serializable {
 		return null;
 	}
 
-	public List<Pessoa> perfis() {
-		return this.bo.listar();
-	}
-
-	public Pessoa getPessoa() {
-		if (this.pessoa == null) {
-			this.pessoa = new Pessoa();
-		}
-
-		return this.pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
-
-	public List<Pessoa> getPessoas() {
-		if (this.pessoas == null) {
-			this.pessoas = new ArrayList<>();
-		}
-
-		return this.pessoas;
-	}
-
-	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
-	}
+//	public List<Pessoa> perfis() {
+//		return this.bo.listar();
+//	}
 
 	public MyLazyDataModel<Pessoa> getPessoasLazy() {
 		if (this.pessoasLazy == null) {
 			this.pessoasLazy = this.bo.filtrar(this.getPessoaFilter());
 		}
-
 		return this.pessoasLazy;
 	}
 
-	public void setPessoasLazy(MyLazyDataModel<Pessoa> pessoasLazy) {
-		this.pessoasLazy = pessoasLazy;
-	}
-
-	public PessoaFilter getPessoaFilter() {
-		if (this.pessoaFilter == null) {
-			this.pessoaFilter = new PessoaFilter();
-		}
-
-		return this.pessoaFilter;
-	}
-
-	public void setPessoaFilter(PessoaFilter pessoaFilter) {
-		this.pessoaFilter = pessoaFilter;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	// ***********************************
 	
 	public void resetarTelefone() {
 		if(FacesUtil.naoFalhouNaValidacao()) {

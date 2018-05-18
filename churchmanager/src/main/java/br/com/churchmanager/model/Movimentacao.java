@@ -16,11 +16,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-//import javax.validation.constraints.DecimalMin;
-//import javax.validation.constraints.Max;
-//import javax.validation.constraints.Min;
-//import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.Size;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -69,14 +64,12 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	@Column(name = "valor", nullable = false)
 	private float valor;
 
-	@Builder.Default
 	@Column(name = "numero_parcelas")
 	@Min(1L)
 	@Max(12L)
 	@NotNull
 	private int numeroParcelas = 1;
 
-	@Builder.Default
 	@Column(name = "parcelado")
 	@Type(type = "true_false")
 	private boolean parcelado = false;
@@ -91,7 +84,6 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private FormaMovimentacao formaMovimentacao;
 
-	@Builder.Default
 	@NotNull
 	@Column(name = "data_base", nullable = false)
 	@Temporal(TemporalType.DATE)
@@ -107,7 +99,6 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private CategoriaMovimentacao categoriaMovimentacao;
 
-	@Builder.Default
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_movimentacao", nullable = false)

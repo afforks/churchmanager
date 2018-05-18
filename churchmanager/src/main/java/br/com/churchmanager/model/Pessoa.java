@@ -70,19 +70,15 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	private String apelido;
 
 	@NotNull
-	@Size(min = 3, max = 50)
+	@Size(min = 17, max = 17)
 	@Column(name = "matricula", unique = true, nullable = false)
-	private String matricula;
+	private String matricula = gerarMatricula();
 
-//	@Builder.Default
 	@ElementCollection
 	@CollectionTable(name = "telefones", joinColumns = { @JoinColumn(name = "pessoa_id") })
 	@Column(name = "telefone")
-	@Singular()
 	private List<String> telefones = new ArrayList<>();
 
-	@Singular
-//	@Builder.Default()
 	@ElementCollection
 	@CollectionTable(name = "emails", joinColumns = { @JoinColumn(name = "pessoa_id") })
 	@Column(name = "email")
@@ -104,10 +100,9 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	private Date dataConversao;
 
 	@Embedded
-	@Builder.Default
 	private Endereco endereco = new Endereco();
 
-	@Builder.Default
+	
 	@Column(name = "estado_civil")
 	@Enumerated(EnumType.STRING)
 	private EstadoCivil estadoCivil = EstadoCivil.SOLTEIRO;
@@ -131,12 +126,12 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(name = "pessoa_atividade_eclesiastica", joinColumns = {
 			@JoinColumn(name = "pessoa_id") }, inverseJoinColumns = { @JoinColumn(name = "atividade_eclesiastica_id") })
-	@Builder.Default
+	
 	private List<AtividadeEclesiastica> atividadesEclesiastica = new ArrayList<>();
 
 	@OneToMany(mappedBy = "pessoa", cascade = { CascadeType.ALL }, targetEntity = Dizimo.class, orphanRemoval = true)
 	@Fetch(FetchMode.SUBSELECT)
-	@Builder.Default
+	
 	private List<Dizimo> dizimos = new ArrayList<>();
 
 	@Column(name = "data_cadastro", nullable = false)
@@ -147,8 +142,8 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 		return DataUtil.calcularIdade(this.dataNascimento);
 	}
 	
-	public void gerarMatricula() {
-		this.matricula = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+	public String gerarMatricula() {
+		return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
 	}
 	
 	public Endereco getEndereco(){

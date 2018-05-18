@@ -21,6 +21,7 @@
 					requiredMessage="Campo 'Nome' é obrigatório!"
 					value="#{categoriaMovimentacaoMB.categoriaMovimentacao.nome}"
 					placeholder="Digite o nome da categoria">
+				<p:clientValidator event="keyup"/>
 				</p:inputText>
 				<p:message for="nome" />
 			</div>
@@ -33,7 +34,10 @@
 				<p:inputTextarea id="descricao" required="false"
 					requiredMessage="Campo 'Descrição' é obrigatório!"
 					value="#{categoriaMovimentacaoMB.categoriaMovimentacao.descricao}"
-					placeholder="Descreva a categoria" />
+					placeholder="Descreva a categoria" >
+					<p:clientValidator event="keyup"/>
+					</p:inputTextarea>
+					
 				<p:message for="descricao" />
 			</div>
 		</div>

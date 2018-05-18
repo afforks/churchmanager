@@ -21,6 +21,7 @@
 				<p:inputText id="nome" required="true"
 					requiredMessage="Campo 'Nome' é obrigatório!"
 					value="#{cargoMB.cargo.nome}" placeholder="Digite o nome do cargo">
+					<p:clientValidator event="keyup"/>
 				</p:inputText>
 				<p:message for="nome" />
 			</div>
@@ -32,7 +33,9 @@
 					value="Descrição" />
 				<p:inputTextarea id="descricao" required="false"
 					requiredMessage="Campo 'Descrição' é obrigatório!"
-					value="#{cargoMB.cargo.descricao}" placeholder="Descreva o cargo" />
+					value="#{cargoMB.cargo.descricao}" placeholder="Descreva o cargo" >
+					<p:clientValidator event="keyup"/>
+					</p:inputTextarea>
 				<p:message for="descricao" />
 			</div>
 		</div>

@@ -23,7 +23,9 @@
 				<p:inputText id="nome" required="true"
 					requiredMessage="Campo 'Nome' é obrigatório!"
 					value="#{pessoaMB.pessoa.nome}"
-					placeholder="Nome completo do membro" />
+					placeholder="Nome completo do membro" >
+					<p:clientValidator event="keyup"/>
+					</p:inputText>
 				<p:message for="nome" />
 			</div>
 
@@ -32,7 +34,9 @@
 				<p:inputText id="apelido" required="true"
 					requiredMessage="Campo 'Apelido' é obrigatório!"
 					value="#{pessoaMB.pessoa.apelido}"
-					placeholder="Nome pelo qual o membro é conhecido" />
+					placeholder="Nome pelo qual o membro é conhecido" >
+					<p:clientValidator event="keyup"/>
+					</p:inputText>
 				<p:message for="apelido" />
 			</div>
 
@@ -43,7 +47,9 @@
 					placeholder="Ex.: 25/10/1990"
 					requiredMessage="Campo 'Dt. nascimento' é obrigatório!"
 					value="#{pessoaMB.pessoa.dataNascimento}" navigator="true"
-					pattern="dd/MM/yyyy" />
+					pattern="dd/MM/yyyy" >
+					<p:clientValidator event="keyup"/>
+					</p:calendar>
 				<p:message for="dataNascimento" />
 			</div>
 
@@ -61,6 +67,7 @@
 						<f:selectItems value="#{utilMB.listarEstadoCivil()}"
 							itemLabel="#{estacoCivil.descricao}" itemValue="#{estacoCivil}"
 							var="estacoCivil" />
+							<p:clientValidator event="onfocus"/>
 					</p:selectOneMenu>
 					<p:message for="estadoCivil" />
 				</div>
@@ -102,7 +109,9 @@
 				<p:inputText id="profissao" required="true"
 					requiredMessage="Campo 'Profissão' é obrigatório!"
 					value="#{pessoaMB.pessoa.profissao}"
-					placeholder="Atuação profissional do membro" />
+					placeholder="Atuação profissional do membro" >
+					<p:clientValidator event="keyup"/>
+					</p:inputText>
 				<p:message for="profissao" />
 			</div>
 
@@ -133,7 +142,9 @@
 				<p:inputText id="logradouro" required="true"
 					requiredMessage="Campo 'Logradouro' é obrigatório!"
 					value="#{pessoaMB.pessoa.endereco.logradouro}"
-					placeholder="Ex.: Rua São João, 170" />
+					placeholder="Ex.: Rua São João, 170" >
+					<p:clientValidator event="keyup"/>
+					</p:inputText>
 				<p:message for="logradouro" />
 			</div>
 
@@ -144,7 +155,9 @@
 				<p:inputText id="referencia" required="true"
 					requiredMessage="Campo 'Referência' é obrigatório!"
 					value="#{pessoaMB.pessoa.endereco.referencia}"
-					placeholder="Ex.: Próximo a..." />
+					placeholder="Ex.: Próximo a..." >
+					<p:clientValidator event="keyup"/>
+					</p:inputText>
 				<p:message for="referencia" />
 			</div>
 
@@ -153,7 +166,9 @@
 				<p:inputText id="bairro" required="true"
 					requiredMessage="Campo 'Bairro' é obrigatório!"
 					value="#{pessoaMB.pessoa.endereco.bairro}"
-					placeholder="Ex.: Girilândia" />
+					placeholder="Ex.: Girilândia" >
+					<p:clientValidator event="keyup"/>
+					</p:inputText>
 				<p:message for="bairro" />
 			</div>
 
@@ -163,7 +178,9 @@
 				<p:inputMask mask="99999-999" id="cep" required="true"
 					requiredMessage="Campo 'CEP' é obrigatório!"
 					value="#{pessoaMB.pessoa.endereco.cep}"
-					placeholder="Ex.: 62.940-000" />
+					placeholder="Ex.: 62.940-000" >
+					<p:clientValidator event="keyup"/>
+					</p:inputMask>
 				<p:message for="cep" />
 			</div>
 
@@ -173,7 +190,9 @@
 				<p:inputText id="cidade" required="true"
 					requiredMessage="Campo 'Cidade' é obrigatório!"
 					value="#{pessoaMB.pessoa.endereco.cidade}"
-					placeholder="Ex.: Morada Nova" />
+					placeholder="Ex.: Morada Nova" >
+					<p:clientValidator event="keyup"/>
+					</p:inputText>
 				<p:message for="cidade" />
 			</div>
 
@@ -196,7 +215,9 @@
 				<p:outputLabel for="pais" styleClass="my-label" value="País " />
 				<p:inputText id="pais" required="true"
 					requiredMessage="Campo 'País' é obrigatório!"
-					value="#{pessoaMB.pessoa.endereco.pais}" placeholder="Ex.: Brasil" />
+					value="#{pessoaMB.pessoa.endereco.pais}" placeholder="Ex.: Brasil" >
+					<p:clientValidator event="keyup"/>
+					</p:inputText>
 				<p:message for="pais" />
 			</div>
 		</p:fieldset>
@@ -282,7 +303,9 @@
 					placeholder="Ex.: 20/08/2006"
 					requiredMessage="Campo 'Dt. de conversão' é obrigatório!"
 					value="#{pessoaMB.pessoa.dataConversao}" navigator="true"
-					pattern="dd/MM/yyyy" />
+					pattern="dd/MM/yyyy" >
+					<p:clientValidator event="keyup"/>
+					</p:calendar>
 				<p:message for="dataConversao" />
 			</div>
 
@@ -293,7 +316,9 @@
 					placeholder="24/12/2006"
 					requiredMessage="Campo 'Dt. debatismo' é obrigatório!"
 					value="#{pessoaMB.pessoa.dataBatismo}" navigator="true"
-					pattern="dd/MM/yyyy" />
+					pattern="dd/MM/yyyy" >
+					<p:clientValidator event="keyup"/>
+					</p:calendar>
 				<p:message for="dataBatismo" />
 			</div>
 
@@ -303,7 +328,9 @@
 				<p:inputTextarea id="observacao" required="true"
 					requiredMessage="Campo 'Observação' é obrigatório!"
 					value="#{pessoaMB.pessoa.observacao}"
-					placeholder="Informações relevantes como: contato de emergência, se possui alergia, se faz uso de medicamento controlado, entre outros" />
+					placeholder="Informações relevantes como: contato de emergência, se possui alergia, se faz uso de medicamento controlado, entre outros" >
+					<p:clientValidator event="keyup"/>
+					</p:inputTextarea>
 				<p:message for="observacao" />
 			</div>
 
@@ -360,6 +387,7 @@
 				styleClass="my-label" />
 			<p:inputMask id="dlg-telefone" mask="(99)9999-9999?9" required="true"
 				value="#{pessoaMB.telefone}">
+				<p:clientValidator event="keyup"/>
 			</p:inputMask>
 			<p:message id="msg-telefone" for="dlg-telefone" />
 
@@ -367,7 +395,7 @@
 				<div class="ui-g-12 ui-g-nopad">
 					<div class="ui-g-6">
 						<p:commandButton icon="fa fa-save" value="Adicionar"
-							action="#{pessoaMB.resetarTelefone()}"
+							action="#{pessoaMB.resetarTelefone()}" validateClient="true"
 							update="msg-telefone dlg-telefone telefones">
 							<p:collector unique="true" value="#{pessoaMB.telefone}"
 								addTo="#{pessoaMB.pessoa.telefones}" />
@@ -394,6 +422,7 @@
 			<p:outputLabel value="E-mail" for="dlg-email" styleClass="my-label" />
 			<p:inputText id="dlg-email" required="true" value="#{pessoaMB.email}"
 				type="email">
+				<p:clientValidator event="keyup"/>
 			</p:inputText>
 			<p:message id="msg-email" for="dlg-email" />
 
@@ -401,7 +430,7 @@
 				<div class="ui-g-12 ui-g-nopad">
 					<div class="ui-g-6">
 						<p:commandButton icon="fa fa-save" value="Adicionar"
-							action="#{pessoaMB.resetarEmail()}"
+							action="#{pessoaMB.resetarEmail()}" validateClient="true"
 							update="msg-email dlg-email emails">
 							<p:collector unique="true" value="#{pessoaMB.email}"
 								addTo="#{pessoaMB.pessoa.emails}" />

@@ -6,7 +6,7 @@ $(document).ready(
 			});
 
 			$('.app-ano-atual').html(
-					'Todos os direitos reservados - GetSoftware - '
+					'Todos os direitos reservados - @GetSoftware - '
 							+ new Date().getFullYear());
 			configurarMoeda();
 			configurarInteiro();

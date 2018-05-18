@@ -60,7 +60,7 @@ public class Usuario extends EntidadeGenerica implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "perfil_id", nullable = false)
 	@NotNull
-	@Builder.Default
+	
 	private Perfil perfil = new Perfil();
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
@@ -68,7 +68,7 @@ public class Usuario extends EntidadeGenerica implements Serializable {
 	@JoinTable(name = "usuario_pagina", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "pagina_id") })
 	@NotNull
-	@Builder.Default
+	
 	private List<Pagina> paginas = new ArrayList();
 
 }

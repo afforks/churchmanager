@@ -58,7 +58,7 @@ public class Diretoria extends EntidadeGenerica implements Serializable {
 
 	@NotNull
 	@NotEmpty
-	@Builder.Default
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(name = "diretoria_pessoa_cargo", joinColumns = {
@@ -66,13 +66,13 @@ public class Diretoria extends EntidadeGenerica implements Serializable {
 	private List<PessoaCargo> pessoaCargos = new ArrayList<>();
 
 	@NotNull
-	@Builder.Default
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_inicio", nullable = false)
 	private Date inicio = DataUtil.stringParaDate("01/01/" + DataUtil.ano());
 
 	@NotNull
-	@Builder.Default
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_termino", nullable = false)
 	private Date termino = DataUtil.stringParaDate("31/12/" + DataUtil.ano());

@@ -62,13 +62,13 @@ public class Dizimo extends EntidadeGenerica implements Serializable {
 	private double valorTotal;
 
 	@NotNull
-	@Builder.Default
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_referencia", nullable = false)
 	private Date dataReferencia = DataUtil.mesAnterior(new Date());
 
 	@NotNull
-	@Builder.Default
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_recebimento", nullable = false)
 	private Date dataRecebimento = new Date();
@@ -77,7 +77,7 @@ public class Dizimo extends EntidadeGenerica implements Serializable {
 	@Column(name = "observacao")
 	private String observcao;
 
-	@Builder.Default
+	
 	@Type(type = "true_false")
 	@Column(name = "is_13")
 	private boolean is13 = false;

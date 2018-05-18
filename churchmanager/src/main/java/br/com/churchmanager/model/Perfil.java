@@ -54,7 +54,7 @@ public class Perfil extends EntidadeGenerica implements Serializable {
 	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(name = "perfil_pagina", joinColumns = { @JoinColumn(name = "perfil_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "pagina_id") })
-	@Builder.Default
+	
 	private List<Pagina> paginas = new ArrayList<>();
 	
 }

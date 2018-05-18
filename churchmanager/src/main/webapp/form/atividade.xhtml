@@ -20,7 +20,9 @@
 				<p:inputText id="nome" required="true"
 					requiredMessage="Campo 'Nome' é obrigatório!"
 					value="#{atividadeEclesiasticaMB.atividadeEclesiastica.nome}"
-					placeholder="Digite o nome da atividade" />
+					placeholder="Digite o nome da atividade" >
+					<p:clientValidator event="keyup"/>
+					</p:inputText>
 				<p:message for="nome" />
 			</div>
 		</div>
@@ -32,7 +34,9 @@
 				<p:inputTextarea id="descricao" required="false"
 					requiredMessage="Campo 'Descrição' é obrigatório!"
 					value="#{atividadeEclesiasticaMB.atividadeEclesiastica.descricao}"
-					placeholder="Descreva a atividade" />
+					placeholder="Descreva a atividade" >
+					<p:clientValidator event="keyup"/>
+					</p:inputTextarea>
 				<p:message for="descricao" />
 			</div>
 		</div>

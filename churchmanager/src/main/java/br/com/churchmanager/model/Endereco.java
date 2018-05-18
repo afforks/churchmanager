@@ -19,8 +19,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
+@AllArgsConstructor
 @Builder
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 7606653748140748746L;
@@ -34,22 +34,18 @@ public class Endereco implements Serializable {
 	@Column(name = "bairro")
 	private String bairro;
 
-	@Builder.Default
 	@Column(name = "cep")
 	@Pattern(regexp = "\\d{5}-\\d{3}", message = "Cep com formato inválido")
 	private String cep = "62940-000";
 
-	@Builder.Default
 	@Column(name = "cidade")
 	private String cidade = "Morada Nova";
 
-	@Builder.Default
 	@Column(name = "estado")
 	@Enumerated(EnumType.STRING)
 	private Estado estado = Estado.CE;
 
-	@Builder.Default
 	@Column(name = "pais")
 	private String pais = "Brasil";
- 
+
 }

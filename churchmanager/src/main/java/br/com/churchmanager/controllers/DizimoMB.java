@@ -10,7 +10,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import br.com.churchmanager.bo.DizimoBO;
 import br.com.churchmanager.bo.PessoaBO;
@@ -43,7 +45,9 @@ public class DizimoMB implements Serializable {
 	@Inject
 	PessoaBO pessoaBO;
 	
-	@Pattern(regexp = "[0-9]{17}")
+	@NotNull
+	@Size(min = 17, max = 17, message = "Deve conter 17 caracteres")
+	@Pattern(regexp = "[0-9]{17}", message="Deve ser informado apenas números!")
 	private String idPessoa;
 
 	@PostConstruct

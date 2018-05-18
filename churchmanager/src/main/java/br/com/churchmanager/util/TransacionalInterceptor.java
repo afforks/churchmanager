@@ -19,44 +19,44 @@ public class TransacionalInterceptor implements Serializable {
 
 	@AroundInvoke
 	public Object invoke(InvocationContext context) throws Exception {
-//		EntityTransaction trx = this.manager.getTransaction();
-//		boolean criador = false;
-//
-//		Object arg5;
-//		try {
-//			if (!trx.isActive()) {
-//				trx.begin();
-//				trx.rollback();
-//				trx.begin();
-//				criador = true;
-//			}
-//
-//			arg5 = context.proceed();
-//		} catch (Exception arg8) {
-//			if (trx != null && criador) {
-//				trx.rollback();
-//			}
-//
-//			throw arg8;
-//		} finally {
-//			if (trx != null && trx.isActive() && criador) {
-//				trx.commit();
-//			}
-//
-//		}
-//
-//		return arg5;
-		EntityTransaction tx = manager.getTransaction();
-		Object resultado = null;
+		EntityTransaction trx = this.manager.getTransaction();
+		boolean criador = false;
+
+		Object arg5;
 		try {
-			tx.begin(); // inicia transação
-			resultado = context.proceed();
-			tx.commit(); // comita transação
-		} catch (Exception e) {
-			if (tx != null && tx.isActive()) {
-				tx.rollback();
+			if (!trx.isActive()) {
+				trx.begin();
+				trx.rollback();
+				trx.begin();
+				criador = true;
 			}
+
+			arg5 = context.proceed();
+		} catch (Exception arg8) {
+			if (trx != null && criador) {
+				trx.rollback();
+			}
+
+			throw arg8;
+		} finally {
+			if (trx != null && trx.isActive() && criador) {
+				trx.commit();
+			}
+
 		}
-		return resultado;
+
+		return arg5;
+//		EntityTransaction tx = manager.getTransaction();
+//		Object resultado = null;
+//		try {
+//			tx.begin(); // inicia transação
+//			resultado = context.proceed();
+//			tx.commit(); // comita transação
+//		} catch (Exception e) {
+//			if (tx != null && tx.isActive()) {
+//				tx.rollback();
+//			}
+//		}
+//		return resultado;
 	}
 }

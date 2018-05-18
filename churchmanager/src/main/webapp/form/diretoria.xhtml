@@ -23,6 +23,7 @@
 					requiredMessage="Campo 'Nome' é obrigatório!"
 					value="#{diretoriaMB.diretoria.nome}"
 					placeholder="Digite o nome da diretoria">
+					<p:clientValidator event="keyup"/>
 				</p:inputText>
 				<p:message for="nome" />
 			</div>
@@ -37,7 +38,9 @@
 				<p:calendar id="inicio" required="true" mask="99/99/9999"
 					requiredMessage="Campo 'Dt. de início' é obrigatório!"
 					value="#{diretoriaMB.diretoria.inicio}" navigator="true"
-					pattern="dd/MM/yyyy" placeholder="Data de início" maskSlotChar="" />
+					pattern="dd/MM/yyyy" placeholder="Data de início" maskSlotChar="" >
+					<p:clientValidator event="keyup"/>
+					</p:calendar>
 				<p:message for="inicio" />
 			</div>
 
@@ -48,7 +51,9 @@
 				<p:calendar id="fim" required="true" mask="99/99/9999"
 					requiredMessage="Campo 'Dt. de término' é obrigatório!"
 					value="#{diretoriaMB.diretoria.termino}" navigator="true"
-					pattern="dd/MM/yyyy" placeholder="Data de término" maskSlotChar="" />
+					pattern="dd/MM/yyyy" placeholder="Data de término" maskSlotChar="" >
+					<p:clientValidator event="keyup"/>
+					</p:calendar>
 				<p:message for="fim" />
 			</div>
 		</div>
@@ -62,7 +67,9 @@
 				<p:inputTextarea id="descricao" required="false"
 					requiredMessage="Campo 'Descrição' é obrigatório!"
 					value="#{diretoriaMB.diretoria.descricao}"
-					placeholder="Descreva a diretoria" />
+					placeholder="Descreva a diretoria" >
+					<p:clientValidator event="keyup"/>
+					</p:inputTextarea>
 				<p:message for="descricao" />
 			</div>
 		</div>
