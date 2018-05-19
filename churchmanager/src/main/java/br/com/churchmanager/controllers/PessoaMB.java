@@ -40,7 +40,7 @@ public class PessoaMB implements Serializable {
 	private PessoaFilter pessoaFilter = new PessoaFilter();
 	
 	@NotNull
-	@Pattern(regexp = "\\(\\d{2}\\)\\d{4}\\-\\d{5}")
+	@Pattern(regexp = "^\\([1-9]{2}\\)[0-9]{4}\\-[0-9]{4}[0-9]{0,1}$")
 	private String telefone;
 	
 	@NotNull
@@ -58,10 +58,7 @@ public class PessoaMB implements Serializable {
 
 	public String salvar() {
 		try {
-//			this.pessoa.atualizarIdMD5();
 			this.pessoa.setDataCadastro(new Date());
-//			String matricula = bo.gerarMatricula(pessoa.getDataCadastro());
-//			this.pessoa.setMatricula(matricula);
 			this.pessoa.gerarMatricula();
 			this.bo.salvar(this.pessoa);
 			FacesUtil.informacao("pessoa-msg", "Cadastrado com sucesso!", this.pessoa.toString());

@@ -67,7 +67,7 @@
 						<f:selectItems value="#{utilMB.listarEstadoCivil()}"
 							itemLabel="#{estacoCivil.descricao}" itemValue="#{estacoCivil}"
 							var="estacoCivil" />
-							<p:clientValidator event="onfocus"/>
+
 					</p:selectOneMenu>
 					<p:message for="estadoCivil" />
 				</div>
@@ -385,7 +385,7 @@
 
 			<p:outputLabel value="Número" for="dlg-telefone"
 				styleClass="my-label" />
-			<p:inputMask id="dlg-telefone" mask="(99)9999-9999?9" required="true"
+			<p:inputMask id="dlg-telefone"  mask="(99)9999-9999?9" required="true"
 				value="#{pessoaMB.telefone}">
 				<p:clientValidator event="keyup"/>
 			</p:inputMask>
@@ -445,5 +445,6 @@
 			</f:facet>
 		</p:dialog>
 	</div>
+	
 </h:form>
 </html>
