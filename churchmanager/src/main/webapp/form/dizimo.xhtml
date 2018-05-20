@@ -13,7 +13,7 @@
 	<p:defaultCommand target="buscar-dizimista" />
 
 	<div class="ui-g-12 ui-g-nopad">
-		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" />
+		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" closable="true"/>
 	</div>
 	<div class="ui-fluid" jsf:id="group">
 
@@ -79,6 +79,7 @@
 				maxlength="10" value="#{dizimoMB.dizimo.valorDizimo}"
 				converter="javax.faces.BigDecimal">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+				<p:clientValidator event="keyup"/>
 			</p:inputText>
 			<p:message for="valor-dizimo" />
 		</div>
@@ -91,6 +92,7 @@
 				maxlength="10" value="#{dizimoMB.dizimo.valorOferta}"
 				converter="javax.faces.BigDecimal">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+				<p:clientValidator event="keyup"/>
 			</p:inputText>
 			<p:message for="valor-oferta" />
 		</div>
@@ -105,7 +107,9 @@
 				requiredMessage="Campo 'Dt. de referência' é obrigatório!"
 				value="#{dizimoMB.dizimo.dataReferencia}" navigator="true"
 				pattern="dd/MM/yyyy" placeholder="Data de referência"
-				maskSlotChar="" />
+				maskSlotChar="" >
+				<p:clientValidator event="keyup"/>
+				</p:calendar>
 			<p:message for="dataBase" />
 		</div>
 
@@ -116,7 +120,9 @@
 				placeholder="Data de recebimento" maskSlotChar=""
 				requiredMessage="Campo 'Dt. de recebimento' é obrigatório!"
 				value="#{dizimoMB.dizimo.dataRecebimento}" navigator="true"
-				pattern="dd/MM/yyyy" />
+				pattern="dd/MM/yyyy" >
+				<p:clientValidator event="keyup"/>
+				</p:calendar>
 			<p:message for="dataRecebimento" />
 		</div>
 
@@ -139,7 +145,9 @@
 			<p:inputTextarea id="observacao" required="true"
 				placeholder="Observação"
 				requiredMessage="Campo 'Observação' é obrigatório!"
-				value="#{dizimoMB.dizimo.observcao}" />
+				value="#{dizimoMB.dizimo.observcao}" >
+				<p:clientValidator event="keyup"/>
+				</p:inputTextarea>
 			<p:message for="observacao" />
 		</div>
 

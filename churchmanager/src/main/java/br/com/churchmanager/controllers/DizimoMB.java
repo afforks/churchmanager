@@ -126,8 +126,13 @@ public class DizimoMB implements Serializable {
 
 	public void buscarPessoa() {
 		Pessoa pessoa = this.pessoaBO.buscarPorMatricula(this.getIdPessoa());
-		this.getDizimo().setPessoa(pessoa);
-		FacesUtil.atualizaComponente("grid-pessoa-selecionada");
+		if(pessoa != null) {
+			this.getDizimo().setPessoa(pessoa);
+			FacesUtil.atualizaComponente("grid-pessoa-selecionada");
+		} else {
+			FacesUtil.atencao("msg", "Atenção!", "Nenhum dizimista foi encontrado para o código "+getIdPessoa()+"!");
+			FacesUtil.atualizaComponente("msg");
+		}
 	}
 
 	public void cancelarSelecao() {

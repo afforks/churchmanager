@@ -16,6 +16,7 @@ import javax.persistence.Transient;
 //import javax.validation.constraints.Size;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 //import org.hibernate.annotations.Cache;
@@ -62,15 +63,15 @@ public class Dizimo extends EntidadeGenerica implements Serializable {
 	private double valorTotal;
 
 	@NotNull
-	
 	@Temporal(TemporalType.DATE)
+	@Past
 	@Column(name = "data_referencia", nullable = false)
 	private Date dataReferencia = DataUtil.mesAnterior(new Date());
 
 	@NotNull
-	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_recebimento", nullable = false)
+	@Past
 	private Date dataRecebimento = new Date();
 	
 	@Size(max = 250)

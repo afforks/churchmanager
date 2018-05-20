@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -164,14 +166,19 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 	}
 
 	public T buscarPorAtributo(String chave, Object valor) {
-		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-		CriteriaQuery<T> cq = builder.createQuery(this.clazz);
-		Root<T> root = cq.from(this.clazz);
-		Predicate predicate = builder.equal(root.get(chave), valor);
-		cq.select(root);
-		cq.where(predicate);
-		TypedQuery<T> query = this.entityManager.createQuery(cq);
-		return query.getSingleResult();
+		try {
+			CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+			CriteriaQuery<T> cq = builder.createQuery(this.clazz);
+			Root<T> root = cq.from(this.clazz);
+			Predicate predicate = builder.equal(root.get(chave), valor);
+			cq.select(root);
+			cq.where(predicate);
+			TypedQuery<T> query = this.entityManager.createQuery(cq);
+			return query.getSingleResult();
+		}catch (NoResultException | NonUniqueResultException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public T buscarPorAtributo(String... args) {

@@ -20,7 +20,9 @@
 			<p:outputLabel for="nome" styleClass="my-label" value="Nome" />
 			<p:inputText id="nome" required="true"
 				value="#{usuarioMB.usuario.nomeCompleto}"
-				placeholder="Digite o nome do usuário" />
+				placeholder="Digite o nome do usuário" >
+				<p:clientValidator event="keyup"/>
+				</p:inputText>
 			<p:message for="nome" />
 		</div>
 
@@ -29,7 +31,9 @@
 			<p:inputText id="email" required="true"
 				requiredMessage="Campo 'E-mail' é obrigatório!"
 				value="#{usuarioMB.usuario.email}"
-				placeholder="Digite o e-mail do usuário" />
+				placeholder="Digite o e-mail do usuário" >
+				<p:clientValidator event="keyup"/>
+				</p:inputText>
 			<p:message for="email" />
 		</div>
 

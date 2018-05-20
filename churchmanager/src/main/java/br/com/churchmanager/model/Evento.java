@@ -3,7 +3,10 @@ package br.com.churchmanager.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -39,14 +42,16 @@ public class Evento extends EntidadeGenerica {
 	@NotBlank
 	@NotNull
 	@Size(min = 1, max = 2)
-	@Range(min = 1, max = 30)
+	@Min(1L)
+	@Max(31L)
 	@Column(name = "dia", nullable = false)
 	private String dia;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 1, max = 2)
-	@Range(min = 1, max = 12)
+	@Min(1L)
+	@Max(12L)
 	@Column(name = "mes", nullable = false)
 	private String mes;
 

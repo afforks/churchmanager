@@ -20,6 +20,7 @@
 				requiredMessage="Campo 'Nome' é obrigatório!"
 				value="#{paginaMB.pagina.nome}" placeholder="Nome da página">
 				<p:ajax process="@this" event="change" update="nomeIdentificador" />
+				<p:clientValidator event="keyup"/>
 			</p:inputText>
 			<p:message for="nome" />
 		</div>
@@ -40,7 +41,9 @@
 				value="Descrição" />
 			<p:inputTextarea id="descricao" required="false"
 				requiredMessage="Campo 'Descrição' é obrigatório!"
-				value="#{paginaMB.pagina.descricao}" placeholder="Descreva a página" />
+				value="#{paginaMB.pagina.descricao}" placeholder="Descreva a página" >
+				<p:clientValidator event="keyup"/>
+				</p:inputTextarea>
 			<p:message for="descricao" />
 		</div>
 

@@ -114,10 +114,6 @@ public class PessoaMB implements Serializable {
 		return null;
 	}
 
-//	public List<Pessoa> perfis() {
-//		return this.bo.listar();
-//	}
-
 	public MyLazyDataModel<Pessoa> getPessoasLazy() {
 		if (this.pessoasLazy == null) {
 			this.pessoasLazy = this.bo.filtrar(this.getPessoaFilter());

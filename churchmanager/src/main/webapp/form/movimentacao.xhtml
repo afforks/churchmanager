@@ -22,7 +22,9 @@
 				<p:inputText id="nome" required="true"
 					placeholder="Nome da movimentação"
 					requiredMessage="Campo 'Nome' é obrigatório!"
-					value="#{movimentacaoMB.movimentacao.nome}" />
+					value="#{movimentacaoMB.movimentacao.nome}" >
+					<p:clientValidator event="keyup"/>
+					</p:inputText>
 				<p:message for="nome" />
 			</div>
 		</div>
@@ -211,14 +213,14 @@
 
 				<p:commandButton value="Cadastrar"
 					action="#{movimentacaoMB.salvar()}" update="group"
-					validateClient="false" icon="fa fa-save" oncomplete="goToTop()"
+					validateClient="true" icon="fa fa-save" oncomplete="goToTop()"
 					rendered="#{movimentacaoMB.movimentacao.id == null}"
 					styleClass="btn-blue">
 				</p:commandButton>
 
 				<p:commandButton value="Editar"
 					action="#{movimentacaoMB.atualizar()}" update="group"
-					validateClient="false" icon="fa fa-edit"
+					validateClient="true" icon="fa fa-edit"
 					rendered="#{movimentacaoMB.movimentacao.id != null}"
 					styleClass="btn-green">
 				</p:commandButton>

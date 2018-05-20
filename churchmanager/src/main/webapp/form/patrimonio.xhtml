@@ -21,7 +21,9 @@
 				<p:inputText id="nome" required="true"
 					requiredMessage="Campo 'Nome' é obrigatório!"
 					value="#{patrimonioMB.patrimonio.nome}"
-					placeholder="Nome do patrimônio" />
+					placeholder="Nome do patrimônio" >
+					<p:clientValidator event="keyup"/>
+					</p:inputText>
 				<p:message for="nome" />
 			</div>
 		</div>
@@ -88,6 +90,7 @@
 				maxlength="10" value="#{patrimonioMB.patrimonio.valorAquisicao}"
 				converter="javax.faces.BigDecimal">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+				<p:clientValidator event="keyup"/>
 			</p:inputText>
 			<p:message for="valor-aquisicao" />
 		</div>
@@ -102,6 +105,7 @@
 				value="#{patrimonioMB.patrimonio.valorAtual}"
 				converter="javax.faces.BigDecimal">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+				<p:clientValidator event="keyup"/>
 			</p:inputText>
 			<p:message for="valor-atual" />
 		</div>
@@ -115,7 +119,9 @@
 				navigator="true"
 				requiredMessage="Campo 'Data de aquisição' é obrigatório!"
 				maskSlotChar=" " value="#{patrimonioMB.patrimonio.dataAquisicao}"
-				mask="99/99/9999" placeholder="Ex.: 25/10/1990" />
+				mask="99/99/9999" placeholder="Ex.: 25/10/1990" >
+				<p:clientValidator event="keyup"/>
+				</p:calendar>
 			<p:message for="data" />
 		</div>
 
@@ -142,7 +148,9 @@
 			<p:inputTextarea id="observacao" required="true"
 				requiredMessage="Campo 'Observação' é obrigatório!"
 				value="#{patrimonioMB.patrimonio.observacao}"
-				placeholder="Informe observações relevantes sobre este patrimônio" />
+				placeholder="Informe observações relevantes sobre este patrimônio" >
+				<p:clientValidator event="keyup"/>
+				</p:inputTextarea>
 			<p:message for="observacao" />
 		</div>
 
@@ -229,13 +237,13 @@
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 				<p:commandButton value="Cadastrar" action="#{patrimonioMB.salvar()}"
-					update="group" validateClient="false" icon="fa fa-save"
+					update="group" validateClient="true" icon="fa fa-save"
 					rendered="#{patrimonioMB.patrimonio.id == null}"
 					styleClass="btn-blue">
 				</p:commandButton>
 
 				<p:commandButton value="Editar" action="#{patrimonioMB.atualizar()}"
-					update="group" validateClient="false" icon="fa fa-edit"
+					update="group" validateClient="true" icon="fa fa-edit"
 					rendered="#{patrimonioMB.patrimonio.id != null}"
 					styleClass="btn-green">
 				</p:commandButton>

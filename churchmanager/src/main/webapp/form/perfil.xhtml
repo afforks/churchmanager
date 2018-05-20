@@ -21,7 +21,9 @@
 				<p:inputText id="nome" required="true"
 					requiredMessage="Campo 'Nome' é obrigatório!"
 					value="#{perfilMB.perfil.nome}"
-					placeholder="Digite o nome do perfil" />
+					placeholder="Digite o nome do perfil" >
+					<p:clientValidator event="keyup"/>
+					</p:inputText>
 				<p:message for="nome" />
 			</div>
 		</div>
@@ -34,7 +36,9 @@
 				<p:inputTextarea id="descricao" required="true"
 					requiredMessage="Campo 'Descrição' é obrigatório!"
 					value="#{perfilMB.perfil.descricao}"
-					placeholder="Descreva o perfil" />
+					placeholder="Descreva o perfil" >
+					<p:clientValidator event="keyup"/>
+					</p:inputTextarea>
 				<p:message for="descricao" />
 			</div>
 		</div>

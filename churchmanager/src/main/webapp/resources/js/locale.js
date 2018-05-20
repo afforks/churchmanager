@@ -143,12 +143,12 @@ PrimeFaces.locales['pt_BR'] = {
 	day : 'Dia',
 	allDayText : 'Todo Dia'
 }
-//
-//PrimeFaces.converter['javax.faces.BigDecimal'] = {
-//	convert : function(e, v) {
-//		if (v === null || v === '') {
-//			return null;
-//		}
-//		return parseInt(v);
-//	}
-//}
+
+PrimeFaces.converter['javax.faces.BigDecimal'] = {
+	convert : function(e, v) {
+		if (v === null || v === '') {
+			return null;
+		}
+		return v;
+	}
+}

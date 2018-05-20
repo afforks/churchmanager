@@ -18,7 +18,9 @@
 			<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
 			<p:inputText id="nome" required="true"
 				requiredMessage="Campo 'Nome' é obrigatório!"
-				value="#{eventoMB.evento.nome}" placeholder="Nome do evento" />
+				value="#{eventoMB.evento.nome}" placeholder="Nome do evento" >
+				<p:clientValidator event="keyup"/>
+				</p:inputText>
 			<p:message for="nome" />
 		</div>
 
@@ -27,7 +29,9 @@
 			<p:outputLabel for="dia" styleClass="my-label" value="Dia" />
 			<p:inputText id="dia" required="true"
 				requiredMessage="Campo 'Dia' é obrigatório!"
-				value="#{eventoMB.evento.dia}" placeholder="Dia. Ex.: 25" />
+				value="#{eventoMB.evento.dia}" placeholder="Dia. Ex.: 25" >
+				<p:clientValidator event="keyup"/>
+				</p:inputText>
 			<p:message for="dia" />
 		</div>
 

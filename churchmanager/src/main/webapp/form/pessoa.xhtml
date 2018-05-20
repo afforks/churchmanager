@@ -385,8 +385,8 @@
 
 			<p:outputLabel value="Número" for="dlg-telefone"
 				styleClass="my-label" />
-			<p:inputMask id="dlg-telefone"  mask="(99)9999-9999?9" required="true"
-				value="#{pessoaMB.telefone}">
+			<p:inputMask id="dlg-telefone"  mask="#{pessoaMB.telefone.legth() eq 13 ? '(99)9999-9999' : '(99)99999-9999'}" required="true"
+				value="#{pessoaMB.telefone}" slotChar=" " >
 				<p:clientValidator event="keyup"/>
 			</p:inputMask>
 			<p:message id="msg-telefone" for="dlg-telefone" />
