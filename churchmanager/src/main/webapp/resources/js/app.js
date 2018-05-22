@@ -40,6 +40,7 @@ function configurarMoeda() {
 		allowZero : true
 	});
 }
+
 function configurarInteiro() {
 	$(".inteiro").maskMoney({
 		decimal : "",

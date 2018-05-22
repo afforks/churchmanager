@@ -37,7 +37,7 @@
 		<view-id value="/nao-encontrado.xhtml" />
 	</url-mapping>
 
-	<!-- PÁGINA -->
+	<!-- PÁGINA ******************************************************************** -->
 	<url-mapping>
 		<pattern value="/cadastrar/pagina" />
 		<view-id value="/cad/pagina.xhtml" />
@@ -53,7 +53,7 @@
 		<view-id value="/list/pagina.xhtml" />
 	</url-mapping>
 
-	<!-- USUÁRIO -->
+	<!-- USUÁRIO ******************************************************************** -->
 	<url-mapping>
 		<pattern value="/cadastrar/usuario" />
 		<view-id value="/cad/usuario.xhtml" />
@@ -67,6 +67,23 @@
 	<url-mapping>
 		<pattern value="/listar/usuario" />
 		<view-id value="/list/usuario.xhtml" />
+	</url-mapping>
+	
+	
+	<!-- MOVIMENTAÇÃO ******************************************************************** -->
+	<url-mapping>
+		<pattern value="/cadastrar/movimentacao" />
+		<view-id value="/cad/movimentacao.xhtml" />
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/editar/movimentacao/#{id}" />
+		<view-id value="/edit/movimentacao.xhtml" />
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/listar/movimentacao" />
+		<view-id value="/list/movimentacao.xhtml" />
 	</url-mapping>
 
 </pretty-config>

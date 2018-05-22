@@ -30,7 +30,9 @@ import br.com.churchmanager.util.faces.FacesUtil;
 @Named
 @ViewScoped
 public class MovimentacaoMB implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
+	
 	private Movimentacao movimentacao;
 	private List<Movimentacao> movimentacaos;
 	private MyLazyDataModel<Movimentacao> movimentacaosLazy;

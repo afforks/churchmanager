@@ -144,11 +144,13 @@ PrimeFaces.locales['pt_BR'] = {
 	allDayText : 'Todo Dia'
 }
 
-PrimeFaces.converter['javax.faces.BigDecimal'] = {
-	convert : function(e, v) {
-		if (v === null || v === '') {
+PrimeFaces.converter['conversor.clientside.moeda'] = {
+	convert : function(element, value) {
+		if (value === null || value === '') {
 			return null;
+		}else{
+			var newValue = value.toString().replace('.', '');	
 		}
-		return v;
+		return parseInt(newValue);
 	}
 }

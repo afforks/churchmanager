@@ -1,6 +1,7 @@
 package br.com.churchmanager.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -96,7 +97,7 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	private Date dataVencimento;
 
 	@NotNull
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, targetEntity = CategoriaMovimentacao.class)
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private CategoriaMovimentacao categoriaMovimentacao;
 
@@ -108,7 +109,7 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	@OneToMany(mappedBy = "movimentacao", cascade = {
 			CascadeType.ALL }, targetEntity = ParcelaMovimentacao.class, orphanRemoval = true)
 	@Fetch(FetchMode.SUBSELECT)
-	private List<ParcelaMovimentacao> parcelas;
+	private List<ParcelaMovimentacao> parcelas = new ArrayList();
 
 	public void gerarParcelas() {
 		this.getParcelas().clear();

@@ -84,18 +84,30 @@
 
 
 		<div class="ui-g-12 ui-g-nopad">
+		
+		
+		
 			<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-12">
 				<p:outputLabel for="valor" styleClass="my-label" value="Valor " />
-
+				
+				
+				<div class="ui-inputgroup">
+	            	<span class="ui-inputgroup-addon">
+	            		<i class="fa fa-dollar"></i>
+	            	</span>
 				<p:inputText id="valor" required="true" styleClass="moeda "
 					requiredMessage="Campo 'Valor' é obrigatório!" maxlength="10"
-					value="#{movimentacaoMB.movimentacao.valor}"
-					converter="javax.faces.BigDecimal">
-					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+					value="#{movimentacaoMB.movimentacao.valor}" >
+					<f:converter converterId="conversor.clientside.moeda"/>
+					<p:clientValidator event="keyup"/>
+					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" pattern="#,##0.00" type="number" locale="pt_BR"/>
+					
 				</p:inputText>
+				</div>
+				
 				<p:message for="valor" />
 			</div>
-
+ 
 
 
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-12">
@@ -164,10 +176,15 @@
 
 		<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-12">
 			<p:outputLabel for="dataBase" styleClass="my-label" value="Dt. base " />
+			<div class="ui-inputgroup">
+	            	<span class="ui-inputgroup-addon">
+	            		<i class="fa fa-calendar"></i>
+	            	</span>
 			<p:calendar id="dataBase" required="true" mask="99/99/9999"
 				requiredMessage="Campo 'Dt. base' é obrigatório!"
 				value="#{movimentacaoMB.movimentacao.dataBase}" navigator="true"
 				pattern="dd/MM/yyyy" placeholder="Data base" maskSlotChar="" />
+				</div>
 			<p:message for="dataBase" />
 		</div>
 
@@ -176,11 +193,16 @@
 		<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-12">
 			<p:outputLabel for="dataVencimento" styleClass="my-label"
 				value="Dt. vencimento " />
+				<div class="ui-inputgroup">
+	            	<span class="ui-inputgroup-addon">
+	            		<i class="fa fa-calendar"/>
+	            	</span>
 			<p:calendar id="dataVencimento" required="true" mask="99/99/9999"
 				placeholder="Data de vencimento" maskSlotChar=""
 				requiredMessage="Campo 'Dt. vencimento' é obrigatório!"
 				value="#{movimentacaoMB.movimentacao.dataVencimento}"
 				navigator="true" pattern="dd/MM/yyyy" />
+				</div>
 			<p:message for="dataVencimento" />
 		</div>
 
