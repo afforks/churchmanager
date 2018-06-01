@@ -1,11 +1,4 @@
 /*  */
-/*create view faixa_etaria as select 
-sum(case when p.sexo = 'M' then 1 else 0 end) as 'M', 
-sum(case when p.sexo = 'F' then 1 else 0 end) as 'F', 
-faixa_etaria(p.data_nascimento) as 'faixa_etaria'
-	from pessoa as p
-		group by faixa_etaria
-        order by ordem_faixa_etaria(p.data_nascimento);*/
 create view faixa_etaria as 
 select 
 p.data_cadastro dc, 
@@ -46,7 +39,7 @@ pm.data_vencimento as data,
 
       
       
-/*  */
+/*
 create view custo_por_categoria as
 select c.nome as nome, sum(pm.valor_parcela) as valor				
  from movimentacao m                             
@@ -59,6 +52,7 @@ select c.nome as nome, sum(pm.valor_parcela) as valor
 		 AND month(pm.data_pagamento) = @mes         
 		 AND year(pm.data_pagamento) = @ano    
 	group by c.nome;
+	*/
 
 
 
@@ -123,11 +117,6 @@ select nome, apelido, data_nascimento as data, calcular_idade(data_nascimento) a
 
     
 /* */ 
-/*create view total_membros as
-select cast(count(id) as SIGNED) as total, 
-	cast(sum(case when sexo = 'M' then 1 else 0 end) as SIGNED) as M,
-	cast(sum(case when sexo = 'F' then 1 else 0 end) as SIGNED) as F 
-from pessoa;*/
 create view total_membros_periodo as
 select 
     year(data_cadastro) as ano,
@@ -240,9 +229,7 @@ group by d.pessoa_id, year(d.data_recebimento);
  
 /*	*/
 create view percentual_dizimistas as
-select month(d.data_referencia) as 'MES' , year(d.data_referencia) as 'ANO',
--- count(distinct d.pessoa_id) as 'Dizimistas', 
--- (select count(p.id) from pessoa p where p.data_cadastro <= d.data_referencia) as 'Membros', 
+select month(d.data_referencia) as 'MES' , year(d.data_referencia) as 'ANO', 
 count(distinct d.pessoa_id) * 100 / (select count(p.id) from pessoa p where p.status = 'ATIVO' and p.data_cadastro <= d.data_referencia) as 'PORCENTAGEM' 
 from dizimo d
 group by year(d.data_referencia), month(d.data_referencia);

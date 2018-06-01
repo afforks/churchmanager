@@ -1,36 +1,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
-	>
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head></h:head>
 
 <h:body>
-	<h:form>
-		<ul id="top-menu" class="ShowOnDesktop">
+	<h:form prependId="false">
+		<ul jsf:id="top-menu" class="ShowOnDesktop">
 			<li>
-				<a jsf:outcome="/home">
-					<p:outputLabel value="Home" />
+				<a jsf:outcome="/home.xhtml">
+					Home
 					<i class="fa fa-map-marker" />
 				</a>
 			</li>
 
 			<li>
-				<a jsf:id="notificacoes"  >
-						<p:outputLabel value="Notificações" />
+				<a id="notificacoes" >
+					Notificações
 					<i class="fa fa-bell" />
 				</a>
 			</li>
 
 			<li>
-				<p:link href="/logout">
-					<p:outputLabel value="Sair" />
+				<a href="#{request.contextPath}/logout">
+					Sair
 					<i class="fa fa-arrow-left" />
-				</p:link>
+				</a>
 			</li>
 
 			<li>
@@ -49,8 +48,8 @@
 			</li>
 		</ul>
 
-		<p:overlayPanel  widgetVar="notificacoes"
-			hideEffect="fade">
+		<p:overlayPanel  widgetVar="notificacoes" 
+			hideEffect="fade" dismissable="true">
 			<h1>Olá, Mundo!</h1>
 		</p:overlayPanel>
 	</h:form>

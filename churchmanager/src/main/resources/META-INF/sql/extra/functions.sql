@@ -1,7 +1,6 @@
 /*  */
 delimiter $$
-create function calcular_idade (data_nascimento date) 
-returns int
+create function calcular_idade (data_nascimento date) returns int
 	begin
 		declare idade int default 0;
 		declare dia_aniv int default day(data_nascimento);
@@ -21,7 +20,8 @@ returns int
 		end if;
     
     return idade;
-end
+end $$
+delimiter ;
 
 /*  
 conforme LEI Nº 10.741, Art. 1o, DE 01 DE OUTUBRO DE 2003 (Estatuto do idoso)

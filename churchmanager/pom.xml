@@ -142,12 +142,14 @@
 		</dependency>
 
 		<!-- Mojarra (implementacao do JSF) -->
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.faces</artifactId>
-			<version>2.2.13</version>
-			<scope>compile</scope>
-		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish/javax.faces -->
+<dependency>
+    <groupId>org.glassfish</groupId>
+    <artifactId>javax.faces</artifactId>
+    <version>2.2.17</version>
+    <scope>compile</scope>
+</dependency>
+
 
 
 		<!-- UTILITÁRIOS -->
@@ -318,7 +320,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.20</version>
+			<version>1.16.22</version>
 			<optional>true</optional>
 		</dependency>
 
