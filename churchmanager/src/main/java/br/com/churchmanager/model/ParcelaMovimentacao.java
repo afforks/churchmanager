@@ -32,7 +32,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(of = { "movimentacao" })
+@ToString(of = { "nome" })
 @EqualsAndHashCode(of= {"id"}, callSuper=true)
 @Builder
 public class ParcelaMovimentacao extends EntidadeGenerica implements Serializable {
