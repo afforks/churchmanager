@@ -1,6 +1,7 @@
 package br.com.churchmanager.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,7 +64,7 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	@NotNull
 	@DecimalMin("0.01")
 	@Column(name = "valor", nullable = false)
-	private float valor;
+	private BigDecimal valor;
 
 	@Column(name = "numero_parcelas")
 	@Min(1L)
@@ -131,14 +132,14 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 			parcela.setMovimentacao(this);
 			parcela.setFormaMovimentacao(this.getFormaMovimentacao());
 			parcela.setStatusMovimentacao(this.getStatusMovimentacao());
-			parcela.setValorParcela(this.getValor() / (float) this.getNumeroParcelas());
+			parcela.setValorParcela(this.getValor().doubleValue() / (double) this.getNumeroParcelas());
 			this.getParcelas().add(parcela);
 		}
 
 	}
 
-	public void setValor(float valor) {
-		if (valor <= 0) {
+	public void setValor(BigDecimal valor) {
+		if (valor == null || valor.doubleValue() <= 0) {
 			throw new ValorInvalidoException("O valor deve ser maior que zero!");
 		}
 		this.valor = valor;
@@ -152,7 +153,7 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	}
 
 	public String toString() {
-		return this.nome + ":  " + MonetarioUtil.formatarReal((double) this.valor) + " em " + this.numeroParcelas
+		return this.nome + ":  " + MonetarioUtil.formatarReal(this.valor.doubleValue()) + " em " + this.numeroParcelas
 				+ " X " + this.parcelas;
 	}
 

@@ -1,5 +1,7 @@
 package br.com.churchmanager.builder;
 
+import java.math.BigDecimal;
+
 import br.com.churchmanager.model.Movimentacao;
 
 public class MovimentacaoBuilder {
@@ -11,6 +13,11 @@ public class MovimentacaoBuilder {
 	}
 
 	public MovimentacaoBuilder comValor(float valor) {
+		this.movimentacao.setValor(new BigDecimal(valor));
+		return this;
+	}
+
+	public MovimentacaoBuilder comValor(BigDecimal valor) {
 		this.movimentacao.setValor(valor);
 		return this;
 	}

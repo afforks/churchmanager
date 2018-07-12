@@ -33,8 +33,7 @@
 					value="Valor atual" />
 				<p:inputText id="valor-atual-av" required="true" styleClass="moeda "
 					requiredMessage="Campo 'Valor atual' é obrigatório!" maxlength="10"
-					value="#{patrimonioMB.avaliacao.valorAtual}"
-					converter="javax.faces.BigDecimal">
+					value="#{patrimonioMB.avaliacao.valorAtual}" >
 					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
 				</p:inputText><div />
 				<p:message for="valor-atual-av" />

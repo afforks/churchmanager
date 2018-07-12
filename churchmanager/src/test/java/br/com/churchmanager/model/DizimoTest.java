@@ -11,7 +11,7 @@ public class DizimoTest {
 	@Test
 	public void deveCalcularValorTotal() {
 		Dizimo dizimo = new DizimoBuilder().comValorOferta(115.50).comValorDizimo(10.20).build();
-		Assert.assertEquals(125.70, dizimo.getValorTotal(), 0.0001);
+		Assert.assertEquals(125.70, dizimo.getValorTotal().doubleValue(), 0.0001);
 	}
 
 }

@@ -74,12 +74,11 @@
 		<div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
 			<p:outputLabel for="valor-dizimo" styleClass="my-label"
 				value="Valor do dízimo" />
-			<p:inputText id="valor-dizimo" required="true" styleClass="moeda "
+				<p:inputText id="valor-dizimo" required="true" styleClass="moeda "
 				requiredMessage="Campo 'Valor do dízimo' é obrigatório!"
-				maxlength="10" value="#{dizimoMB.dizimo.valorDizimo}"
-				converter="javax.faces.BigDecimal">
+				maxlength="10" value="#{dizimoMB.dizimo.valorDizimo}">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-				<p:clientValidator event="keyup"/>
+				<p:clientValidator event="keyup" />
 			</p:inputText>
 			<p:message for="valor-dizimo" />
 		</div>
@@ -89,8 +88,7 @@
 				value="Valor da oferta" />
 			<p:inputText id="valor-oferta" required="true" styleClass="moeda "
 				requiredMessage="Campo 'Valor da oferta' é obrigatório!"
-				maxlength="10" value="#{dizimoMB.dizimo.valorOferta}"
-				converter="javax.faces.BigDecimal">
+				maxlength="10" value="#{dizimoMB.dizimo.valorOferta}">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
 				<p:clientValidator event="keyup"/>
 			</p:inputText>
@@ -168,13 +166,13 @@
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 				<p:commandButton value="Cadastrar" action="#{dizimoMB.salvar()}"
-					update="group" validateClient="false" icon="fa fa-save"
+					update="group" validateClient="true" icon="fa fa-save"
 					oncomplete="goToTop()" rendered="#{dizimoMB.dizimo.id == null}"
 					styleClass="btn-blue">
 				</p:commandButton>
 
 				<p:commandButton value="Editar" action="#{dizimoMB.atualizar()}"
-					update="group" validateClient="false" icon="fa fa-edit"
+					update="group" validateClient="true" icon="fa fa-edit"
 					rendered="#{dizimoMB.dizimo.id != null}" styleClass="btn-green">
 				</p:commandButton>
 

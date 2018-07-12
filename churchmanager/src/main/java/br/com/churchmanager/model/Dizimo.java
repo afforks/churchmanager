@@ -1,6 +1,7 @@
 package br.com.churchmanager.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -53,14 +54,14 @@ public class Dizimo extends EntidadeGenerica implements Serializable {
 	@NotNull
 	@DecimalMin("0.01")
 	@Column(name = "valor_dizimo", nullable = false)
-	private double valorDizimo;
+	private BigDecimal valorDizimo = new BigDecimal(0);
 
 	@NotNull
 	@Column(name = "valor_oferta", nullable = false)
-	private double valorOferta;
+	private BigDecimal valorOferta = new BigDecimal(0);
 	
 	@Transient
-	private double valorTotal;
+	private BigDecimal valorTotal = new BigDecimal(0);
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
@@ -83,14 +84,14 @@ public class Dizimo extends EntidadeGenerica implements Serializable {
 	@Column(name = "is_13")
 	private boolean is13 = false;
 
-	public double getValorTotal() {
-		this.valorTotal = this.valorDizimo + this.valorOferta;
+	public BigDecimal getValorTotal() {
+		this.valorTotal = new BigDecimal(this.valorDizimo.doubleValue() + this.valorOferta.doubleValue());
 		return this.valorTotal;
 	}
 
 	public String toString() {
 		return DataUtil.dateParaString(this.dataRecebimento) + ": "
-				+ MonetarioUtil.formatarReal(this.valorDizimo + this.valorOferta);
+				+ MonetarioUtil.formatarReal(this.valorDizimo.doubleValue() + this.valorOferta.doubleValue());
 	}
 
 	//************************************************************************S

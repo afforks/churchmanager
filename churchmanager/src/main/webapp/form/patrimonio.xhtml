@@ -28,10 +28,10 @@
 			</div>
 		</div>
 
-		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12" jsf:id="grid-tipo-selecionado">
 
 			<div class="ui-g-1 ui-lg-1 ui-md-2 ui-sm-3"
-				jsf:id="grid-tipo-selecionado">
+				>
 
 				<p:outputLabel for="tipo" styleClass="my-label" value="Tipo" />
 			</div>
@@ -55,15 +55,14 @@
 					oncomplete="PF('tipos-patrimonio').show()" icon="fa fa-cube"
 					title="Selecionar tipo" styleClass="btn-grey" />
 			</div>
+			
 			<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">
 				<p:outputLabel id="tipo"
 					value="#{patrimonioMB.patrimonio.tipo.nome}"
 					styleClass="my-label font-white destaque bg-green centralizado"
 					title="Tipo selecionado"
 					rendered="#{patrimonioMB.patrimonio.tipo != null}" />
-
 			</div>
-
 
 			<p:message for="tipo" />
 		</div>
@@ -87,8 +86,7 @@
 				value="Valor de aquisição" />
 			<p:inputText id="valor-aquisicao" required="true" styleClass="moeda "
 				requiredMessage="Campo 'Valor de aquisição' é obrigatório!"
-				maxlength="10" value="#{patrimonioMB.patrimonio.valorAquisicao}"
-				converter="javax.faces.BigDecimal">
+				maxlength="10" value="#{patrimonioMB.patrimonio.valorAquisicao}">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
 				<p:clientValidator event="keyup"/>
 			</p:inputText>
@@ -102,8 +100,7 @@
 				value="Valor atual" />
 			<p:inputText id="valor-atual" required="true" styleClass="moeda "
 				requiredMessage="Campo 'Valor atual' é obrigatório!" maxlength="10"
-				value="#{patrimonioMB.patrimonio.valorAtual}"
-				converter="javax.faces.BigDecimal">
+				value="#{patrimonioMB.patrimonio.valorAtual}">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
 				<p:clientValidator event="keyup"/>
 			</p:inputText>

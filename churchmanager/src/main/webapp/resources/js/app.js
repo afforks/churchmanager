@@ -35,8 +35,8 @@ function goToTop() {
 
 function configurarMoeda() {
 	$(".moeda").maskMoney({
-		decimal : ",",
-		thousands : ".",
+		decimal : ".",
+		thousands : ",",
 		allowZero : true
 	});
 }

@@ -90,17 +90,15 @@
 			<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-12">
 				<p:outputLabel for="valor" styleClass="my-label" value="Valor " />
 				
-				
 				<div class="ui-inputgroup">
 	            	<span class="ui-inputgroup-addon">
 	            		<i class="fa fa-dollar"></i>
 	            	</span>
 				<p:inputText id="valor" required="true" styleClass="moeda "
 					requiredMessage="Campo 'Valor' é obrigatório!" maxlength="10"
-					value="#{movimentacaoMB.movimentacao.valor}" >
-					<f:converter converterId="conversor.clientside.moeda"/>
+					value="#{movimentacaoMB.movimentacao.valor}">
 					<p:clientValidator event="keyup"/>
-					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" pattern="#,##0.00" type="number" locale="pt_BR"/>
+					<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
 					
 				</p:inputText>
 				</div>

@@ -8,9 +8,9 @@ PrimeFaces.locales['pt_BR'] = {
 		'javax.faces.converter.DoubleConverter.DOUBLE' : '{2}: \' {0} \'deve ser um número consistindo de um ou mais dígitos.',
 		'javax.faces.converter.DoubleConverter.DOUBLE_detail' : '{2}: \' {0} \'deve ser um número entre 4.9E-324 e 1.7976931348623157E308 Exemplo: {1}',
 		'javax.faces.converter.BigDecimalConverter.DECIMAL' : '{2}: \' {0} \'deve ser um número decimal assinado.',
-		'javax.faces.converter.BigDecimalConverter.DECIMAL_detail' : '{2}: \' {0} \'deve ser um número decimal assinado consistindo de zero ou mais dígitos, que podem ser seguidos por um ponto decimal e uma fração. Exemplo 1}',
+		'javax.faces.converter.BigDecimalConverter.DECIMAL_detail' : '{2}: \' {0} \'deve ser um número decimal assinado consistindo de zero ou mais dígitos, que podem ser seguidos por um ponto decimal e uma fração. Exemplo {1}',
 		'javax.faces.converter.BigIntegerConverter.BIGINTEGER' : '{2}: \' {0} \'deve ser um número consistindo de um ou mais dígitos.',
-		'javax.faces.converter.BigIntegerConverter.BIGINTEGER_detail' : '{2}: \' {0} \'deve ser um número consistindo de um ou mais dígitos. Exemplo 1}',
+		'javax.faces.converter.BigIntegerConverter.BIGINTEGER_detail' : '{2}: \' {0} \'deve ser um número consistindo de um ou mais dígitos. Exemplo {1}',
 		'javax.faces.converter.ByteConverter.BYTE' : '{2}: \' {0} \'deve ser um número entre 0 e 255.',
 		'javax.faces.converter.ByteConverter.BYTE_detail' : '{2}: \' {0} \'deve ser um número entre 0 e 255. Exemplo: {1}',
 		'javax.faces.converter.CharacterConverter.CHARACTER' : '{1}: \' {0} \'deve ser um caractere válido.',
@@ -30,20 +30,20 @@ PrimeFaces.locales['pt_BR'] = {
 		'javax.faces.converter.FloatConverter.FLOAT' : '{2}: \' {0} \'deve ser um número consistindo de um ou mais dígitos.',
 		'javax.faces.converter.FloatConverter.FLOAT_detail' : '{2}: \' {0} \'deve ser um número entre 1.4E-45 e 3.4028235E38 Exemplo: {1}',
 		'javax.faces.converter.DateTimeConverter.DATE' : '{2}: \' {0} \'não pode ser entendido como uma data.',
-		'javax.faces.converter.DateTimeConverter.DATE_detail' : '{2}: \' {0} \'não pode ser entendido como uma data. Exemplo 1}',
+		'javax.faces.converter.DateTimeConverter.DATE_detail' : '{2}: \' {0} \'não pode ser entendido como uma data. Exemplo {1}',
 		'javax.faces.converter.DateTimeConverter.TIME' : '{2}: \' {0} \'não pode ser entendido como um tempo.',
-		'javax.faces.converter.DateTimeConverter.TIME_detail' : '{2}: \' {0} \'não pode ser entendido como um tempo. Exemplo 1}',
+		'javax.faces.converter.DateTimeConverter.TIME_detail' : '{2}: \' {0} \'não pode ser entendido como um tempo. Exemplo {1}',
 		'javax.faces.converter.DateTimeConverter.DATETIME' : '{2}: \' {0} \'não pode ser entendido como data e hora.',
-		'javax.faces.converter.DateTimeConverter.DATETIME_detail' : '{2}: \' {0} \'não pode ser entendido como uma data e hora. Exemplo 1}',
+		'javax.faces.converter.DateTimeConverter.DATETIME_detail' : '{2}: \' {0} \'não pode ser entendido como uma data e hora. Exemplo {1}',
 		'javax.faces.converter.DateTimeConverter.PATTERN_TYPE' : '{1}: A \' padrão \'ou \' tipo \'atributo deve ser especificado para converter o valor \' {0} \'',
 		'javax.faces.converter.NumberConverter.CURRENCY' : '{2}: \' {0} \'não pode ser entendido como um valor de moeda.',
-		'javax.faces.converter.NumberConverter.CURRENCY_detail' : '{2}: \' {0} \'não pode ser entendido como um valor de moeda. Exemplo 1}',
+		'javax.faces.converter.NumberConverter.CURRENCY_detail' : '{2}: \' {0} \'não pode ser entendido como um valor de moeda. Exemplo {1}',
 		'javax.faces.converter.NumberConverter.PERCENT' : '{2}: \' {0} \'não pode ser entendido como uma porcentagem.',
-		'javax.faces.converter.NumberConverter.PERCENT_detail' : '{2}: \' {0} \'não pode ser entendido como uma porcentagem. Exemplo 1}',
+		'javax.faces.converter.NumberConverter.PERCENT_detail' : '{2}: \' {0} \'não pode ser entendido como uma porcentagem. Exemplo {1}',
 		'javax.faces.converter.NumberConverter.NUMBER' : '{2}: \' {0} \'não pode ser entendido como uma data.',
-		'javax.faces.converter.NumberConverter.NUMBER_detail' : '{2}: \' {0} \'não é um número. Exemplo 1}',
+		'javax.faces.converter.NumberConverter.NUMBER_detail' : '{2}: \'{0}\' não é um número. Exemplo: {1}',
 		'javax.faces.converter.NumberConverter.PATTERN' : '{2}: \' {0} \'não é um padrão de número.',
-		'javax.faces.converter.NumberConverter.PATTERN_detail' : '{2}: \' {0} \'não é um padrão de número. Exemplo 1}',
+		'javax.faces.converter.NumberConverter.PATTERN_detail' : '{2}: \' {0} \'não é um padrão de número. Exemplo {1}',
 		'javax.faces.validator.LengthValidator.MINIMUM' : '{1}: Erro de validação: O comprimento é menor que o mínimo permitido de \' {0} \'',
 		'javax.faces.validator.LengthValidator.MAXIMUM' : '{1}: Erro de validação: o comprimento é maior que o máximo permitido de \' {0} \'',
 		'javax.faces.validator.RegexValidator.PATTERN_NOT_SET' : 'O padrão Regex deve ser definido.',
@@ -149,8 +149,11 @@ PrimeFaces.converter['conversor.clientside.moeda'] = {
 		if (value === null || value === '') {
 			return null;
 		}else{
-			var newValue = value.toString().replace('.', '');	
+			var newValue = value.toString()
+				.replace('.', '*')
+				.replace(',','.')
+				.replace('*', ',');
 		}
-		return parseInt(newValue);
+		return newValue;
 	}
 }

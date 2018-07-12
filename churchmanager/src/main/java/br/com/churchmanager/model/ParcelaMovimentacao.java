@@ -46,7 +46,7 @@ public class ParcelaMovimentacao extends EntidadeGenerica implements Serializabl
 
 	@NotNull
 	@Column(name = "valor_parcela", nullable = false)
-	private float valorParcela;
+	private double valorParcela;
 
 	@NotNull
 	@Column(name = "data_vencimento", nullable = false)
