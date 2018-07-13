@@ -43,6 +43,8 @@ public class MovimentacaoMB implements Serializable {
 	@Inject
 	private ParcelaMovimentacaoBO parcelasBO;
 
+	private List<Integer> listAnos = DataUtil.getAnos();
+
 	@PostConstruct
 	public void init() {
 		Movimentacao movimentacao = (Movimentacao) BuscaObjeto.comParametroGET(Movimentacao.class, "id", this.bo);
@@ -109,6 +111,7 @@ public class MovimentacaoMB implements Serializable {
 
 	public String filtrar() {
 		this.movimentacaosLazy = this.bo.filtrar(this.movimentacaoFilter);
+		this.listAnos = DataUtil.getAnos(this.movimentacaoFilter.getAno());
 		return null;
 	}
 
@@ -190,7 +193,7 @@ public class MovimentacaoMB implements Serializable {
 	}
 
 	public List<Integer> anos() {
-		return DataUtil.getAnos();
+		return this.listAnos ;
 	}
 
 	public boolean isStatusEmAbeto() {
@@ -303,5 +306,13 @@ public class MovimentacaoMB implements Serializable {
 			FacesUtil.atualizaComponente("msg-pagar-receber");
 		}
 		return null;
+	}
+
+	public List<Integer> getListAnos() {
+		return listAnos;
+	}
+
+	public void setListAnos(List<Integer> listAnos) {
+		this.listAnos = listAnos;
 	}
 }

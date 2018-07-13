@@ -55,9 +55,16 @@ public class DataUtil implements Serializable {
 
 	public static List<Integer> getAnos() {
 		Integer ano = Integer.valueOf(getInstance().get(1));
+		Integer anoProx = Integer.valueOf(ano.intValue() + 1);
 		Integer anoPrev = Integer.valueOf(ano.intValue() - 1);
-		Integer anoPrevPrev = Integer.valueOf(anoPrev.intValue() - 1);
-		return Arrays.asList(new Integer[] { anoPrevPrev, anoPrev, ano });
+		return Arrays.asList(new Integer[] { anoPrev, ano, anoProx });
+	}
+	
+	public static List<Integer> getAnos(String year) {
+		Integer ano = Integer.valueOf(year);
+		Integer anoProx = Integer.valueOf(ano.intValue() + 1);
+		Integer anoPrev = Integer.valueOf(ano.intValue() - 1);
+		return Arrays.asList(new Integer[] { anoPrev, ano, anoProx });
 	}
 
 	public static String mes() {

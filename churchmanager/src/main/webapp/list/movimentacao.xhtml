@@ -54,9 +54,9 @@
 						value="#{movimentacaoMB.movimentacaoFilter.ano}"
 						styleClass="font-12">
 						<f:selectItems var="ano" itemLabel="#{ano}" itemValue="#{ano}"
-							value="#{movimentacaoMB.anos()}" />
+							value="#{movimentacaoMB.listAnos}" />
 						<p:ajax process="ano" listener="#{movimentacaoMB.filtrar()}"
-							update="table" />
+							update="table ano" />
 					</p:selectOneButton>
 				</h:panelGroup>
 
