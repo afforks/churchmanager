@@ -17,7 +17,7 @@
 	<div class="ui-fluid" jsf:id="group">
 
 		<div class="ui-g-12 ui-g-nopad">
-			<div class="ui-g-8 ui-lg-8 ui-md-8 ui-sm-12">
+			<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
 				<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
 				<p:inputText id="nome" required="true"
 					placeholder="Nome da movimentação"
@@ -131,14 +131,19 @@
 				</h:panelGroup>
 
 				<h:panelGroup id="renderNumeroParcelasCampo">
-					<p:inputText id="numeroParcelas" required="true"
-						placeholder="Número de parcelas" min="1" styleClass="inteiro"
-						type="number" max="20"
-						rendered="#{movimentacaoMB.movimentacao.parcelado}"
-						readonly="#{!movimentacaoMB.movimentacao.parcelado}"
-						requiredMessage="Campo 'Núm. Parcelas' é obrigatório!"
-						value="#{movimentacaoMB.movimentacao.numeroParcelas}">
-					</p:inputText>
+<!-- 					<p:inputText id="numeroParcelas" required="true" -->
+<!-- 						placeholder="Número de parcelas" min="1" styleClass="inteiro" -->
+<!-- 						type="number" max="20" -->
+<!-- 						rendered="#{movimentacaoMB.movimentacao.parcelado}" -->
+<!-- 						readonly="#{!movimentacaoMB.movimentacao.parcelado}" -->
+<!-- 						requiredMessage="Campo 'Núm. Parcelas' é obrigatório!" -->
+<!-- 						value="#{movimentacaoMB.movimentacao.numeroParcelas}"> -->
+<!-- 					</p:inputText> -->
+					<h:outputText id="output" value="#{movimentacaoMB.movimentacao.numeroParcelas}" rendered="#{movimentacaoMB.movimentacao.parcelado}"/>
+					<h:inputHidden id="numeroParcelasHidden" value="#{movimentacaoMB.movimentacao.numeroParcelas}" rendered="#{movimentacaoMB.movimentacao.parcelado}"/>
+					<p:slider id="numeroParcelas" for="numeroParcelasHidden" minValue="1" 
+					animate="true" maxValue="12" value="%{value}" 
+					step="1" display="output" rendered="#{movimentacaoMB.movimentacao.parcelado}"/>
 
 				</h:panelGroup>
 
@@ -212,7 +217,9 @@
 			<p:inputTextarea id="descricao" required="true"
 				placeholder="Descreva a movimentação"
 				requiredMessage="Campo 'Descrição' é obrigatório!"
-				value="#{movimentacaoMB.movimentacao.descricao}" />
+				value="#{movimentacaoMB.movimentacao.descricao}" >
+				<p:clientValidator event="keyup"/>
+				</p:inputTextarea>
 			<p:message for="descricao" />
 		</div>
 

@@ -70,14 +70,14 @@ PrimeFaces.locales['pt_BR'] = {
 		'javax.validation.constraints.Size.message' : 'o tamanho deve estar entre {0} e {1}',
 		'javax.validation.constraints.AssertFalse.message'      : 'deve ser falso',
 		'javax.validation.constraints.AssertTrue.message'       : 'deve ser verdadeiro',
-		'javax.validation.constraints.DecimalMax.message'       : 'deve ser menor ou igual a {value}',
-		'javax.validation.constraints.DecimalMin.message'       : 'deve ser maior ou igual a {value}',
+		'javax.validation.constraints.DecimalMax.message'       : 'deve ser menor ou igual a {0}',
+		'javax.validation.constraints.DecimalMin.message'       : 'deve ser maior ou igual a {0}',
 		'javax.validation.constraints.Digits.message'           : 'valor num\u00E9rico fora do limite (<{integer} d\u00EDgitos>.<{fraction} d\u00EDgitos> esperado)',
 		'javax.validation.constraints.Email.message'            : 'n\u00E3o \u00E9 um endere\u00E7o de e-mail',
 		'javax.validation.constraints.Future.message'           : 'deve estar no futuro',
 		'javax.validation.constraints.FutureOrPresent.message'  : 'deve de ser uma data em presente ou em futuro',
-		'javax.validation.constraints.Max.message'              : 'deve ser menor ou igual a {value}',
-		'javax.validation.constraints.Min.message'              : 'deve ser maior ou igual a {value}',
+		'javax.validation.constraints.Max.message'              : 'deve ser menor ou igual a {0}',
+		'javax.validation.constraints.Min.message'              : 'deve ser maior ou igual a {0}',
 		'javax.validation.constraints.Negative.message'         : 'deve ser menor que 0',
 		'javax.validation.constraints.NegativeOrZero.message'   : 'deve ser menor ou igual a 0',
 		'javax.validation.constraints.NotBlank.message'         : 'n\u00E3o pode estar em branco',
@@ -145,6 +145,7 @@ PrimeFaces.locales['pt_BR'] = {
 }
 
 PrimeFaces.converter['conversor.clientside.moeda'] = {
+			
 	convert : function(element, value) {
 		if (value === null || value === '') {
 			return null;
@@ -154,6 +155,7 @@ PrimeFaces.converter['conversor.clientside.moeda'] = {
 				.replace(',','.')
 				.replace('*', ',');
 		}
-		return newValue;
+		console.log('.......................');
+		return parseFloat(newValue);
 	}
 }

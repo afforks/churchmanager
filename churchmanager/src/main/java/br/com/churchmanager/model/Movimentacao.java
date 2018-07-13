@@ -64,7 +64,7 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	@NotNull
 	@DecimalMin("0.01")
 	@Column(name = "valor", nullable = false)
-	private BigDecimal valor;
+	private BigDecimal valor = new BigDecimal(0);
 
 	@Column(name = "numero_parcelas")
 	@Min(1L)

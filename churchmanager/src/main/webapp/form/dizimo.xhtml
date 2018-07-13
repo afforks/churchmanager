@@ -77,7 +77,8 @@
 				<p:inputText id="valor-dizimo" required="true" styleClass="moeda "
 				requiredMessage="Campo 'Valor do dízimo' é obrigatório!"
 				maxlength="10" value="#{dizimoMB.dizimo.valorDizimo}">
-				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" 
+				maxIntegerDigits="10" minIntegerDigits="1"/>
 				<p:clientValidator event="keyup" />
 			</p:inputText>
 			<p:message for="valor-dizimo" />
@@ -88,7 +89,8 @@
 				value="Valor da oferta" />
 			<p:inputText id="valor-oferta" required="true" styleClass="moeda "
 				requiredMessage="Campo 'Valor da oferta' é obrigatório!"
-				maxlength="10" value="#{dizimoMB.dizimo.valorOferta}">
+				maxlength="10" value="#{dizimoMB.dizimo.valorOferta}"
+				converter="javax.faces.BigDecimal">
 				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
 				<p:clientValidator event="keyup"/>
 			</p:inputText>

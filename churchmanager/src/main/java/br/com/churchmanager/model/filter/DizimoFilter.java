@@ -1,5 +1,6 @@
 package br.com.churchmanager.model.filter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +15,10 @@ import org.hibernate.criterion.Restrictions;
 import br.com.churchmanager.dao.generic.Alias;
 import br.com.churchmanager.util.DataUtil;
 
-public class DizimoFilter implements Filter {
+public class DizimoFilter implements Filter, Serializable {
+	
+	private static final long serialVersionUID = -5696573251550574369L;
+	
 	private String nomePessoa;
 	private double valorDizimo;
 	private double valorOferta;

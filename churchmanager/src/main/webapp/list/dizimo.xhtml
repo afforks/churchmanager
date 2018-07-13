@@ -105,7 +105,7 @@
 						<f:facet name="header" />
 
 
-						<p:column headerText="Dizimista" colspan="3" priority="1">
+						<p:column headerText="Dizimista" colspan="3" >
 							<div class="text-overflow">
 								<p:link outcome="/edit/dizimo" styleClass="my-link"
 									value="#{dizimo.pessoa.nome}">
@@ -140,7 +140,7 @@
 						</p:column>
 
 						<p:column headerText="Dízimo" styleClass="center" colspan="1"
-							priority="4">
+							>
 							<p:outputLabel value="#{dizimo.valorDizimo}">
 								<f:convertNumber type="currency" />
 							</p:outputLabel>
