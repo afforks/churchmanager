@@ -15,6 +15,7 @@ import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.filter.PessoaFilter;
 import br.com.churchmanager.model.group.Aniversariante;
+import br.com.churchmanager.model.group.Dizimista;
 import br.com.churchmanager.model.group.MembrosPorFaixaEtaria;
 import br.com.churchmanager.model.group.PessoaAtividaEclesiastica;
 import br.com.churchmanager.util.MyLazyDataModel;
@@ -79,5 +80,9 @@ public class PessoaBO implements Serializable, Buscador<Pessoa> {
 
 	public String gerarMatricula(Date dataCadastro) {
 		return dao.gerarMatricula(dataCadastro);
+	}
+	
+	public List<Dizimista> listarDizimistas(PessoaFilter filter) {
+		return this.dao.listarDizimistas(filter);
 	}
 }

@@ -101,7 +101,7 @@
 					<p:dataTable id="table" var="movimentacao" lazy="true"
 						value="#{movimentacaoMB.movimentacaosLazy}" rowHover="true"
 						paginator="true" paginatorAlwaysVisible="false" rows="50"
-						rowsPerPageLabel="de"
+						rowsPerPageLabel="de" 
 						emptyMessage="Nenhum registro foi encontrado!"
 						paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
 						{PreviousPageLink} {PageLinks} {NextPageLink} 
@@ -143,7 +143,7 @@
 
 						</p:column>
 
-						<p:column headerText="Nome" colspan="2" priority="1">
+						<p:column headerText="Nome" colspan="2" priority="1" sortBy="#{movimentacao.nome}">
 							<div class="text-overflow">
 								<p:link outcome="/edit/movimentacao" styleClass="my-link"
 									value="#{movimentacao.nome}">

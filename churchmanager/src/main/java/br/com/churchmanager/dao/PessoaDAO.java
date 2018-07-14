@@ -24,6 +24,7 @@ import br.com.churchmanager.dao.generic.DAO;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.filter.PessoaFilter;
 import br.com.churchmanager.model.group.Aniversariante;
+import br.com.churchmanager.model.group.Dizimista;
 import br.com.churchmanager.model.group.MembrosPorFaixaEtaria;
 import br.com.churchmanager.model.group.PessoaAtividaEclesiastica;
 
@@ -139,5 +140,32 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 		String qtdPorPeriodo = (String) dados.get("qtd_registros");
 		String matricula = ano() + semestre() + qtdPorPeriodo;
 		return matricula;
+	}
+	
+	public List<Dizimista> listarDizimistas(PessoaFilter filter) {
+		String sql = "select nome, data from dizimistas where MONTH(data) = :mes and YEAR(data) = :ano order by nome";
+		ArrayList<Dizimista> dizimistas = new ArrayList<>();
+		Session session = (Session) this.entityManager.unwrap(Session.class);
+		SQLQuery query = session.createSQLQuery(sql);
+		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+		
+		String mes = filter.getMes();
+		String ano = filter.getAno();
+		
+		query.setParameter("mes", mes);
+		query.setParameter("ano", ano);
+		
+		List<?> data = query.list();
+		Iterator<?> iterador = data.iterator();
+
+		while (iterador.hasNext()) {
+			Object o = iterador.next();
+			Map<?, ?> map = (Map<?, ?>) o;
+			dizimistas.add(
+					new Dizimista((String) map.get("nome")));
+		}
+
+		return dizimistas;
+
 	}
 }

@@ -352,7 +352,7 @@ a.my-link {
 	border-radius: 10px;
 	background: #2196F3;
 	color: white;
-	font-weight: bold;
+	/*font-weight: bold;*/
 }
 
 .tipo:hover {

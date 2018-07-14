@@ -47,7 +47,7 @@
 									<p:outputLabel value="Mês " styleClass="my-label" />
 									<br />
 									<p:selectOneButton id="mes" value="#{dashBoard.mes}"
-										styleClass="font-12">
+										styleClass="font-12" >
 										<f:selectItems var="mes" itemLabel="#{mes.abreviacao}"
 											itemValue="#{mes.numero}" value="#{utilMB.meses()}" />
 										<p:ajax process="mes" listener="#{dashBoard.atualizarDados()}" update="frm"/>
@@ -60,9 +60,8 @@
 									<p:selectOneButton id="ano" value="#{dashBoard.ano}"
 										styleClass="font-12">
 										<f:selectItems var="ano" itemLabel="#{ano}" itemValue="#{ano}"
-											value="#{utilMB.anos()}" />
-										
-										<p:ajax process="ano" listener="#{dashBoard.atualizarDados()}" update="frm"/>
+											value="#{dashBoard.listAnos}" />
+										<p:ajax process="ano" listener="#{dashBoard.atualizarDados()}" update="ano frm"/>
 									</p:selectOneButton>
 								</h:panelGroup>
 
@@ -234,21 +233,30 @@
 
  
 
-				<div class="ui-g-8  ui-md-6 ui-lg-8 ui-sm-12 font-white ">
+				<div class="ui-g-8 ">
 					<div class="ui-g-12 card shadow-effect">
-
 						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
-							<div class="center">
-								<div class="dash-title-1 font-dark-grey"
-									style="font-weight: normal;">Movimentação Anual</div>
+
+							<div class="dash-title-1 font-dark-grey"
+								style="font-weight: normal; padding-bottom: 10px;">Dizimistas</div>
+
+							<div class="ui-g bg-blue shadow-effect font-white">
+								<div class="ui-g-12 dash-desc">
+									<div class="dash-table">
+										<div class="dash-table-title">
+											<h:outputText value="#{dashBoard.mesAtual().nome}" />
+										</div>
+										<p:dataTable var="pessoa"
+											value="#{dashBoard.listarDizimistas()}" rowHover="true"
+											reflow="true" emptyMessage="Nenhum registro foi encontrado!">
+
+											<p:column headerText="Nome" >
+												<p:outputLabel value="#{pessoa.nome}" />
+											</p:column>
+										</p:dataTable>
+									</div>
+								</div>
 							</div>
-						</div>
-
-						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
-							<!-- <p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
-							<p:chart type="line" model="#{dashBoard.movimentacaoAnual}"
-								responsive="true" />
-							<!-- </p:outputPanel> -->
 						</div>
 					</div>
 				</div>
@@ -258,7 +266,7 @@
 
 						<div class="ui-g-12 ui-md-12 ui-lg-12 center">
 							<div class="dash-title-1 font-dark-grey"
-								style="font-weight: normal;">Dizimistas</div>
+								style="font-weight: normal;">Percent. dizimistas</div>
 						</div>
 
 						<div class="ui-g-12 ui-md-12 ui-lg-12" style="height: 80%">
@@ -373,18 +381,18 @@
 								<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">	
 									<h:outputText value="Próximas faturas" styleClass="destaque bg-dark-blue centralizado font-med"/>
 								 
-									<h:outputText value="Entradas" styleClass="my-label"/>
+									<h:outputText value="Entradas" />
 									<h:outputText value="#{dashBoard.totalEntradasEmAberto()}" styleClass="destaque bg-blue centralizado ">
 										<f:convertNumber type="currency"/>
 									</h:outputText>
 							
-									<h:outputText value="Saídas" styleClass="my-label"/>
+									<h:outputText value="Saídas" />
 									<h:outputText value="#{dashBoard.totalSaidasEmAberto()}"  styleClass="destaque bg-yellow centralizado " >
 										<f:convertNumber type="currency"/>
 									</h:outputText>
 									
 							
-									<h:outputText value="Saldo" styleClass="my-label"/>
+									<h:outputText value="Saldo" />
 									<h:outputText value="#{dashBoard.saldoAFaturar()}"  styleClass="destaque bg-orange my-label font-med centralizado" >
 										<f:convertNumber type="currency"/>
 									</h:outputText>

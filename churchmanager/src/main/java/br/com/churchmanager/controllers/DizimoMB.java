@@ -38,8 +38,6 @@ public class DizimoMB implements Serializable {
 	private List<Dizimo> dizimos;
 	private MyLazyDataModel<Dizimo> dizimosLazy;
 	private DizimoFilter dizimoFilter;
-	private String mes;
-	private String ano;
 	@Inject
 	private DizimoBO bo;
 	@Inject
@@ -49,6 +47,7 @@ public class DizimoMB implements Serializable {
 	@Size(min = 17, max = 17, message = "Deve conter 17 caracteres")
 	@Pattern(regexp = "[0-9]{17}", message="Deve ser informado apenas números!")
 	private String idPessoa;
+	private List<Integer> listAnos = DataUtil.getAnos();
 
 	@PostConstruct
 	public void init() {
@@ -107,7 +106,12 @@ public class DizimoMB implements Serializable {
 
 	public String filtrar() {
 		this.dizimosLazy = this.bo.filtrar(this.dizimoFilter);
+		this.listAnos = DataUtil.getAnos(this.dizimoFilter.getAno());
 		return null;
+	}
+	
+	public List<Integer> anos() {
+		return this.listAnos ;
 	}
 
 	public String deletar() {
@@ -210,19 +214,12 @@ public class DizimoMB implements Serializable {
 		GenericReport.gerarPdfComConnection(mapa, "dizimo", pessoa.getNome(), true);
 	}
 
-	public String getMes() {
-		return this.mes;
+	public List<Integer> getListAnos() {
+		return listAnos;
 	}
 
-	public void setMes(String mes) {
-		this.mes = mes;
+	public void setListAnos(List<Integer> listAnos) {
+		this.listAnos = listAnos;
 	}
-
-	public String getAno() {
-		return this.ano;
-	}
-
-	public void setAno(String ano) {
-		this.ano = ano;
-	}
+	
 }

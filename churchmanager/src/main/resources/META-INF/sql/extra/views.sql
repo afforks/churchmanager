@@ -229,8 +229,24 @@ group by d.pessoa_id, year(d.data_recebimento);
  
 /*	*/
 create view percentual_dizimistas as
-select month(d.data_referencia) as 'MES' , year(d.data_referencia) as 'ANO', 
-count(distinct d.pessoa_id) * 100 / (select count(p.id) from pessoa p where p.status = 'ATIVO' and p.data_cadastro <= d.data_referencia) as 'PORCENTAGEM' 
-from dizimo d
+select month(d.data_referencia) as 'MES' , 
+		year(d.data_referencia) as 'ANO', 
+		count(distinct d.pessoa_id) * 100 / (select count(p.id) 
+			from pessoa p 
+			where p.status = 'ATIVO' and 
+			p.data_cadastro <= d.data_referencia) as 'PORCENTAGEM' 
+	from dizimo d
 group by year(d.data_referencia), month(d.data_referencia);
- 
+
+
+
+create view dizimistas as
+select
+        distinct p.nome as nome,
+        d.data_referencia as data
+    from
+        dizimo d 
+    inner join
+        pessoa p 
+            on d.pessoa_id=p.id 
+    order by p.nome;

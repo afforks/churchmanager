@@ -35,6 +35,7 @@ import br.com.churchmanager.model.filter.ParcelaMovimentacaoFilter;
 import br.com.churchmanager.model.filter.PessoaFilter;
 import br.com.churchmanager.model.group.Aniversariante;
 import br.com.churchmanager.model.group.DetalheMovimentacao;
+import br.com.churchmanager.model.group.Dizimista;
 import br.com.churchmanager.model.group.MembrosPorFaixaEtaria;
 import br.com.churchmanager.model.group.MovimentacaoAnual;
 import br.com.churchmanager.model.group.MovimentacaoCategoria;
@@ -49,7 +50,9 @@ import br.com.churchmanager.util.faces.FacesUtil;
 @Named
 @ViewScoped
 public class DashBoard implements Serializable {
+	
 	private static final long serialVersionUID = -8423931165560787194L;
+	
 	private BarChartModel membresia;
 	private BarChartModel pessoasPorAtividadesEclesiasticas;
 	private LineChartModel movimentacaoAnual;
@@ -59,6 +62,7 @@ public class DashBoard implements Serializable {
 	private Totais totais;
 	private String mes;
 	private String ano;
+	private List<Integer> listAnos = DataUtil.getAnos();
 	@Inject
 	private HttpServletRequest request;
 	@Inject
@@ -96,6 +100,7 @@ public class DashBoard implements Serializable {
 		this.atualizarContadores();
 		this.atualizarUltimosLancamentos();
 		this.atualizarPercentualDizimista();
+		this.listAnos = DataUtil.getAnos(ano);
 	}
 
 	private void criarGraficos() {
@@ -324,6 +329,13 @@ public class DashBoard implements Serializable {
 		filter.setAno(this.ano);
 		return this.pessoaBO.aniversariantesDoMes(filter);
 	}
+	
+	public List<Dizimista> listarDizimistas() {
+		PessoaFilter filter = new PessoaFilter();
+		filter.setMes(this.mes);
+		filter.setAno(this.ano);
+		return this.pessoaBO.listarDizimistas(filter);
+	}
 
 	public List<MembrosPorFaixaEtaria> membresiaFaixaEtaria() {
 		PessoaFilter filter = new PessoaFilter();
@@ -400,4 +412,11 @@ public class DashBoard implements Serializable {
 		this.ano = ano;
 	}
 
+	public List<Integer> getListAnos() {
+		return listAnos;
+	}
+
+	public void setListAnos(List<Integer> listAnos) {
+		this.listAnos = listAnos;
+	}
 }

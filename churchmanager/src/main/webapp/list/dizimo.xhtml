@@ -51,9 +51,9 @@
 					<p:selectOneButton id="ano" value="#{dizimoMB.dizimoFilter.ano}"
 						styleClass="font-12">
 						<f:selectItems var="ano" itemLabel="#{ano}" itemValue="#{ano}"
-							value="#{utilMB.anos()}" />
+							value="#{dizimoMB.listAnos}" />
 						<p:ajax process="ano" listener="#{dizimoMB.filtrar()}"
-							update="table" />
+							update="table ano" />
 					</p:selectOneButton>
 				</h:panelGroup>
 
@@ -105,7 +105,7 @@
 						<f:facet name="header" />
 
 
-						<p:column headerText="Dizimista" colspan="3" >
+						<p:column headerText="Dizimista" colspan="3"  sortBy="#{dizimo.pessoa.nome}">
 							<div class="text-overflow">
 								<p:link outcome="/edit/dizimo" styleClass="my-link"
 									value="#{dizimo.pessoa.nome}">
