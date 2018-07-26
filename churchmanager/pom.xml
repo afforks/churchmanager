@@ -143,12 +143,12 @@
 
 		<!-- Mojarra (implementacao do JSF) -->
 		<!-- https://mvnrepository.com/artifact/org.glassfish/javax.faces -->
-<dependency>
-    <groupId>org.glassfish</groupId>
-    <artifactId>javax.faces</artifactId>
-    <version>2.2.17</version>
-    <scope>compile</scope>
-</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.faces</artifactId>
+			<version>2.2.17</version>
+			<scope>compile</scope>
+		</dependency>
 
 
 
@@ -258,7 +258,7 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- RELATORIOS COM IREPORT -->
+		<!-- RELATORIOS COM JASPERREPORTS -->
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>

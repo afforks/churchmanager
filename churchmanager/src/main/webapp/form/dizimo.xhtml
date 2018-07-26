@@ -13,7 +13,8 @@
 	<p:defaultCommand target="buscar-dizimista" />
 
 	<div class="ui-g-12 ui-g-nopad">
-		<p:messages id="msg" life="7000" showDetail="true" showSummary="true" closable="true"/>
+		<p:messages id="msg" life="7000" showDetail="true" showSummary="true"
+			closable="true" />
 	</div>
 	<div class="ui-fluid" jsf:id="group">
 
@@ -43,12 +44,16 @@
 
 			<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12"
 				jsf:rendered="#{dizimoMB.dizimo.pessoa == null}">
-				<p:inputText placeholder="Digite o código de barras do membro"
-					required="true"
-					requiredMessage="O campo de busca deve ser preenchido!"
-					value="#{dizimoMB.idPessoa}" id="codigo-dizimista">
-					<p:clientValidator event="keyup"/>
-				</p:inputText>
+				<div class="ui-inputgroup">
+					<span class="ui-inputgroup-addon"> <i class="fa fa-barcode"></i>
+					</span>
+					<p:inputText placeholder="Digite o código de barras do membro"
+						required="true"
+						requiredMessage="O campo de busca deve ser preenchido!"
+						value="#{dizimoMB.idPessoa}" id="codigo-dizimista">
+						<p:clientValidator event="keyup" />
+					</p:inputText>
+				</div>
 				<p:message id="id-codigo-dizimista" for="codigo-dizimista" />
 			</div>
 
@@ -74,26 +79,34 @@
 		<div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
 			<p:outputLabel for="valor-dizimo" styleClass="my-label"
 				value="Valor do dízimo" />
+			<div class="ui-inputgroup">
+				<span class="ui-inputgroup-addon"> <i class="fa fa-dollar"></i>
+				</span>
 				<p:inputText id="valor-dizimo" required="true" styleClass="moeda "
-				requiredMessage="Campo 'Valor do dízimo' é obrigatório!"
-				maxlength="10" value="#{dizimoMB.dizimo.valorDizimo}">
-				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" 
-				maxIntegerDigits="10" minIntegerDigits="1"/>
-				<p:clientValidator event="keyup" />
-			</p:inputText>
+					requiredMessage="Campo 'Valor do dízimo' é obrigatório!"
+					maxlength="10" value="#{dizimoMB.dizimo.valorDizimo}">
+					<f:convertNumber maxFractionDigits="2" minFractionDigits="2"
+						maxIntegerDigits="10" minIntegerDigits="1" />
+					<p:clientValidator event="keyup" />
+				</p:inputText>
+			</div>
 			<p:message for="valor-dizimo" />
 		</div>
 
 		<div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
 			<p:outputLabel for="valor-oferta" styleClass="my-label"
 				value="Valor da oferta" />
-			<p:inputText id="valor-oferta" required="true" styleClass="moeda "
-				requiredMessage="Campo 'Valor da oferta' é obrigatório!"
-				maxlength="10" value="#{dizimoMB.dizimo.valorOferta}"
-				converter="javax.faces.BigDecimal">
-				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-				<p:clientValidator event="keyup"/>
-			</p:inputText>
+			<div class="ui-inputgroup">
+				<span class="ui-inputgroup-addon"> <i class="fa fa-dollar"></i>
+				</span>
+				<p:inputText id="valor-oferta" required="true" styleClass="moeda "
+					requiredMessage="Campo 'Valor da oferta' é obrigatório!"
+					maxlength="10" value="#{dizimoMB.dizimo.valorOferta}"
+					converter="javax.faces.BigDecimal">
+					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+					<p:clientValidator event="keyup" />
+				</p:inputText>
+			</div>
 			<p:message for="valor-oferta" />
 		</div>
 
@@ -103,26 +116,34 @@
 		<div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
 			<p:outputLabel for="dataBase" styleClass="my-label"
 				value="Dt. de referência " />
-			<p:calendar id="dataBase" required="true" mask="99/99/9999"
-				requiredMessage="Campo 'Dt. de referência' é obrigatório!"
-				value="#{dizimoMB.dizimo.dataReferencia}" navigator="true"
-				pattern="dd/MM/yyyy" placeholder="Data de referência"
-				maskSlotChar="" >
-				<p:clientValidator event="keyup"/>
+			<div class="ui-inputgroup">
+				<span class="ui-inputgroup-addon"> <i class="fa fa-calendar"></i>
+				</span>
+				<p:calendar id="dataBase" required="true" mask="99/99/9999"
+					requiredMessage="Campo 'Dt. de referência' é obrigatório!"
+					value="#{dizimoMB.dizimo.dataReferencia}" navigator="true"
+					pattern="dd/MM/yyyy" placeholder="Data de referência"
+					maskSlotChar="">
+					<p:clientValidator event="keyup" />
 				</p:calendar>
+			</div>
 			<p:message for="dataBase" />
 		</div>
 
 		<div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
 			<p:outputLabel for="dataRecebimento" styleClass="my-label"
 				value="Dt. de recebimento " />
-			<p:calendar id="dataRecebimento" required="true" mask="99/99/9999"
-				placeholder="Data de recebimento" maskSlotChar=""
-				requiredMessage="Campo 'Dt. de recebimento' é obrigatório!"
-				value="#{dizimoMB.dizimo.dataRecebimento}" navigator="true"
-				pattern="dd/MM/yyyy" >
-				<p:clientValidator event="keyup"/>
+			<div class="ui-inputgroup">
+				<span class="ui-inputgroup-addon"> <i class="fa fa-calendar"></i>
+				</span>
+				<p:calendar id="dataRecebimento" required="true" mask="99/99/9999"
+					placeholder="Data de recebimento" maskSlotChar=""
+					requiredMessage="Campo 'Dt. de recebimento' é obrigatório!"
+					value="#{dizimoMB.dizimo.dataRecebimento}" navigator="true"
+					pattern="dd/MM/yyyy">
+					<p:clientValidator event="keyup" />
 				</p:calendar>
+			</div>
 			<p:message for="dataRecebimento" />
 		</div>
 
@@ -145,9 +166,9 @@
 			<p:inputTextarea id="observacao" required="true"
 				placeholder="Observação"
 				requiredMessage="Campo 'Observação' é obrigatório!"
-				value="#{dizimoMB.dizimo.observcao}" >
-				<p:clientValidator event="keyup"/>
-				</p:inputTextarea>
+				value="#{dizimoMB.dizimo.observcao}">
+				<p:clientValidator event="keyup" />
+			</p:inputTextarea>
 			<p:message for="observacao" />
 		</div>
 

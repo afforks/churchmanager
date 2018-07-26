@@ -43,6 +43,10 @@
 			<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
 				<p:outputLabel for="dataNascimento" styleClass="my-label"
 					value="Dt. nascimento " />
+					<div class="ui-inputgroup">
+	            	<span class="ui-inputgroup-addon">
+	            		<i class="fa fa-calendar"></i>
+	            	</span>
 				<p:calendar id="dataNascimento" required="true" mask="99/99/9999"
 					placeholder="Ex.: 25/10/1990"
 					requiredMessage="Campo 'Dt. nascimento' é obrigatório!"
@@ -50,6 +54,7 @@
 					pattern="dd/MM/yyyy" >
 					<p:clientValidator event="keyup"/>
 					</p:calendar>
+					</div>
 				<p:message for="dataNascimento" />
 			</div>
 
@@ -175,12 +180,17 @@
 
 			<div class="ui-g-6 ui-lg-6 ui-md-4 ui-sm-12">
 				<p:outputLabel for="cep" styleClass="my-label" value="CEP " />
+				<div class="ui-inputgroup">
+	            	<span class="ui-inputgroup-addon">
+	            		<i class="fa fa-envelope-o"></i>
+	            	</span>
 				<p:inputMask mask="99999-999" id="cep" required="true"
 					requiredMessage="Campo 'CEP' é obrigatório!"
 					value="#{pessoaMB.pessoa.endereco.cep}"
 					placeholder="Ex.: 62.940-000" >
 					<p:clientValidator event="keyup"/>
 					</p:inputMask>
+					</div>
 				<p:message for="cep" />
 			</div>
 
@@ -299,6 +309,10 @@
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-12">
 				<p:outputLabel for="dataConversao" styleClass="my-label"
 					value="Dt. de conversão " />
+					<div class="ui-inputgroup">
+	            	<span class="ui-inputgroup-addon">
+	            		<i class="fa fa-calendar"></i>
+	            	</span>
 				<p:calendar id="dataConversao" required="true" mask="99/99/9999"
 					placeholder="Ex.: 20/08/2006"
 					requiredMessage="Campo 'Dt. de conversão' é obrigatório!"
@@ -306,12 +320,17 @@
 					pattern="dd/MM/yyyy" >
 					<p:clientValidator event="keyup"/>
 					</p:calendar>
+					</div>
 				<p:message for="dataConversao" />
 			</div>
 
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-12">
 				<p:outputLabel for="dataBatismo" styleClass="my-label"
 					value="Dt. de batismo " />
+					<div class="ui-inputgroup">
+	            	<span class="ui-inputgroup-addon">
+	            		<i class="fa fa-calendar"></i>
+	            	</span>
 				<p:calendar id="dataBatismo" required="true" mask="99/99/9999"
 					placeholder="24/12/2006"
 					requiredMessage="Campo 'Dt. debatismo' é obrigatório!"
@@ -319,6 +338,7 @@
 					pattern="dd/MM/yyyy" >
 					<p:clientValidator event="keyup"/>
 					</p:calendar>
+					</div>
 				<p:message for="dataBatismo" />
 			</div>
 
@@ -385,10 +405,15 @@
 
 			<p:outputLabel value="Número" for="dlg-telefone"
 				styleClass="my-label" />
+				<div class="ui-inputgroup">
+	            	<span class="ui-inputgroup-addon">
+	            		<i class="fa fa-phone"></i>
+	            	</span>
 			<p:inputMask id="dlg-telefone"  mask="#{pessoaMB.telefone.legth() eq 13 ? '(99)9999-9999' : '(99)99999-9999'}" required="true"
 				value="#{pessoaMB.telefone}" slotChar=" " >
 				<p:clientValidator event="keyup"/>
 			</p:inputMask>
+			</div>
 			<p:message id="msg-telefone" for="dlg-telefone" />
 
 			<f:facet name="footer">
@@ -420,10 +445,15 @@
 			widgetVar="dlg-emails" fitViewport="true" resizable="false">
 
 			<p:outputLabel value="E-mail" for="dlg-email" styleClass="my-label" />
+			<div class="ui-inputgroup">
+	            	<span class="ui-inputgroup-addon">
+	            		<i class="fa fa-at"></i>
+	            	</span>
 			<p:inputText id="dlg-email" required="true" value="#{pessoaMB.email}"
 				type="email">
 				<p:clientValidator event="keyup"/>
 			</p:inputText>
+			</div>
 			<p:message id="msg-email" for="dlg-email" />
 
 			<f:facet name="footer">

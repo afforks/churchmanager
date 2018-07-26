@@ -54,19 +54,28 @@ body .blur {
 						<i class="fa fa-institution" /> ChurchManager
 					</h2>
 				</div>
-				
+
 				<p:messages id="msg" closable="true" />
 
 				<div class="padding">
 					<p:outputLabel for="username" value="E-mail" styleClass="my-label" />
-					<p:inputText id="username" value="#{loginBean.email}"
-						required="true" placeholder="E-mail do usuário" />
+					<div class="ui-inputgroup">
+						<span class="ui-inputgroup-addon"> <i class="fa fa-user"></i>
+						</span>
+						<p:inputText id="username" value="#{loginBean.email}"
+							required="true" placeholder="E-mail do usuário" />
+					</div>
 				</div>
 
 				<div class="padding">
 					<p:outputLabel for="password" value="Senha" styleClass="my-label" />
-					<p:password id="password" required="true"
-						placeholder="Digite sua senha" />
+					<div class="ui-inputgroup">
+						<span class="ui-inputgroup-addon"> <i
+							class="fa fa-ellipsis-h"></i>
+						</span>
+						<p:password id="password" required="true"
+							placeholder="Digite sua senha" />
+					</div>
 				</div>
 
 				<div class="padding">
@@ -79,7 +88,7 @@ body .blur {
 		</div>
 	</div>
 </h:form>
-<p:defaultCommand target="btn-logar"/>
-<p:focus for="username"/>
+<p:defaultCommand target="btn-logar" />
+<p:focus for="username" />
 
 </html>

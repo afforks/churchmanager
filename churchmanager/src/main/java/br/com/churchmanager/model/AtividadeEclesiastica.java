@@ -8,6 +8,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -31,6 +33,7 @@ public class AtividadeEclesiastica extends EntidadeGenerica implements Serializa
 	private static final long serialVersionUID = 361521832597715321L;
 
 	@Size(min = 3, max = 50)
+	@NotBlank
 	@NotNull
 	@Column(name = "nome", nullable = false, unique = true)
 	private String nome;

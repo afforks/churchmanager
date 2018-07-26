@@ -27,19 +27,29 @@
 
 		<div class="ui-g-3 ui-lg-3 ui-md-2 ui-sm-6">
 			<p:outputLabel for="dia" styleClass="my-label" value="Dia" />
+			<div class="ui-inputgroup">
+	            	<span class="ui-inputgroup-addon">
+	            		<i class="fa fa-calendar"></i>
+	            	</span>
 			<p:inputText id="dia" required="true"
 				requiredMessage="Campo 'Dia' é obrigatório!"
 				value="#{eventoMB.evento.dia}" placeholder="Dia. Ex.: 25" >
 				<p:clientValidator event="keyup"/>
 				</p:inputText>
+				</div>
 			<p:message for="dia" />
 		</div>
 
 		<div class="ui-g-3 ui-lg-3 ui-md-2 ui-sm-6">
 			<p:outputLabel for="mes" styleClass="my-label" value="Mês" />
+			<div class="ui-inputgroup">
+	            	<span class="ui-inputgroup-addon">
+	            		<i class="fa fa-calendar"></i>
+	            	</span>
 			<p:inputText id="mes" required="true"
 				requiredMessage="Campo 'Mês' é obrigatório!"
 				value="#{eventoMB.evento.mes}" placeholder="Mês. Ex.: 10" />
+				</div>
 			<p:message for="mes" />
 		</div>
 

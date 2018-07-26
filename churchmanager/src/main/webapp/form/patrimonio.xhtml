@@ -21,17 +21,17 @@
 				<p:inputText id="nome" required="true"
 					requiredMessage="Campo 'Nome' é obrigatório!"
 					value="#{patrimonioMB.patrimonio.nome}"
-					placeholder="Nome do patrimônio" >
-					<p:clientValidator event="keyup"/>
-					</p:inputText>
+					placeholder="Nome do patrimônio">
+					<p:clientValidator event="keyup" />
+				</p:inputText>
 				<p:message for="nome" />
 			</div>
 		</div>
 
-		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12" jsf:id="grid-tipo-selecionado">
+		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12"
+			jsf:id="grid-tipo-selecionado">
 
-			<div class="ui-g-1 ui-lg-1 ui-md-2 ui-sm-3"
-				>
+			<div class="ui-g-1 ui-lg-1 ui-md-2 ui-sm-3">
 
 				<p:outputLabel for="tipo" styleClass="my-label" value="Tipo" />
 			</div>
@@ -55,7 +55,7 @@
 					oncomplete="PF('tipos-patrimonio').show()" icon="fa fa-cube"
 					title="Selecionar tipo" styleClass="btn-grey" />
 			</div>
-			
+
 			<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">
 				<p:outputLabel id="tipo"
 					value="#{patrimonioMB.patrimonio.tipo.nome}"
@@ -84,12 +84,17 @@
 		<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-12">
 			<p:outputLabel for="valor-aquisicao" styleClass="my-label"
 				value="Valor de aquisição" />
-			<p:inputText id="valor-aquisicao" required="true" styleClass="moeda "
-				requiredMessage="Campo 'Valor de aquisição' é obrigatório!"
-				maxlength="10" value="#{patrimonioMB.patrimonio.valorAquisicao}">
-				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-				<p:clientValidator event="keyup"/>
-			</p:inputText>
+			<div class="ui-inputgroup">
+				<span class="ui-inputgroup-addon"> <i class="fa fa-dollar"></i>
+				</span>
+				<p:inputText id="valor-aquisicao" required="true"
+					styleClass="moeda "
+					requiredMessage="Campo 'Valor de aquisição' é obrigatório!"
+					maxlength="10" value="#{patrimonioMB.patrimonio.valorAquisicao}">
+					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+					<p:clientValidator event="keyup" />
+				</p:inputText>
+			</div>
 			<p:message for="valor-aquisicao" />
 		</div>
 
@@ -98,12 +103,16 @@
 		<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-12">
 			<p:outputLabel for="valor-atual" styleClass="my-label"
 				value="Valor atual" />
-			<p:inputText id="valor-atual" required="true" styleClass="moeda "
-				requiredMessage="Campo 'Valor atual' é obrigatório!" maxlength="10"
-				value="#{patrimonioMB.patrimonio.valorAtual}">
-				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-				<p:clientValidator event="keyup"/>
-			</p:inputText>
+			<div class="ui-inputgroup">
+				<span class="ui-inputgroup-addon"> <i class="fa fa-dollar"></i>
+				</span>
+				<p:inputText id="valor-atual" required="true" styleClass="moeda "
+					requiredMessage="Campo 'Valor atual' é obrigatório!" maxlength="10"
+					value="#{patrimonioMB.patrimonio.valorAtual}">
+					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+					<p:clientValidator event="keyup" />
+				</p:inputText>
+			</div>
 			<p:message for="valor-atual" />
 		</div>
 
@@ -112,13 +121,17 @@
 		<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-12">
 			<p:outputLabel for="data" styleClass="my-label"
 				value="Data de aquisição " />
-			<p:calendar pattern="dd/MM/yyyy" id="data" required="true"
-				navigator="true"
-				requiredMessage="Campo 'Data de aquisição' é obrigatório!"
-				maskSlotChar=" " value="#{patrimonioMB.patrimonio.dataAquisicao}"
-				mask="99/99/9999" placeholder="Ex.: 25/10/1990" >
-				<p:clientValidator event="keyup"/>
+			<div class="ui-inputgroup">
+				<span class="ui-inputgroup-addon"> <i class="fa fa-calendar"></i>
+				</span>
+				<p:calendar pattern="dd/MM/yyyy" id="data" required="true"
+					navigator="true"
+					requiredMessage="Campo 'Data de aquisição' é obrigatório!"
+					maskSlotChar=" " value="#{patrimonioMB.patrimonio.dataAquisicao}"
+					mask="99/99/9999" placeholder="Ex.: 25/10/1990">
+					<p:clientValidator event="keyup" />
 				</p:calendar>
+			</div>
 			<p:message for="data" />
 		</div>
 
@@ -145,9 +158,9 @@
 			<p:inputTextarea id="observacao" required="true"
 				requiredMessage="Campo 'Observação' é obrigatório!"
 				value="#{patrimonioMB.patrimonio.observacao}"
-				placeholder="Informe observações relevantes sobre este patrimônio" >
-				<p:clientValidator event="keyup"/>
-				</p:inputTextarea>
+				placeholder="Informe observações relevantes sobre este patrimônio">
+				<p:clientValidator event="keyup" />
+			</p:inputTextarea>
 			<p:message for="observacao" />
 		</div>
 
