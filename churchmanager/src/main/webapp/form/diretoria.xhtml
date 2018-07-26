@@ -19,9 +19,7 @@
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
 				<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
-				<p:inputText id="nome" required="true"
-					requiredMessage="Campo 'Nome' é obrigatório!"
-					value="#{diretoriaMB.diretoria.nome}"
+				<p:inputText id="nome" value="#{diretoriaMB.diretoria.nome}"
 					placeholder="Digite o nome da diretoria">
 					<p:clientValidator event="keyup" />
 				</p:inputText>
@@ -39,8 +37,7 @@
 				<div class="ui-inputgroup">
 					<span class="ui-inputgroup-addon"> <i class="fa fa-calendar"></i>
 					</span>
-					<p:calendar id="inicio" required="true" mask="99/99/9999"
-						requiredMessage="Campo 'Dt. de início' é obrigatório!"
+					<p:calendar id="inicio" mask="99/99/9999"
 						value="#{diretoriaMB.diretoria.inicio}" navigator="true"
 						pattern="dd/MM/yyyy" placeholder="Data de início" maskSlotChar="">
 						<p:clientValidator event="keyup" />
@@ -56,8 +53,7 @@
 				<div class="ui-inputgroup">
 					<span class="ui-inputgroup-addon"> <i class="fa fa-calendar"></i>
 					</span>
-					<p:calendar id="fim" required="true" mask="99/99/9999"
-						requiredMessage="Campo 'Dt. de término' é obrigatório!"
+					<p:calendar id="fim" mask="99/99/9999"
 						value="#{diretoriaMB.diretoria.termino}" navigator="true"
 						pattern="dd/MM/yyyy" placeholder="Data de término" maskSlotChar="">
 						<p:clientValidator event="keyup" />
@@ -73,8 +69,7 @@
 			<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
 				<p:outputLabel for="descricao" styleClass="my-label"
 					value="Descrição" />
-				<p:inputTextarea id="descricao" required="false"
-					requiredMessage="Campo 'Descrição' é obrigatório!"
+				<p:inputTextarea id="descricao"
 					value="#{diretoriaMB.diretoria.descricao}"
 					placeholder="Descreva a diretoria">
 					<p:clientValidator event="keyup" />
@@ -87,8 +82,7 @@
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-lg-6 ui-md-8 ui-sm-12">
 				<p:outputLabel for="status" styleClass="my-label" value="Status" />
-				<p:selectOneRadio id="status" required="true"
-					requiredMessage="Campo 'Status' é obrigatório!"
+				<p:selectOneRadio id="status"
 					value="#{diretoriaMB.diretoria.status}">
 					<f:selectItems itemLabel="#{status.descricao}" var="status"
 						value="#{diretoriaMB.listarStatus()}" itemValue="#{status}" />

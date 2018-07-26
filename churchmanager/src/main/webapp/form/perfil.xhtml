@@ -18,8 +18,7 @@
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
 				<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
-				<p:inputText id="nome" required="true"
-					requiredMessage="Campo 'Nome' é obrigatório!"
+				<p:inputText id="nome" 
 					value="#{perfilMB.perfil.nome}"
 					placeholder="Digite o nome do perfil" >
 					<p:clientValidator event="keyup"/>
@@ -33,8 +32,7 @@
 			<div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12">
 				<p:outputLabel for="descricao" styleClass="my-label"
 					value="Descrição" />
-				<p:inputTextarea id="descricao" required="true"
-					requiredMessage="Campo 'Descrição' é obrigatório!"
+				<p:inputTextarea id="descricao" 
 					value="#{perfilMB.perfil.descricao}"
 					placeholder="Descreva o perfil" >
 					<p:clientValidator event="keyup"/>
@@ -46,8 +44,7 @@
 
 		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
 			<p:outputLabel for="status" styleClass="my-label" value="Status" />
-			<p:selectOneRadio id="status" required="true"
-				requiredMessage="Campo 'Status' é obrigatório!"
+			<p:selectOneRadio id="status"
 				value="#{perfilMB.perfil.status}">
 				<f:selectItems itemLabel="#{status.descricao}" var="status"
 					value="#{perfilMB.listarStatus()}" itemValue="#{status}" />
@@ -60,8 +57,7 @@
 			<p:outputLabel for="pagina" styleClass="my-label" value="Páginas " />
 			<p:message for="pagina" />
 			<div />
-			<p:selectManyCheckbox id="pagina" required="true"
-				requiredMessage="Campo 'Páginas' é obrigatório!"
+			<p:selectManyCheckbox id="pagina"
 				converter="genericConverter" value="#{perfilMB.perfil.paginas}"
 				columns="3" layout="responsive">
 				<f:attribute name="collectionType" value="java.util.ArrayList" />

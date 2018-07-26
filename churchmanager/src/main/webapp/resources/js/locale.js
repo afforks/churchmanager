@@ -82,7 +82,7 @@ PrimeFaces.locales['pt_BR'] = {
 		'javax.validation.constraints.NegativeOrZero.message'   : 'deve ser menor ou igual a 0',
 		'javax.validation.constraints.NotBlank.message'         : 'n\u00E3o pode estar em branco',
 		'javax.validation.constraints.NotEmpty.message'         : 'n\u00E3o pode estar vazio',
-		'javax.validation.constraints.NotNull.message'          : 'n\u00E3o pode ser nulo',
+		'javax.validation.constraints.NotNull.message'          : '\'{1}\' n\u00E3o pode ser nulo',
 		'javax.validation.constraints.Null.message'             : 'deve ser nulo',
 		'javax.validation.constraints.Past.message'             : 'deve estar no passado',
 		'javax.validation.constraints.PastOrPresent.message'    : 'deve de ser uma data em passado ou em presente',

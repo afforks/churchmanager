@@ -16,11 +16,10 @@
 
 		<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
 			<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
-			<p:inputText id="nome" required="true"
-				requiredMessage="Campo 'Nome' é obrigatório!"
-				value="#{eventoMB.evento.nome}" placeholder="Nome do evento" >
-				<p:clientValidator event="keyup"/>
-				</p:inputText>
+			<p:inputText id="nome" value="#{eventoMB.evento.nome}"
+				placeholder="Nome do evento">
+				<p:clientValidator event="keyup" />
+			</p:inputText>
 			<p:message for="nome" />
 		</div>
 
@@ -28,45 +27,40 @@
 		<div class="ui-g-3 ui-lg-3 ui-md-2 ui-sm-6">
 			<p:outputLabel for="dia" styleClass="my-label" value="Dia" />
 			<div class="ui-inputgroup">
-	            	<span class="ui-inputgroup-addon">
-	            		<i class="fa fa-calendar"></i>
-	            	</span>
-			<p:inputText id="dia" required="true"
-				requiredMessage="Campo 'Dia' é obrigatório!"
-				value="#{eventoMB.evento.dia}" placeholder="Dia. Ex.: 25" >
-				<p:clientValidator event="keyup"/>
+				<span class="ui-inputgroup-addon"> <i class="fa fa-calendar"></i>
+				</span>
+				<p:inputText id="dia" value="#{eventoMB.evento.dia}"
+					placeholder="Dia. Ex.: 25">
+					<p:clientValidator event="keyup" />
 				</p:inputText>
-				</div>
+			</div>
 			<p:message for="dia" />
 		</div>
 
 		<div class="ui-g-3 ui-lg-3 ui-md-2 ui-sm-6">
 			<p:outputLabel for="mes" styleClass="my-label" value="Mês" />
 			<div class="ui-inputgroup">
-	            	<span class="ui-inputgroup-addon">
-	            		<i class="fa fa-calendar"></i>
-	            	</span>
-			<p:inputText id="mes" required="true"
-				requiredMessage="Campo 'Mês' é obrigatório!"
-				value="#{eventoMB.evento.mes}" placeholder="Mês. Ex.: 10" />
-				</div>
+				<span class="ui-inputgroup-addon"> <i class="fa fa-calendar"></i>
+				</span>
+				<p:inputText id="mes" value="#{eventoMB.evento.mes}"
+					placeholder="Mês. Ex.: 10" >
+					<p:clientValidator event="keyup" />
+					</p:inputText>
+			</div>
 			<p:message for="mes" />
 		</div>
 
 		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
 			<p:outputLabel for="descricao" styleClass="my-label"
 				value="Descrição" />
-			<p:inputTextarea id="descricao" required="true"
-				requiredMessage="Campo 'Descrição' é obrigatório!"
-				value="#{eventoMB.evento.descricao}" placeholder="Descreva o evento" />
+			<p:inputTextarea id="descricao" value="#{eventoMB.evento.descricao}"
+				placeholder="Descreva o evento" />
 			<p:message for="descricao" />
 		</div>
 
 		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
 			<p:outputLabel for="status" styleClass="my-label" value="Status" />
-			<p:selectOneRadio id="status" required="true"
-				requiredMessage="Campo 'Status' é obrigatório!"
-				value="#{eventoMB.evento.status}">
+			<p:selectOneRadio id="status" value="#{eventoMB.evento.status}">
 				<f:selectItems itemLabel="#{status.descricao}" var="status"
 					value="#{eventoMB.listarStatus()}" itemValue="#{status}" />
 			</p:selectOneRadio>

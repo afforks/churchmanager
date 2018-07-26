@@ -18,7 +18,7 @@
 <div class="ui-g-12 ui-g-nopad">
 		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
 			<p:outputLabel for="nome" styleClass="my-label" value="Nome" />
-			<p:inputText id="nome" required="true"
+			<p:inputText id="nome"
 				value="#{usuarioMB.usuario.nomeCompleto}"
 				placeholder="Digite o nome do usuário">
 				<p:clientValidator event="keyup" />
@@ -31,8 +31,7 @@
 			<div class="ui-inputgroup">
 				<span class="ui-inputgroup-addon"> <i class="fa fa-at"></i>
 				</span>
-				<p:inputText id="email" required="true"
-					requiredMessage="Campo 'E-mail' é obrigatório!"
+				<p:inputText id="email" 
 					value="#{usuarioMB.usuario.email}"
 					placeholder="Digite o e-mail do usuário">
 					<p:clientValidator event="keyup" />
@@ -44,7 +43,6 @@
 		<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
 			<p:outputLabel for="perfil" value="Perfil " styleClass="my-label" />
 			<p:selectOneMenu id="perfil" value="#{usuarioMB.usuario.perfil}"
-				required="true" requiredMessage="Campo 'Perfil' é obrigatório!"
 				converter="genericConverter">
 
 				<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
@@ -86,8 +84,7 @@
 					<p:password id="senha" feedback="true" match="confirmar-senha"
 						promptLabel="Nível da senha" weakLabel="Fraca"
 						value="#{usuarioMB.usuario.senha}" goodLabel="Média"
-						strongLabel="Forte" required="true"
-						requiredMessage="Campo 'Senha' é obrigatório!"
+						strongLabel="Forte" 
 						validatorMessage="As senhas informadas são diferentes, digite novamente!"
 						placeholder="Digite uma senha forte" />
 				</div>
@@ -103,9 +100,8 @@
 					<span class="ui-inputgroup-addon"> <i
 						class="fa fa-ellipsis-h"></i>
 					</span>
-					<p:password id="confirmar-senha" required="true"
+					<p:password id="confirmar-senha" 
 						value="#{usuarioMB.usuario.senha}"
-						requiredMessage="Campo 'Confirmar Senha' é obrigatório!"
 						placeholder="Repita a senha" />
 				</div>
 				<p:message for="confirmar-senha" />
@@ -116,8 +112,7 @@
 
 		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
 			<p:outputLabel for="status" styleClass="my-label" value="Status" />
-			<p:selectOneRadio id="status" required="true"
-				requiredMessage="Campo 'Status' é obrigatório!"
+			<p:selectOneRadio id="status" 
 				value="#{usuarioMB.usuario.status}">
 				<f:selectItems id="status-item" itemLabel="#{status.descricao}"
 					var="status" value="#{utilMB.listarStatus()}" itemValue="#{status}" />
@@ -130,8 +125,7 @@
 			<p:outputLabel for="pagina" value="Páginas de acesso"
 				styleClass="my-label" />
 			<p:message for="pagina" />
-			<p:selectManyCheckbox id="pagina" required="true"
-				requiredMessage="Campo 'Páginas' é obrigatório!"
+			<p:selectManyCheckbox id="pagina" 
 				converter="genericConverter" value="#{usuarioMB.usuario.paginas}"
 				columns="3" layout="responsive">
 				<f:attribute name="collectionType" value="java.util.ArrayList" />

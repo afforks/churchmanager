@@ -10,6 +10,11 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.churchmanager.util.faces.FacesUtil;
 
@@ -28,6 +33,10 @@ public class LoginBean implements Serializable {
 	@Inject
 	private HttpServletResponse response;
 	
+	@NotNull
+	@NotEmpty
+	@NotBlank
+	@Email
 	private String email;
 
 	public void preRender() {

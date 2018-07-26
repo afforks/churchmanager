@@ -43,9 +43,8 @@
 
 				<div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12 ">
 					<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
-					<p:inputText id="nome" required="true"
-						requiredMessage="Campo 'Nome' é obrigatório!"
-						value="#{categoriaMovimentacaoMB.categoriaMovimentacao.nome}"
+					<p:inputText id="nome"
+						value=""
 						placeholder="Casa de Oração da Igreja de Cristo no Brasil em Morada Nova">
 					</p:inputText>
 					<p:message for="nome" />
@@ -54,8 +53,7 @@
 
 				<div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12  ">
 					<p:outputLabel for="cnpj" styleClass="my-label" value="CNPJ " />
-					<p:inputMask id="cnpj" required="true" mask="99.999.999/9999-99"
-						requiredMessage="Campo 'CNPJ' é obrigatório!" value="" 
+					<p:inputMask id="cnpj" mask="99.999.999/9999-99" value=""
 						placeholder="Ex.: 15.206.686/0001-49">
 					</p:inputMask>
 					<p:message for="cnpj" />
@@ -65,9 +63,7 @@
 
 				<div class="ui-g-4  ui-lg-4 ui-md-4 ui-sm-12  ">
 					<p:outputLabel for="banco" styleClass="my-label" value="Banco " />
-					<p:inputText id="banco" required="true"
-						requiredMessage="Campo 'Banco' é obrigatório!" value=""
-						placeholder="Banco do Brasil">
+					<p:inputText id="banco" value="" placeholder="Banco do Brasil">
 					</p:inputText>
 					<p:message for="banco" />
 				</div>
@@ -75,18 +71,14 @@
 
 				<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-12  ">
 					<p:outputLabel for="ag" styleClass="my-label" value="Agência " />
-					<p:inputText id="ag" required="true"
-						requiredMessage="Campo 'Agência' é obrigatório!" value=""
-						placeholder="0863-x">
+					<p:inputText id="ag" value="" placeholder="0863-x">
 					</p:inputText>
 					<p:message for="ag" />
 				</div>
 
 				<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-12  ">
 					<p:outputLabel for="conta" styleClass="my-label" value="Conta " />
-					<p:inputText id="conta" required="true"
-						requiredMessage="Campo 'Conta' é obrigatório!" value=""
-						placeholder="12345-6">
+					<p:inputText id="conta" value="" placeholder="12345-6">
 					</p:inputText>
 					<p:message for="conta" />
 				</div>
@@ -96,18 +88,14 @@
 				<div class="ui-g-8 ui-lg-8 ui-md-8 ui-sm-12  ">
 					<p:outputLabel for="pp" styleClass="my-label"
 						value="Pastor Presidente" />
-					<p:inputText id="pp" required="true"
-						requiredMessage="Campo 'Pastor Presidente' é obrigatório!"
-						value="" placeholder="Digite o nome do pastor">
+					<p:inputText id="pp" value="" placeholder="Digite o nome do pastor">
 					</p:inputText>
 					<p:message for="pp" />
 				</div>
 
 				<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-12  ">
 					<p:outputLabel for="tel" styleClass="my-label" value="Telefone " />
-					<p:inputText id="tel" required="true"
-						requiredMessage="Campo 'Telefone' é obrigatório!" value=""
-						placeholder="(88)3422-1234">
+					<p:inputText id="tel" value="" placeholder="(88)3422-1234">
 					</p:inputText>
 					<p:message for="tel" />
 				</div>
@@ -117,8 +105,7 @@
 				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="logradouro" styleClass="my-label"
 						value="Logradouro " />
-					<p:inputText id="logradouro" required="true"
-						requiredMessage="Campo 'Logradouro' é obrigatório!"
+					<p:inputText id="logradouro"
 						value="#{pessoaMB.pessoa.endereco.logradouro}"
 						placeholder="Av. Ce. Tibúrcio, Nº 56" />
 					<p:message for="logradouro" />
@@ -127,8 +114,7 @@
 				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="referencia" styleClass="my-label"
 						value="Referência " />
-					<p:inputText id="referencia" required="true"
-						requiredMessage="Campo 'Referência' é obrigatório!"
+					<p:inputText id="referencia"
 						value="#{pessoaMB.pessoa.endereco.referencia}"
 						placeholder="Próximo ao Sindicato dos Trabalhadores" />
 					<p:message for="referencia" />
@@ -137,9 +123,7 @@
 
 				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="bairro" styleClass="my-label" value="Bairro " />
-					<p:inputText id="bairro" required="true"
-						requiredMessage="Campo 'Bairro' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.bairro}"
+					<p:inputText id="bairro" value="#{pessoaMB.pessoa.endereco.bairro}"
 						placeholder="Girilândia" />
 					<p:message for="bairro" />
 				</div>
@@ -148,8 +132,7 @@
 
 				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="cep" styleClass="my-label" value="CEP " />
-					<p:inputMask mask="99999-999" id="cep" required="true"
-						requiredMessage="Campo 'CEP' é obrigatório!"
+					<p:inputMask mask="99999-999" id="cep"
 						value="#{pessoaMB.pessoa.endereco.cep}" placeholder="62.940-000" />
 					<p:message for="cep" />
 				</div>
@@ -158,9 +141,7 @@
 
 				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="cidade" styleClass="my-label" value="Cidade " />
-					<p:inputText id="cidade" required="true"
-						requiredMessage="Campo 'Cidade' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.cidade}"
+					<p:inputText id="cidade" value="#{pessoaMB.pessoa.endereco.cidade}"
 						placeholder="Morada Nova	" />
 					<p:message for="cidade" />
 				</div>
@@ -170,8 +151,7 @@
 					<p:outputLabel for="estado" styleClass="my-label" value="Estado " />
 					<p:selectOneMenu id="estado"
 						value="#{pessoaMB.pessoa.endereco.estado}" filter="true"
-						converterMessage="Não foi possível converter o objeto (Estado)"
-						required="true" requiredMessage="Campo 'Estado' é obrigatório">
+						converterMessage="Não foi possível converter o objeto (Estado)">
 						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
 						<f:selectItems value="#{utilMB.listarEstados()}"
 							itemLabel="#{estado.descricao}" itemValue="#{estado}"
@@ -183,9 +163,8 @@
 
 				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="pais" styleClass="my-label" value="País " />
-					<p:inputText id="pais" required="true"
-						requiredMessage="Campo 'País' é obrigatório!"
-						value="#{pessoaMB.pessoa.endereco.pais}" placeholder="Brasil" />
+					<p:inputText id="pais" value="#{pessoaMB.pessoa.endereco.pais}"
+						placeholder="Brasil" />
 					<p:message for="pais" />
 				</div>
 

@@ -17,11 +17,11 @@
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
 				<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
-				<p:inputText id="nome" 
+				<p:inputText id="nome"
 					value="#{atividadeEclesiasticaMB.atividadeEclesiastica.nome}"
-					placeholder="Digite o nome da atividade" >
-					<p:clientValidator event="keyup"/>
-					</p:inputText>
+					placeholder="Digite o nome da atividade">
+					<p:clientValidator event="keyup" />
+				</p:inputText>
 				<p:message for="nome" />
 			</div>
 		</div>
@@ -30,12 +30,11 @@
 			<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
 				<p:outputLabel for="descricao" styleClass="my-label"
 					value="Descrição" />
-				<p:inputTextarea id="descricao" required="false"
-					requiredMessage="Campo 'Descrição' é obrigatório!"
+				<p:inputTextarea id="descricao"
 					value="#{atividadeEclesiasticaMB.atividadeEclesiastica.descricao}"
-					placeholder="Descreva a atividade" >
-					<p:clientValidator event="keyup"/>
-					</p:inputTextarea>
+					placeholder="Descreva a atividade">
+					<p:clientValidator event="keyup" />
+				</p:inputTextarea>
 				<p:message for="descricao" />
 			</div>
 		</div>
@@ -43,8 +42,7 @@
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
 				<p:outputLabel for="status" styleClass="my-label" value="Status" />
-				<p:selectOneRadio id="status" required="true"
-					requiredMessage="Campo 'Status' é obrigatório!"
+				<p:selectOneRadio id="status"
 					value="#{atividadeEclesiasticaMB.atividadeEclesiastica.status}">
 					<f:selectItems itemLabel="#{status.descricao}" var="status"
 						value="#{atividadeEclesiasticaMB.listarStatus()}"

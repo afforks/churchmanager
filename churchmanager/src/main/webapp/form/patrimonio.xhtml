@@ -18,8 +18,7 @@
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
 				<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
-				<p:inputText id="nome" required="true"
-					requiredMessage="Campo 'Nome' é obrigatório!"
+				<p:inputText id="nome" 
 					value="#{patrimonioMB.patrimonio.nome}"
 					placeholder="Nome do patrimônio">
 					<p:clientValidator event="keyup" />
@@ -70,8 +69,7 @@
 
 		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
 			<p:outputLabel for="estado" styleClass="my-label" value="Estado" />
-			<p:selectOneRadio id="estado" required="true"
-				requiredMessage="Campo 'Estado' é obrigatório!"
+			<p:selectOneRadio id="estado" 
 				value="#{patrimonioMB.patrimonio.estado}">
 				<f:selectItems itemLabel="#{estado.descricao}" var="estado"
 					value="#{utilMB.listarEstadoPatrimonio()}" itemValue="#{estado}" />
@@ -87,9 +85,8 @@
 			<div class="ui-inputgroup">
 				<span class="ui-inputgroup-addon"> <i class="fa fa-dollar"></i>
 				</span>
-				<p:inputText id="valor-aquisicao" required="true"
+				<p:inputText id="valor-aquisicao" 
 					styleClass="moeda "
-					requiredMessage="Campo 'Valor de aquisição' é obrigatório!"
 					maxlength="10" value="#{patrimonioMB.patrimonio.valorAquisicao}">
 					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
 					<p:clientValidator event="keyup" />
@@ -106,8 +103,8 @@
 			<div class="ui-inputgroup">
 				<span class="ui-inputgroup-addon"> <i class="fa fa-dollar"></i>
 				</span>
-				<p:inputText id="valor-atual" required="true" styleClass="moeda "
-					requiredMessage="Campo 'Valor atual' é obrigatório!" maxlength="10"
+				<p:inputText id="valor-atual"  styleClass="moeda "
+					maxlength="10"
 					value="#{patrimonioMB.patrimonio.valorAtual}">
 					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
 					<p:clientValidator event="keyup" />
@@ -124,9 +121,8 @@
 			<div class="ui-inputgroup">
 				<span class="ui-inputgroup-addon"> <i class="fa fa-calendar"></i>
 				</span>
-				<p:calendar pattern="dd/MM/yyyy" id="data" required="true"
+				<p:calendar pattern="dd/MM/yyyy" id="data" 
 					navigator="true"
-					requiredMessage="Campo 'Data de aquisição' é obrigatório!"
 					maskSlotChar=" " value="#{patrimonioMB.patrimonio.dataAquisicao}"
 					mask="99/99/9999" placeholder="Ex.: 25/10/1990">
 					<p:clientValidator event="keyup" />
@@ -140,8 +136,7 @@
 
 		<div class="ui-g-3 ui-lg-3 ui-md-6 ui-sm-12">
 			<p:outputLabel for="situacao" styleClass="my-label" value="Situação" />
-			<p:selectOneRadio id="situacao" required="true"
-				requiredMessage="Campo 'Situação' é obrigatório!"
+			<p:selectOneRadio id="situacao" 
 				value="#{patrimonioMB.patrimonio.situacao}">
 				<f:selectItems itemLabel="#{situacao.descricao}" var="situacao"
 					value="#{utilMB.listarSituacao()}" itemValue="#{situacao}" />
@@ -155,8 +150,7 @@
 		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
 			<p:outputLabel for="observacao" styleClass="my-label"
 				value="Observação " />
-			<p:inputTextarea id="observacao" required="true"
-				requiredMessage="Campo 'Observação' é obrigatório!"
+			<p:inputTextarea id="observacao"
 				value="#{patrimonioMB.patrimonio.observacao}"
 				placeholder="Informe observações relevantes sobre este patrimônio">
 				<p:clientValidator event="keyup" />
@@ -168,8 +162,7 @@
 
 		<div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
 			<p:outputLabel for="status" styleClass="my-label" value="Status" />
-			<p:selectOneRadio id="status" required="true"
-				requiredMessage="Campo 'Status' é obrigatório!"
+			<p:selectOneRadio id="status" 
 				value="#{patrimonioMB.patrimonio.status}">
 				<f:selectItems itemLabel="#{status.descricao}" var="status"
 					value="#{utilMB.listarStatus()}" itemValue="#{status}" />

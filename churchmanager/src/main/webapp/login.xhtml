@@ -63,7 +63,8 @@ body .blur {
 						<span class="ui-inputgroup-addon"> <i class="fa fa-user"></i>
 						</span>
 						<p:inputText id="username" value="#{loginBean.email}"
-							required="true" placeholder="E-mail do usuário" />
+							placeholder="E-mail do usuário" required="true"
+							requiredMessage="Campo 'E-mail' deve ser informado!" />
 					</div>
 				</div>
 
@@ -73,8 +74,9 @@ body .blur {
 						<span class="ui-inputgroup-addon"> <i
 							class="fa fa-ellipsis-h"></i>
 						</span>
-						<p:password id="password" required="true"
-							placeholder="Digite sua senha" />
+						<p:password id="password" placeholder="Digite sua senha"
+							required="true"
+							requiredMessage="Campo 'Senha' deve ser informado!" />
 					</div>
 				</div>
 
