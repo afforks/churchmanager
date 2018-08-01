@@ -21,36 +21,30 @@
 
 		<div class="ui-g-12 ui-g-nopad" jsf:id="grid-pessoa-selecionada">
 
-			<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-6">
+			<div class="ui-g-12 ui-lg-6 ui-md-8 ui-sm-12"
+				jsf:rendered="#{dizimoMB.dizimo.pessoa == null}">
 				<p:outputLabel value="Dizimista" styleClass="my-label"
 					for="dizimista" />
-			</div>
-
-
-			<div class="ui-g-1 ui-lg-2 ui-md-2 ui-sm-3">
-				<p:commandButton icon="fa fa-list-alt" styleClass="btn-grey"
-					title="Selecionar dizimista" oncomplete="PF('membros').show()"
-					update="list-membros membros" process="@this" />
-			</div>
-
-			<div class="ui-g-1 ui-lg-2 ui-md-2 ui-sm-3"
-				jsf:rendered="#{dizimoMB.dizimo.pessoa == null}">
-				<p:commandButton id="buscar-dizimista" icon="fa fa-search"
-					styleClass="btn-green" action="#{dizimoMB.buscarPessoa()}"
-					process="@this codigo-dizimista"
-					title="Buscar dizimista com código de barras"
-					update="id-codigo-dizimista grid-pessoa-selecionada" />
-			</div>
-
-			<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12"
-				jsf:rendered="#{dizimoMB.dizimo.pessoa == null}">
 				<div class="ui-inputgroup">
 					<span class="ui-inputgroup-addon"> <i class="fa fa-barcode"></i>
 					</span>
 					<p:inputText placeholder="Digite o código de barras do membro"
-						value="#{dizimoMB.idPessoa}" id="codigo-dizimista">
+						value="#{dizimoMB.idPessoa}" id="codigo-dizimista"
+						label="Código do dizimista">
 						<p:clientValidator event="keyup" />
 					</p:inputText>
+
+					<p:commandButton id="buscar-dizimista" icon="fa fa-search"
+						styleClass="btn-green" action="#{dizimoMB.buscarPessoa()}"
+						process="@this codigo-dizimista"
+						title="Buscar dizimista com código de barras"
+						update="id-codigo-dizimista grid-pessoa-selecionada" />
+
+					<p:commandButton icon="fa fa-list-alt" styleClass="btn-grey"
+						title="Selecionar dizimista" oncomplete="PF('membros').show()"
+						update="list-membros membros" process="@this" />
+
+
 				</div>
 				<p:message id="id-codigo-dizimista" for="codigo-dizimista" />
 			</div>
@@ -80,8 +74,8 @@
 			<div class="ui-inputgroup">
 				<span class="ui-inputgroup-addon"> <i class="fa fa-dollar"></i>
 				</span>
-				<p:inputText id="valor-dizimo" styleClass="moeda "
-					maxlength="10" value="#{dizimoMB.dizimo.valorDizimo}">
+				<p:inputText id="valor-dizimo" styleClass="moeda " maxlength="10"
+					value="#{dizimoMB.dizimo.valorDizimo}">
 					<f:convertNumber maxFractionDigits="2" minFractionDigits="2"
 						maxIntegerDigits="10" minIntegerDigits="1" />
 					<p:clientValidator event="keyup" />
@@ -96,8 +90,8 @@
 			<div class="ui-inputgroup">
 				<span class="ui-inputgroup-addon"> <i class="fa fa-dollar"></i>
 				</span>
-				<p:inputText id="valor-oferta" styleClass="moeda "
-					maxlength="10" value="#{dizimoMB.dizimo.valorOferta}"
+				<p:inputText id="valor-oferta" styleClass="moeda " maxlength="10"
+					value="#{dizimoMB.dizimo.valorOferta}"
 					converter="javax.faces.BigDecimal">
 					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
 					<p:clientValidator event="keyup" />
@@ -131,7 +125,7 @@
 			<div class="ui-inputgroup">
 				<span class="ui-inputgroup-addon"> <i class="fa fa-calendar"></i>
 				</span>
-				<p:calendar id="dataRecebimento"  mask="99/99/9999"
+				<p:calendar id="dataRecebimento" mask="99/99/9999"
 					placeholder="Data de recebimento" maskSlotChar=""
 					value="#{dizimoMB.dizimo.dataRecebimento}" navigator="true"
 					pattern="dd/MM/yyyy">
@@ -145,8 +139,7 @@
 
 		<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-12">
 			<p:outputLabel for="is13" styleClass="my-label" value="É 13º?" />
-			<p:selectOneRadio id="is13" 
-				value="#{dizimoMB.dizimo.is13}">
+			<p:selectOneRadio id="is13" value="#{dizimoMB.dizimo.is13}">
 				<f:selectItem itemValue="true" itemLabel="Sim" />
 				<f:selectItem itemLabel="Não" itemValue="false" />
 			</p:selectOneRadio>
@@ -155,9 +148,8 @@
 
 		<div class="ui-g-9 ui-lg-9 ui-md-9 ui-sm-12">
 			<p:outputLabel for="observacao" styleClass="my-label"
-				value="Observaçao" />
-			<p:inputTextarea id="observacao" 
-				placeholder="Observação"
+				value="Observação" />
+			<p:inputTextarea id="observacao" placeholder="Observação"
 				value="#{dizimoMB.dizimo.observcao}">
 				<p:clientValidator event="keyup" />
 			</p:inputTextarea>
@@ -167,8 +159,7 @@
 
 		<div class="ui-g-9 ui-lg-9 ui-md-9 ui-sm-12">
 			<p:outputLabel for="status" styleClass="my-label" value="Status" />
-			<p:selectOneRadio id="status" 
-				value="#{dizimoMB.dizimo.status}">
+			<p:selectOneRadio id="status" value="#{dizimoMB.dizimo.status}">
 				<f:selectItems itemLabel="#{status.descricao}" var="status"
 					value="#{dizimoMB.listarStatus()}" itemValue="#{status}" />
 			</p:selectOneRadio>
