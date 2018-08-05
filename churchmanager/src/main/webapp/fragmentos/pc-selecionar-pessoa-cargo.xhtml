@@ -24,28 +24,35 @@
 
 				<p:toolbar style="padding: 10px">
 					<f:facet name="left">
-						<p:panelGrid columns="4" styleClass="ui-panelgrid-blank"
-							layout="grid"
-							columnClasses="ui-grid-col-3, ui-grid-col-4, ui-grid-col-4, ui-grid-col-3">
 
-							<p:outputLabel value="Filtrar por: " />
+						<div class="ui-g-12">
 
-							<p:inputText id="filtro-pessoa-cargo-p"
-								styleClass="ui-grid-col-6" placeholder="Nome da pessoa"
-								value="#{pessoaCargoMB.pessoaCargoFilter.nomePessoa}" />
+							<div class="ui-g-2 ui-lg-2 ui-md-4 ui-sm-4">
+								<p:outputLabel value="Filtrar por: " />
+							</div>
 
-							<p:inputText id="filtro-pessoa-cargo-c"
-								styleClass="ui-grid-col-6" placeholder="Nome do cargo"
-								value="#{pessoaCargoMB.pessoaCargoFilter.nomeCargo}" />
+							<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-4">
 
-							<h:panelGrid columns="2">
+								<p:inputText id="filtro-pessoa-cargo-p"
+									styleClass="ui-grid-col-6" placeholder="Nome da pessoa"
+									value="#{pessoaCargoMB.pessoaCargoFilter.nomePessoa}" />
+							</div>
+
+							<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-4">
+
+								<p:inputText id="filtro-pessoa-cargo-c"
+									styleClass="ui-grid-col-6" placeholder="Nome do cargo"
+									value="#{pessoaCargoMB.pessoaCargoFilter.nomeCargo}" />
+							</div>
+
+							<div class="ui-g-2 ui-lg-2 ui-md-4 ui-sm-4">
 								<p:commandButton action="#{pessoaCargoMB.filtrar()}"
 									process="@this filtro-pessoa-cargo-p filtro-pessoa-cargo-c"
 									update="table-pessoa-cargo" icon="fa fa-search"
 									styleClass="btn-grey" />
-							</h:panelGrid>
+							</div>
 
-						</p:panelGrid>
+						</div>
 					</f:facet>
 				</p:toolbar>
 
@@ -86,7 +93,7 @@
 								addTo="#{diretoriaMB.diretoria.pessoaCargos}" />
 						</p:commandButton>
 
-						<p:commandButton  icon="fa fa-close" styleClass="btn-red"
+						<p:commandButton icon="fa fa-close" styleClass="btn-red"
 							process="@this"
 							rendered="#{diretoriaMB.diretoria.pessoaCargos.contains(pc)}"
 							update="@this table-diretoria">

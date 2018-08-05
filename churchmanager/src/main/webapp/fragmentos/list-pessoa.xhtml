@@ -10,12 +10,12 @@
 	<div class="ui-fluid">
 
 		<p:growl life="5000" id="list-membros" />
-		
+
 
 		<p:dialog header="Membros" modal="true" resizable="false"
 			draggable="false" closable="true" closeOnEscape="true" dynamic="true"
-			responsive="true" id="membros" widgetVar="membros"
-			visible="false" width="800" fitViewport="true" positionType="fixed">
+			responsive="true" id="membros" widgetVar="membros" visible="false"
+			width="800" fitViewport="true" positionType="fixed">
 
 			<p:panelGrid id="grid-membros" columns="1" layout="grid"
 				styleClass="ui-panelgrid-blank">
@@ -24,31 +24,34 @@
 
 				<p:toolbar style="padding: 10px">
 					<f:facet name="left">
-						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
-							layout="grid"
-							columnClasses="ui-grid-col-3, ui-grid-col-6, ui-grid-col-3">
 
-							<p:outputLabel value="Filtrar por: " />
+						<div class="ui-g-12">
+							<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-2">
+								<p:outputLabel value="Filtrar por: " />
+							</div>
 
-							<p:inputText id="filtro" styleClass="ui-grid-col-6"
-								placeholder="Nome"
-								value="#{pessoaMB.pessoaFilter.nome}" />
+							<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-6">
+								<p:inputText id="filtro" placeholder="Nome"
+									value="#{pessoaMB.pessoaFilter.nome}" />
+							</div>
 
-							<h:panelGrid columns="2">
+							<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-2">
 								<p:commandButton action="#{pessoaMB.filtrar()}"
 									process="@this filtro" update="table" icon="fa fa-search"
 									styleClass="btn-grey" />
-							</h:panelGrid>
+							</div>
+						</div>
 
-						</p:panelGrid>
+
 					</f:facet>
 				</p:toolbar>
 
 
-				<p:dataTable id="table" var="pessoa" lazy="true" value="#{pessoaMB.pessoasLazy}"
-					reflow="true" rowHover="true" paginatorPosition="bottom"
-					paginator="true" paginatorAlwaysVisible="false" rows="10"
-					rowsPerPageLabel="de" scrollable="true" scrollHeight="250"
+				<p:dataTable id="table" var="pessoa" lazy="true"
+					value="#{pessoaMB.pessoasLazy}" reflow="true" rowHover="true"
+					paginatorPosition="bottom" paginator="true"
+					paginatorAlwaysVisible="false" rows="10" rowsPerPageLabel="de"
+					scrollable="true" scrollHeight="250"
 					emptyMessage="Nenhum registro foi encontrado!"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
 						{PreviousPageLink} {PageLinks} {NextPageLink} 
@@ -62,15 +65,17 @@
 							<p:outputLabel value="#{pessoa.nome}" />
 						</div>
 					</p:column>
-					 
+
 
 					<p:column headerText="Selecionar" colspan="1" styleClass="center">
-						<p:commandButton icon="fa fa-check" process="@this" update="dizimista, grid-pessoa-selecionada"
-						oncomplete="PF('membros').hide()" 
-						title="Clique para selecionar o dizimista">
-							<f:setPropertyActionListener value="#{pessoa}" target="#{dizimoMB.dizimo.pessoa}"/>
+						<p:commandButton icon="fa fa-check" process="@this"
+							update="dizimista, grid-pessoa-selecionada"
+							oncomplete="PF('membros').hide()"
+							title="Clique para selecionar o dizimista">
+							<f:setPropertyActionListener value="#{pessoa}"
+								target="#{dizimoMB.dizimo.pessoa}" />
 						</p:commandButton>
-						 
+
 					</p:column>
 				</p:dataTable>
 

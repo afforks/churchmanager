@@ -23,31 +23,34 @@
 
 				<p:toolbar style="padding: 10px">
 					<f:facet name="left">
-						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
-							layout="grid"
-							columnClasses="ui-grid-col-3, ui-grid-col-6, ui-grid-col-3">
 
-							<p:outputLabel value="Filtrar por: " />
+						<div class="ui-g-12">
+							<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-2">
+								<p:outputLabel value="Filtrar por: " />
+							</div>
 
-							<p:inputText id="filtro" styleClass="ui-grid-col-6"
-								placeholder="Tipo de patrimônio"
-								value="#{tipoMB.tipoFilter.nome}" />
+							<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-6">
+								<p:inputText id="filtro" 
+									placeholder="Tipo de patrimônio"
+									value="#{tipoMB.tipoFilter.nome}" />
+							</div>
 
-							<h:panelGrid columns="2">
+							<div class="ui-g-2 ui-lg-2 ui-md-2 ui-sm-2">
 								<p:commandButton action="#{tipoMB.filtrar()}"
 									process="@this filtro" update="table" icon="fa fa-search"
 									styleClass="btn-grey" />
-							</h:panelGrid>
+							</div>
+						</div>
 
-						</p:panelGrid>
 					</f:facet>
 				</p:toolbar>
 
 
-				<p:dataTable id="table" var="tipo" lazy="true" value="#{tipoMB.tiposLazy}"
-					reflow="true" rowHover="true" patrimoniotorPosition="bottom"
-					patrimoniotor="true" patrimoniotorAlwaysVisible="false" rows="10"
-					rowsPerPageLabel="de" scrollable="true" scrollHeight="250"
+				<p:dataTable id="table" var="tipo" lazy="true"
+					value="#{tipoMB.tiposLazy}" reflow="true" rowHover="true"
+					patrimoniotorPosition="bottom" patrimoniotor="true"
+					patrimoniotorAlwaysVisible="false" rows="10" rowsPerPageLabel="de"
+					scrollable="true" scrollHeight="250"
 					emptyMessage="Nenhum registro foi encontrado!"
 					patrimoniotorTemplate="{CurrentPageReport} {FirstPageLink} 
 						{PreviousPageLink} {PageLinks} {NextPageLink} 
@@ -68,9 +71,11 @@
 					</p:column>
 
 					<p:column headerText="Selecionar" colspan="1" styleClass="center">
-						<p:commandButton icon="fa fa-check" process="@this" update="tipo, grid-tipo-selecionado"
-						oncomplete="PF('tipos-patrimonio').hide()">
-							<f:setPropertyActionListener value="#{tipo}" target="#{patrimonioMB.patrimonio.tipo}"/>
+						<p:commandButton icon="fa fa-check" process="@this"
+							update="tipo, grid-tipo-selecionado"
+							oncomplete="PF('tipos-patrimonio').hide()">
+							<f:setPropertyActionListener value="#{tipo}"
+								target="#{patrimonioMB.patrimonio.tipo}" />
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
