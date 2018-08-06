@@ -7,17 +7,14 @@
 	template="/WEB-INF/template/layout.xhtml">
 
 	<ui:define name="page-name">
-		Não Encontrado
+		Bug no Sistema
 	</ui:define>
 
 	<ui:define name="page-title" />
 	<ui:define name="menu-super" />
 	<ui:define name="menu-aside" />
 	<ui:define name="footer" />
-
-	<ui:define name="page-subtitle">
-		Subtítulo da página
-	</ui:define>
+	<ui:define name="page-subtitle" />
 
 	<ui:define name="page-menu">
 		<ui:include src="/WEB-INF/template/links-funcionais.xhtml" />
@@ -39,13 +36,15 @@
 			<div class="ui-fluid">
 
 				<p:dialog visible="true" closable="false" closeOnEscape="false"
-					draggable="false" resizable="false" responsive="true" header="Erro 404">
+					draggable="false" resizable="false" responsive="true"
+					header="New bug">
 					<center>
-					<i class="fa fa-file-o icon" />
-					<i class="fa fa-question icon" />
-						<h1><b>Arquivo não Encontrado</b></h1>
-						<h3>A URL que você solicitou não foi encontrada</h3>
-						<h5>Entre em contato com o administrador!</h5>
+					<i class="fa fa-bug icon" />
+					<i class="fa fa-code icon" />
+						<h1><b>Um provável bug foi encontrado!</b></h1>
+						<h3></h3>
+						<h5>Entre em contato com o administrador e reporte a ativida
+							que gerou o problema!</h5>
 					</center>
 					<br />
 

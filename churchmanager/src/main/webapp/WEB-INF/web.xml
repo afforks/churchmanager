@@ -22,7 +22,7 @@
 	<listener>
 		<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
 	</listener>
-	
+
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -47,7 +47,7 @@
 
 	<context-param>
 		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
-		<param-value>1</param-value>
+		<param-value>0</param-value><!-- setar para -1 em produção -->
 	</context-param>
 
 	<context-param>
@@ -66,6 +66,11 @@
 	</context-param>
 
 	<context-param>
+		<param-name>com.sun.faces.enableRestoreView11Compatibility</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<context-param>
 		<param-name>primefaces.FONT_AWESOME</param-name>
 		<param-value>true</param-value>
 	</context-param>
@@ -79,7 +84,7 @@
 		<param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
 		<param-value>true</param-value>
 	</context-param>
-	
+
 	<context-param>
 		<param-name>primefaces.TRANSFORM_METADATA</param-name>
 		<param-value>true</param-value>
@@ -93,6 +98,11 @@
 	<error-page>
 		<error-code>403</error-code>
 		<location>/acesso-negado.xhtml</location>
+	</error-page>
+	
+	<error-page>
+		<exception-type>java.lang.RuntimeException</exception-type>
+       <location>/bug.xhtml</location>
 	</error-page>
 
 	<error-page>

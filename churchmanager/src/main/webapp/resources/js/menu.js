@@ -11,7 +11,6 @@
 		   	$this.addClass('active lf-active');
 		   	$this.parents('li.has-sub').addClass('open');
 		    $this.parents('ul').slideDown(200).show();
-		    
 	   	}
 	   }); 
 

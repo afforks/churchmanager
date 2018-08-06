@@ -109,7 +109,8 @@ PrimeFaces.locales['pt_BR'] = {
 		'org.hibernate.validator.constraints.URL.message'                 : 'deve ser uma URL v\u00E1lida',
 		'org.hibernate.validator.constraints.br.CNPJ.message'             : 'CNPJ inv\u00E1lido',
 		'org.hibernate.validator.constraints.br.CPF.message'              : 'CPF inv\u00E1lido',
-		'org.hibernate.validator.constraints.br.TituloEleitoral.message'	: 'T\u00EDtulo Eleitoral inv\u00E1lido'
+		'org.hibernate.validator.constraints.br.TituloEleitoral.message'	: 'T\u00EDtulo Eleitoral inv\u00E1lido',
+		'javax.validation.constraints.Cep.message' : 'Cep inv\u00E1lido'
 			
 
 	},

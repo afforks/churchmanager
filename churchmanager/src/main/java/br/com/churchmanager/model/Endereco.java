@@ -6,8 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.Pattern;
 
+import br.com.churchmanager.util.custom.Cep;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,7 +35,8 @@ public class Endereco implements Serializable {
 	private String bairro;
 
 	@Column(name = "cep")
-	@Pattern(regexp = "\\d{5}-\\d{3}", message = "Cep com formato inválido")
+//	@Pattern(regexp = "\\d{5}-\\d{3}", message = "Cep com formato inválido")
+	@Cep
 	private String cep = "62940-000";
 
 	@Column(name = "cidade")
