@@ -1,6 +1,7 @@
 package br.com.churchmanager.model.filter;
 
 import br.com.churchmanager.dao.generic.Alias;
+import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.Filter;
 
 import java.io.Serializable;
@@ -42,7 +43,7 @@ public class PaginaFilter implements Filter, Serializable {
 		if (StringUtils.isNotBlank(this.getNomeIdentificador())) {
 			restricoes.add(Restrictions.like("nomeIdentificador", this.getNomeIdentificador(), MatchMode.ANYWHERE));
 		}
-
+		restricoes.add(Restrictions.eq("status", Status.ATIVO));
 		return restricoes;
 	}
 

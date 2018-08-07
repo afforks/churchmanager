@@ -2,6 +2,7 @@ package br.com.churchmanager.model.filter;
 
 import br.com.churchmanager.dao.generic.Alias;
 import br.com.churchmanager.model.Sexo;
+import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.Filter;
 
 import java.io.Serializable;
@@ -29,7 +30,7 @@ public class PessoaFilter implements Filter, Serializable {
 		if (this.sexo != null) {
 			restricoes.add(Restrictions.eq("sexo", this.getSexo()));
 		}
-
+		restricoes.add(Restrictions.eq("status", Status.ATIVO));
 		return restricoes;
 	}
 

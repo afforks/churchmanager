@@ -1,6 +1,7 @@
 package br.com.churchmanager.model.filter;
 
 import br.com.churchmanager.dao.generic.Alias;
+import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.Filter;
 
 import java.io.Serializable;
@@ -26,7 +27,7 @@ public class PessoaCargoFilter implements Filter, Serializable {
 		if (StringUtils.isNotBlank(this.getNomeCargo())) {
 			restricoes.add(Restrictions.like("cargo.nome", this.getNomeCargo(), MatchMode.ANYWHERE));
 		}
-
+		restricoes.add(Restrictions.eq("status", Status.ATIVO));
 		return restricoes;
 	}
 
@@ -40,7 +41,7 @@ public class PessoaCargoFilter implements Filter, Serializable {
 		aliases.add(new Alias("cargo", "cargo"));
 		return aliases;
 	}
-
+	
 	public Boolean usarDistinct() {
 		return null;
 	}

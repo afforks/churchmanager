@@ -11,6 +11,7 @@ import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.churchmanager.dao.generic.Alias;
+import br.com.churchmanager.model.Status;
 
 public class PatrimonioFilter implements Filter, Serializable {
 	private static final long serialVersionUID = 1232701463701329577L;
@@ -29,7 +30,7 @@ public class PatrimonioFilter implements Filter, Serializable {
 		if (StringUtils.isNotBlank(this.getNome())) {
 			restricoes.add(Restrictions.like("nome", this.getNome(), MatchMode.ANYWHERE));
 		}
-
+		restricoes.add(Restrictions.eq("status", Status.ATIVO));
 		return restricoes;
 	}
 

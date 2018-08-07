@@ -11,6 +11,7 @@ import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.churchmanager.dao.generic.Alias;
+import br.com.churchmanager.model.Status;
 
 public class CargoFilter implements Filter, Serializable {
 	private static final long serialVersionUID = 11043712329577L;
@@ -21,7 +22,7 @@ public class CargoFilter implements Filter, Serializable {
 		if (StringUtils.isNotBlank(this.getNome())) {
 			restricoes.add(Restrictions.like("nome", this.getNome(), MatchMode.ANYWHERE));
 		}
-
+		restricoes.add(Restrictions.eq("status", Status.ATIVO));
 		return restricoes;
 	}
 

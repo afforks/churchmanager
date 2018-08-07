@@ -1,6 +1,7 @@
 package br.com.churchmanager.model.filter;
 
 import br.com.churchmanager.dao.generic.Alias;
+import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.StatusMovimentacao;
 import br.com.churchmanager.model.TipoMovimentacao;
 import br.com.churchmanager.model.filter.Filter;
@@ -63,7 +64,7 @@ public class MovimentacaoFilter implements Filter, Serializable {
 			Date data2 = DataUtil.stringParaDate(ultimoDiaDoMes + "/" + this.mes + "/" + this.ano);
 			restricoes.add(Restrictions.between("dataVencimento", data1, data2));
 		}
-
+		restricoes.add(Restrictions.eq("status", Status.ATIVO));
 		return restricoes;
 	}
 
