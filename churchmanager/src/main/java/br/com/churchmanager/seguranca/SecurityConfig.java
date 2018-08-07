@@ -36,8 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		custom.setReturnParameterName("page");
 		http.csrf().disable().headers().frameOptions().sameOrigin().and().authorizeRequests()
 				.antMatchers("/form/**", "/WEB-INF/template/**").denyAll()
-				.antMatchers("/login.xhtml", "/erro.xhtml", "/javax.faces.resource/**", "/nao-encontrado.xhtml")
-				.permitAll().antMatchers("/home.xhtml", "/acesso-negado.xhtml").authenticated()
+				.antMatchers("/login.xhtml", "/erro.xhtml", "/javax.faces.resource/**",
+						"/nao-encontrado.xhtml", "/bug.xhtml").permitAll()
+				
+				.antMatchers("/home.xhtml", "/acesso-negado.xhtml").authenticated()
+				
 				.antMatchers("/cad/pagina.xhtml").hasAnyRole("CADASTRAR_PAGINA").antMatchers("/edit/pagina.xhtml")
 				.hasAnyRole("EDITAR_PAGINA").antMatchers("/list/pagina.xhtml").hasAnyRole("LISTAR_PAGINA")
 				.antMatchers("/cad/perfil.xhtml").hasAnyRole("CADASTRAR_PERFIL").antMatchers("/edit/perfil.xhtml")
