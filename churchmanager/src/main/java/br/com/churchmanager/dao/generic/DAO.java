@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -20,6 +21,7 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
@@ -53,7 +55,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 	public DAO(Class<T> clazz) {
 		this.clazz = clazz;
 	}
-	
+
 	public DAO(Class<T> clazz, EntityManager entityManager) {
 		this(clazz);
 		this.entityManager = entityManager;
@@ -175,7 +177,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 			cq.where(predicate);
 			TypedQuery<T> query = this.entityManager.createQuery(cq);
 			return query.getSingleResult();
-		}catch (NoResultException | NonUniqueResultException e) {
+		} catch (NoResultException | NonUniqueResultException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -451,4 +453,26 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 		return new MyLazyDataModel(dao, this.clazz, filter.restricoes(), filter.projecoes(), filter.aliases(),
 				filter.usarDistinct());
 	}
+
+	public List<Map<?, ?>> listar(String sql, Map<String, Object> parametros) {
+		ArrayList<Map<?, ?>> resultList = new ArrayList<>();
+		Session session = (Session) this.entityManager.unwrap(Session.class);
+		SQLQuery query = session.createSQLQuery(sql);
+		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+
+		parametros.forEach((k, v) -> {
+			query.setParameter(k, v);
+		});
+
+		List<?> data = query.list();
+		Iterator<?> it = data.iterator();
+
+		while (it.hasNext()) {
+			Object o = it.next();
+			Map<?, ?> map = (Map<?, ?>) o;
+			resultList.add(map);
+		}
+		return resultList;
+	}
+
 }

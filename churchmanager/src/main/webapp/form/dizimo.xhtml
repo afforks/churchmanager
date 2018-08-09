@@ -149,10 +149,12 @@
 		<div class="ui-g-9 ui-lg-9 ui-md-9 ui-sm-12">
 			<p:outputLabel for="observacao" styleClass="my-label"
 				value="Observação" />
+			<div class="ui-g-12">
 			<p:inputTextarea id="observacao" placeholder="Observação"
 				value="#{dizimoMB.dizimo.observcao}">
 				<p:clientValidator event="keyup" />
 			</p:inputTextarea>
+			</div>
 			<p:message for="observacao" />
 		</div>
 
