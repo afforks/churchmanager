@@ -59,12 +59,12 @@ public class Configuracao extends EntidadeGenerica {
 	private String nomeDoDirigente;
 
 	@ElementCollection
-	@CollectionTable(name = "telefones", joinColumns = { @JoinColumn(name = "pessoa_id") })
+	@CollectionTable(name = "config_telefones", joinColumns = { @JoinColumn(name = "configuracao_id") })
 	@Column(name = "telefone")
 	private List<String> telefones = new ArrayList<>();
 
 	@ElementCollection
-	@CollectionTable(name = "emails", joinColumns = { @JoinColumn(name = "pessoa_id") })
+	@CollectionTable(name = "config_emails", joinColumns = { @JoinColumn(name = "configuracao_id") })
 	@Column(name = "email")
 	private List<String> emails = new ArrayList<>();
 

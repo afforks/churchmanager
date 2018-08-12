@@ -19,7 +19,7 @@ public class PerfilBO implements Serializable, Buscador<Perfil> {
 	private static final boolean ORDER_ASC = true;
 
 	@Inject
-	PerfilDAO dao;
+	private PerfilDAO dao;
 
 	public void salvar(Perfil perfil) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
 		this.validar(perfil);

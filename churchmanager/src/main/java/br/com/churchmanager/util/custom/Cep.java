@@ -18,7 +18,7 @@ import br.com.churchmanager.util.custom.validator.CepValidator;
 public @interface Cep {
 	
 	String message() default "{javax.validation.constraints.Cep.message}";
-	Class[] groups() default {};
+	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 
 }

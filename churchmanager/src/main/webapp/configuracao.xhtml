@@ -35,16 +35,20 @@
 			<p:focus for="nome" />
 
 			<div class="ui-g-12 ">
-				<p:messages id="msg" life="7000" showDetail="true"
+				<p:messages id="config-msg" life="7000" showDetail="true"
 					showSummary="true" />
 			</div>
+
+			<p:commandButton value="Carregar última configuração"
+				styleClass="btn btn-red" icon="fa fa-refresh" process="@this"
+				action="#{configuracaoMB.carregarUltimaConfiguracao()}"></p:commandButton>
 
 			<div class="ui-fluid" jsf:id="group">
 
 				<div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12 ">
 					<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
-					<p:inputText id="nome"
-						value=""
+					<p:inputText id="nome" required="true"
+						value="#{configuracaoMB.configuracao.nomeDaIgreja}"
 						placeholder="Casa de Oração da Igreja de Cristo no Brasil em Morada Nova">
 					</p:inputText>
 					<p:message for="nome" />
@@ -53,7 +57,8 @@
 
 				<div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12  ">
 					<p:outputLabel for="cnpj" styleClass="my-label" value="CNPJ " />
-					<p:inputMask id="cnpj" mask="99.999.999/9999-99" value=""
+					<p:inputMask id="cnpj" mask="99.999.999/9999-99" required="true"
+						value="#{configuracaoMB.configuracao.cnpj}"
 						placeholder="Ex.: 15.206.686/0001-49">
 					</p:inputMask>
 					<p:message for="cnpj" />
@@ -63,7 +68,8 @@
 
 				<div class="ui-g-4  ui-lg-4 ui-md-4 ui-sm-12  ">
 					<p:outputLabel for="banco" styleClass="my-label" value="Banco " />
-					<p:inputText id="banco" value="" placeholder="Banco do Brasil">
+					<p:inputText id="banco" placeholder="Banco do Brasil"
+						required="true" value="#{configuracaoMB.configuracao.nomeDoBanco}">
 					</p:inputText>
 					<p:message for="banco" />
 				</div>
@@ -71,14 +77,16 @@
 
 				<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-12  ">
 					<p:outputLabel for="ag" styleClass="my-label" value="Agência " />
-					<p:inputText id="ag" value="" placeholder="0863-x">
+					<p:inputText id="ag" placeholder="0863-x" required="true"
+						value="#{configuracaoMB.configuracao.agencia}">
 					</p:inputText>
 					<p:message for="ag" />
 				</div>
 
 				<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-12  ">
 					<p:outputLabel for="conta" styleClass="my-label" value="Conta " />
-					<p:inputText id="conta" value="" placeholder="12345-6">
+					<p:inputText id="conta" placeholder="12345-6" required="true"
+						value="#{configuracaoMB.configuracao.conta}">
 					</p:inputText>
 					<p:message for="conta" />
 				</div>
@@ -88,25 +96,78 @@
 				<div class="ui-g-8 ui-lg-8 ui-md-8 ui-sm-12  ">
 					<p:outputLabel for="pp" styleClass="my-label"
 						value="Pastor Presidente" />
-					<p:inputText id="pp" value="" placeholder="Digite o nome do pastor">
+					<p:inputText id="pp" placeholder="Digite o nome do pastor"
+						required="true"
+						value="#{configuracaoMB.configuracao.nomeDoDirigente}">
 					</p:inputText>
 					<p:message for="pp" />
 				</div>
 
-				<div class="ui-g-4 ui-lg-4 ui-md-4 ui-sm-12  ">
-					<p:outputLabel for="tel" styleClass="my-label" value="Telefone " />
-					<p:inputText id="tel" value="" placeholder="(88)3422-1234">
-					</p:inputText>
-					<p:message for="tel" />
+				<div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12">
+					<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-3 ui-g-nopad">
+						<p:outputLabel for="telefones" styleClass="my-label"
+							value="Telefone(s) " />
+					</div>
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2 ui-g-nopad">
+						<p:commandButton icon="fa fa-plus" update="dlg-telefones"
+							resetValues="true" process="@this" styleClass="btn-green"
+							title="Adicionar telefone"
+							oncomplete="PF('dlg-telefones').show();" />
+					</div>
+
+					<p:dataTable id="telefones" var="telefone"
+						value="#{configuracaoMB.configuracao.telefones}"
+						emptyMessage="Nenhum telefone foi cadastrado!">
+						<p:column headerText="Telefone" colspan="4">
+						#{telefone}
+					</p:column>
+
+						<p:column headerText="#">
+							<p:commandButton icon="fa fa-remove" styleClass="btn-red"
+								process="@this" update="telefones">
+								<p:collector value="#{telefone}"
+									removeFrom="#{configuracaoMB.configuracao.telefones}" />
+							</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
 				</div>
 
 
+				<div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12">
+					<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-3 ui-g-nopad">
+						<p:outputLabel for="emails" styleClass="my-label"
+							value="E-mail(s) " />
+					</div>
+					<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2 ui-g-nopad">
+						<p:commandButton icon="fa fa-plus" update="dlg-emails"
+							resetValues="true" process="@this" styleClass="btn-green"
+							title="Adicionar e-mail" oncomplete="PF('dlg-emails').show();" />
+					</div>
+
+					<p:dataTable id="emails" var="email"
+						value="#{configuracaoMB.configuracao.emails}"
+						emptyMessage="Nenhum e-mail foi cadastrado!">
+						<p:column headerText="E-mail" colspan="4">
+						#{email}
+					</p:column>
+
+						<p:column headerText="#">
+							<p:commandButton icon="fa fa-remove" styleClass="btn-red"
+								process="@this" update="emails">
+								<p:collector value="#{email}"
+									removeFrom="#{configuracaoMB.configuracao.emails}" />
+							</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+				</div>
 
 				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="logradouro" styleClass="my-label"
 						value="Logradouro " />
-					<p:inputText id="logradouro"
-						value="#{pessoaMB.pessoa.endereco.logradouro}"
+					<p:inputText id="logradouro" required="true"
+						value="#{configuracaoMB.configuracao.endereco.logradouro}"
 						placeholder="Av. Ce. Tibúrcio, Nº 56" />
 					<p:message for="logradouro" />
 				</div>
@@ -115,7 +176,7 @@
 					<p:outputLabel for="referencia" styleClass="my-label"
 						value="Referência " />
 					<p:inputText id="referencia"
-						value="#{pessoaMB.pessoa.endereco.referencia}"
+						value="#{configuracaoMB.configuracao.endereco.referencia}"
 						placeholder="Próximo ao Sindicato dos Trabalhadores" />
 					<p:message for="referencia" />
 				</div>
@@ -123,7 +184,8 @@
 
 				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="bairro" styleClass="my-label" value="Bairro " />
-					<p:inputText id="bairro" value="#{pessoaMB.pessoa.endereco.bairro}"
+					<p:inputText id="bairro" required="true"
+						value="#{configuracaoMB.configuracao.endereco.bairro}"
 						placeholder="Girilândia" />
 					<p:message for="bairro" />
 				</div>
@@ -132,8 +194,9 @@
 
 				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="cep" styleClass="my-label" value="CEP " />
-					<p:inputMask mask="99.999-999" id="cep"
-						value="#{pessoaMB.pessoa.endereco.cep}" placeholder="62.940-000" />
+					<p:inputMask mask="99.999-999" id="cep" required="true"
+						value="#{configuracaoMB.configuracao.endereco.cep}"
+						placeholder="62.940-000" />
 					<p:message for="cep" />
 				</div>
 
@@ -141,7 +204,8 @@
 
 				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="cidade" styleClass="my-label" value="Cidade " />
-					<p:inputText id="cidade" value="#{pessoaMB.pessoa.endereco.cidade}"
+					<p:inputText id="cidade" required="true"
+						value="#{configuracaoMB.configuracao.endereco.cidade}"
 						placeholder="Morada Nova	" />
 					<p:message for="cidade" />
 				</div>
@@ -149,8 +213,9 @@
 
 				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="estado" styleClass="my-label" value="Estado " />
-					<p:selectOneMenu id="estado"
-						value="#{pessoaMB.pessoa.endereco.estado}" filter="true"
+					<p:selectOneMenu id="estado" required="true"
+						value="#{configuracaoMB.configuracao.endereco.estado}"
+						filter="true"
 						converterMessage="Não foi possível converter o objeto (Estado)">
 						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
 						<f:selectItems value="#{utilMB.listarEstados()}"
@@ -163,7 +228,8 @@
 
 				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12  ">
 					<p:outputLabel for="pais" styleClass="my-label" value="País " />
-					<p:inputText id="pais" value="#{pessoaMB.pessoa.endereco.pais}"
+					<p:inputText id="pais" required="true"
+						value="#{configuracaoMB.configuracao.endereco.pais}"
 						placeholder="Brasil" />
 					<p:message for="pais" />
 				</div>
@@ -171,18 +237,10 @@
 				<div class="ui-g-12 ui-g-nopad">
 					<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 						<p:commandButton value="Cadastrar"
-							action="#{categoriaMovimentacaoMB.salvar()}" update="group"
-							validateClient="true" icon="fa fa-save"
-							rendered="#{categoriaMovimentacaoMB.categoriaMovimentacao.id == null}"
-							styleClass="btn-blue">
+							action="#{configuracaoMB.salvar()}" update="group"
+							validateClient="true" icon="fa fa-save" styleClass="btn-blue">
 						</p:commandButton>
 
-						<p:commandButton value="Editar"
-							action="#{categoriaMovimentacaoMB.atualizar()}" update="group"
-							validateClient="true" icon="fa fa-edit"
-							rendered="#{categoriaMovimentacaoMB.categoriaMovimentacao.id != null}"
-							styleClass="btn-green">
-						</p:commandButton>
 					</div>
 
 					<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
@@ -193,5 +251,87 @@
 				</div>
 			</div>
 		</h:form>
+
+		<p:growl id="msg-tel-email" autoUpdate="false" life="7000"
+			showDetail="true" showSummary="true" />
+		<h:form prependId="false">
+			<div class="ui-fluid">
+				<p:dialog id="dlg-telefones" header="Telefone" closeOnEscape="true"
+					draggable="false" dynamic="true" modal="true" focus="dlg-telefone"
+					widgetVar="dlg-telefones" fitViewport="true" resizable="false">
+
+					<p:outputLabel value="Número" for="dlg-telefone"
+						styleClass="my-label" />
+					<div class="ui-inputgroup">
+						<span class="ui-inputgroup-addon"> <i class="fa fa-phone"></i>
+						</span>
+						<p:inputMask id="dlg-telefone" mask="(99)99999-9999"
+							value="#{configuracaoMB.telefone}" slotChar=" ">
+							<p:clientValidator event="keyup" />
+						</p:inputMask>
+					</div>
+					<p:message id="msg-telefone" for="dlg-telefone" />
+
+					<f:facet name="footer">
+						<div class="ui-g-12 ui-g-nopad">
+							<div class="ui-g-6">
+								<p:commandButton icon="fa fa-save" value="Adicionar"
+									action="#{configuracaoMB.resetarTelefone()}"
+									validateClient="true" 
+									update="msg-telefone dlg-telefone telefones">
+									<p:collector unique="true" value="#{configuracaoMB.telefone}"
+										addTo="#{configuracaoMB.configuracao.telefones}" />
+								</p:commandButton>
+							</div>
+							<div class="ui-g-6">
+								<p:commandButton icon="fa fa-close" process="@none"
+									styleClass="btn-red" oncomplete="PF('dlg-telefones').hide();"
+									value="Cancelar" />
+							</div>
+						</div>
+					</f:facet>
+				</p:dialog>
+			</div>
+		</h:form>
+
+
+		<h:form prependId="false">
+			<div class="ui-fluid">
+				<p:dialog id="dlg-emails" header="E-mail" closeOnEscape="true"
+					draggable="false" dynamic="true" modal="true" focus="dlg-email"
+					widgetVar="dlg-emails" fitViewport="true" resizable="false">
+
+					<p:outputLabel value="E-mail" for="dlg-email" styleClass="my-label" />
+					<div class="ui-inputgroup">
+						<span class="ui-inputgroup-addon"> <i class="fa fa-at"></i>
+						</span>
+						<p:inputText id="dlg-email" value="#{configuracaoMB.email}"
+							type="email">
+							<p:clientValidator event="keyup" />
+						</p:inputText>
+					</div>
+					<p:message id="msg-email" for="dlg-email" />
+
+					<f:facet name="footer">
+						<div class="ui-g-12 ui-g-nopad">
+							<div class="ui-g-6">
+								<p:commandButton icon="fa fa-save" value="Adicionar"
+									action="#{configuracaoMB.resetarEmail()}" validateClient="true"
+									update="msg-email dlg-email emails">
+									<p:collector unique="true" value="#{configuracaoMB.email}"
+										addTo="#{configuracaoMB.configuracao.emails}" />
+								</p:commandButton>
+							</div>
+							<div class="ui-g-6">
+								<p:commandButton icon="fa fa-close" process="@this"
+									styleClass="btn-red" oncomplete="PF('dlg-emails').hide();"
+									value="Cancelar" />
+							</div>
+						</div>
+					</f:facet>
+				</p:dialog>
+			</div>
+		</h:form>
+
 	</ui:define>
 </ui:composition>

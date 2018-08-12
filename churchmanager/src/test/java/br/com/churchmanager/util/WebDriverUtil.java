@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 public class WebDriverUtil {
 
 	public static WebDriver driver(DriverStrategy driver) {
-		return driver.getDriver();
+		WebDriver webDriver = driver.getDriver();
+		webDriver.manage().window().maximize();
+		return webDriver;
 	}
 }

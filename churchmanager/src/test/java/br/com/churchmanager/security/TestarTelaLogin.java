@@ -10,8 +10,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import br.com.churchmanager.util.Chrome;
 import br.com.churchmanager.util.ContextoDaAplicacao;
+import br.com.churchmanager.util.Firefox;
 import br.com.churchmanager.util.WebDriverUtil;
 
 public class TestarTelaLogin {
@@ -21,7 +21,7 @@ public class TestarTelaLogin {
 
 	@BeforeClass
 	public static void inicializa() {
-		driver = WebDriverUtil.driver(new Chrome());
+		driver = WebDriverUtil.driver(new Firefox());
 		URL = ContextoDaAplicacao.login();
 		driver.get(URL);
 	}

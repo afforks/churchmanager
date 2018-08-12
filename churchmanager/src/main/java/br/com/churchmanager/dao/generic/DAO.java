@@ -224,7 +224,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 		return total;
 	}
 
-	private Criteria criteria(List<?> restricoes, List<Alias> aliases, Boolean includeDistinctRootEntity) {
+	public Criteria criteria(List<?> restricoes, List<Alias> aliases, Boolean includeDistinctRootEntity) {
 		Criteria criteria = null;
 
 		try {
