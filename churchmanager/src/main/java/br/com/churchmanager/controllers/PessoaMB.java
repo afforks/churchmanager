@@ -52,7 +52,7 @@ public class PessoaMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Pessoa pessoa = BuscaObjeto.comParametroGET(Pessoa.class, "id", this.bo);
+		Pessoa pessoa = BuscaObjeto.comParametroGET("id", this.bo);
 		this.pessoa = pessoa == null ? new Pessoa() : pessoa;
 	}
 

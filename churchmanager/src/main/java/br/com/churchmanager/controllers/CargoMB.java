@@ -34,7 +34,7 @@ public class CargoMB implements Serializable {
 	@PostConstruct
 	public void init() {
 		if (FacesUtil.isNotPostback()) {
-			Cargo cargo = (Cargo) BuscaObjeto.comParametroGET(Cargo.class, "id", this.bo);
+			Cargo cargo = BuscaObjeto.comParametroGET("id", this.bo);
 			this.cargo = cargo;
 		}
 	}

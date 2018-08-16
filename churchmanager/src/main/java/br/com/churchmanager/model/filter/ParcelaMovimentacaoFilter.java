@@ -1,25 +1,31 @@
 package br.com.churchmanager.model.filter;
 
-import br.com.churchmanager.dao.generic.Alias;
-import br.com.churchmanager.model.Status;
-import br.com.churchmanager.model.StatusMovimentacao;
-import br.com.churchmanager.model.TipoMovimentacao;
-import br.com.churchmanager.model.filter.Filter;
-import br.com.churchmanager.util.DataUtil;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Restrictions;
 
+import br.com.churchmanager.dao.generic.Alias;
+import br.com.churchmanager.model.Status;
+import br.com.churchmanager.model.StatusMovimentacao;
+import br.com.churchmanager.model.TipoMovimentacao;
+import br.com.churchmanager.util.DataUtil;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ParcelaMovimentacaoFilter implements Filter, Serializable {
+
 	private static final long serialVersionUID = 5321701463701329577L;
+
 	private String mes;
 	private String ano;
 	private String nome;
@@ -54,8 +60,7 @@ public class ParcelaMovimentacaoFilter implements Filter, Serializable {
 	}
 
 	public List<Projection> projecoes() {
-		ArrayList<Projection> projecoes = new ArrayList<>();
-		return projecoes;
+		return new ArrayList<>();
 	}
 
 	public List<Alias> aliases() {
@@ -64,47 +69,7 @@ public class ParcelaMovimentacaoFilter implements Filter, Serializable {
 		return aliases;
 	}
 
-	public Boolean usarDistinct() {
-		return null;
-	}
-
-	public String getMes() {
-		return this.mes;
-	}
-
-	public void setMes(String mes) {
-		this.mes = mes;
-	}
-
-	public String getAno() {
-		return this.ano;
-	}
-
-	public void setAno(String ano) {
-		this.ano = ano;
-	}
-
-	public String getNome() {
-		return this.nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public StatusMovimentacao getStatusMovimentacao() {
-		return this.statusMovimentacao;
-	}
-
-	public void setStatusMovimentacao(StatusMovimentacao statusMovimentacao) {
-		this.statusMovimentacao = statusMovimentacao;
-	}
-
-	public TipoMovimentacao getTipoMovimentacao() {
-		return this.tipoMovimentacao;
-	}
-
-	public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
-		this.tipoMovimentacao = tipoMovimentacao;
+	public boolean usarDistinct() {
+		return false;
 	}
 }

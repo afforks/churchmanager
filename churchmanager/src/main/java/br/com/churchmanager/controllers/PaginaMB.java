@@ -35,7 +35,7 @@ public class PaginaMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Pagina pagina = BuscaObjeto.comParametroGET(Pagina.class, "id", this.bo);
+		Pagina pagina = BuscaObjeto.comParametroGET("id", this.bo);
 		this.pagina = pagina;
 	}
 

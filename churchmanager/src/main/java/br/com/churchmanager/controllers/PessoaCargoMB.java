@@ -35,7 +35,7 @@ public class PessoaCargoMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		PessoaCargo pessoaCargo = (PessoaCargo) BuscaObjeto.comParametroGET(PessoaCargo.class, "id", this.bo);
+		PessoaCargo pessoaCargo = BuscaObjeto.comParametroGET("id", this.bo);
 		this.pessoaCargo = pessoaCargo;
 	}
 

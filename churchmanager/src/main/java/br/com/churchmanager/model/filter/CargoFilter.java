@@ -12,9 +12,15 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.churchmanager.dao.generic.Alias;
 import br.com.churchmanager.model.Status;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class CargoFilter implements Filter, Serializable {
+
 	private static final long serialVersionUID = 11043712329577L;
+
 	private String nome;
 
 	public List<Criterion> restricoes() {
@@ -27,22 +33,15 @@ public class CargoFilter implements Filter, Serializable {
 	}
 
 	public List<Projection> projecoes() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<Alias> aliases() {
-		return null;
+		return new ArrayList<>();
 	}
 
-	public Boolean usarDistinct() {
-		return null;
+	public boolean usarDistinct() {
+		return false;
 	}
 
-	public String getNome() {
-		return this.nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 }

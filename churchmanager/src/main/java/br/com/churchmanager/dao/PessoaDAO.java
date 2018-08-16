@@ -29,7 +29,9 @@ import br.com.churchmanager.model.group.MembrosPorFaixaEtaria;
 import br.com.churchmanager.model.group.PessoaAtividaEclesiastica;
 
 public class PessoaDAO extends DAO<Pessoa> implements Serializable {
+
 	private static final long serialVersionUID = 45674563471L;
+
 	@Inject
 	private EntityManager entityManager;
 
@@ -39,7 +41,7 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 
 	public BigDecimal[] quantidadeDeMembros(PessoaFilter filter) {
 		String sql = "select sum(total) as total, sum(M) as M, sum(F) as F from total_membros_periodo where dc <= :data";
-		Session session = (Session) this.entityManager.unwrap(Session.class);
+		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
 
@@ -50,16 +52,15 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 		query.setParameter("data", stringParaDate(dia + "/" + mes + "/" + ano));
 
 		Map<?, ?> dados = (Map<?, ?>) query.uniqueResult();
-		BigDecimal[] totais = new BigDecimal[] { (BigDecimal) dados.get("total"), (BigDecimal) dados.get("M"),
+		return new BigDecimal[] { (BigDecimal) dados.get("total"), (BigDecimal) dados.get("M"),
 				(BigDecimal) dados.get("F") };
-		return totais;
 	}
 
 	public List<Aniversariante> aniversariantesDoMes(PessoaFilter filter) {
-		int mes = Integer.valueOf(filter.getMes()).intValue();
+		int mes = Integer.parseInt((filter.getMes()));
 		String sql = "select * from aniversariantes where month(data) = :mes_atual order by day(data)";
 		ArrayList<Aniversariante> resultList = new ArrayList<>();
-		Session session = (Session) this.entityManager.unwrap(Session.class);
+		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setParameter("mes_atual", Integer.valueOf(mes));
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
@@ -79,7 +80,7 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 	public List<MembrosPorFaixaEtaria> membresiaFaixaEtaria(PessoaFilter filter) {
 		String sql = "select sum(M) as M, sum(F) as F, faixa_etaria from faixa_etaria where dc <= :data  group by faixa_etaria";
 		ArrayList<MembrosPorFaixaEtaria> resultList = new ArrayList<>();
-		Session session = (Session) this.entityManager.unwrap(Session.class);
+		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
 
@@ -105,7 +106,7 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 	public List<PessoaAtividaEclesiastica> pessoasPorAtividadeEclesiastica(PessoaFilter filter) {
 		String sql = "SELECT distinct categoria, sum(quantidade) as quantidade FROM pessoas_por_atividade_eclesiastica where data < :data group by categoria";
 		ArrayList<PessoaAtividaEclesiastica> resultList = new ArrayList<>();
-		Session session = (Session) this.entityManager.unwrap(Session.class);
+		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
 
@@ -130,7 +131,7 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 
 	public String gerarMatricula(Date dataCadastro) {
 		String sql = "select contagem_por_periodo(:data) as qtd_registros";
-		Session session = (Session) this.entityManager.unwrap(Session.class);
+		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
 
@@ -138,31 +139,29 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 
 		Map<?, ?> dados = (Map<?, ?>) query.uniqueResult();
 		String qtdPorPeriodo = (String) dados.get("qtd_registros");
-		String matricula = ano() + semestre() + qtdPorPeriodo;
-		return matricula;
+		return (ano() + semestre() + qtdPorPeriodo);
 	}
-	
+
 	public List<Dizimista> listarDizimistas(PessoaFilter filter) {
 		String sql = "select nome, data from dizimistas where MONTH(data) = :mes and YEAR(data) = :ano order by nome";
 		ArrayList<Dizimista> dizimistas = new ArrayList<>();
-		Session session = (Session) this.entityManager.unwrap(Session.class);
+		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-		
+
 		String mes = filter.getMes();
 		String ano = filter.getAno();
-		
+
 		query.setParameter("mes", mes);
 		query.setParameter("ano", ano);
-		
+
 		List<?> data = query.list();
 		Iterator<?> iterador = data.iterator();
 
 		while (iterador.hasNext()) {
 			Object o = iterador.next();
 			Map<?, ?> map = (Map<?, ?>) o;
-			dizimistas.add(
-					new Dizimista((String) map.get("nome")));
+			dizimistas.add(new Dizimista((String) map.get("nome")));
 		}
 
 		return dizimistas;

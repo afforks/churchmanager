@@ -1,38 +1,28 @@
 package br.com.churchmanager.model.filter;
 
-import br.com.churchmanager.dao.generic.Alias;
-import br.com.churchmanager.model.Status;
-import br.com.churchmanager.model.filter.Filter;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Restrictions;
 
+import br.com.churchmanager.dao.generic.Alias;
+import br.com.churchmanager.model.Status;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class AtividadeEclesiasticaFilter implements Filter, Serializable {
+
 	private static final long serialVersionUID = 5423301463701329577L;
+
 	private String nome;
 	private String descricao;
-
-	public String getNome() {
-		return this.nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getDescricao() {
-		return this.descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
 
 	public List<Criterion> restricoes() {
 		ArrayList<Criterion> restricoes = new ArrayList<>();
@@ -48,14 +38,15 @@ public class AtividadeEclesiasticaFilter implements Filter, Serializable {
 	}
 
 	public List<Projection> projecoes() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<Alias> aliases() {
-		return null;
+		return new ArrayList<>();
 	}
 
-	public Boolean usarDistinct() {
-		return null;
+	public boolean usarDistinct() {
+		return false;
 	}
+
 }

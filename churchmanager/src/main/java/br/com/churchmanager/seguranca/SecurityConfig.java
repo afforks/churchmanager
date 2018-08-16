@@ -23,6 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(this.userDetailService()).passwordEncoder(new Md5PasswordEncoder());
 	}
 
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		JsfLoginUrlAuthenticationEntryPoint jsfLogin = new JsfLoginUrlAuthenticationEntryPoint();
 		jsfLogin.setLoginFormUrl("/login.xhtml");

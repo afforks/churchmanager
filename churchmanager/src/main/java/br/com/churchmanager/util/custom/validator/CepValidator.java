@@ -14,7 +14,7 @@ public class CepValidator implements ConstraintValidator<Cep, String> {
 
 	@Override
 	public void initialize(Cep constraintAnnotation) {
-
+		//Do not nothing
 	}
 
 	@Override

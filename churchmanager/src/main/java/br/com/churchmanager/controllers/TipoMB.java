@@ -33,7 +33,7 @@ public class TipoMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Tipo tipo = (Tipo) BuscaObjeto.comParametroGET(Tipo.class, "id", this.bo);
+		Tipo tipo = BuscaObjeto.comParametroGET("id", this.bo);
 		this.tipo = tipo;
 	}
 

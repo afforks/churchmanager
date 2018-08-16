@@ -25,18 +25,18 @@ public class DizimoDAO extends DAO<Dizimo> implements Serializable {
 
 	public PercentualDizimista percentualDizimista(DizimoFilter filter) {
 		String sql = "select * from percentual_dizimistas where mes = :mes and ano = :ano";
-		Session session = (Session) this.entityManager.unwrap(Session.class);
+		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
-		int mes = Integer.valueOf(filter.getMes()).intValue();
-		int ano = Integer.valueOf(filter.getAno()).intValue();
+		int mes = Integer.parseInt(filter.getMes());
+		int ano = Integer.parseInt(filter.getAno());
 		query.setParameter("mes", Integer.valueOf(mes));
 		query.setParameter("ano", Integer.valueOf(ano));
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
 		Map<?, ?> dados = (Map<?, ?>) query.uniqueResult();
 		PercentualDizimista percentual = new PercentualDizimista(mes, ano, BigDecimal.valueOf(0));
-		if(dados != null) {
+		if (dados != null) {
 			percentual = new PercentualDizimista(((Integer) dados.get("MES")).intValue(),
-				((Integer) dados.get("ANO")).intValue(), (BigDecimal) dados.get("PORCENTAGEM"));
+					((Integer) dados.get("ANO")).intValue(), (BigDecimal) dados.get("PORCENTAGEM"));
 		}
 		return percentual;
 	}

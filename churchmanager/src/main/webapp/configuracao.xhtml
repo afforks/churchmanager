@@ -317,7 +317,7 @@
 							<div class="ui-g-6">
 								<p:commandButton icon="fa fa-save" value="Adicionar"
 									action="#{configuracaoMB.resetarEmail()}" validateClient="true"
-									update="msg-email dlg-email emails">
+									update="msg-email dlg-email emails" process="@this dlg-email">
 									<p:collector unique="true" value="#{configuracaoMB.email}"
 										addTo="#{configuracaoMB.configuracao.emails}" />
 								</p:commandButton>

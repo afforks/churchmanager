@@ -47,7 +47,7 @@ public class MovimentacaoMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Movimentacao movimentacao = (Movimentacao) BuscaObjeto.comParametroGET(Movimentacao.class, "id", this.bo);
+		Movimentacao movimentacao = BuscaObjeto.comParametroGET("id", this.bo);
 		this.movimentacao = movimentacao;
 		this.getMovimentacaoFilter().setMes(DataUtil.mes());
 		this.getMovimentacaoFilter().setAno(DataUtil.ano());

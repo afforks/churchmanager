@@ -1,5 +1,6 @@
 package br.com.churchmanager.model.filter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.criterion.Criterion;
@@ -11,21 +12,21 @@ public class ConfiguracaoFilter implements Filter {
 
 	@Override
 	public List<Criterion> restricoes() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override
 	public List<Projection> projecoes() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override
 	public List<Alias> aliases() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override
-	public Boolean usarDistinct() {
+	public boolean usarDistinct() {
 		return true;
 	}
 

@@ -7,9 +7,13 @@ import org.primefaces.PrimeFaces;
 
 public class FacesUtil {
 
+	private FacesUtil() {
+	}
+
 	public static boolean falhouNaValidacao() {
 		return FacesContext.getCurrentInstance().isValidationFailed();
 	}
+
 	public static boolean naoFalhouNaValidacao() {
 		return !falhouNaValidacao();
 	}
@@ -43,14 +47,13 @@ public class FacesUtil {
 	public static void atualizaComponente(String id) {
 		PrimeFaces.current().ajax().update(id);
 	}
-	
+
 	public static void executarJS(String statement) {
 		PrimeFaces.current().executeScript(statement);
 	}
 
 	public static void manterMensagem() {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
 	}
 
 }

@@ -43,11 +43,11 @@ public class ParcelaMovimentacaoDAO extends DAO<ParcelaMovimentacao> implements 
 	}
 
 	public List<DetalheMovimentacao> ultimosLancamentos(ParcelaMovimentacaoFilter filter) {
-		int mes = Integer.valueOf(filter.getMes()).intValue();
-		int ano = Integer.valueOf(filter.getAno()).intValue();
+		int mes = Integer.parseInt(filter.getMes());
+		int ano = Integer.parseInt(filter.getAno());
 		String sql = "select * from movimentacoes where mes = :mes and ano = :ano";
 		ArrayList<DetalheMovimentacao> resultList = new ArrayList<>();
-		Session session = (Session) this.entityManager.unwrap(Session.class);
+		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setParameter("mes", Integer.valueOf(mes));
 		query.setParameter("ano", Integer.valueOf(ano));
@@ -65,7 +65,7 @@ public class ParcelaMovimentacaoDAO extends DAO<ParcelaMovimentacao> implements 
 			d.setDescricao((String) map.get("descricao"));
 			d.setDataVencimento((Date) map.get("data_vencimento"));
 			d.setDataPagamento((Date) map.get("data_pagamento"));
-			d.setValor((double) ((Float) map.get("valor")).floatValue());
+			d.setValor((Float) map.get("valor"));
 			d.setTipo((String) map.get("tipo"));
 			d.setForma((String) map.get("forma"));
 			d.setStatus((String) map.get("status"));
@@ -77,10 +77,10 @@ public class ParcelaMovimentacaoDAO extends DAO<ParcelaMovimentacao> implements 
 
 	public Totais movimentacoes(ParcelaMovimentacaoFilter filter) {
 		String sql = "select * from totalizadores where mes = :mes and ano = :ano";
-		Session session = (Session) this.entityManager.unwrap(Session.class);
+		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
-		int mes = Integer.valueOf(filter.getMes()).intValue();
-		int ano = Integer.valueOf(filter.getAno()).intValue();
+		int mes = Integer.parseInt(filter.getMes());
+		int ano = Integer.parseInt(filter.getAno());
 		query.setParameter("mes", Integer.valueOf(mes));
 		query.setParameter("ano", Integer.valueOf(ano));
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
@@ -98,10 +98,10 @@ public class ParcelaMovimentacaoDAO extends DAO<ParcelaMovimentacao> implements 
 	public List<MovimentacaoCategoria> custosPorCategoria(ParcelaMovimentacaoFilter filter) {
 		String sql = "select * from entradas_e_saidas_por_categoria where mes = :mes and ano = :ano and tipo = \'SAIDA\' ";
 		ArrayList<MovimentacaoCategoria> resultList = new ArrayList<>();
-		Session session = (Session) this.entityManager.unwrap(Session.class);
+		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
-		int mes = Integer.valueOf(filter.getMes()).intValue();
-		int ano = Integer.valueOf(filter.getAno()).intValue();
+		int mes = Integer.parseInt(filter.getMes());
+		int ano = Integer.parseInt(filter.getAno());
 		query.setParameter("mes", Integer.valueOf(mes));
 		query.setParameter("ano", Integer.valueOf(ano));
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
@@ -122,10 +122,10 @@ public class ParcelaMovimentacaoDAO extends DAO<ParcelaMovimentacao> implements 
 	public List<MovimentacaoAnual> movimentacaoUltimos12Meses(ParcelaMovimentacaoFilter filter) {
 		String sql = "select * from tipo_status_total_mensal  where data <= :date order by data desc limit 48";
 		ArrayList<MovimentacaoAnual> resultList = new ArrayList<>();
-		Session session = (Session) this.entityManager.unwrap(Session.class);
+		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
-		int mes = Integer.valueOf(filter.getMes()).intValue();
-		int ano = Integer.valueOf(filter.getAno()).intValue();
+		int mes = Integer.parseInt(filter.getMes());
+		int ano = Integer.parseInt(filter.getAno());
 		int dia = DataUtil.ultimoDiaDoMes(DataUtil.stringParaDate("01/" + mes + "/" + ano));
 		query.setParameter("date", DataUtil.stringParaDate(dia + "/" + mes + "/" + ano));
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);

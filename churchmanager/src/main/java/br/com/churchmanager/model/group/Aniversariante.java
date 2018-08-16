@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Aniversariante implements Serializable {
+
 	private static final long serialVersionUID = -4924708331162801772L;
+
 	private String nome;
 	private String apelido;
 	private Date data;

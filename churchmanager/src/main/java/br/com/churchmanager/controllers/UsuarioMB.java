@@ -40,7 +40,7 @@ public class UsuarioMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Usuario usuario = (Usuario) BuscaObjeto.comParametroGET(Usuario.class, "id", this.bo);
+		Usuario usuario = BuscaObjeto.comParametroGET("id", this.bo);
 		this.usuario = usuario == null ? new Usuario() : usuario;
 	}
 

@@ -13,5 +13,5 @@ public interface Filter {
 
 	List<Alias> aliases();
 
-	Boolean usarDistinct();
+	boolean usarDistinct();
 }

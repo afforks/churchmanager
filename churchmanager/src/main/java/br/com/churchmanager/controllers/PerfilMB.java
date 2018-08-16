@@ -33,7 +33,7 @@ public class PerfilMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Perfil perfil = (Perfil) BuscaObjeto.comParametroGET(Perfil.class, "id", this.bo);
+		Perfil perfil = BuscaObjeto.comParametroGET("id", this.bo);
 		this.perfil = perfil;
 	}
 

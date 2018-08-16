@@ -51,7 +51,7 @@ public class DizimoMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Dizimo dizimo = (Dizimo) BuscaObjeto.comParametroGET(Dizimo.class, "id", this.bo);
+		Dizimo dizimo = BuscaObjeto.comParametroGET("id", this.bo);
 		this.dizimo = dizimo;
 		this.getDizimoFilter().setMes(DataUtil.mes());
 		this.getDizimoFilter().setAno(DataUtil.ano());

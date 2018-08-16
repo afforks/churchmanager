@@ -15,11 +15,15 @@ import org.hibernate.criterion.Restrictions;
 import br.com.churchmanager.dao.generic.Alias;
 import br.com.churchmanager.model.Status;
 import br.com.churchmanager.util.DataUtil;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class DizimoFilter implements Filter, Serializable {
-	
+
 	private static final long serialVersionUID = -5696573251550574369L;
-	
+
 	private String nomePessoa;
 	private double valorDizimo;
 	private double valorOferta;
@@ -30,8 +34,7 @@ public class DizimoFilter implements Filter, Serializable {
 
 	public List<Criterion> restricoes() {
 		ArrayList<Criterion> restricoes = new ArrayList<>();
-		if (StringUtils.isNotBlank(this.getNomePessoa()) && StringUtils.isNotBlank(this.getNomePessoa())) {
-
+		if (StringUtils.isNotBlank(this.getNomePessoa())) {
 			restricoes.add(Restrictions.like("pessoa.nome", this.getNomePessoa(), MatchMode.ANYWHERE));
 		}
 
@@ -48,7 +51,7 @@ public class DizimoFilter implements Filter, Serializable {
 	}
 
 	public List<Projection> projecoes() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<Alias> aliases() {
@@ -57,63 +60,7 @@ public class DizimoFilter implements Filter, Serializable {
 		return aliases;
 	}
 
-	public Boolean usarDistinct() {
-		return null;
-	}
-
-	public String getNomePessoa() {
-		return this.nomePessoa;
-	}
-
-	public void setNomePessoa(String nomePessoa) {
-		this.nomePessoa = nomePessoa;
-	}
-
-	public double getValorDizimo() {
-		return this.valorDizimo;
-	}
-
-	public void setValorDizimo(double valorDizimo) {
-		this.valorDizimo = valorDizimo;
-	}
-
-	public double getValorOferta() {
-		return this.valorOferta;
-	}
-
-	public void setValorOferta(double valorOferta) {
-		this.valorOferta = valorOferta;
-	}
-
-	public Date getDataReferencia() {
-		return this.dataReferencia;
-	}
-
-	public void setDataReferencia(Date dataReferencia) {
-		this.dataReferencia = dataReferencia;
-	}
-
-	public Date getDataRecebimento() {
-		return this.dataRecebimento;
-	}
-
-	public void setDataRecebimento(Date dataRecebimento) {
-		this.dataRecebimento = dataRecebimento;
-	}
-
-	public String getMes() {
-		return this.mes;
-	}
-
-	public void setMes(String mes) {
-		this.mes = mes;
-	}
-
-	public String getAno() {
-		return this.ano;
-	}
-
-	public void setAno(String ano) {
-		this.ano = ano;
+	public boolean usarDistinct() {
+		return false;
 	}
 }

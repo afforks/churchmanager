@@ -3,7 +3,7 @@ package br.com.churchmanager.pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import static br.com.churchmanager.util.Util.aguardar;
+
 public class NovoUsuarioPage {
 
 	private WebDriver driver;
@@ -43,9 +43,7 @@ public class NovoUsuarioPage {
 
 	public NovoUsuarioPage selecionaPerfil() {
 		driver.findElement(By.id("perfil_label")).click();
-		aguardar(5);
 		driver.findElement(By.id("perfil_1")).click();
-		aguardar(5);
 		return this;
 	}
 
@@ -59,6 +57,5 @@ public class NovoUsuarioPage {
 	public void submete() {
 		WebElement botao = driver.findElement(By.id("btn-salvar"));
 		botao.click();
-		aguardar(5);
 	}
 }

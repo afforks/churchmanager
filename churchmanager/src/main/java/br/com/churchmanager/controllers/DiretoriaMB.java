@@ -38,7 +38,7 @@ public class DiretoriaMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Diretoria diretoria = (Diretoria) BuscaObjeto.comParametroGET(Diretoria.class, "id", this.bo);
+		Diretoria diretoria = BuscaObjeto.comParametroGET("id", this.bo);
 		this.diretoria = diretoria;
 	}
 

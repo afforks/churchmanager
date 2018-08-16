@@ -37,7 +37,7 @@ public class EventoMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Evento evento = (Evento) BuscaObjeto.comParametroGET(Evento.class, "id", this.bo);
+		Evento evento = BuscaObjeto.comParametroGET("id", this.bo);
 		this.evento = evento;
 	}
 

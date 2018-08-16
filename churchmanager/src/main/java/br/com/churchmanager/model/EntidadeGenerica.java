@@ -42,7 +42,6 @@ public class EntidadeGenerica implements Serializable {
 	private Status status = Status.ATIVO;
  
 	public String idCriptografado() {
-		AES.encrypt(this.id.toString());
-		return AES.getEncryptedString().replace("/", "@").replace("=", "");
+		return AES.encrypt(this.id.toString()).replace("/", "@").replace("=", "");
 	}
 }

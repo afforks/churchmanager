@@ -35,7 +35,7 @@ public class PatrimonioMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Patrimonio patrimonio = (Patrimonio) BuscaObjeto.comParametroGET(Patrimonio.class, "id", this.bo);
+		Patrimonio patrimonio = BuscaObjeto.comParametroGET("id", this.bo);
 		this.patrimonio = patrimonio;
 	}
 

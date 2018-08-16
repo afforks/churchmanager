@@ -9,12 +9,18 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 
 public class AES {
+	
+	private AES() {}
+	
+	private static final String AES_ECB_PKCS5_PADDING = "AES/ECB/PKCS5Padding";
+
 	private static SecretKeySpec secretKey = getKey(
 			"kdjdoKSKDHDKDKkshkjIugTRDuhbUGFjhbGijndokeoeowdfiwowiDeGVtBKuGfGSHDHD");
+
 	private static String decryptedString;
 	private static String encryptedString;
 
-	public static SecretKeySpec getKey(String myKey) {
+	private static SecretKeySpec getKey(String myKey) {
 		byte[] key = myKey.getBytes();
 		SecretKeySpec secretKey = null;
 		MessageDigest sha = null;
@@ -32,52 +38,43 @@ public class AES {
 		}
 	}
 
-	public static String getDecryptedString() {
+	private static String getDecryptedString() {
 		return decryptedString;
 	}
 
-	public static void setDecryptedString(String decryptedString) {
+	private static void setDecryptedString(String decryptedString) {
 		AES.decryptedString = decryptedString;
 	}
 
-	public static String getEncryptedString() {
+	private static String getEncryptedString() {
 		return encryptedString;
 	}
 
-	public static void setEncryptedString(String encryptedString) {
+	private static void setEncryptedString(String encryptedString) {
 		AES.encryptedString = encryptedString;
 	}
 
 	public static String encrypt(String strToEncrypt) {
 		try {
-			Cipher e = Cipher.getInstance("AES/ECB/PKCS5Padding");
+			Cipher e = Cipher.getInstance(AES_ECB_PKCS5_PADDING);
 			e.init(1, secretKey);
 			setEncryptedString(Base64.encodeBase64String(e.doFinal(strToEncrypt.getBytes("UTF-8"))));
 		} catch (Exception arg1) {
 			arg1.printStackTrace();
 		}
 
-		return null;
+		return getEncryptedString();
 	}
 
 	public static String decrypt(String strToDecrypt) {
 		try {
-			Cipher e = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+			Cipher e = Cipher.getInstance(AES_ECB_PKCS5_PADDING);
 			e.init(2, secretKey);
 			setDecryptedString(new String(e.doFinal(Base64.decodeBase64(strToDecrypt))));
 		} catch (Exception arg1) {
 			arg1.printStackTrace();
 		}
 
-		return null;
-	}
-
-	public static void main(String[] args) {
-		encrypt("Mensagem");
-		String crip = getEncryptedString();
-		decrypt(crip);
-		String dec = getDecryptedString();
-		String concat = crip + " - " + dec;
-		System.out.println(concat);
+		return getDecryptedString();
 	}
 }

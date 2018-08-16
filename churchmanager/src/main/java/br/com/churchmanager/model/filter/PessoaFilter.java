@@ -4,6 +4,8 @@ import br.com.churchmanager.dao.generic.Alias;
 import br.com.churchmanager.model.Sexo;
 import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.Filter;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,8 +16,12 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Restrictions;
 
+@Getter
+@Setter
 public class PessoaFilter implements Filter, Serializable {
+
 	private static final long serialVersionUID = 5043742463701329577L;
+
 	private String nome;
 	private String mes;
 	private String ano;
@@ -35,46 +41,14 @@ public class PessoaFilter implements Filter, Serializable {
 	}
 
 	public List<Projection> projecoes() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<Alias> aliases() {
-		return null;
+		return new ArrayList<>();
 	}
 
-	public Boolean usarDistinct() {
-		return null;
-	}
-
-	public String getNome() {
-		return this.nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getMes() {
-		return this.mes;
-	}
-
-	public void setMes(String mes) {
-		this.mes = mes;
-	}
-
-	public String getAno() {
-		return this.ano;
-	}
-
-	public void setAno(String ano) {
-		this.ano = ano;
-	}
-
-	public Sexo getSexo() {
-		return this.sexo;
-	}
-
-	public void setSexo(Sexo sexo) {
-		this.sexo = sexo;
+	public boolean usarDistinct() {
+		return false;
 	}
 }

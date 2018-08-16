@@ -33,8 +33,8 @@ public class CategoriaMovimentacaoMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		CategoriaMovimentacao categoria = (CategoriaMovimentacao) BuscaObjeto
-				.comParametroGET(CategoriaMovimentacao.class, "id", this.bo);
+		CategoriaMovimentacao categoria = BuscaObjeto
+				.comParametroGET("id", this.bo);
 		this.categoria = categoria;
 	}
 

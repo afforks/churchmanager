@@ -12,18 +12,16 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.churchmanager.dao.generic.Alias;
 import br.com.churchmanager.model.Status;
+import lombok.Getter;
+import lombok.Setter;
 
 public class PatrimonioFilter implements Filter, Serializable {
+	
 	private static final long serialVersionUID = 1232701463701329577L;
+
+	@Getter
+	@Setter
 	private String nome;
-
-	public String getNome() {
-		return this.nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 
 	public List<Criterion> restricoes() {
 		ArrayList<Criterion> restricoes = new ArrayList<>();
@@ -35,14 +33,14 @@ public class PatrimonioFilter implements Filter, Serializable {
 	}
 
 	public List<Projection> projecoes() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<Alias> aliases() {
-		return null;
+		return new ArrayList<>();
 	}
 
-	public Boolean usarDistinct() {
-		return null;
+	public boolean usarDistinct() {
+		return false;
 	}
 }
