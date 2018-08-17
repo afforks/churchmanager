@@ -1,17 +1,16 @@
 package br.com.churchmanager.bo;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import br.com.churchmanager.dao.DiretoriaDAO;
 import br.com.churchmanager.dao.generic.Buscador;
-import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
-import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Diretoria;
 import br.com.churchmanager.model.filter.DiretoriaFilter;
 import br.com.churchmanager.util.MyLazyDataModel;
-
-import java.io.Serializable;
-import java.util.List;
-import javax.inject.Inject;
 
 public class DiretoriaBO implements Serializable, Buscador<Diretoria> {
 	private static final long serialVersionUID = 1L;
@@ -21,12 +20,12 @@ public class DiretoriaBO implements Serializable, Buscador<Diretoria> {
 	@Inject
 	DiretoriaDAO dao;
 
-	public void salvar(Diretoria evento) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void salvar(Diretoria evento) throws NegocioException {
 		this.validar(evento);
 		this.dao.salvar(evento);
 	}
 
-	public void atualizar(Diretoria evento) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void atualizar(Diretoria evento) throws NegocioException {
 		this.validar(evento);
 		this.dao.atualizar(evento);
 	}
@@ -46,7 +45,7 @@ public class DiretoriaBO implements Serializable, Buscador<Diretoria> {
 	}
 
 	public Diretoria buscarPorId(Long id) {
-		return (Diretoria) this.dao.buscarPorId(id);
+		return this.dao.buscarPorId(id);
 	}
 
 	public MyLazyDataModel<Diretoria> filtrar(DiretoriaFilter eventoFilter) {

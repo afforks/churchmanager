@@ -13,12 +13,14 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 public class MyLazyDataModel<T extends EntidadeGenerica> extends LazyDataModel<T> implements Serializable {
+	
 	private static final long serialVersionUID = 1705877968617746122L;
+	
 	private Class<T> clazz;
-	private List<Criterion> restrictions = null;
-	private List<Projection> projections = null;
-	private List<Alias> aliases = null;
-	private Boolean includeDistinctRootEntity = null;
+	private List<Criterion> restrictions;
+	private List<Projection> projections;
+	private List<Alias> aliases;
+	private Boolean includeDistinctRootEntity;
 	private DAO<T> dao;
 
 	public MyLazyDataModel(DAO<T> dao, Class<T> clazz, List<Criterion> restrictions, List<Projection> projections,
@@ -31,13 +33,13 @@ public class MyLazyDataModel<T extends EntidadeGenerica> extends LazyDataModel<T
 		this.includeDistinctRootEntity = includeDistinctRootEntity;
 	}
 
+	@Override
 	public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 		this.setRowCount(
 				this.dao.tamanhoDaLista(this.clazz, this.restrictions, this.aliases, this.includeDistinctRootEntity)
 						.intValue());
-		List<T> list = this.dao.listarPorDemanda(this.clazz, Integer.valueOf(first), Integer.valueOf(pageSize),
+		return this.dao.listarPorDemanda(this.clazz, Integer.valueOf(first), Integer.valueOf(pageSize),
 				this.restrictions, this.projections, sortField, sortOrder, this.aliases,
 				this.includeDistinctRootEntity);
-		return list;
 	}
 }

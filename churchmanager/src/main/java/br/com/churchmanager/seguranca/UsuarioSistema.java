@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.User;
 import br.com.churchmanager.model.Usuario;
 
 public class UsuarioSistema extends User {
+
 	private static final long serialVersionUID = 1L;
 	private Usuario usuario;
 

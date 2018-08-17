@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.faces.context.FacesContext;
 import javax.naming.Context;
@@ -25,6 +26,8 @@ public class GenericReport {
 
 	private GenericReport() {
 	}
+
+	private static final Logger LOGGER = Logger.getLogger(GenericReport.class.getName());
 
 	private static Connection conexao;
 
@@ -65,7 +68,7 @@ public class GenericReport {
 			closeConexao();
 			FacesContext.getCurrentInstance().responseComplete();
 		} catch (IOException | JRException arg10) {
-			arg10.printStackTrace();
+			LOGGER.info(arg10.getMessage());
 		}
 
 	}
@@ -77,7 +80,7 @@ public class GenericReport {
 			DataSource ds = (DataSource) envContext.lookup("jdbc/churchmanagerDS");
 			conexao = ds.getConnection();
 		} catch (SQLException | NamingException arg2) {
-			arg2.printStackTrace();
+			LOGGER.info(arg2.getMessage());
 		}
 
 		return conexao;
@@ -88,7 +91,7 @@ public class GenericReport {
 			try {
 				conexao.close();
 			} catch (SQLException arg0) {
-				arg0.printStackTrace();
+				LOGGER.info(arg0.getMessage());
 			}
 		}
 

@@ -1,17 +1,16 @@
 package br.com.churchmanager.bo;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import br.com.churchmanager.dao.PaginaDAO;
 import br.com.churchmanager.dao.generic.Buscador;
-import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
-import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Pagina;
 import br.com.churchmanager.model.filter.PaginaFilter;
 import br.com.churchmanager.util.MyLazyDataModel;
-
-import java.io.Serializable;
-import java.util.List;
-import javax.inject.Inject;
 
 public class PaginaBO implements Serializable, Buscador<Pagina> {
 	private static final long serialVersionUID = 1L;
@@ -21,12 +20,12 @@ public class PaginaBO implements Serializable, Buscador<Pagina> {
 	@Inject
 	private PaginaDAO dao;
 
-	public void salvar(Pagina pagina) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void salvar(Pagina pagina) throws NegocioException {
 		this.validar(pagina);
 		this.dao.salvar(pagina);
 	}
 
-	public void atualizar(Pagina pagina) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void atualizar(Pagina pagina) throws NegocioException {
 		this.validar(pagina);
 		this.dao.atualizar(pagina);
 	}
@@ -40,10 +39,11 @@ public class PaginaBO implements Serializable, Buscador<Pagina> {
 	}
 
 	public void validar(Pagina pagina) throws NegocioException {
+		//
 	}
 
 	public Pagina buscarPorId(Long id) {
-		return (Pagina) this.dao.buscarPorId(id);
+		return this.dao.buscarPorId(id);
 	}
 
 	public MyLazyDataModel<Pagina> filtrar(PaginaFilter paginaFilter) {

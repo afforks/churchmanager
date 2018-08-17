@@ -3,6 +3,7 @@ package br.com.churchmanager.controllers;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -16,6 +17,7 @@ import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Pagina;
 import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.PaginaFilter;
+import br.com.churchmanager.report.GenericReport;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
 import br.com.churchmanager.util.faces.FacesUtil;
@@ -23,13 +25,14 @@ import br.com.churchmanager.util.faces.FacesUtil;
 @Named
 @ViewScoped
 public class PaginaMB implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	private Pagina pagina;
 	private List<Pagina> paginas;
 	private MyLazyDataModel<Pagina> paginasLazy;
 	private PaginaFilter paginaFilter;
-	
+	private static final Logger LOGGER = Logger.getLogger(GenericReport.class.getName());
+
 	@Inject
 	private PaginaBO bo;
 
@@ -47,13 +50,14 @@ public class PaginaMB implements Serializable {
 			this.pagina = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+			LOGGER.info(e.getMessage());
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O valor '"+pagina.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O valor '" + pagina.getNome() + "' está duplicado, por favor, informe outro!");
+			LOGGER.info(e.getMessage());
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+			LOGGER.info(e.getMessage());
 		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
@@ -67,15 +71,16 @@ public class PaginaMB implements Serializable {
 			this.pagina = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+			LOGGER.info(e.getMessage());
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O valor '"+pagina.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O valor '" + pagina.getNome() + "' está duplicado, por favor, informe outro!");
+			LOGGER.info(e.getMessage());
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+			LOGGER.info(e.getMessage());
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
@@ -100,8 +105,9 @@ public class PaginaMB implements Serializable {
 	}
 
 	private List<Pagina> listarPaginas;
+
 	public List<Pagina> listarPaginas() {
-		if(listarPaginas == null && FacesUtil.isNotPostback()) {
+		if (listarPaginas == null && FacesUtil.isNotPostback()) {
 			listarPaginas = this.bo.listar();
 		}
 		return listarPaginas;

@@ -1,17 +1,16 @@
 package br.com.churchmanager.bo;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import br.com.churchmanager.dao.PessoaCargoDAO;
 import br.com.churchmanager.dao.generic.Buscador;
-import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
-import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.PessoaCargo;
 import br.com.churchmanager.model.filter.PessoaCargoFilter;
 import br.com.churchmanager.util.MyLazyDataModel;
-
-import java.io.Serializable;
-import java.util.List;
-import javax.inject.Inject;
 
 public class PessoaCargoBO implements Serializable, Buscador<PessoaCargo> {
 	private static final long serialVersionUID = 1L;
@@ -21,12 +20,12 @@ public class PessoaCargoBO implements Serializable, Buscador<PessoaCargo> {
 	@Inject
 	PessoaCargoDAO dao;
 
-	public void salvar(PessoaCargo pc) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void salvar(PessoaCargo pc) throws NegocioException {
 		this.validar(pc);
 		this.dao.salvar(pc);
 	}
 
-	public void atualizar(PessoaCargo pc) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void atualizar(PessoaCargo pc) throws NegocioException {
 		this.validar(pc);
 		this.dao.atualizar(pc);
 	}
@@ -48,7 +47,7 @@ public class PessoaCargoBO implements Serializable, Buscador<PessoaCargo> {
 	}
 
 	public PessoaCargo buscarPorId(Long id) {
-		return (PessoaCargo) this.dao.buscarPorId(id);
+		return this.dao.buscarPorId(id);
 	}
 
 	public MyLazyDataModel<PessoaCargo> filtrar(PessoaCargoFilter pcFilter) {

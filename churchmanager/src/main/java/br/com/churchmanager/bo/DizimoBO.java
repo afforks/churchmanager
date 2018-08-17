@@ -1,18 +1,17 @@
 package br.com.churchmanager.bo;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import br.com.churchmanager.dao.DizimoDAO;
 import br.com.churchmanager.dao.generic.Buscador;
-import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
-import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Dizimo;
 import br.com.churchmanager.model.filter.DizimoFilter;
 import br.com.churchmanager.model.group.PercentualDizimista;
 import br.com.churchmanager.util.MyLazyDataModel;
-
-import java.io.Serializable;
-import java.util.List;
-import javax.inject.Inject;
 
 public class DizimoBO implements Serializable, Buscador<Dizimo> {
 	private static final long serialVersionUID = 1L;
@@ -22,12 +21,12 @@ public class DizimoBO implements Serializable, Buscador<Dizimo> {
 	@Inject
 	private DizimoDAO dao;
 
-	public void salvar(Dizimo dizimo) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void salvar(Dizimo dizimo) throws NegocioException {
 		this.validar(dizimo);
 		this.dao.salvar(dizimo);
 	}
 
-	public void atualizar(Dizimo dizimo) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void atualizar(Dizimo dizimo) throws NegocioException {
 		this.validar(dizimo);
 		this.dao.atualizar(dizimo);
 	}
@@ -41,10 +40,11 @@ public class DizimoBO implements Serializable, Buscador<Dizimo> {
 	}
 
 	public void validar(Dizimo dizimo) throws NegocioException {
+		//
 	}
 
 	public Dizimo buscarPorId(Long id) {
-		return (Dizimo) this.dao.buscarPorId(id);
+		return this.dao.buscarPorId(id);
 	}
 
 	public MyLazyDataModel<Dizimo> filtrar(DizimoFilter dizimoFilter) {

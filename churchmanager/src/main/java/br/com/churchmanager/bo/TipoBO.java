@@ -1,17 +1,16 @@
 package br.com.churchmanager.bo;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import br.com.churchmanager.dao.TipoDAO;
 import br.com.churchmanager.dao.generic.Buscador;
-import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
-import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Tipo;
 import br.com.churchmanager.model.filter.TipoFilter;
 import br.com.churchmanager.util.MyLazyDataModel;
-
-import java.io.Serializable;
-import java.util.List;
-import javax.inject.Inject;
 
 public class TipoBO implements Serializable, Buscador<Tipo> {
 	private static final long serialVersionUID = 11236782348L;
@@ -21,12 +20,12 @@ public class TipoBO implements Serializable, Buscador<Tipo> {
 	@Inject
 	private TipoDAO dao;
 
-	public void salvar(Tipo tipo) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void salvar(Tipo tipo) throws NegocioException {
 		this.validar(tipo);
 		this.dao.salvar(tipo);
 	}
 
-	public void atualizar(Tipo tipo) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void atualizar(Tipo tipo) throws NegocioException {
 		this.validar(tipo);
 		this.dao.atualizar(tipo);
 	}
@@ -40,10 +39,12 @@ public class TipoBO implements Serializable, Buscador<Tipo> {
 	}
 
 	public void validar(Tipo tipo) throws NegocioException {
+		//
 	}
 
+	@Override
 	public Tipo buscarPorId(Long id) {
-		return (Tipo) this.dao.buscarPorId(id);
+		return this.dao.buscarPorId(id);
 	}
 
 	public MyLazyDataModel<Tipo> filtrar(TipoFilter tipoFilter) {

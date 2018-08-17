@@ -1,17 +1,16 @@
 package br.com.churchmanager.bo;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import br.com.churchmanager.dao.PerfilDAO;
 import br.com.churchmanager.dao.generic.Buscador;
-import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
-import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Perfil;
 import br.com.churchmanager.model.filter.PerfilFilter;
 import br.com.churchmanager.util.MyLazyDataModel;
-
-import java.io.Serializable;
-import java.util.List;
-import javax.inject.Inject;
 
 public class PerfilBO implements Serializable, Buscador<Perfil> {
 	private static final long serialVersionUID = 1L;
@@ -21,12 +20,12 @@ public class PerfilBO implements Serializable, Buscador<Perfil> {
 	@Inject
 	private PerfilDAO dao;
 
-	public void salvar(Perfil perfil) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void salvar(Perfil perfil) throws NegocioException {
 		this.validar(perfil);
 		this.dao.salvar(perfil);
 	}
 
-	public void atualizar(Perfil perfil) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void atualizar(Perfil perfil) throws NegocioException {
 		this.validar(perfil);
 		this.dao.atualizar(perfil);
 	}
@@ -40,10 +39,11 @@ public class PerfilBO implements Serializable, Buscador<Perfil> {
 	}
 
 	public void validar(Perfil perfil) throws NegocioException {
+		//
 	}
 
 	public Perfil buscarPorId(Long id) {
-		return (Perfil) this.dao.buscarPorId(id);
+		return this.dao.buscarPorId(id);
 	}
 
 	public MyLazyDataModel<Perfil> filtrar(PerfilFilter perfilFilter) {

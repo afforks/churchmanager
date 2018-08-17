@@ -9,9 +9,7 @@ import javax.inject.Inject;
 
 import br.com.churchmanager.dao.PessoaDAO;
 import br.com.churchmanager.dao.generic.Buscador;
-import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
-import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.filter.PessoaFilter;
 import br.com.churchmanager.model.group.Aniversariante;
@@ -29,12 +27,12 @@ public class PessoaBO implements Serializable, Buscador<Pessoa> {
 	@Inject
 	PessoaDAO dao;
 
-	public void salvar(Pessoa pessoa) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void salvar(Pessoa pessoa) throws NegocioException {
 		this.validar(pessoa);
 		this.dao.salvar(pessoa);
 	}
 
-	public void atualizar(Pessoa pessoa) throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void atualizar(Pessoa pessoa) throws NegocioException {
 		this.validar(pessoa);
 		this.dao.atualizar(pessoa);
 	}
@@ -48,10 +46,11 @@ public class PessoaBO implements Serializable, Buscador<Pessoa> {
 	}
 
 	public void validar(Pessoa pessoa) throws NegocioException {
+		//
 	}
 
 	public Pessoa buscarPorId(Long id) {
-		return (Pessoa) this.dao.buscarPorId(id);
+		return this.dao.buscarPorId(id);
 	}
 
 	public Pessoa buscarPorMatricula(String matricula) {
@@ -81,7 +80,7 @@ public class PessoaBO implements Serializable, Buscador<Pessoa> {
 	public String gerarMatricula(Date dataCadastro) {
 		return dao.gerarMatricula(dataCadastro);
 	}
-	
+
 	public List<Dizimista> listarDizimistas(PessoaFilter filter) {
 		return this.dao.listarDizimistas(filter);
 	}

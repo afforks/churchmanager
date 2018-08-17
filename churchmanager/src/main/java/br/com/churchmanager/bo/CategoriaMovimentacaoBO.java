@@ -1,17 +1,16 @@
 package br.com.churchmanager.bo;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import br.com.churchmanager.dao.CategoriaMovimentacaoDAO;
 import br.com.churchmanager.dao.generic.Buscador;
-import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
-import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.CategoriaMovimentacao;
 import br.com.churchmanager.model.filter.CategoriaMovimentacaoFilter;
 import br.com.churchmanager.util.MyLazyDataModel;
-
-import java.io.Serializable;
-import java.util.List;
-import javax.inject.Inject;
 
 public class CategoriaMovimentacaoBO implements Serializable, Buscador<CategoriaMovimentacao> {
 	private static final long serialVersionUID = 1L;
@@ -21,14 +20,12 @@ public class CategoriaMovimentacaoBO implements Serializable, Buscador<Categoria
 	@Inject
 	private CategoriaMovimentacaoDAO dao;
 
-	public void salvar(CategoriaMovimentacao categoria)
-			throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void salvar(CategoriaMovimentacao categoria) throws NegocioException {
 		this.validar(categoria);
 		this.dao.salvar(categoria);
 	}
 
-	public void atualizar(CategoriaMovimentacao categoria)
-			throws NegocioException, ViolacaoDeRestricaoException, DadosException {
+	public void atualizar(CategoriaMovimentacao categoria) throws NegocioException {
 		this.validar(categoria);
 		this.dao.atualizar(categoria);
 	}
@@ -42,10 +39,11 @@ public class CategoriaMovimentacaoBO implements Serializable, Buscador<Categoria
 	}
 
 	public void validar(CategoriaMovimentacao categoria) throws NegocioException {
+		//
 	}
 
 	public CategoriaMovimentacao buscarPorId(Long id) {
-		return (CategoriaMovimentacao) this.dao.buscarPorId(id);
+		return this.dao.buscarPorId(id);
 	}
 
 	public MyLazyDataModel<CategoriaMovimentacao> filtrar(CategoriaMovimentacaoFilter categoriaFilter) {
