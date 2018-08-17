@@ -50,9 +50,9 @@ import br.com.churchmanager.util.faces.FacesUtil;
 @Named
 @ViewScoped
 public class DashBoard implements Serializable {
-	
+
 	private static final long serialVersionUID = -8423931165560787194L;
-	
+
 	private BarChartModel membresia;
 	private BarChartModel pessoasPorAtividadesEclesiasticas;
 	private LineChartModel movimentacaoAnual;
@@ -86,12 +86,9 @@ public class DashBoard implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		// if (FacesUtil.isNotPostback()) {
 		this.mes = DataUtil.mes();
 		this.ano = DataUtil.ano();
 		atualizarDados();
-		// }
-
 	}
 
 	public void atualizarDados() {
@@ -114,11 +111,10 @@ public class DashBoard implements Serializable {
 		this.membresia = new BarChartModel();
 		ChartSeries boys = new ChartSeries("Homens");
 		ChartSeries girls = new ChartSeries("Mulheres");
-		List<MembrosPorFaixaEtaria> membresia = this.membresiaFaixaEtaria();
-		Iterator<MembrosPorFaixaEtaria> arg4 = membresia.iterator();
+		List<MembrosPorFaixaEtaria> membresiaFaixaetaria = this.membresiaFaixaEtaria();
 
-		while (arg4.hasNext()) {
-			MembrosPorFaixaEtaria m = (MembrosPorFaixaEtaria) arg4.next();
+		while (membresiaFaixaetaria.iterator().hasNext()) {
+			MembrosPorFaixaEtaria m = membresiaFaixaetaria.iterator().next();
 			boys.set(m.getFaixaEtaria(), m.getM());
 			girls.set(m.getFaixaEtaria(), m.getF());
 		}
@@ -136,7 +132,7 @@ public class DashBoard implements Serializable {
 		Iterator<PessoaAtividaEclesiastica> it = pessoasPorAtividadeEclesiastica.iterator();
 
 		while (it.hasNext()) {
-			PessoaAtividaEclesiastica pessoaAtividade = (PessoaAtividaEclesiastica) it.next();
+			PessoaAtividaEclesiastica pessoaAtividade = it.next();
 			ChartSeries chartSeries = new ChartSeries(pessoaAtividade.getCategoria());
 			chartSeries.set(pessoaAtividade.getCategoria(), pessoaAtividade.getQuantidade());
 			this.pessoasPorAtividadesEclesiasticas.addSeries(chartSeries);
@@ -162,7 +158,7 @@ public class DashBoard implements Serializable {
 		ChartSeries saidasEmAberto = new ChartSeries("Pagar");
 
 		for (int yAxis2 = 0; yAxis2 < movimentacaoUltimos12Meses.size(); ++yAxis2) {
-			MovimentacaoAnual mov = (MovimentacaoAnual) movimentacaoUltimos12Meses.get(yAxis2);
+			MovimentacaoAnual mov = movimentacaoUltimos12Meses.get(yAxis2);
 			if (mov.getTipo().equals(TipoMovimentacao.ENTRADA.toString())
 					&& mov.getStatus().equals(StatusMovimentacao.PAGO.toString())) {
 				entradasPagas.set(mov.getData(), Double.valueOf(mov.getValor()));
@@ -196,7 +192,7 @@ public class DashBoard implements Serializable {
 		Iterator<MovimentacaoCategoria> arg2 = custosPorCategoria2.iterator();
 
 		while (arg2.hasNext()) {
-			MovimentacaoCategoria movimentacaoCategoria = (MovimentacaoCategoria) arg2.next();
+			MovimentacaoCategoria movimentacaoCategoria = arg2.next();
 			this.custosPorCategoria.set(movimentacaoCategoria.getNome(),
 					Double.valueOf(movimentacaoCategoria.getValorParcela()));
 		}
@@ -217,39 +213,39 @@ public class DashBoard implements Serializable {
 	}
 
 	public List<DetalheMovimentacao> ultimosLancamentosEmConta() {
-		return this.ultimosLancamentos.stream().filter((m) -> {
-			return m.getForma() != null && m.getForma().equals(FormaMovimentacao.EM_CONTA.toString());
-		}).collect(Collectors.toList());
+		return this.ultimosLancamentos.stream()
+				.filter(m -> m.getForma() != null && m.getForma().equals(FormaMovimentacao.EM_CONTA.toString()))
+				.collect(Collectors.toList());
 	}
 
 	public List<DetalheMovimentacao> ultimosLancamentosEntradas() {
-		return this.ultimosLancamentos.stream().filter((m) -> {
-			return m.getStatus().equals(StatusMovimentacao.PAGO.toString())
-					&& m.getTipo().equals(TipoMovimentacao.ENTRADA.toString()) && m.getForma() != null
-					&& m.getForma().equals(FormaMovimentacao.EM_ESPECIE.toString());
-		}).collect(Collectors.toList());
+		return this.ultimosLancamentos.stream()
+				.filter(m -> m.getStatus().equals(StatusMovimentacao.PAGO.toString())
+						&& m.getTipo().equals(TipoMovimentacao.ENTRADA.toString()) && m.getForma() != null
+						&& m.getForma().equals(FormaMovimentacao.EM_ESPECIE.toString()))
+				.collect(Collectors.toList());
 	}
 
 	public List<DetalheMovimentacao> ultimosLancamentosSaidas() {
-		return this.ultimosLancamentos.stream().filter((m) -> {
-			return m.getStatus().equals(StatusMovimentacao.PAGO.toString())
-					&& m.getTipo().equals(TipoMovimentacao.SAIDA.toString()) && m.getForma() != null
-					&& m.getForma().equals(FormaMovimentacao.EM_ESPECIE.toString());
-		}).collect(Collectors.toList());
+		return this.ultimosLancamentos.stream()
+				.filter(m -> m.getStatus().equals(StatusMovimentacao.PAGO.toString())
+						&& m.getTipo().equals(TipoMovimentacao.SAIDA.toString()) && m.getForma() != null
+						&& m.getForma().equals(FormaMovimentacao.EM_ESPECIE.toString()))
+				.collect(Collectors.toList());
 	}
 
 	public List<DetalheMovimentacao> proximasEntradas() {
-		return this.ultimosLancamentos.stream().filter((m) -> {
-			return m.getStatus().equals(StatusMovimentacao.EM_ABERTO.toString())
-					&& m.getTipo().equals(TipoMovimentacao.ENTRADA.toString());
-		}).collect(Collectors.toList());
+		return this.ultimosLancamentos.stream()
+				.filter(m -> m.getStatus().equals(StatusMovimentacao.EM_ABERTO.toString())
+						&& m.getTipo().equals(TipoMovimentacao.ENTRADA.toString()))
+				.collect(Collectors.toList());
 	}
 
 	public List<DetalheMovimentacao> proximasSaidas() {
-		return this.ultimosLancamentos.stream().filter((m) -> {
-			return m.getStatus().equals(StatusMovimentacao.EM_ABERTO.toString())
-					&& m.getTipo().equals(TipoMovimentacao.SAIDA.toString());
-		}).collect(Collectors.toList());
+		return this.ultimosLancamentos.stream()
+				.filter(m -> m.getStatus().equals(StatusMovimentacao.EM_ABERTO.toString())
+						&& m.getTipo().equals(TipoMovimentacao.SAIDA.toString()))
+				.collect(Collectors.toList());
 	}
 
 	public void atualizarPercentualDizimista() {
@@ -329,7 +325,7 @@ public class DashBoard implements Serializable {
 		filter.setAno(this.ano);
 		return this.pessoaBO.aniversariantesDoMes(filter);
 	}
-	
+
 	public List<Dizimista> listarDizimistas() {
 		PessoaFilter filter = new PessoaFilter();
 		filter.setMes(this.mes);

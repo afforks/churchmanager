@@ -57,14 +57,14 @@ public class DataUtil implements Serializable {
 		Integer ano = Integer.valueOf(getInstance().get(1));
 		Integer anoProx = Integer.valueOf(ano.intValue() + 1);
 		Integer anoPrev = Integer.valueOf(ano.intValue() - 1);
-		return Arrays.asList(new Integer[] { anoPrev, ano, anoProx });
+		return Arrays.asList(anoPrev, ano, anoProx );
 	}
 	
 	public static List<Integer> getAnos(String year) {
 		Integer ano = Integer.valueOf(year);
 		Integer anoProx = Integer.valueOf(ano.intValue() + 1);
 		Integer anoPrev = Integer.valueOf(ano.intValue() - 1);
-		return Arrays.asList(new Integer[] { anoPrev, ano, anoProx });
+		return Arrays.asList(anoPrev, ano, anoProx );
 	}
 
 	public static String mes() {

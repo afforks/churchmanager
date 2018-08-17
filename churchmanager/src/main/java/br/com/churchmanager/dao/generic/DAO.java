@@ -62,7 +62,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 	}
 
 	@Transacional
-	public void salvar(T entity) throws ViolacaoDeRestricaoException, DadosException {
+	public void salvar(T entity) {
 		try {
 			this.entityManager.persist(entity);
 		} catch (PersistenceException e) {
@@ -77,7 +77,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 	}
 
 	@Transacional
-	public T atualizar(T entity) throws ViolacaoDeRestricaoException, DadosException {
+	public T atualizar(T entity) {
 		T t = null;
 		try {
 			t = this.entityManager.merge(entity);
@@ -107,7 +107,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 	}
 
 	@Transacional
-	public void atualizarStatus(T t) throws ViolacaoDeRestricaoException, DadosException {
+	public void atualizarStatus(T t) {
 		t.setStatus(Status.negarStatus(t.getStatus()));
 		this.atualizar(t);
 	}
@@ -191,37 +191,32 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 			Boolean includeDistinctRootEntity) {
 		Criteria criteria = this.criteria(restricoes, aliases, includeDistinctRootEntity);
 		criteria.setProjection(Projections.sum(propertyName));
-		Double total = (Double) criteria.uniqueResult();
-		return total;
+		return (Double) criteria.uniqueResult();
 	}
 
 	public Long contagem(String propertyName, List<?> restricoes, List<Alias> aliases,
 			Boolean includeDistinctRootEntity) {
 		Criteria criteria = this.criteria(restricoes, aliases, includeDistinctRootEntity);
 		criteria.setProjection(Projections.count(propertyName));
-		Long total = (Long) criteria.uniqueResult();
-		return total;
+		return (Long) criteria.uniqueResult();
 	}
 
 	public Number max(String propertyName, List<?> restricoes, List<Alias> aliases, Boolean includeDistinctRootEntity) {
 		Criteria criteria = this.criteria(restricoes, aliases, includeDistinctRootEntity);
 		criteria.setProjection(Projections.max(propertyName));
-		Number total = (Number) criteria.uniqueResult();
-		return total;
+		return (Number) criteria.uniqueResult();
 	}
 
 	public Number min(String propertyName, List<?> restricoes, List<Alias> aliases, Boolean includeDistinctRootEntity) {
 		Criteria criteria = this.criteria(restricoes, aliases, includeDistinctRootEntity);
 		criteria.setProjection(Projections.min(propertyName));
-		Number total = (Number) criteria.uniqueResult();
-		return total;
+		return  (Number) criteria.uniqueResult();
 	}
 
 	public Number avg(String propertyName, List<?> restricoes, List<Alias> aliases, Boolean includeDistinctRootEntity) {
 		Criteria criteria = this.criteria(restricoes, aliases, includeDistinctRootEntity);
 		criteria.setProjection(Projections.avg(propertyName));
-		Number total = (Number) criteria.uniqueResult();
-		return total;
+		return (Number) criteria.uniqueResult();
 	}
 
 	public Criteria criteria(List<?> restricoes, List<Alias> aliases, Boolean includeDistinctRootEntity) {
@@ -248,7 +243,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 				}
 			}
 
-			if (restricoes != null && restricoes != null) {
+			if (restricoes != null) {
 				Iterator<?> iterator11 = restricoes.iterator();
 
 				while (iterator11.hasNext()) {
@@ -288,7 +283,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 				}
 			}
 
-			if (restricoes != null && restricoes != null) {
+			if (restricoes != null) {
 				Iterator<?> iterator11 = restricoes.iterator();
 
 				while (iterator11.hasNext()) {
@@ -456,13 +451,11 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 
 	public List<Map<?, ?>> listar(String sql, Map<String, Object> parametros) {
 		ArrayList<Map<?, ?>> resultList = new ArrayList<>();
-		Session session = (Session) this.entityManager.unwrap(Session.class);
+		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
 
-		parametros.forEach((k, v) -> {
-			query.setParameter(k, v);
-		});
+		parametros.forEach((k, v) -> query.setParameter(k, v));
 
 		List<?> data = query.list();
 		Iterator<?> it = data.iterator();
