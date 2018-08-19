@@ -111,10 +111,11 @@ public class DashBoard implements Serializable {
 		this.membresia = new BarChartModel();
 		ChartSeries boys = new ChartSeries("Homens");
 		ChartSeries girls = new ChartSeries("Mulheres");
-		List<MembrosPorFaixaEtaria> membresiaFaixaetaria = this.membresiaFaixaEtaria();
+		List<MembrosPorFaixaEtaria> membresia = this.membresiaFaixaEtaria();
+		Iterator<MembrosPorFaixaEtaria> arg4 = membresia.iterator();
 
-		while (membresiaFaixaetaria.iterator().hasNext()) {
-			MembrosPorFaixaEtaria m = membresiaFaixaetaria.iterator().next();
+		while (arg4.hasNext()) {
+			MembrosPorFaixaEtaria m = (MembrosPorFaixaEtaria) arg4.next();
 			boys.set(m.getFaixaEtaria(), m.getM());
 			girls.set(m.getFaixaEtaria(), m.getF());
 		}
