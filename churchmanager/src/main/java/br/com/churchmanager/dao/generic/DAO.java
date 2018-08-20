@@ -83,11 +83,9 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 			t = this.entityManager.merge(entity);
 		} catch (PersistenceException e) {
 			if (e.getCause().toString().contains("ConstraintViolationException")) {
-				e.printStackTrace();
 				throw new ViolacaoDeRestricaoException(
 						"A operação DML solicitada resultou em uma violação de uma restrição de integridade definida.");
 			} else if (e.getCause().toString().contains("DataException")) {
-				e.printStackTrace();
 				throw new DadosException(
 						"A avaliação da instrução SQL válida em relação aos dados fornecidos resultou em alguma operação ilegal, tipos incompatíveis ou cardinalidade incorreta.");
 			}
@@ -129,7 +127,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 
 	@SuppressWarnings("unchecked")
 	public List<T> listarComQueryNativa(String query, Object[] parametros) {
-		Query q = this.entityManager.createNamedQuery(query);
+		Query q = this.entityManager.createNativeQuery(query);
 
 		for (int i = 0; i < parametros.length; i += 2) {
 			q.setParameter(parametros[i].toString(), parametros[i + 1]);
@@ -142,7 +140,7 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> cq = builder.createQuery(this.clazz);
 		Root<T> root = cq.from(this.clazz);
-		ArrayList<javax.persistence.criteria.Order> orders = new ArrayList<javax.persistence.criteria.Order>();
+		ArrayList<javax.persistence.criteria.Order> orders = new ArrayList<>();
 		String[] campos = propertiersOrders;
 		int qtdPropriedades = propertiersOrders.length;
 
@@ -178,13 +176,8 @@ public abstract class DAO<T extends EntidadeGenerica> implements Serializable {
 			TypedQuery<T> query = this.entityManager.createQuery(cq);
 			return query.getSingleResult();
 		} catch (NoResultException | NonUniqueResultException e) {
-			e.printStackTrace();
 			return null;
 		}
-	}
-
-	public T buscarPorAtributo(String... args) {
-		return null;
 	}
 
 	public Double somatorio(String propertyName, List<?> restricoes, List<Alias> aliases,

@@ -105,8 +105,14 @@ from pessoa p
 
 /*  */
 create view aniversariantes as 
-select nome, apelido, data_nascimento as data, calcular_idade(data_nascimento) as idade
-	from pessoa;
+-- alter view aniversariantes as
+select 
+	month(data_cadastro) as mes_cadastro, 
+	year(data_cadastro) as ano_cadastro,
+	nome, apelido, data_nascimento,
+	calcular_idade(data_nascimento) as idade from pessoa 
+order by day(data_nascimento)
+
 
 
 

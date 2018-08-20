@@ -58,11 +58,13 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 
 	public List<Aniversariante> aniversariantesDoMes(PessoaFilter filter) {
 		int mes = Integer.parseInt((filter.getMes()));
-		String sql = "select * from aniversariantes where month(data) = :mes_atual order by day(data)";
+		int ano = Integer.parseInt((filter.getAno()));
+		String sql = "select * from aniversariantes where ano_cadastro <= :ano_atual and month(data_nascimento) = :mes_atual ";
 		ArrayList<Aniversariante> resultList = new ArrayList<>();
 		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
-		query.setParameter("mes_atual", Integer.valueOf(mes));
+		query.setParameter("mes_atual", mes);
+		query.setParameter("ano_atual", ano);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
 		List<?> data = query.list();
 		Iterator<?> arg8 = data.iterator();
@@ -71,7 +73,7 @@ public class PessoaDAO extends DAO<Pessoa> implements Serializable {
 			Object o = arg8.next();
 			Map<?, ?> map = (Map<?, ?>) o;
 			resultList.add(new Aniversariante((String) map.get("nome"), (String) map.get("apelido"),
-					(Date) map.get("data"), ((Integer) map.get("idade")).intValue()));
+					(Date) map.get("data_nascimento"), ((Integer) map.get("idade")).intValue()));
 		}
 
 		return resultList;

@@ -97,6 +97,10 @@ public class DashBoard implements Serializable {
 		this.atualizarContadores();
 		this.atualizarUltimosLancamentos();
 		this.atualizarPercentualDizimista();
+		
+	}
+	
+	public void atualizarAno() {
 		this.listAnos = DataUtil.getAnos(ano);
 	}
 
@@ -115,7 +119,7 @@ public class DashBoard implements Serializable {
 		Iterator<MembrosPorFaixaEtaria> arg4 = membresia.iterator();
 
 		while (arg4.hasNext()) {
-			MembrosPorFaixaEtaria m = (MembrosPorFaixaEtaria) arg4.next();
+			MembrosPorFaixaEtaria m = arg4.next();
 			boys.set(m.getFaixaEtaria(), m.getM());
 			girls.set(m.getFaixaEtaria(), m.getF());
 		}
@@ -288,15 +292,19 @@ public class DashBoard implements Serializable {
 	}
 
 	public BigDecimal quantidadeDeMembros() {
-		return this.totalizadores[0];
+		return valueBigDecimal(totalizadores[0]);
 	}
 
 	public BigDecimal quantidadeDeHomem() {
-		return this.totalizadores[1];
+		return valueBigDecimal(totalizadores[1]);
 	}
 
 	public BigDecimal quantidadeDeMulher() {
-		return this.totalizadores[2];
+		return valueBigDecimal(totalizadores[2]);
+	}
+	
+	public BigDecimal valueBigDecimal(BigDecimal value) {
+		return value != null ? value : BigDecimal.ZERO;
 	}
 
 	private void atualizarContadores() {

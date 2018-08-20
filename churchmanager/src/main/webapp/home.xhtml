@@ -3,8 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui" xmlns:jsf="http://xmlns.jcp.org/jsf"
 	template="/WEB-INF/template/layout.xhtml">
 
 	<f:metadata>
@@ -15,42 +14,43 @@
 	<ui:define name="page-name">
 		Home
 	</ui:define>
-	
+
 	<ui:define name="footer">
 		<ui:include src="/WEB-INF/template/loading.xhtml" />
+		<ui:include src="/WEB-INF/template/footer.xhtml" />
 	</ui:define>
 
 
 	<ui:define name="full-content">
-		<h:form  prependId="false">
+		<h:form prependId="false">
 			<p:growl id="msg" showDetail="true" showSummary="true" />
 
 			<p:sticky target="filtragem" />
-			
+
 			<div class="ui-g">
 				<div class="ui-g-12  ui-md-12 ui-lg-12 ui-sm-12">
-					<div  class="ui-g-12 card shadow-effect "  >
+					<div class="ui-g-12 card shadow-effect ">
 						<div class="ui-g-12 center">
 							<div class="dash-title-1 font-dark-grey"
 								style="font-weight: normal; padding-bottom: 10px;">Filtrar
 								por período</div>
 						</div>
-<!-- 						<p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
+						<!-- 						<p:outputPanel deferred="true" deferredMode="visible" layout="block"> -->
 						<div class="ui-g-12">
 
 
-							<p:panelGrid id="filtragem" columns="2" styleClass="ui-panelgrid-blank"
-								style="margin-bottom: 15px;" layout="grid"
-								columnClasses="ui-grid-col-9, ui-grid-col-3">
+							<p:panelGrid id="filtragem" columns="3"
+								styleClass="ui-panelgrid-blank" style="margin-bottom: 15px;"
+								layout="grid" columnClasses="ui-grid-col-8, ui-grid-col-3, ui-grid-col-1">
 
 								<h:panelGroup>
 									<p:outputLabel value="Mês " styleClass="my-label" />
 									<br />
 									<p:selectOneButton id="mes" value="#{dashBoard.mes}"
-										styleClass="font-12" >
+										styleClass="font-12">
 										<f:selectItems var="mes" itemLabel="#{mes.abreviacao}"
 											itemValue="#{mes.numero}" value="#{utilMB.meses()}" />
-										<p:ajax process="mes" listener="#{dashBoard.atualizarDados()}" update="frm"/>
+										<p:ajax process="mes" />
 									</p:selectOneButton>
 								</h:panelGroup>
 
@@ -61,20 +61,26 @@
 										styleClass="font-12">
 										<f:selectItems var="ano" itemLabel="#{ano}" itemValue="#{ano}"
 											value="#{dashBoard.listAnos}" />
-										<p:ajax process="ano" listener="#{dashBoard.atualizarDados()}" update="ano frm"/>
+										<p:ajax process="ano" update="ano" listener="#{dashBoard.atualizarAno()}"/>
 									</p:selectOneButton>
+								</h:panelGroup>
+								
+								<h:panelGroup>
+									<p:outputLabel value="Atualizar " styleClass="my-label" />
+									<br />
+									<p:commandButton icon="fa fa-refresh" action="#{dashBoard.atualizarDados()}" update="frm"/>
 								</h:panelGroup>
 
 							</p:panelGrid>
 
 						</div>
-<!-- 						</p:outputPanel> -->
+						<!-- 						</p:outputPanel> -->
 					</div>
 				</div>
 			</div>
 		</h:form>
 
-	<h:form id="frm" prependId="false">
+		<h:form id="frm" prependId="false">
 
 			<div class="ui-g">
 
@@ -187,9 +193,9 @@
 						</div>
 					</div>
 				</div>
- 
-								
-								
+
+
+
 				<div class="ui-g-12 ">
 					<div class="ui-g-12 card shadow-effect">
 						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
@@ -230,7 +236,7 @@
 				</div>
 
 
- 
+
 
 				<div class="ui-g-8  ui-md-6 ui-lg-8 ui-sm-12">
 					<div class="ui-g-12 card shadow-effect">
@@ -249,7 +255,7 @@
 											value="#{dashBoard.listarDizimistas()}" rowHover="true"
 											reflow="true" emptyMessage="Nenhum registro foi encontrado!">
 
-											<p:column headerText="Nome" >
+											<p:column headerText="Nome">
 												<p:outputLabel value="#{pessoa.nome}" />
 											</p:column>
 										</p:dataTable>
@@ -342,81 +348,91 @@
 						</div>
 					</div>
 				</div>
-				
-				
-				
-				
+
+
+
+
 				<div class="ui-g-12 ">
 					<div class="ui-g-12 card shadow-effect">
 						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
 
 							<div class="dash-title-1 font-dark-grey"
 								style="font-weight: normal; padding-bottom: 10px;">Resumo</div>
-								
-								
-								<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">
-									
-									
-										<h:outputText value="Valores faturados" styleClass="destaque bg-dark-blue centralizado font-med"/>
-									 
-										<h:outputText value="Entradas" />
-										<h:outputText value="#{dashBoard.totalEntradasPagas()}" styleClass="destaque bg-green centralizado ">
-											<f:convertNumber type="currency"/>
-										</h:outputText>
-										 
-										<h:outputText value="Saídas" />
-										<h:outputText value="#{dashBoard.totalSaidasPagas()}"  styleClass="destaque bg-red centralizado " >
-											<f:convertNumber type="currency"/>
-										</h:outputText>
-										
-										<h:outputText value="Saldo" />
-										<h:outputText value="#{dashBoard.saldoFaturado()}"  styleClass="destaque bg-blue my-label font-med centralizado " >
-											<f:convertNumber type="currency"/>
-										</h:outputText>
-									
-									</div>
-									
-								
-								<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">	
-									<h:outputText value="Próximas faturas" styleClass="destaque bg-dark-blue centralizado font-med"/>
-								 
-									<h:outputText value="Entradas" />
-									<h:outputText value="#{dashBoard.totalEntradasEmAberto()}" styleClass="destaque bg-blue centralizado ">
-										<f:convertNumber type="currency"/>
-									</h:outputText>
-							
-									<h:outputText value="Saídas" />
-									<h:outputText value="#{dashBoard.totalSaidasEmAberto()}"  styleClass="destaque bg-yellow centralizado " >
-										<f:convertNumber type="currency"/>
-									</h:outputText>
-									
-							
-									<h:outputText value="Saldo" />
-									<h:outputText value="#{dashBoard.saldoAFaturar()}"  styleClass="destaque bg-orange my-label font-med centralizado" >
-										<f:convertNumber type="currency"/>
-									</h:outputText>
-								
-								</div>
-								
-								<blockquote>
-									<i>
-										<h:outputText value="Ao término do processamento das próximas faturas, a previsão é que o saldo será de: " 
-											style="color: red"/>
-									</i>
-								</blockquote>
-								
-								<h:outputText value="#{dashBoard.saldoFaturado() + dashBoard.saldoAFaturar()}"  styleClass="destaque bg-green my-label font-med centralizado " >
-									<f:convertNumber type="currency"/>
+
+
+							<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">
+
+
+								<h:outputText value="Valores faturados"
+									styleClass="destaque bg-dark-blue centralizado font-med" />
+
+								<h:outputText value="Entradas" />
+								<h:outputText value="#{dashBoard.totalEntradasPagas()}"
+									styleClass="destaque bg-green centralizado ">
+									<f:convertNumber type="currency" />
 								</h:outputText>
-							 
+
+								<h:outputText value="Saídas" />
+								<h:outputText value="#{dashBoard.totalSaidasPagas()}"
+									styleClass="destaque bg-red centralizado ">
+									<f:convertNumber type="currency" />
+								</h:outputText>
+
+								<h:outputText value="Saldo" />
+								<h:outputText value="#{dashBoard.saldoFaturado()}"
+									styleClass="destaque bg-blue my-label font-med centralizado ">
+									<f:convertNumber type="currency" />
+								</h:outputText>
+
+							</div>
+
+
+							<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">
+								<h:outputText value="Próximas faturas"
+									styleClass="destaque bg-dark-blue centralizado font-med" />
+
+								<h:outputText value="Entradas" />
+								<h:outputText value="#{dashBoard.totalEntradasEmAberto()}"
+									styleClass="destaque bg-blue centralizado ">
+									<f:convertNumber type="currency" />
+								</h:outputText>
+
+								<h:outputText value="Saídas" />
+								<h:outputText value="#{dashBoard.totalSaidasEmAberto()}"
+									styleClass="destaque bg-yellow centralizado ">
+									<f:convertNumber type="currency" />
+								</h:outputText>
+
+
+								<h:outputText value="Saldo" />
+								<h:outputText value="#{dashBoard.saldoAFaturar()}"
+									styleClass="destaque bg-orange my-label font-med centralizado">
+									<f:convertNumber type="currency" />
+								</h:outputText>
+
+							</div>
+
+							<blockquote>
+								<i> <h:outputText
+										value="Ao término do processamento das próximas faturas, a previsão é que o saldo será de: "
+										style="color: red" />
+								</i>
+							</blockquote>
+
+							<h:outputText
+								value="#{dashBoard.saldoFaturado() + dashBoard.saldoAFaturar()}"
+								styleClass="destaque bg-green my-label font-med centralizado ">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+
 						</div>
 					</div>
 				</div>
-				
-				
-				
-				
-				
+
+
+
+
+
 				<div class="ui-g-6 ui-md-6 ui-lg-6 ui-sm-12">
 					<div class="ui-g-12 card shadow-effect">
 
@@ -469,9 +485,9 @@
 						</div>
 					</div>
 				</div>
-				
-				
-				
+
+
+
 				<div class="ui-g-6  ui-md-6 ui-lg-6 ui-sm-12">
 					<div class="ui-g-12 card shadow-effect">
 
@@ -520,10 +536,10 @@
 						</div>
 					</div>
 				</div>
-				
-				
-				
-				
+
+
+
+
 				<div class="ui-g-12 ">
 					<div class="ui-g-12 card shadow-effect">
 						<div class="ui-g-12 ui-md-12 ui-lg-12 box ui-g-nopad">
@@ -587,10 +603,10 @@
 						</div>
 					</div>
 				</div>
-				
-				
-				
-				
+
+
+
+
 
 				<div class="ui-g-12 ">
 					<div class="ui-g-12 card shadow-effect">
@@ -790,8 +806,6 @@
 						</div>
 					</div>
 				</div>
-
-
 			</div>
 		</h:form>
 	</ui:define>
