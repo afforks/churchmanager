@@ -154,7 +154,7 @@ public class AtividadeEclesiasticaDaoTest {
 
 	@Test
 	public void deveRetornarNuloSeNaoEncontrarAtividadePorNome() {
-		AtividadeEclesiastica atividadeDoBanco = atividadeDAO.buscarPorAtributo("Cantar");
+		AtividadeEclesiastica atividadeDoBanco = atividadeDAO.buscarPorAtributo("nome", "Cantar");
 		assertNull(atividadeDoBanco);
 	}
 

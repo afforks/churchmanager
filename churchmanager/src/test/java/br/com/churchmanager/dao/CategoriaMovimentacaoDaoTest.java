@@ -154,7 +154,7 @@ public class CategoriaMovimentacaoDaoTest {
 
 	@Test
 	public void deveRetornarNuloSeNaoEncontrarCategoriaPorNome() {
-		CategoriaMovimentacao categoriaDoBanco = categoriaDAO.buscarPorAtributo("Mercantil");
+		CategoriaMovimentacao categoriaDoBanco = categoriaDAO.buscarPorAtributo("nome", "Mercantil");
 		assertNull(categoriaDoBanco);
 	}
 

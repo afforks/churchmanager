@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class DataUtil implements Serializable {
 
@@ -77,17 +78,20 @@ public class DataUtil implements Serializable {
 
 	public static int calcularIdade(Date dataNascimento) {
 
-		Calendar c = getInstance();
-		Calendar c2 = getInstance();
-		Date dataAtual = new Date();
-		c.setTime(dataNascimento);
-		c2.setTime(dataAtual);
-		int diaAtual = c2.get(DATE);
-		int mesAtual = c2.get(MONTH);
-		int anoAtual = c2.get(YEAR);
-		int idade = anoAtual - c.get(YEAR) - 1;
-		if (mesAtual >= c.get(MONTH) && diaAtual >= c.get(DATE)) {
-			++idade;
+		int idade = 0;
+		if(!Objects.isNull(dataNascimento)) {
+			Calendar c = getInstance();
+			Calendar c2 = getInstance();
+			Date dataAtual = new Date();
+			c.setTime(dataNascimento);
+			c2.setTime(dataAtual);
+			int diaAtual = c2.get(DATE);
+			int mesAtual = c2.get(MONTH);
+			int anoAtual = c2.get(YEAR);
+			idade = anoAtual - c.get(YEAR) - 1;
+			if (mesAtual >= c.get(MONTH) && diaAtual >= c.get(DATE)) {
+				++idade;
+			}
 		}
 
 		return idade;

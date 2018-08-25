@@ -35,6 +35,7 @@ import javax.validation.constraints.Size;
 //import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.churchmanager.util.DataUtil;
 import lombok.AllArgsConstructor;
@@ -60,7 +61,7 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 2103210206726291934L;
 
-	@NotNull
+	@NotBlank
 	@Size(min = 3, max = 50)
 	@Column(name = "nome", nullable = false, unique = true)
 	private String nome;
@@ -105,7 +106,7 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	
 	@Column(name = "estado_civil")
 	@Enumerated(EnumType.STRING)
-	private EstadoCivil estadoCivil = EstadoCivil.SOLTEIRO;
+	private EstadoCivil estadoCivil;
 
 	@Column(name = "escolaridade")
 	@Enumerated(EnumType.STRING)
@@ -130,8 +131,7 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	private List<AtividadeEclesiastica> atividadesEclesiastica = new ArrayList<>();
 
 	@OneToMany(mappedBy = "pessoa", cascade = { CascadeType.ALL }, targetEntity = Dizimo.class, orphanRemoval = true)
-	@Fetch(FetchMode.SUBSELECT)
-	
+	@Fetch(FetchMode.SUBSELECT)	
 	private List<Dizimo> dizimos = new ArrayList<>();
 
 	@Column(name = "data_cadastro", nullable = false)

@@ -86,7 +86,7 @@
 						styleClass="center">
 
 						<p:commandButton icon="fa fa-check" process="@this"
-							update="table-diretoria col-selecionar  @this"
+							update="table-pessoa-cargo table-diretoria col-selecionar  @this"
 							title="Clique para selecionar a relação"
 							rendered="#{diretoriaMB.naoContemPessoaCargo(pc)}">
 							<p:collector unique="true" value="#{pc}"
@@ -96,7 +96,7 @@
 						<p:commandButton icon="fa fa-close" styleClass="btn-red"
 							process="@this"
 							rendered="#{diretoriaMB.diretoria.pessoaCargos.contains(pc)}"
-							update="@this table-diretoria">
+							update="table-pessoa-cargo table-diretoria col-selecionar  @this">
 							<p:collector value="#{pc}"
 								removeFrom="#{diretoriaMB.diretoria.pessoaCargos}" />
 						</p:commandButton>

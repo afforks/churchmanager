@@ -150,7 +150,7 @@ public class CargoDaoTest {
 
 	@Test
 	public void deveRetornarNuloSeNaoEncontrarCargoPorNome() {
-		Cargo cargoDoBanco = cargoDAO.buscarPorAtributo("Vice-presidente");
+		Cargo cargoDoBanco = cargoDAO.buscarPorAtributo("nome", "Vice-presidente");
 		assertNull(cargoDoBanco);
 	}
 

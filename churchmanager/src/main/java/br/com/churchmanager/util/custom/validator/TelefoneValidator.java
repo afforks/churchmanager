@@ -6,14 +6,14 @@ import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import br.com.churchmanager.util.custom.Cep;
+import br.com.churchmanager.util.custom.Telefone;
 
-public class CepValidator implements ConstraintValidator<Cep, String> {
+public class TelefoneValidator implements ConstraintValidator<Telefone, String> {
 
-	private Pattern padrao = Pattern.compile("(\\d{2}.\\d{3}\\-\\d{3})?");
+	private Pattern padrao = Pattern.compile("(\\(\\d{2}\\)\\d{4,5}\\-\\d{4})?");
 
 	@Override
-	public void initialize(Cep constraintAnnotation) {
+	public void initialize(Telefone constraintAnnotation) {
 		//Do not nothing
 	}
 

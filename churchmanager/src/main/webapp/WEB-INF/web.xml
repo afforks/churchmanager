@@ -100,10 +100,10 @@
 		<location>/acesso-negado.xhtml</location>
 	</error-page>
 	
-	<error-page>
-		<exception-type>java.lang.RuntimeException</exception-type>
-       <location>/bug.xhtml</location>
-	</error-page>
+<!-- 	<error-page> -->
+<!-- 		<exception-type>java.lang.RuntimeException</exception-type> -->
+<!--        <location>/bug.xhtml</location> -->
+<!-- 	</error-page> -->
 
 	<error-page>
 		<exception-type>java.lang.Throwable</exception-type>

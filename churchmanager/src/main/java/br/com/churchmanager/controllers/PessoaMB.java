@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -22,6 +21,7 @@ import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.filter.PessoaFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
+import br.com.churchmanager.util.custom.Telefone;
 import br.com.churchmanager.util.faces.FacesUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,12 +38,10 @@ public class PessoaMB implements Serializable {
 	private List<Pessoa> pessoas = new ArrayList<>();
 	private MyLazyDataModel<Pessoa> pessoasLazy;
 	private PessoaFilter pessoaFilter = new PessoaFilter();
-	
-	@NotNull
-	@Pattern(regexp = "^\\([1-9]{2}\\)[0-9]{4}\\-[0-9]{4}[0-9]{0,1}$")
+
+	@Telefone
 	private String telefone;
-	
-	@NotNull
+
 	@Email
 	private String email;
 
@@ -122,22 +120,29 @@ public class PessoaMB implements Serializable {
 	}
 
 	// ***********************************
-	
+
 	public void resetarTelefone() {
-		if(FacesUtil.naoFalhouNaValidacao()) {
-			FacesUtil.informacao("msg-tel-email", "Telefone adicionado!", "Número: "+this.telefone);
+		if (FacesUtil.naoFalhouNaValidacao()) {
+			FacesUtil.informacao("msg-tel-email", "Telefone adicionado!", "Número: " + this.telefone);
 			FacesUtil.atualizaComponente("msg-tel-email");
 			this.telefone = null;
 		}
 	}
 
 	public void resetarEmail() {
-		if(FacesUtil.naoFalhouNaValidacao()) {
-			FacesUtil.informacao("msg-tel-email", "E-mail adicionado!", "E-mail: "+this.email);
+		if (FacesUtil.naoFalhouNaValidacao()) {
+			FacesUtil.informacao("msg-tel-email", "E-mail adicionado!", "E-mail: " + this.email);
 			FacesUtil.atualizaComponente("msg-tel-email");
 			this.email = null;
 		}
 	}
-	
-	
+
+	public Pessoa getPessoa() {
+		return Objects.isNull(pessoa) ? new Pessoa() : pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
 }

@@ -21,6 +21,16 @@ public class CepAnnotationTest {
 	public void tearDown() {
 		this.cepValidator = null;
 	}
+	
+	@Test
+	public void deveValidarCepEmBranco() {
+		assertTrue(cepValidator.isValid("", null));
+	}
+
+	@Test
+	public void deveValidarCepNulo() {
+		assertTrue(cepValidator.isValid(null, null));
+	}
 
 	@Test
 	public void deveValidarCep() {
