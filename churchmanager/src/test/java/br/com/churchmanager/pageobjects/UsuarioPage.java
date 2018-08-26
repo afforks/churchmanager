@@ -26,7 +26,6 @@ public class UsuarioPage {
 
 	public boolean contemMensagem(String msg) {
 		WebElement mensagens = driver.findElement(By.id("msg"));
-		System.out.println(mensagens.getText());
 		return mensagens.getText().contains(msg);
 
 	}

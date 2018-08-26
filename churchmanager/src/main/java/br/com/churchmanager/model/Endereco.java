@@ -35,9 +35,8 @@ public class Endereco implements Serializable {
 	private String bairro;
 
 	@Column(name = "cep")
-//	@Pattern(regexp = "\\d{5}-\\d{3}", message = "Cep com formato inválido")
 	@Cep
-	private String cep = "62940-000";
+	private String cep = "62.940-000";
 
 	@Column(name = "cidade")
 	private String cidade = "Morada Nova";

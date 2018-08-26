@@ -24,8 +24,8 @@ import br.com.churchmanager.model.Pagina;
 import br.com.churchmanager.model.Perfil;
 import br.com.churchmanager.model.Usuario;
 import br.com.churchmanager.pageobjects.UsuarioPage;
+import br.com.churchmanager.util.Chrome;
 import br.com.churchmanager.util.ContextoDaAplicacao;
-import br.com.churchmanager.util.Firefox;
 import br.com.churchmanager.util.JPAUtil;
 import br.com.churchmanager.util.LoginUtil;
 import br.com.churchmanager.util.WebDriverUtil;
@@ -68,7 +68,7 @@ public class CadastroDeUsuarioTest {
 
 		novoUsuario();
 
-		driver = WebDriverUtil.driver(new Firefox());
+		driver = WebDriverUtil.driver(new Chrome());
 
 		LoginUtil.efetuarLogin(driver);
 	}

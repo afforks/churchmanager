@@ -10,7 +10,7 @@ import br.com.churchmanager.util.custom.Cep;
 
 public class CepValidator implements ConstraintValidator<Cep, String> {
 
-	private Pattern padrao = Pattern.compile("(\\d{2}.\\d{3}\\-\\d{3})?");
+	private Pattern padrao = Pattern.compile("^\\d{2}.\\d{3}\\-\\d{3}?");
 
 	@Override
 	public void initialize(Cep constraintAnnotation) {
