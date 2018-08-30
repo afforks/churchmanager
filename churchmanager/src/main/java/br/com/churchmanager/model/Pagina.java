@@ -8,23 +8,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Entity(name = "pagina")
 @Table(name = "pagina")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString(of = { "nome" })
-@EqualsAndHashCode(of= {"id"}, callSuper=true)
-@Builder
 public class Pagina extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,7 +18,7 @@ public class Pagina extends EntidadeGenerica implements Serializable {
 	@Size(min = 3, max = 50)
 	@Column(name = "nome", nullable = false, unique = true)
 	private String nome;
-	
+
 	@NotNull
 	@Size(min = 3, max = 50)
 	@Column(name = "nome_identificador", nullable = false, unique = true)
@@ -45,14 +30,29 @@ public class Pagina extends EntidadeGenerica implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-		this.setNomeIdentificador(nome.toUpperCase()
-				.replaceAll(" ", "_")
-				.replaceAll("[ÁÀÂÃ]", "A")
-				.replaceAll("[ÉÈÊ]", "E")
-				.replaceAll("[ÍÏ]", "I")
-				.replaceAll("[ÓÔÕÖ]", "O")
-				.replaceAll("Ú", "U")
-				.replaceAll("Ç", "C")
-				.replaceAll("Ñ", "N"));
+		this.setNomeIdentificador(nome.toUpperCase().replaceAll(" ", "_").replaceAll("[ÁÀÂÃ]", "A")
+				.replaceAll("[ÉÈÊ]", "E").replaceAll("[ÍÏ]", "I").replaceAll("[ÓÔÕÖ]", "O").replaceAll("Ú", "U")
+				.replaceAll("Ç", "C").replaceAll("Ñ", "N"));
 	}
+
+	public String getNomeIdentificador() {
+		return nomeIdentificador;
+	}
+
+	public void setNomeIdentificador(String nomeIdentificador) {
+		this.nomeIdentificador = nomeIdentificador;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
 }

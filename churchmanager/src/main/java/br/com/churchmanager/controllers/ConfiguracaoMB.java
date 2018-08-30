@@ -13,8 +13,6 @@ import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Configuracao;
 import br.com.churchmanager.util.faces.FacesUtil;
-import lombok.Getter;
-import lombok.Setter;
 
 @Model
 public class ConfiguracaoMB {
@@ -24,20 +22,14 @@ public class ConfiguracaoMB {
 
 	@NotNull
 	@Pattern(regexp = "^\\([1-9]{2}\\)[0-9]{4}\\-[0-9]{4}[0-9]{0,1}$|\\([1-9]{2}\\)[0-9]{5}\\-[0-9]{4}[0-9]{0,1}$")
-	@Getter
-	@Setter
 	private String telefone;
 
 	@NotNull
 	@Email
-	@Getter
-	@Setter
 	private String email;
 
-	@Getter
-	@Setter
 	private Configuracao configuracao = new Configuracao();
-	
+
 	public void carregarUltimaConfiguracao() {
 		this.configuracao = configuracaoBO.buscarUltimaConfiguracao();
 		FacesUtil.atualizaComponente("group");
@@ -48,7 +40,7 @@ public class ConfiguracaoMB {
 			configuracaoBO.salvar(configuracao);
 			FacesUtil.informacao("config-msg", "Cadastrado com sucesso!", null);
 		} catch (ViolacaoDeRestricaoException | DadosException | NegocioException e) {
-			e.printStackTrace();
+
 			FacesUtil.erro("config-msg", "Atenção!", e.getMessage());
 		} finally {
 			FacesUtil.atualizaComponente("config-msg");
@@ -70,6 +62,30 @@ public class ConfiguracaoMB {
 			FacesUtil.atualizaComponente("msg-tel-email");
 			this.email = null;
 		}
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Configuracao getConfiguracao() {
+		return configuracao;
+	}
+
+	public void setConfiguracao(Configuracao configuracao) {
+		this.configuracao = configuracao;
 	}
 
 }

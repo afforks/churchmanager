@@ -2,7 +2,6 @@ package br.com.churchmanager.controllers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,9 +16,7 @@ import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Movimentacao;
 import br.com.churchmanager.model.ParcelaMovimentacao;
-import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.StatusMovimentacao;
-import br.com.churchmanager.model.TipoMovimentacao;
 import br.com.churchmanager.model.filter.MovimentacaoFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.DataUtil;
@@ -30,9 +27,9 @@ import br.com.churchmanager.util.faces.FacesUtil;
 @Named
 @ViewScoped
 public class MovimentacaoMB implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Movimentacao movimentacao;
 	private List<Movimentacao> movimentacaos;
 	private MyLazyDataModel<Movimentacao> movimentacaosLazy;
@@ -69,15 +66,8 @@ public class MovimentacaoMB implements Serializable {
 			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.movimentacao.toString());
 			FacesUtil.atualizaComponente("msg");
 			this.movimentacao = null;
-		} catch (NegocioException e) {
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
 		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
@@ -92,15 +82,15 @@ public class MovimentacaoMB implements Serializable {
 			this.movimentacao = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
@@ -119,10 +109,6 @@ public class MovimentacaoMB implements Serializable {
 		this.bo.deletar(this.movimentacao);
 		this.movimentacao = null;
 		return null;
-	}
-
-	public Status[] listarStatus() {
-		return Status.values();
 	}
 
 	public List<Movimentacao> movimentacaos() {
@@ -193,53 +179,11 @@ public class MovimentacaoMB implements Serializable {
 	}
 
 	public List<Integer> anos() {
-		return this.listAnos ;
-	}
-
-	public boolean isStatusEmAbeto() {
-		return this.getMovimentacao().getStatusMovimentacao().equals(StatusMovimentacao.EM_ABERTO);
-	}
-
-	public boolean isStatusEmAbeto(Movimentacao movimentacao) {
-		return movimentacao.getStatusMovimentacao().equals(StatusMovimentacao.EM_ABERTO);
-	}
-
-	public boolean isStatusEmAbeto(ParcelaMovimentacao parcelaMovimentacao) {
-		return parcelaMovimentacao.getStatusMovimentacao().equals(StatusMovimentacao.EM_ABERTO);
-	}
-
-	public boolean isStatusPago(ParcelaMovimentacao parcelaMovimentacao) {
-		return parcelaMovimentacao.getStatusMovimentacao().equals(StatusMovimentacao.PAGO);
-	}
-
-	public boolean isEntrada() {
-		return this.getMovimentacao().getTipoMovimentacao().equals(TipoMovimentacao.ENTRADA);
-	}
-
-	public boolean isSaida() {
-		return this.getMovimentacao().getTipoMovimentacao().equals(TipoMovimentacao.SAIDA);
-	}
-
-	public boolean isReceber(Movimentacao movimentacao) {
-		return movimentacao.getTipoMovimentacao().equals(TipoMovimentacao.ENTRADA)
-				&& movimentacao.getStatusMovimentacao().equals(StatusMovimentacao.EM_ABERTO);
-	}
-
-	public boolean isPagar(Movimentacao movimentacao) {
-		return movimentacao.getTipoMovimentacao().equals(TipoMovimentacao.SAIDA)
-				&& movimentacao.getStatusMovimentacao().equals(StatusMovimentacao.EM_ABERTO);
-	}
-
-	public boolean isEntradaOuSaidaComStatusPago(Movimentacao movimentacao) {
-		return !this.isReceber(movimentacao) && !this.isPagar(movimentacao);
+		return this.listAnos;
 	}
 
 	public String tituloReceberPagar() {
-		return this.isEntrada() ? "Receber" : "Pagar";
-	}
-	
-	public boolean naoEstaEmAberto(ParcelaMovimentacao parcela) {
-		return !isStatusEmAbeto(parcela);
+		return this.getMovimentacao().isEntrada() ? "Receber" : "Pagar";
 	}
 
 	public String alterarStatusDaParcela() {
@@ -248,9 +192,8 @@ public class MovimentacaoMB implements Serializable {
 			Movimentacao movimentacao = this.parcela.getMovimentacao();
 			List<ParcelaMovimentacao> listaDeParcelas = this.parcelasBO.busarParcelas(movimentacao);
 			movimentacao.setParcelas(listaDeParcelas);
-			long parcelasEmAberto = movimentacao.getParcelas().stream().filter((p) -> {
-				return this.isStatusEmAbeto(p);
-			}).count();
+			long parcelasEmAberto = movimentacao.getParcelas().stream().filter(ParcelaMovimentacao::isStatusEmAbeto)
+					.count();
 			if (parcelasEmAberto - 1L == 0L) {
 				movimentacao.setStatusMovimentacao(StatusMovimentacao.PAGO);
 			}
@@ -262,7 +205,7 @@ public class MovimentacaoMB implements Serializable {
 				FacesUtil.informacao("msg-pagar-receber", "Editado com sucesso!", this.parcela.toString());
 			} catch (Exception e) {
 				FacesUtil.atencao("msg-pagar-receber", "Atenção!", e.getMessage());
-				e.printStackTrace();
+
 			} finally {
 				FacesUtil.atualizaComponente("msg-pagar-receber");
 			}
@@ -284,13 +227,11 @@ public class MovimentacaoMB implements Serializable {
 
 	public String cancelarAlterarStatusDaParcela() {
 		this.getParcela().setStatusMovimentacao(StatusMovimentacao.EM_ABERTO);
-		this.getParcela().setDataPagamento((Date) null);
+		this.getParcela().setDataPagamento(null);
 		Movimentacao movimentacao = this.parcela.getMovimentacao();
 		List<ParcelaMovimentacao> listaDeParcelas = this.parcelasBO.busarParcelas(movimentacao);
 		movimentacao.setParcelas(listaDeParcelas);
-		long parcelasPagas = movimentacao.getParcelas().stream().filter((p) -> {
-			return this.isStatusEmAbeto(p);
-		}).count();
+		long parcelasPagas = movimentacao.getParcelas().stream().filter(ParcelaMovimentacao::isStatusEmAbeto).count();
 		if (parcelasPagas == 0L) {
 			movimentacao.setStatusMovimentacao(StatusMovimentacao.EM_ABERTO);
 		}
@@ -301,7 +242,7 @@ public class MovimentacaoMB implements Serializable {
 			FacesUtil.informacao("msg-pagar-receber", "Editado com sucesso!", this.parcela.toString());
 		} catch (Exception e) {
 			FacesUtil.atencao("msg-pagar-receber", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} finally {
 			FacesUtil.atualizaComponente("msg-pagar-receber");
 		}

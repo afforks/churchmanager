@@ -14,7 +14,6 @@ import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Cargo;
-import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.CargoFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
@@ -46,13 +45,14 @@ public class CargoMB implements Serializable {
 			this.cargo = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+			
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O nome '"+cargo.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O nome '" + cargo.getNome() + "' está duplicado, por favor, informe outro!");
+			
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+			
 		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
@@ -68,15 +68,16 @@ public class CargoMB implements Serializable {
 			this.cargo = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+			
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O nome '"+cargo.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O nome '" + cargo.getNome() + "' está duplicado, por favor, informe outro!");
+			
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+			
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
@@ -94,10 +95,6 @@ public class CargoMB implements Serializable {
 		this.bo.deletar(this.cargo);
 		this.cargo = null;
 		return null;
-	}
-
-	public Status[] listarStatus() {
-		return Status.values();
 	}
 
 	public List<Cargo> cargos() {
@@ -151,4 +148,5 @@ public class CargoMB implements Serializable {
 	public void setCargoFilter(CargoFilter cargoFilter) {
 		this.cargoFilter = cargoFilter;
 	}
+
 }

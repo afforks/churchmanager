@@ -14,21 +14,8 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CNPJ;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity(name = "configuracao")
 @Table(name = "configuracao")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = { "id" }, callSuper = true)
-@Builder
 public class Configuracao extends EntidadeGenerica {
 
 	private static final long serialVersionUID = -2791052442461724363L;
@@ -70,5 +57,77 @@ public class Configuracao extends EntidadeGenerica {
 
 	@Embedded
 	private Endereco endereco = new Endereco();
+
+	public String getNomeDaIgreja() {
+		return nomeDaIgreja;
+	}
+
+	public void setNomeDaIgreja(String nomeDaIgreja) {
+		this.nomeDaIgreja = nomeDaIgreja;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public String getNomeDoBanco() {
+		return nomeDoBanco;
+	}
+
+	public void setNomeDoBanco(String nomeDoBanco) {
+		this.nomeDoBanco = nomeDoBanco;
+	}
+
+	public String getConta() {
+		return conta;
+	}
+
+	public void setConta(String conta) {
+		this.conta = conta;
+	}
+
+	public String getAgencia() {
+		return agencia;
+	}
+
+	public void setAgencia(String agencia) {
+		this.agencia = agencia;
+	}
+
+	public String getNomeDoDirigente() {
+		return nomeDoDirigente;
+	}
+
+	public void setNomeDoDirigente(String nomeDoDirigente) {
+		this.nomeDoDirigente = nomeDoDirigente;
+	}
+
+	public List<String> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(List<String> telefones) {
+		this.telefones = telefones;
+	}
+
+	public List<String> getEmails() {
+		return emails;
+	}
+
+	public void setEmails(List<String> emails) {
+		this.emails = emails;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
 
 }

@@ -14,24 +14,8 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Entity(name = "avaliacao_patrimonio")
 @Table(name = "avaliacao_patrimonio")
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString(of = { "patrimonio" })
-@EqualsAndHashCode(of = { "id" }, callSuper = true)
-@Builder
 public class AvaliacaoPatrimonio extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 4287443468273L;
@@ -54,5 +38,37 @@ public class AvaliacaoPatrimonio extends EntidadeGenerica implements Serializabl
 	@DecimalMin("0.01")
 	@Column(name = "valor_atual", nullable = false)
 	private double valorAtual;
+
+	public Patrimonio getPatrimonio() {
+		return patrimonio;
+	}
+
+	public void setPatrimonio(Patrimonio patrimonio) {
+		this.patrimonio = patrimonio;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public Date getDataAvaliacao() {
+		return dataAvaliacao;
+	}
+
+	public void setDataAvaliacao(Date dataAvaliacao) {
+		this.dataAvaliacao = dataAvaliacao;
+	}
+
+	public double getValorAtual() {
+		return valorAtual;
+	}
+
+	public void setValorAtual(double valorAtual) {
+		this.valorAtual = valorAtual;
+	}
 
 }

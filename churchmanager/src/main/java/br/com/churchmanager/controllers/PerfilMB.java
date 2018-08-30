@@ -14,7 +14,6 @@ import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Perfil;
-import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.PerfilFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
@@ -45,14 +44,14 @@ public class PerfilMB implements Serializable {
 			this.perfil = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} catch (ViolacaoDeRestricaoException e) {
 			FacesUtil.atencao("msg", "Atenção!",
 					"O nome '" + perfil.getNome() + "' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
@@ -66,16 +65,16 @@ public class PerfilMB implements Serializable {
 			this.perfil = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
 			FacesUtil.atencao("msg", "Atenção!",
 					"O nome '" + perfil.getNome() + "' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
@@ -96,15 +95,12 @@ public class PerfilMB implements Serializable {
 	}
 
 	private List<Perfil> perfis;
+
 	public List<Perfil> perfis() {
-		if(perfis == null && FacesUtil.isNotPostback()) {
+		if (perfis == null && FacesUtil.isNotPostback()) {
 			perfis = this.bo.listar();
 		}
 		return perfis;
-	}
-
-	public Status[] listarStatus() {
-		return Status.values();
 	}
 
 	public Perfil getPerfil() {
@@ -154,4 +150,13 @@ public class PerfilMB implements Serializable {
 	public void setPerfilFilter(PerfilFilter perfilFilter) {
 		this.perfilFilter = perfilFilter;
 	}
+
+	public List<Perfil> getPerfis() {
+		return perfis;
+	}
+
+	public void setPerfis(List<Perfil> perfis) {
+		this.perfis = perfis;
+	}
+
 }

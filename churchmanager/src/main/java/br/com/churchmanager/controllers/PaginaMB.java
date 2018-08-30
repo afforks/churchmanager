@@ -15,7 +15,6 @@ import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Pagina;
-import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.PaginaFilter;
 import br.com.churchmanager.report.GenericReport;
 import br.com.churchmanager.util.BuscaObjeto;
@@ -100,10 +99,6 @@ public class PaginaMB implements Serializable {
 		return null;
 	}
 
-	public Status[] listarStatus() {
-		return Status.values();
-	}
-
 	private List<Pagina> listarPaginas;
 
 	public List<Pagina> listarPaginas() {
@@ -160,4 +155,13 @@ public class PaginaMB implements Serializable {
 	public void setPaginaFilter(PaginaFilter paginaFilter) {
 		this.paginaFilter = paginaFilter;
 	}
+
+	public List<Pagina> getListarPaginas() {
+		return listarPaginas;
+	}
+
+	public void setListarPaginas(List<Pagina> listarPaginas) {
+		this.listarPaginas = listarPaginas;
+	}
+
 }

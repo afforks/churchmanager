@@ -8,20 +8,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 import br.com.churchmanager.util.custom.Cep;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Embeddable
-@Getter
-@Setter
-@NoArgsConstructor
-@ToString
-@AllArgsConstructor
-@Builder
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 7606653748140748746L;
 
@@ -47,5 +35,61 @@ public class Endereco implements Serializable {
 
 	@Column(name = "pais")
 	private String pais = "Brasil";
+
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getReferencia() {
+		return referencia;
+	}
+
+	public void setReferencia(String referencia) {
+		this.referencia = referencia;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
 
 }

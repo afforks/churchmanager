@@ -12,11 +12,7 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.churchmanager.dao.generic.Alias;
 import br.com.churchmanager.model.Status;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class EventoFilter implements Filter, Serializable {
 
 	private static final long serialVersionUID = 5043712329577L;
@@ -53,4 +49,29 @@ public class EventoFilter implements Filter, Serializable {
 	public boolean usarDistinct() {
 		return false;
 	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDia() {
+		return dia;
+	}
+
+	public void setDia(String dia) {
+		this.dia = dia;
+	}
+
+	public String getMes() {
+		return mes;
+	}
+
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
 }

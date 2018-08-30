@@ -13,6 +13,7 @@ import br.com.churchmanager.model.filter.CategoriaMovimentacaoFilter;
 import br.com.churchmanager.util.MyLazyDataModel;
 
 public class CategoriaMovimentacaoBO implements Serializable, Buscador<CategoriaMovimentacao> {
+	
 	private static final long serialVersionUID = 1L;
 
 	private static final boolean ORDER_ASC = true;

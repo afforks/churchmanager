@@ -15,11 +15,7 @@ import org.hibernate.criterion.Restrictions;
 import br.com.churchmanager.dao.generic.Alias;
 import br.com.churchmanager.model.Status;
 import br.com.churchmanager.util.DataUtil;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class DizimoFilter implements Filter, Serializable {
 
 	private static final long serialVersionUID = -5696573251550574369L;
@@ -63,4 +59,61 @@ public class DizimoFilter implements Filter, Serializable {
 	public boolean usarDistinct() {
 		return false;
 	}
+
+	public String getNomePessoa() {
+		return nomePessoa;
+	}
+
+	public void setNomePessoa(String nomePessoa) {
+		this.nomePessoa = nomePessoa;
+	}
+
+	public double getValorDizimo() {
+		return valorDizimo;
+	}
+
+	public void setValorDizimo(double valorDizimo) {
+		this.valorDizimo = valorDizimo;
+	}
+
+	public double getValorOferta() {
+		return valorOferta;
+	}
+
+	public void setValorOferta(double valorOferta) {
+		this.valorOferta = valorOferta;
+	}
+
+	public Date getDataReferencia() {
+		return dataReferencia;
+	}
+
+	public void setDataReferencia(Date dataReferencia) {
+		this.dataReferencia = dataReferencia;
+	}
+
+	public Date getDataRecebimento() {
+		return dataRecebimento;
+	}
+
+	public void setDataRecebimento(Date dataRecebimento) {
+		this.dataRecebimento = dataRecebimento;
+	}
+
+	public String getMes() {
+		return mes;
+	}
+
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
+	public String getAno() {
+		return ano;
+	}
+
+	public void setAno(String ano) {
+		this.ano = ano;
+	}
+
 }

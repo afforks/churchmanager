@@ -1,10 +1,9 @@
 package br.com.churchmanager.util;
 
-import br.com.churchmanager.dao.generic.Buscador;
-import br.com.churchmanager.util.AES;
-
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+
+import br.com.churchmanager.dao.generic.Buscador;
 
 public class BuscaObjeto {
 
@@ -17,8 +16,6 @@ public class BuscaObjeto {
 				.getRequest();
 		if (request.getParameter(paramId) != null) {
 			StringBuilder stringId = new StringBuilder(request.getParameter(paramId));
-			String decryptedString = AES.decrypt(stringId.toString().replace("@", "/").concat("=="));
-			stringId = new StringBuilder(decryptedString);
 			if (stringId.toString().matches("\\d+")) {
 				Long id = Long.valueOf(Long.parseLong(stringId.toString()));
 				t = buscador.buscarPorId(id);

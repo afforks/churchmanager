@@ -20,23 +20,8 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Email;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Entity(name = "usuario")
 @Table(name = "usuario")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString(of = { "nomeCompleto" })
-@EqualsAndHashCode(of= {"id"}, callSuper=true)
-@Builder
 public class Usuario extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -57,10 +42,9 @@ public class Usuario extends EntidadeGenerica implements Serializable {
 	@Column(name = "senha", nullable = false)
 	private String senha;
 
-	@OneToOne
+	@OneToOne(targetEntity = Perfil.class)
 	@JoinColumn(name = "perfil_id", nullable = false)
 	@NotNull
-	
 	private Perfil perfil = new Perfil();
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
@@ -68,7 +52,47 @@ public class Usuario extends EntidadeGenerica implements Serializable {
 	@JoinTable(name = "usuario_pagina", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "pagina_id") })
 	@NotNull
-	
-	private List<Pagina> paginas = new ArrayList();
+
+	private List<Pagina> paginas = new ArrayList<>();
+
+	public String getNomeCompleto() {
+		return nomeCompleto;
+	}
+
+	public void setNomeCompleto(String nomeCompleto) {
+		this.nomeCompleto = nomeCompleto;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
+
+	public List<Pagina> getPaginas() {
+		return paginas;
+	}
+
+	public void setPaginas(List<Pagina> paginas) {
+		this.paginas = paginas;
+	}
 
 }

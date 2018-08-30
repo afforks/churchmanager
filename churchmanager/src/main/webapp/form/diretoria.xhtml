@@ -85,7 +85,7 @@
 				<p:selectOneRadio id="status"
 					value="#{diretoriaMB.diretoria.status}">
 					<f:selectItems itemLabel="#{status.descricao}" var="status"
-						value="#{diretoriaMB.listarStatus()}" itemValue="#{status}" />
+						value="#{utilMB.listarStatus()}" itemValue="#{status}" />
 				</p:selectOneRadio>
 				<p:message for="status" />
 			</div>

@@ -32,22 +32,9 @@ import br.com.churchmanager.exception.NumeroParcelasInvalidoException;
 import br.com.churchmanager.exception.ValorInvalidoException;
 import br.com.churchmanager.util.DataUtil;
 import br.com.churchmanager.util.MonetarioUtil;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity(name = "movimentacao")
 @Table(name = "movimentacao")
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of= {"id"}, callSuper=true)
-@Builder
 public class Movimentacao extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 2815844645996443651L;
@@ -109,7 +96,7 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 	@OneToMany(mappedBy = "movimentacao", cascade = {
 			CascadeType.ALL }, targetEntity = ParcelaMovimentacao.class, orphanRemoval = true)
 	@Fetch(FetchMode.SUBSELECT)
-	private List<ParcelaMovimentacao> parcelas = new ArrayList();
+	private List<ParcelaMovimentacao> parcelas = new ArrayList<>();
 
 	public void gerarParcelas() {
 		this.getParcelas().clear();
@@ -165,5 +152,123 @@ public class Movimentacao extends EntidadeGenerica implements Serializable {
 			}
 		}
 
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public boolean isParcelado() {
+		return parcelado;
+	}
+
+	public void setParcelado(boolean parcelado) {
+		this.parcelado = parcelado;
+	}
+
+	public TipoMovimentacao getTipoMovimentacao() {
+		return tipoMovimentacao;
+	}
+
+	public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
+		this.tipoMovimentacao = tipoMovimentacao;
+	}
+
+	public FormaMovimentacao getFormaMovimentacao() {
+		return formaMovimentacao;
+	}
+
+	public void setFormaMovimentacao(FormaMovimentacao formaMovimentacao) {
+		this.formaMovimentacao = formaMovimentacao;
+	}
+
+	public Date getDataBase() {
+		return dataBase;
+	}
+
+	public void setDataBase(Date dataBase) {
+		this.dataBase = dataBase;
+	}
+
+	public Date getDataVencimento() {
+		return dataVencimento;
+	}
+
+	public void setDataVencimento(Date dataVencimento) {
+		this.dataVencimento = dataVencimento;
+	}
+
+	public CategoriaMovimentacao getCategoriaMovimentacao() {
+		return categoriaMovimentacao;
+	}
+
+	public void setCategoriaMovimentacao(CategoriaMovimentacao categoriaMovimentacao) {
+		this.categoriaMovimentacao = categoriaMovimentacao;
+	}
+
+	public StatusMovimentacao getStatusMovimentacao() {
+		return statusMovimentacao;
+	}
+
+	public void setStatusMovimentacao(StatusMovimentacao statusMovimentacao) {
+		this.statusMovimentacao = statusMovimentacao;
+	}
+
+	public List<ParcelaMovimentacao> getParcelas() {
+		return parcelas;
+	}
+
+	public void setParcelas(List<ParcelaMovimentacao> parcelas) {
+		this.parcelas = parcelas;
+	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public int getNumeroParcelas() {
+		return numeroParcelas;
+	}
+
+	public boolean isStatusEmAbeto() {
+		return this.getStatusMovimentacao().equals(StatusMovimentacao.EM_ABERTO);
+	}
+
+	public boolean isEntrada() {
+		return this.getTipoMovimentacao().equals(TipoMovimentacao.ENTRADA);
+	}
+
+	public boolean isSaida() {
+		return this.getTipoMovimentacao().equals(TipoMovimentacao.SAIDA);
+	}
+
+	public boolean isReceber() {
+		return getTipoMovimentacao().equals(TipoMovimentacao.ENTRADA)
+				&& getStatusMovimentacao().equals(StatusMovimentacao.EM_ABERTO);
+	}
+
+	public boolean isPagar() {
+		return getTipoMovimentacao().equals(TipoMovimentacao.SAIDA)
+				&& getStatusMovimentacao().equals(StatusMovimentacao.EM_ABERTO);
+	}
+
+	public boolean isEntradaOuSaidaComStatusPago() {
+		return !this.isReceber() && !this.isPagar();
+	}
+
+	public boolean naoEstaEmAberto() {
+		return !isStatusEmAbeto();
 	}
 }

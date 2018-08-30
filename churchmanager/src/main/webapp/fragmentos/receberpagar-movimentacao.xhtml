@@ -71,7 +71,7 @@
 				<p:column headerText="#{movimentacaoMB.tituloReceberPagar()}">
 					<p:commandButton icon="fa fa-check" styleClass="btn-green"
 						title="#{movimentacaoMB.tituloReceberPagar()}"
-						rendered="#{movimentacaoMB.isStatusEmAbeto(parcela)}"
+						rendered="#{parcela.isStatusEmAbeto()}"
 						update="table table-pagar-receber"
 						action="#{movimentacaoMB.alterarStatusDaParcela()}">
 						<f:setPropertyActionListener value="#{parcela}"
@@ -80,7 +80,7 @@
 
 					<p:commandButton icon="fa fa-close" styleClass="btn-red"
 						title="Cancelar "
-						rendered="#{movimentacaoMB.naoEstaEmAberto(parcela)}"
+						rendered="#{parcela.naoEstaEmAberto()}"
 						update="table table-pagar-receber"
 						action="#{movimentacaoMB.cancelarAlterarStatusDaParcela()}">
 						

@@ -12,11 +12,7 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.churchmanager.dao.generic.Alias;
 import br.com.churchmanager.model.Status;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class CategoriaMovimentacaoFilter implements Filter, Serializable {
 
 	private static final long serialVersionUID = 123451463701329577L;
@@ -48,4 +44,21 @@ public class CategoriaMovimentacaoFilter implements Filter, Serializable {
 	public boolean usarDistinct() {
 		return false;
 	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getNomeIdentificador() {
+		return nomeIdentificador;
+	}
+
+	public void setNomeIdentificador(String nomeIdentificador) {
+		this.nomeIdentificador = nomeIdentificador;
+	}
+
 }

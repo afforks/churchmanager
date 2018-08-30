@@ -12,29 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-//import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Entity(name = "parcela_movimentacao")
 @Table(name = "parcela_movimentacao")
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString(of = { "nome" })
-@EqualsAndHashCode(of= {"id"}, callSuper=true)
-@Builder
 public class ParcelaMovimentacao extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 6311557355809561814L;
@@ -76,4 +58,79 @@ public class ParcelaMovimentacao extends EntidadeGenerica implements Serializabl
 	@Enumerated(EnumType.STRING)
 	private FormaMovimentacao formaMovimentacao;
 
+	public Movimentacao getMovimentacao() {
+		return movimentacao;
+	}
+
+	public void setMovimentacao(Movimentacao movimentacao) {
+		this.movimentacao = movimentacao;
+	}
+
+	public double getValorParcela() {
+		return valorParcela;
+	}
+
+	public void setValorParcela(double valorParcela) {
+		this.valorParcela = valorParcela;
+	}
+
+	public Date getDataVencimento() {
+		return dataVencimento;
+	}
+
+	public void setDataVencimento(Date dataVencimento) {
+		this.dataVencimento = dataVencimento;
+	}
+
+	public Date getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public StatusMovimentacao getStatusMovimentacao() {
+		return statusMovimentacao;
+	}
+
+	public void setStatusMovimentacao(StatusMovimentacao statusMovimentacao) {
+		this.statusMovimentacao = statusMovimentacao;
+	}
+
+	public FormaMovimentacao getFormaMovimentacao() {
+		return formaMovimentacao;
+	}
+
+	public void setFormaMovimentacao(FormaMovimentacao formaMovimentacao) {
+		this.formaMovimentacao = formaMovimentacao;
+	}
+
+	public boolean isStatusEmAbeto() {
+		return getStatusMovimentacao().equals(StatusMovimentacao.EM_ABERTO);
+	}
+
+	public boolean isStatusPago() {
+		return getStatusMovimentacao().equals(StatusMovimentacao.PAGO);
+	}
+	
+	public boolean naoEstaEmAberto() {
+		return !isStatusEmAbeto();
+	}
 }

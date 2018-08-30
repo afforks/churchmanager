@@ -50,7 +50,7 @@
 			<p:outputLabel for="status" styleClass="my-label" value="Status" />
 			<p:selectOneRadio id="status" value="#{paginaMB.pagina.status}">
 				<f:selectItems itemLabel="#{status.descricao}" var="status"
-					value="#{paginaMB.listarStatus()}" itemValue="#{status}" />
+					value="#{utilMB.listarStatus()}" itemValue="#{status}" />
 			</p:selectOneRadio>
 			<p:message for="status" />
 		</div>

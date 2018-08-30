@@ -21,7 +21,6 @@ import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Dizimo;
 import br.com.churchmanager.model.Pessoa;
-import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.DizimoFilter;
 import br.com.churchmanager.report.GenericReport;
 import br.com.churchmanager.util.BuscaObjeto;
@@ -42,10 +41,10 @@ public class DizimoMB implements Serializable {
 	private DizimoBO bo;
 	@Inject
 	PessoaBO pessoaBO;
-	
+
 	@NotNull
 	@Size(min = 17, max = 17, message = "Deve conter 17 caracteres")
-	@Pattern(regexp = "[0-9]{17}", message="Deve ser informado apenas números!")
+	@Pattern(regexp = "[0-9]{17}", message = "Deve ser informado apenas números!")
 	private String idPessoa;
 	private List<Integer> listAnos = DataUtil.getAnos();
 
@@ -66,13 +65,13 @@ public class DizimoMB implements Serializable {
 			this.idPessoa = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} catch (ViolacaoDeRestricaoException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
@@ -87,15 +86,15 @@ public class DizimoMB implements Serializable {
 			this.idPessoa = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
@@ -109,9 +108,9 @@ public class DizimoMB implements Serializable {
 		this.listAnos = DataUtil.getAnos(this.dizimoFilter.getAno());
 		return null;
 	}
-	
+
 	public List<Integer> anos() {
-		return this.listAnos ;
+		return this.listAnos;
 	}
 
 	public String deletar() {
@@ -124,17 +123,14 @@ public class DizimoMB implements Serializable {
 		return this.bo.listar();
 	}
 
-	public Status[] listarStatus() {
-		return Status.values();
-	}
-
 	public void buscarPessoa() {
 		Pessoa pessoa = this.pessoaBO.buscarPorMatricula(this.getIdPessoa());
-		if(pessoa != null) {
+		if (pessoa != null) {
 			this.getDizimo().setPessoa(pessoa);
 			FacesUtil.atualizaComponente("grid-pessoa-selecionada");
 		} else {
-			FacesUtil.atencao("msg", "Atenção!", "Nenhum dizimista foi encontrado para o código "+getIdPessoa()+"!");
+			FacesUtil.atencao("msg", "Atenção!",
+					"Nenhum dizimista foi encontrado para o código " + getIdPessoa() + "!");
 			FacesUtil.atualizaComponente("msg");
 		}
 	}
@@ -221,5 +217,5 @@ public class DizimoMB implements Serializable {
 	public void setListAnos(List<Integer> listAnos) {
 		this.listAnos = listAnos;
 	}
-	
+
 }

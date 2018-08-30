@@ -115,7 +115,7 @@
 							<p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
 								<p:commandButton icon="fa fa-arrow-down" styleClass="btn-yellow"
 									title="Receber"
-									rendered="#{movimentacaoMB.isReceber(movimentacao)}"
+									rendered="#{movimentacao.isReceber()}"
 									oncomplete="PF('pagar-receber').show()" update="pagar-receber"
 									action="#{movimentacaoMB.buscarParcelas()}">
 									<f:setPropertyActionListener value="#{movimentacao}"
@@ -124,7 +124,7 @@
 
 								<p:commandButton icon="fa fa-arrow-up" styleClass="btn-red"
 									title="Pagar"
-									rendered="#{movimentacaoMB.isPagar(movimentacao)}"
+									rendered="#{movimentacao.isPagar()}"
 									oncomplete="PF('pagar-receber').show()" update="pagar-receber"
 									action="#{movimentacaoMB.buscarParcelas()}">
 									<f:setPropertyActionListener value="#{movimentacao}"
@@ -133,7 +133,7 @@
 
 								<p:commandButton icon="fa fa-check" styleClass="btn-blue"
 									title="Editar"
-									rendered="#{movimentacaoMB.isEntradaOuSaidaComStatusPago(movimentacao)}"
+									rendered="#{movimentacao.isEntradaOuSaidaComStatusPago()}"
 									oncomplete="PF('pagar-receber').show()" update="pagar-receber"
 									action="#{movimentacaoMB.buscarParcelas()}">
 									<f:setPropertyActionListener value="#{movimentacao}"
@@ -148,7 +148,7 @@
 							<div class="text-overflow">
 								<p:link outcome="/edit/movimentacao" styleClass="my-link"
 									value="#{movimentacao.nome}">
-									<f:param name="id" value="#{movimentacao.idCriptografado()}" />
+									<f:param name="id" value="#{movimentacao.id}" />
 								</p:link>
 							</div>
 						</p:column>

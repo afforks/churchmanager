@@ -65,7 +65,7 @@ public class ParcelaMovimentacaoDAO extends DAO<ParcelaMovimentacao> implements 
 			d.setDescricao((String) map.get("descricao"));
 			d.setDataVencimento((Date) map.get("data_vencimento"));
 			d.setDataPagamento((Date) map.get("data_pagamento"));
-			d.setValor((Float) map.get("valor"));
+			d.setValor((Double) map.get("valor"));
 			d.setTipo((String) map.get("tipo"));
 			d.setForma((String) map.get("forma"));
 			d.setStatus((String) map.get("status"));

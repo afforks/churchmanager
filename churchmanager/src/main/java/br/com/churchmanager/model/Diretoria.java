@@ -14,35 +14,18 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-//import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-//import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.churchmanager.util.DataUtil;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Entity(name = "diretoria")
 @Table(name = "diretoria")
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString(of = { "nome" })
-@EqualsAndHashCode(of= {"id"}, callSuper=true)
-@Builder
 public class Diretoria extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 2345438374225768867L;
@@ -58,7 +41,7 @@ public class Diretoria extends EntidadeGenerica implements Serializable {
 
 	@NotNull
 	@NotEmpty
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(name = "diretoria_pessoa_cargo", joinColumns = {
@@ -66,15 +49,55 @@ public class Diretoria extends EntidadeGenerica implements Serializable {
 	private List<PessoaCargo> pessoaCargos = new ArrayList<>();
 
 	@NotNull
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_inicio", nullable = false)
 	private Date inicio = DataUtil.stringParaDate("01/01/" + DataUtil.ano());
 
 	@NotNull
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_termino", nullable = false)
 	private Date termino = DataUtil.stringParaDate("31/12/" + DataUtil.ano());
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public List<PessoaCargo> getPessoaCargos() {
+		return pessoaCargos;
+	}
+
+	public void setPessoaCargos(List<PessoaCargo> pessoaCargos) {
+		this.pessoaCargos = pessoaCargos;
+	}
+
+	public Date getInicio() {
+		return inicio;
+	}
+
+	public void setInicio(Date inicio) {
+		this.inicio = inicio;
+	}
+
+	public Date getTermino() {
+		return termino;
+	}
+
+	public void setTermino(Date termino) {
+		this.termino = termino;
+	}
 
 }

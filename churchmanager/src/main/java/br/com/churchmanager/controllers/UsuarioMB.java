@@ -18,23 +18,19 @@ import br.com.churchmanager.model.filter.UsuarioFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
 import br.com.churchmanager.util.faces.FacesUtil;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 @Named
 @ViewScoped
 public class UsuarioMB implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Usuario usuario = new Usuario();
 	private List<Usuario> usuarios = new ArrayList<>();
 	private MyLazyDataModel<Usuario> usuariosLazy;
 	private UsuarioFilter usuarioFilter = new UsuarioFilter();
 	private Boolean mudarSenha;
-	
+
 	@Inject
 	private UsuarioBO bo;
 
@@ -51,13 +47,10 @@ public class UsuarioMB implements Serializable {
 			this.usuario = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O e-mail '"+usuario.getEmail()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!", "O e-mail '" + usuario.getEmail() + "' está duplicado, por favor, informe outro!");
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
 		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
@@ -71,15 +64,13 @@ public class UsuarioMB implements Serializable {
 			this.usuario = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O e-mail '"+usuario.getEmail()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O e-mail '" + usuario.getEmail() + "' está duplicado, por favor, informe outro!");
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
@@ -106,9 +97,9 @@ public class UsuarioMB implements Serializable {
 	public Usuario porEmail(String email) {
 		return bo.porEmail(email);
 	}
-	
-	//*************************************************************
-	
+
+	// *************************************************************
+
 	public MyLazyDataModel<Usuario> getUsuariosLazy() {
 		if (this.usuariosLazy == null) {
 			this.usuariosLazy = this.bo.filtrar(this.usuarioFilter);
@@ -118,9 +109,42 @@ public class UsuarioMB implements Serializable {
 	}
 
 	public Usuario getUsuario() {
-		if(usuario == null) {
+		if (usuario == null) {
 			usuario = new Usuario();
 		}
 		return usuario;
 	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public UsuarioFilter getUsuarioFilter() {
+		return usuarioFilter;
+	}
+
+	public void setUsuarioFilter(UsuarioFilter usuarioFilter) {
+		this.usuarioFilter = usuarioFilter;
+	}
+
+	public Boolean getMudarSenha() {
+		return mudarSenha;
+	}
+
+	public void setMudarSenha(Boolean mudarSenha) {
+		this.mudarSenha = mudarSenha;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public void setUsuariosLazy(MyLazyDataModel<Usuario> usuariosLazy) {
+		this.usuariosLazy = usuariosLazy;
+	}
+
 }

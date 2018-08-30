@@ -16,7 +16,6 @@ import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Cargo;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.PessoaCargo;
-import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.PessoaCargoFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
@@ -47,13 +46,13 @@ public class PessoaCargoMB implements Serializable {
 			this.pessoaCargo = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} catch (ViolacaoDeRestricaoException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
@@ -68,15 +67,15 @@ public class PessoaCargoMB implements Serializable {
 			pessoaCargo = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
@@ -95,10 +94,6 @@ public class PessoaCargoMB implements Serializable {
 		this.bo.deletar(this.pessoaCargo);
 		this.pessoaCargo = null;
 		return null;
-	}
-
-	public Status[] listarStatus() {
-		return Status.values();
 	}
 
 	public List<PessoaCargo> pessoaCargos() {
@@ -165,4 +160,5 @@ public class PessoaCargoMB implements Serializable {
 		removerCargo();
 		removerPessoa();
 	}
+
 }

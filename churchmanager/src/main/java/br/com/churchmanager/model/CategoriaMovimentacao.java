@@ -8,24 +8,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Entity(name = "categoria_movimentacao")
 @Table(name = "categoria_movimentacao")
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString(of = { "nome" })
-@EqualsAndHashCode(of= {"id"}, callSuper=true)
-@Builder
 public class CategoriaMovimentacao extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 244096197492206449L;
@@ -38,5 +22,21 @@ public class CategoriaMovimentacao extends EntidadeGenerica implements Serializa
 	@Size(max = 250)
 	@Column(name = "descricao")
 	private String descricao;
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
 }

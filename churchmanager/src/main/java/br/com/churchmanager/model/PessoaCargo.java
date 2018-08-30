@@ -8,24 +8,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Entity(name = "pessoa_cargo")
 @Table(name = "pessoa_cargo")
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString(of = { "pessoa", "cargo" })
-@EqualsAndHashCode(of= {"id"}, callSuper=true)
-@Builder
 public class PessoaCargo extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 985908374225768867L;
@@ -39,5 +23,21 @@ public class PessoaCargo extends EntidadeGenerica implements Serializable {
 	@JoinColumn(name = "cargo_id", nullable = false)
 	@NotNull
 	private Cargo cargo;
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public Cargo getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
 
 }

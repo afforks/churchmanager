@@ -23,13 +23,9 @@ import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
 import br.com.churchmanager.util.custom.Telefone;
 import br.com.churchmanager.util.faces.FacesUtil;
-import lombok.Getter;
-import lombok.Setter;
 
 @Named
 @ViewScoped
-@Getter
-@Setter
 public class PessoaMB implements Serializable {
 
 	private static final long serialVersionUID = 1654654455L;
@@ -64,13 +60,13 @@ public class PessoaMB implements Serializable {
 			this.pessoa = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} catch (ViolacaoDeRestricaoException e) {
 			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} catch (DadosException e) {
 			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} finally {
 			FacesUtil.atualizaComponente("pessoa-msg");
 		}
@@ -84,15 +80,15 @@ public class PessoaMB implements Serializable {
 			this.pessoa = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
 			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("pessoa-msg");
@@ -143,6 +139,42 @@ public class PessoaMB implements Serializable {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public List<Pessoa> getPessoas() {
+		return pessoas;
+	}
+
+	public void setPessoas(List<Pessoa> pessoas) {
+		this.pessoas = pessoas;
+	}
+
+	public PessoaFilter getPessoaFilter() {
+		return pessoaFilter;
+	}
+
+	public void setPessoaFilter(PessoaFilter pessoaFilter) {
+		this.pessoaFilter = pessoaFilter;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPessoasLazy(MyLazyDataModel<Pessoa> pessoasLazy) {
+		this.pessoasLazy = pessoasLazy;
 	}
 
 }

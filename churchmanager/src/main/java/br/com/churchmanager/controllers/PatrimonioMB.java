@@ -47,13 +47,14 @@ public class PatrimonioMB implements Serializable {
 			this.patrimonio = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O nome '"+patrimonio.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O nome '" + patrimonio.getNome() + "' está duplicado, por favor, informe outro!");
+
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
@@ -68,15 +69,16 @@ public class PatrimonioMB implements Serializable {
 			this.patrimonio = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O nome '"+patrimonio.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O nome '" + patrimonio.getNome() + "' está duplicado, por favor, informe outro!");
+
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
@@ -191,4 +193,5 @@ public class PatrimonioMB implements Serializable {
 	public void setAvaliacao(AvaliacaoPatrimonio avaliacao) {
 		this.avaliacao = avaliacao;
 	}
+
 }

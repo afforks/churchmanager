@@ -16,35 +16,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-//import javax.validation.constraints.DecimalMin;
-//import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.Size;
-//
-//import org.hibernate.annotations.Cache;
-//import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Entity(name = "patrimonio")
 @Table(name = "patrimonio")
-//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString(of = { "nome" })
-@EqualsAndHashCode(of= {"id"}, callSuper=true)
-@Builder
 public class Patrimonio extends EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 12342873468273L;
@@ -62,13 +39,13 @@ public class Patrimonio extends EntidadeGenerica implements Serializable {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado", nullable = false)
-	
+
 	private EstadoPatrimonio estado = EstadoPatrimonio.REGULAR;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "situacao", nullable = false)
-	
+
 	private Situacao situacao = Situacao.QUITADO;
 
 	@NotNull
@@ -92,10 +69,9 @@ public class Patrimonio extends EntidadeGenerica implements Serializable {
 
 	@OneToMany(mappedBy = "patrimonio", orphanRemoval = true, targetEntity = AvaliacaoPatrimonio.class, cascade = {
 			CascadeType.ALL })
-	
+
 	private List<AvaliacaoPatrimonio> avaliacoes = new ArrayList();
 
-	
 	public void adicionar(AvaliacaoPatrimonio avaliacao) {
 		avaliacao.setPatrimonio(this);
 		this.getAvaliacoes().add(avaliacao);
@@ -122,4 +98,77 @@ public class Patrimonio extends EntidadeGenerica implements Serializable {
 		}
 		return indice;
 	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Tipo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
+	}
+
+	public EstadoPatrimonio getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoPatrimonio estado) {
+		this.estado = estado;
+	}
+
+	public Situacao getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(Situacao situacao) {
+		this.situacao = situacao;
+	}
+
+	public Date getDataAquisicao() {
+		return dataAquisicao;
+	}
+
+	public void setDataAquisicao(Date dataAquisicao) {
+		this.dataAquisicao = dataAquisicao;
+	}
+
+	public double getValorAquisicao() {
+		return valorAquisicao;
+	}
+
+	public void setValorAquisicao(double valorAquisicao) {
+		this.valorAquisicao = valorAquisicao;
+	}
+
+	public double getValorAtual() {
+		return valorAtual;
+	}
+
+	public void setValorAtual(double valorAtual) {
+		this.valorAtual = valorAtual;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public List<AvaliacaoPatrimonio> getAvaliacoes() {
+		return avaliacoes;
+	}
+
+	public void setAvaliacoes(List<AvaliacaoPatrimonio> avaliacoes) {
+		this.avaliacoes = avaliacoes;
+	}
+
 }

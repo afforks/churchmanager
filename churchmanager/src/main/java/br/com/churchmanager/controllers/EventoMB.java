@@ -16,7 +16,6 @@ import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Evento;
-import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.EventoFilter;
 import br.com.churchmanager.report.GenericReport;
 import br.com.churchmanager.util.BuscaObjeto;
@@ -49,13 +48,14 @@ public class EventoMB implements Serializable {
 			this.evento = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O nome '"+evento.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O nome '" + evento.getNome() + "' está duplicado, por favor, informe outro!");
+
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
@@ -69,15 +69,16 @@ public class EventoMB implements Serializable {
 			this.evento = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O nome '"+evento.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O nome '" + evento.getNome() + "' está duplicado, por favor, informe outro!");
+
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
@@ -99,10 +100,6 @@ public class EventoMB implements Serializable {
 
 	public List<Evento> perfis() {
 		return this.bo.listar();
-	}
-
-	public Status[] listarStatus() {
-		return Status.values();
 	}
 
 	public void relatorioDeEventos() {

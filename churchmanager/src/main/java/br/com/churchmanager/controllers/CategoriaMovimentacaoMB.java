@@ -14,7 +14,6 @@ import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.CategoriaMovimentacao;
-import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.CategoriaMovimentacaoFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
@@ -23,18 +22,20 @@ import br.com.churchmanager.util.faces.FacesUtil;
 @Named
 @ViewScoped
 public class CategoriaMovimentacaoMB implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
+	
 	private CategoriaMovimentacao categoria;
 	private List<CategoriaMovimentacao> categorias;
 	private MyLazyDataModel<CategoriaMovimentacao> categoriasLazy;
 	private CategoriaMovimentacaoFilter categoriaFilter;
+	
 	@Inject
 	private CategoriaMovimentacaoBO bo;
 
 	@PostConstruct
 	public void init() {
-		CategoriaMovimentacao categoria = BuscaObjeto
-				.comParametroGET("id", this.bo);
+		CategoriaMovimentacao categoria = BuscaObjeto.comParametroGET("id", this.bo);
 		this.categoria = categoria;
 	}
 
@@ -45,13 +46,14 @@ public class CategoriaMovimentacaoMB implements Serializable {
 			this.categoria = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O nome '"+categoria.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O nome '" + categoria.getNome() + "' está duplicado, por favor, informe outro!");
+
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
@@ -65,15 +67,14 @@ public class CategoriaMovimentacaoMB implements Serializable {
 			this.categoria = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O nome '"+categoria.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O nome '" + categoria.getNome() + "' está duplicado, por favor, informe outro!");
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
@@ -91,10 +92,6 @@ public class CategoriaMovimentacaoMB implements Serializable {
 		this.bo.deletar(this.categoria);
 		this.categoria = null;
 		return null;
-	}
-
-	public Status[] listarStatus() {
-		return Status.values();
 	}
 
 	public List<CategoriaMovimentacao> categorias() {
@@ -151,5 +148,21 @@ public class CategoriaMovimentacaoMB implements Serializable {
 
 	public void setCategoriaMovimentacaoFilter(CategoriaMovimentacaoFilter categoriaFilter) {
 		this.categoriaFilter = categoriaFilter;
+	}
+
+	public CategoriaMovimentacao getCategoria() {
+		return categoria;
+	}
+
+	public List<CategoriaMovimentacao> getCategorias() {
+		return categorias;
+	}
+
+	public MyLazyDataModel<CategoriaMovimentacao> getCategoriasLazy() {
+		return categoriasLazy;
+	}
+
+	public CategoriaMovimentacaoFilter getCategoriaFilter() {
+		return categoriaFilter;
 	}
 }

@@ -13,7 +13,6 @@ import br.com.churchmanager.bo.TipoBO;
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
-import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.Tipo;
 import br.com.churchmanager.model.filter.TipoFilter;
 import br.com.churchmanager.util.BuscaObjeto;
@@ -45,13 +44,11 @@ public class TipoMB implements Serializable {
 			this.tipo = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O nome '"+tipo.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O nome '" + tipo.getNome() + "' está duplicado, por favor, informe outro!");
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
 		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
@@ -65,15 +62,13 @@ public class TipoMB implements Serializable {
 			this.tipo = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O nome '"+tipo.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O nome '" + tipo.getNome() + "' está duplicado, por favor, informe outro!");
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
@@ -91,10 +86,6 @@ public class TipoMB implements Serializable {
 		this.bo.deletar(this.tipo);
 		this.tipo = null;
 		return null;
-	}
-
-	public Status[] listarStatus() {
-		return Status.values();
 	}
 
 	public List<Tipo> tipos() {
@@ -148,4 +139,5 @@ public class TipoMB implements Serializable {
 	public void setTipoFilter(TipoFilter tipoFilter) {
 		this.tipoFilter = tipoFilter;
 	}
+	
 }

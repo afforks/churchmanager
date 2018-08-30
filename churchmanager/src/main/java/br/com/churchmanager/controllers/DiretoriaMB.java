@@ -17,7 +17,6 @@ import br.com.churchmanager.model.Cargo;
 import br.com.churchmanager.model.Diretoria;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.PessoaCargo;
-import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.filter.DiretoriaFilter;
 import br.com.churchmanager.util.BuscaObjeto;
 import br.com.churchmanager.util.MyLazyDataModel;
@@ -49,13 +48,14 @@ public class DiretoriaMB implements Serializable {
 			this.diretoria = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O nome '"+diretoria.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O nome '" + diretoria.getNome() + "' está duplicado, por favor, informe outro!");
+
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 		} finally {
 			FacesUtil.atualizaComponente("msg");
 		}
@@ -70,15 +70,16 @@ public class DiretoriaMB implements Serializable {
 			this.diretoria = null;
 		} catch (NegocioException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O nome '"+diretoria.getNome()+"' está duplicado, por favor, informe outro!");
-			e.printStackTrace();
+			FacesUtil.atencao("msg", "Atenção!",
+					"O nome '" + diretoria.getNome() + "' está duplicado, por favor, informe outro!");
+
 			return null;
 		} catch (DadosException e) {
 			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			e.printStackTrace();
+
 			return null;
 		} finally {
 			FacesUtil.atualizaComponente("msg");
@@ -96,10 +97,6 @@ public class DiretoriaMB implements Serializable {
 		this.bo.deletar(this.diretoria);
 		this.diretoria = null;
 		return null;
-	}
-
-	public Status[] listarStatus() {
-		return Status.values();
 	}
 
 	public List<Diretoria> diretorias() {
@@ -153,7 +150,7 @@ public class DiretoriaMB implements Serializable {
 	public void setDiretoriaFilter(DiretoriaFilter diretoriaFilter) {
 		this.diretoriaFilter = diretoriaFilter;
 	}
-	
+
 	public boolean naoContemPessoaCargo(PessoaCargo pc) {
 		return !this.getDiretoria().getPessoaCargos().contains(pc);
 	}

@@ -11,19 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
-import br.com.churchmanager.util.AES;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @MappedSuperclass
-@Getter
-@Setter
-@EqualsAndHashCode(of = { "id" })
-@NoArgsConstructor
-@ToString(of = { "id" })
 public class EntidadeGenerica implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -40,8 +28,21 @@ public class EntidadeGenerica implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false)
 	private Status status = Status.ATIVO;
- 
-	public String idCriptografado() {
-		return AES.encrypt(this.id.toString()).replace("/", "@").replace("=", "");
+
+	public Long getId() {
+		return id;
 	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 }

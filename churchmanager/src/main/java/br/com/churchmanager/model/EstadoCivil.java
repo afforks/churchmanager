@@ -1,10 +1,5 @@
 package br.com.churchmanager.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@AllArgsConstructor
-@Getter
 public enum EstadoCivil {
 
 	SOLTEIRO("Solteiro"), 
@@ -13,6 +8,14 @@ public enum EstadoCivil {
 	DIVORCIADO("Divorciado"), 
 	OUTROS("Outros");
 
+	private EstadoCivil(String descricao) {
+		this.descricao = descricao;
+	}
+
 	private String descricao;
+	
+	public String getDescricao() {
+		return descricao;
+	}
 
 }

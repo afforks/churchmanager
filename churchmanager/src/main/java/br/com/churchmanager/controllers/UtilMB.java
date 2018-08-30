@@ -1,5 +1,13 @@
 package br.com.churchmanager.controllers;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+
 import br.com.churchmanager.model.Estado;
 import br.com.churchmanager.model.EstadoCivil;
 import br.com.churchmanager.model.EstadoPatrimonio;
@@ -12,27 +20,15 @@ import br.com.churchmanager.model.StatusMovimentacao;
 import br.com.churchmanager.model.TipoMovimentacao;
 import br.com.churchmanager.util.DataUtil;
 import br.com.churchmanager.util.Meses;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
 
 @Named
 @ViewScoped
 public class UtilMB implements Serializable {
 	private static final long serialVersionUID = 9384579348751L;
-	
-	@Getter @Setter
+
 	private String mes = DataUtil.mes();
-	@Getter @Setter
 	private String ano = DataUtil.ano();
-	
+
 	public String mudarParametros() {
 		Map<String, Object> requestMap = FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
 		requestMap.put("mes", mes);
@@ -40,7 +36,7 @@ public class UtilMB implements Serializable {
 		return null;
 	}
 
-	public Status[] listarStatus() { 
+	public Status[] listarStatus() {
 		return Status.values();
 	}
 
@@ -86,6 +82,24 @@ public class UtilMB implements Serializable {
 
 	public List<Integer> anos() {
 		return DataUtil.getAnos();
+	}
+
+	//
+
+	public String getMes() {
+		return mes;
+	}
+
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
+	public String getAno() {
+		return ano;
+	}
+
+	public void setAno(String ano) {
+		this.ano = ano;
 	}
 
 }

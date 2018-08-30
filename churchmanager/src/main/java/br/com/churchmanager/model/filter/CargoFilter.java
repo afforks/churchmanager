@@ -12,11 +12,7 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.churchmanager.dao.generic.Alias;
 import br.com.churchmanager.model.Status;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class CargoFilter implements Filter, Serializable {
 
 	private static final long serialVersionUID = 11043712329577L;
@@ -42,6 +38,14 @@ public class CargoFilter implements Filter, Serializable {
 
 	public boolean usarDistinct() {
 		return false;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 }

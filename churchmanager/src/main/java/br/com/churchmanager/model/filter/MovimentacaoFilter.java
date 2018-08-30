@@ -17,11 +17,7 @@ import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.StatusMovimentacao;
 import br.com.churchmanager.model.TipoMovimentacao;
 import br.com.churchmanager.util.DataUtil;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class MovimentacaoFilter implements Filter, Serializable {
 
 	private static final long serialVersionUID = 43212463701329577L;
@@ -61,4 +57,45 @@ public class MovimentacaoFilter implements Filter, Serializable {
 	public boolean usarDistinct() {
 		return true;
 	}
+
+	public String getMes() {
+		return mes;
+	}
+
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
+	public String getAno() {
+		return ano;
+	}
+
+	public void setAno(String ano) {
+		this.ano = ano;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public StatusMovimentacao getStatusMovimentacao() {
+		return statusMovimentacao;
+	}
+
+	public void setStatusMovimentacao(StatusMovimentacao statusMovimentacao) {
+		this.statusMovimentacao = statusMovimentacao;
+	}
+
+	public TipoMovimentacao getTipoMovimentacao() {
+		return tipoMovimentacao;
+	}
+
+	public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
+		this.tipoMovimentacao = tipoMovimentacao;
+	}
+
 }

@@ -12,11 +12,7 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.churchmanager.dao.generic.Alias;
 import br.com.churchmanager.model.Status;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class AtividadeEclesiasticaFilter implements Filter, Serializable {
 
 	private static final long serialVersionUID = 5423301463701329577L;
@@ -47,6 +43,22 @@ public class AtividadeEclesiasticaFilter implements Filter, Serializable {
 
 	public boolean usarDistinct() {
 		return false;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 }

@@ -1,10 +1,5 @@
 package br.com.churchmanager.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
-@AllArgsConstructor
 public enum PerfilEscolaridade {
 	
 	SEM_ESCOLARIDADE("Sem Escolaridade"), 
@@ -19,6 +14,18 @@ public enum PerfilEscolaridade {
 	SUPERIOR_INCOMPLETO("Tecnólogo Incompleto"), 
 	SUPERIOR_COMPLETO("Superior Completo");
 
+	private PerfilEscolaridade(String descricao) {
+		this.descricao = descricao;
+	}
+
 	private String descricao;
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
 }

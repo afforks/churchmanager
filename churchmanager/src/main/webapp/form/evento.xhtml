@@ -14,7 +14,7 @@
 	</div>
 	<div class="ui-fluid" jsf:id="group">
 
-		<div class="ui-g-6 ui-lg-6 ui-md-8 ui-sm-12">
+		<div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-12">
 			<p:outputLabel for="nome" styleClass="my-label" value="Nome " />
 			<p:inputText id="nome" value="#{eventoMB.evento.nome}"
 				placeholder="Nome do evento">
@@ -24,7 +24,7 @@
 		</div>
 
 
-		<div class="ui-g-3 ui-lg-3 ui-md-2 ui-sm-6">
+		<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-6">
 			<p:outputLabel for="dia" styleClass="my-label" value="Dia" />
 			<div class="ui-inputgroup">
 				<span class="ui-inputgroup-addon"> <i class="fa fa-calendar"></i>
@@ -37,7 +37,7 @@
 			<p:message for="dia" />
 		</div>
 
-		<div class="ui-g-3 ui-lg-3 ui-md-2 ui-sm-6">
+		<div class="ui-g-3 ui-lg-3 ui-md-3 ui-sm-6">
 			<p:outputLabel for="mes" styleClass="my-label" value="Mês" />
 			<div class="ui-inputgroup">
 				<span class="ui-inputgroup-addon"> <i class="fa fa-calendar"></i>
@@ -62,7 +62,7 @@
 			<p:outputLabel for="status" styleClass="my-label" value="Status" />
 			<p:selectOneRadio id="status" value="#{eventoMB.evento.status}">
 				<f:selectItems itemLabel="#{status.descricao}" var="status"
-					value="#{eventoMB.listarStatus()}" itemValue="#{status}" />
+					value="#{utilMB.listarStatus()}" itemValue="#{status}" />
 			</p:selectOneRadio>
 			<p:message for="status" />
 		</div>
