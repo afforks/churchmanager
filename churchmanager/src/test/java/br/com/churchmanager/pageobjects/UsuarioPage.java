@@ -15,7 +15,7 @@ public class UsuarioPage {
 	}
 
 	public UsuarioPage abre() {
-		driver.get(ContextoDaAplicacao.listar("usuario"));
+		driver.get(ContextoDaAplicacao.findAll("usuario"));
 		return this;
 	}
 

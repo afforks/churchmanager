@@ -78,7 +78,7 @@
 						rendered="#{empty patrimonioMB.avaliacao.observacao}" />
 
 					<p:commandButton value="Atualizar"
-						action="#{patrimonioMB.atualizarAvaliacao()}"
+						action="#{patrimonioMB.saveAvaliacao()}"
 						update="avaliacoes, grid-avaliacao-patrimonio" icon="fa fa-edit"
 						styleClass="btn-green"
 						rendered="#{not empty patrimonioMB.avaliacao.observacao}" />

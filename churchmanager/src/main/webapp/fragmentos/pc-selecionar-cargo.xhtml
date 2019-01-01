@@ -35,7 +35,7 @@
 								value="#{cargoMB.cargoFilter.nome}" />
 
 							<h:panelGrid columns="2">
-								<p:commandButton action="#{cargoMB.filtrar()}"
+								<p:commandButton action="#{cargoMB.lazyList()}"
 									process="@this filtro-cargo" update="table-cargo" icon="fa fa-search"
 									styleClass="btn-grey" />
 							</h:panelGrid>

@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
@@ -21,31 +22,31 @@ import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.PieChartModel;
 
-import br.com.churchmanager.bo.DizimoBO;
-import br.com.churchmanager.bo.EventoBO;
-import br.com.churchmanager.bo.ParcelaMovimentacaoBO;
-import br.com.churchmanager.bo.PessoaBO;
+import br.com.churchmanager.jsf.Msgs;
 import br.com.churchmanager.model.Evento;
 import br.com.churchmanager.model.FormaMovimentacao;
 import br.com.churchmanager.model.StatusMovimentacao;
 import br.com.churchmanager.model.TipoMovimentacao;
+import br.com.churchmanager.model.dto.Aniversariante;
+import br.com.churchmanager.model.dto.DetalheMovimentacao;
+import br.com.churchmanager.model.dto.Dizimista;
+import br.com.churchmanager.model.dto.MembrosPorFaixaEtaria;
+import br.com.churchmanager.model.dto.MovimentacaoAnual;
+import br.com.churchmanager.model.dto.MovimentacaoCategoria;
+import br.com.churchmanager.model.dto.PercentualDizimista;
+import br.com.churchmanager.model.dto.PessoaAtividaEclesiastica;
+import br.com.churchmanager.model.dto.Totais;
 import br.com.churchmanager.model.filter.DizimoFilter;
 import br.com.churchmanager.model.filter.EventoFilter;
 import br.com.churchmanager.model.filter.ParcelaMovimentacaoFilter;
 import br.com.churchmanager.model.filter.PessoaFilter;
-import br.com.churchmanager.model.group.Aniversariante;
-import br.com.churchmanager.model.group.DetalheMovimentacao;
-import br.com.churchmanager.model.group.Dizimista;
-import br.com.churchmanager.model.group.MembrosPorFaixaEtaria;
-import br.com.churchmanager.model.group.MovimentacaoAnual;
-import br.com.churchmanager.model.group.MovimentacaoCategoria;
-import br.com.churchmanager.model.group.PercentualDizimista;
-import br.com.churchmanager.model.group.PessoaAtividaEclesiastica;
-import br.com.churchmanager.model.group.Totais;
 import br.com.churchmanager.seguranca.Seguranca;
+import br.com.churchmanager.service.DizimoService;
+import br.com.churchmanager.service.EventoService;
+import br.com.churchmanager.service.ParcelaMovimentacaoService;
+import br.com.churchmanager.service.PessoaService;
 import br.com.churchmanager.util.DataUtil;
 import br.com.churchmanager.util.Meses;
-import br.com.churchmanager.util.faces.FacesUtil;
 
 @Named
 @ViewScoped
@@ -67,19 +68,22 @@ public class DashBoard implements Serializable {
 	private HttpServletRequest request;
 	@Inject
 	private Seguranca seguranca;
+
 	@Inject
-	private ParcelaMovimentacaoBO parcelasBO;
+	private ParcelaMovimentacaoService parcelasService;
 	@Inject
-	private PessoaBO pessoaBO;
+	private PessoaService pessoaService;
 	@Inject
-	private EventoBO eventoBO;
+	private EventoService eventoService;
 	private PercentualDizimista percentualDizimista;
 	@Inject
-	private DizimoBO dizimoBO;
+	private DizimoService dizimoService;
+	@Inject
+	private JsfMessage<Msgs> message;
 
 	public void loginSucesso() {
 		if ("true".equals(this.request.getParameter("logado"))) {
-			FacesUtil.informacao("msg", "Bem-vindo!", this.seguranca.getUsuarioLogado().getUsuario().getNomeCompleto());
+			message.addInfo().bemVindo(this.seguranca.getUsuarioLogado().getUsuario().getNomeCompleto());
 		}
 
 	}
@@ -88,19 +92,19 @@ public class DashBoard implements Serializable {
 	public void init() {
 		this.mes = DataUtil.mes();
 		this.ano = DataUtil.ano();
-		atualizarDados();
+		updateDados();
 	}
 
-	public void atualizarDados() {
+	public void updateDados() {
 		this.criarGraficos();
-		this.atualizarTotais();
-		this.atualizarContadores();
-		this.atualizarUltimosLancamentos();
-		this.atualizarPercentualDizimista();
+		this.updateTotais();
+		this.updateContadores();
+		this.updateUltimosLancamentos();
+		this.updatePercentualDizimista();
 
 	}
 
-	public void atualizarAno() {
+	public void updateAno() {
 		this.listAnos = DataUtil.getAnos(ano);
 	}
 
@@ -210,11 +214,11 @@ public class DashBoard implements Serializable {
 				"D60000, FF530E, FFC801, 93C700, 0E99DA, C10250, 324C5D, 46B19D, 34A73F, 3E2E86, CA1E2C, B6D124, F9AB15");
 	}
 
-	private void atualizarUltimosLancamentos() {
+	private void updateUltimosLancamentos() {
 		ParcelaMovimentacaoFilter parcelaFilter = new ParcelaMovimentacaoFilter();
 		parcelaFilter.setMes(this.mes);
 		parcelaFilter.setAno(this.ano);
-		this.ultimosLancamentos = this.parcelasBO.ultimosLancamentos(parcelaFilter);
+		this.ultimosLancamentos = this.parcelasService.ultimosLancamentos(parcelaFilter);
 	}
 
 	public List<DetalheMovimentacao> ultimosLancamentosEmConta() {
@@ -253,18 +257,18 @@ public class DashBoard implements Serializable {
 				.collect(Collectors.toList());
 	}
 
-	public void atualizarPercentualDizimista() {
+	public void updatePercentualDizimista() {
 		DizimoFilter filter = new DizimoFilter();
 		filter.setMes(this.mes);
 		filter.setAno(this.ano);
-		this.percentualDizimista = this.dizimoBO.percentualDizimista(filter);
+		this.percentualDizimista = this.dizimoService.percentualDizimista(filter);
 	}
 
-	private void atualizarTotais() {
+	private void updateTotais() {
 		ParcelaMovimentacaoFilter filter = new ParcelaMovimentacaoFilter();
 		filter.setMes(this.mes);
 		filter.setAno(this.ano);
-		this.totais = this.parcelasBO.movimentacoes(filter);
+		this.totais = this.parcelasService.movimentacoes(filter);
 	}
 
 	public double totalEntradasPagas() {
@@ -307,53 +311,53 @@ public class DashBoard implements Serializable {
 		return value != null ? value : BigDecimal.ZERO;
 	}
 
-	private void atualizarContadores() {
+	private void updateContadores() {
 		PessoaFilter filter = new PessoaFilter();
 		filter.setAno(getAno());
 		filter.setMes(getMes());
-		this.totalizadores = this.pessoaBO.quantidadeDeMembros(filter);
+		this.totalizadores = this.pessoaService.quantidadeDeMembros(filter);
 	}
 
 	public List<MovimentacaoCategoria> custosPorCategoria() {
 		ParcelaMovimentacaoFilter filter = new ParcelaMovimentacaoFilter();
 		filter.setMes(this.mes);
 		filter.setAno(this.ano);
-		return this.parcelasBO.custosPorCategoria(filter);
+		return this.parcelasService.custosPorCategoria(filter);
 	}
 
 	public List<MovimentacaoAnual> movimentacaoUltimos12Meses() {
 		ParcelaMovimentacaoFilter filter = new ParcelaMovimentacaoFilter();
 		filter.setMes(this.mes);
 		filter.setAno(this.ano);
-		return this.parcelasBO.movimentacaoUltimos12Meses(filter);
+		return this.parcelasService.movimentacaoUltimos12Meses(filter);
 	}
 
 	public List<Aniversariante> aniversariantesDoMes() {
 		PessoaFilter filter = new PessoaFilter();
 		filter.setMes(this.mes);
 		filter.setAno(this.ano);
-		return this.pessoaBO.aniversariantesDoMes(filter);
+		return this.pessoaService.aniversariantesDoMes(filter);
 	}
 
 	public List<Dizimista> listarDizimistas() {
 		PessoaFilter filter = new PessoaFilter();
 		filter.setMes(this.mes);
 		filter.setAno(this.ano);
-		return this.pessoaBO.listarDizimistas(filter);
+		return this.pessoaService.listarDizimistas(filter);
 	}
 
 	public List<MembrosPorFaixaEtaria> membresiaFaixaEtaria() {
 		PessoaFilter filter = new PessoaFilter();
 		filter.setMes(this.mes);
 		filter.setAno(this.ano);
-		return this.pessoaBO.membresiaFaixaEtaria(filter);
+		return this.pessoaService.membresiaFaixaEtaria(filter);
 	}
 
 	public List<PessoaAtividaEclesiastica> pessoasPorAtividadeEclesiastica() {
 		PessoaFilter filter = new PessoaFilter();
 		filter.setMes(this.mes);
 		filter.setAno(this.ano);
-		return this.pessoaBO.pessoasPorAtividadeEclesiastica(filter);
+		return this.pessoaService.pessoasPorAtividadeEclesiastica(filter);
 	}
 
 	public Meses mesAtual() {
@@ -363,7 +367,7 @@ public class DashBoard implements Serializable {
 	public List<Evento> eventosDoMes() {
 		EventoFilter filter = new EventoFilter();
 		filter.setMes(this.mes);
-		return this.eventoBO.eventosDoMes(filter);
+		return this.eventoService.eventosDoMes(filter);
 	}
 
 	public LineChartModel getMovimentacaoAnual() {

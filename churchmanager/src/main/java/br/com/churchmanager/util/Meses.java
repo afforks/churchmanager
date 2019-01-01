@@ -1,10 +1,18 @@
 package br.com.churchmanager.util;
 
 public enum Meses {
-	JAN("Janeiro", "JAN", "01"), FEV("Fevereiro", "FEV", "02"), MAR("Março", "MAR", "03"), ABR("Abril", "ABR",
-			"04"), MAI("Maio", "MAI", "05"), JUN("Junho", "JUN", "06"), JUL("Julho", "JUL", "07"), AGO("Agosto", "AGO",
-					"08"), SET("Setembro", "SET", "09"), OUT("Outubro", "OUT",
-							"10"), NOV("Novembro", "NOV", "11"), DEZ("Dezembro", "DEZ", "12");
+	JAN("Janeiro", "JAN", "01"), 
+	FEV("Fevereiro", "FEV", "02"), 
+	MAR("Março", "MAR", "03"), 
+	ABR("Abril", "ABR", "04"), 
+	MAI("Maio", "MAI", "05"), 
+	JUN("Junho", "JUN", "06"), 
+	JUL("Julho", "JUL", "07"), 
+	AGO("Agosto", "AGO", "08"), 
+	SET("Setembro", "SET", "09"), 
+	OUT("Outubro", "OUT", "10"), 
+	NOV("Novembro", "NOV", "11"), 
+	DEZ("Dezembro", "DEZ", "12");
 
 	private String nome;
 	private String abreviacao;

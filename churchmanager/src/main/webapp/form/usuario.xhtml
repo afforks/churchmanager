@@ -115,7 +115,7 @@
 			<p:selectOneRadio id="status" 
 				value="#{usuarioMB.usuario.status}">
 				<f:selectItems id="status-item" itemLabel="#{status.descricao}"
-					var="status" value="#{utilMB.listarStatus()}" itemValue="#{status}" />
+					var="status" value="#{utilMB.findAllStatus()}" itemValue="#{status}" />
 			</p:selectOneRadio>
 			<p:message for="status" />
 		</div>
@@ -130,20 +130,20 @@
 				columns="3" layout="responsive">
 				<f:attribute name="collectionType" value="java.util.ArrayList" />
 				<f:selectItems var="pagina" itemValue="#{pagina}"
-					itemLabel="#{pagina.nome}" value="#{paginaMB.listarPaginas()}" />
+					itemLabel="#{pagina.nome}" value="#{paginaMB.findAllPaginas()}" />
 
 			</p:selectManyCheckbox>
 		</div>
 
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
-				<p:commandButton value="Cadastrar" action="#{usuarioMB.salvar()}"
+				<p:commandButton value="Cadastrar" action="#{usuarioMB.save()}"
 					id="btn-salvar" update="group"
 					validateClient="true" icon="fa fa-save"
 					rendered="#{usuarioMB.usuario.id == null}" styleClass="btn-blue">
 				</p:commandButton>
 
-				<p:commandButton value="Editar" action="#{usuarioMB.atualizar()}"
+				<p:commandButton value="Editar" action="#{usuarioMB.save()}"
 					update="group" validateClient="true" icon="fa fa-edit"
 					rendered="#{usuarioMB.usuario.id != null}" styleClass="btn-green">
 				</p:commandButton>

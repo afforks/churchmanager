@@ -9,15 +9,17 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.churchmanager.bo.PerfilBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.Perfil;
 import br.com.churchmanager.model.filter.PerfilFilter;
-import br.com.churchmanager.util.BuscaObjeto;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
+import br.com.churchmanager.service.PerfilService;
 
 @Named
 @ViewScoped
@@ -25,71 +27,57 @@ public class PerfilMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Perfil perfil;
 	private List<Perfil> perfils;
-	private MyLazyDataModel<Perfil> perfilsLazy;
+	private LazyDataModel<Perfil> perfilsLazy;
 	private PerfilFilter perfilFilter;
 	@Inject
-	private PerfilBO bo;
+	private PerfilService bo;
+	@Inject
+	private FacesUtil facesUtil;
+	@Inject
+	private JsfMessage<Msgs> msgs;
 
 	@PostConstruct
 	public void init() {
-		Perfil perfil = BuscaObjeto.comParametroGET("id", this.bo);
+		Perfil perfil = null;
 		this.perfil = perfil;
 	}
 
 	public String salvar() {
 		try {
-			this.bo.salvar(this.perfil);
-			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.perfil.toString());
-			FacesUtil.atualizaComponente("msg");
+			this.bo.save(this.perfil);
+			msgs.addInfo().cadastradoComSucesso();
 			this.perfil = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + perfil.getNome() + "' está duplicado, por favor, informe outro!");
-
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.atualizarComponente("msg");
 		}
 		return null;
 	}
 
 	public String atualizar() {
 		try {
-			this.bo.atualizar(this.perfil);
-			FacesUtil.informacao("msg", "Editado com sucesso!", this.perfil.toString());
+			this.bo.save(this.perfil);
+			msgs.addInfo().editadoComSucesso();
 			this.perfil = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + perfil.getNome() + "' está duplicado, por favor, informe outro!");
-
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("msg");
+			facesUtil.manterMensagem();
 		}
 		return "/list/perfil?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.perfilsLazy = this.bo.filtrar(this.perfilFilter);
+		this.perfilsLazy = this.bo.lazyList(this.perfilFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.perfil);
+		this.bo.delete(this.perfil);
 		this.perfil = null;
 		return null;
 	}
@@ -97,8 +85,8 @@ public class PerfilMB implements Serializable {
 	private List<Perfil> perfis;
 
 	public List<Perfil> perfis() {
-		if (perfis == null && FacesUtil.isNotPostback()) {
-			perfis = this.bo.listar();
+		if (perfis == null && facesUtil.isNotPostback()) {
+			perfis = this.bo.findAll();
 		}
 		return perfis;
 	}
@@ -127,15 +115,15 @@ public class PerfilMB implements Serializable {
 		this.perfils = perfils;
 	}
 
-	public MyLazyDataModel<Perfil> getPerfilsLazy() {
+	public LazyDataModel<Perfil> getPerfilsLazy() {
 		if (this.perfilsLazy == null) {
-			this.perfilsLazy = this.bo.filtrar(this.perfilFilter);
+			this.perfilsLazy = this.bo.lazyList(this.perfilFilter);
 		}
 
 		return this.perfilsLazy;
 	}
 
-	public void setPerfilsLazy(MyLazyDataModel<Perfil> perfilsLazy) {
+	public void setPerfilsLazy(LazyDataModel<Perfil> perfilsLazy) {
 		this.perfilsLazy = perfilsLazy;
 	}
 

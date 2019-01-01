@@ -9,17 +9,19 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.churchmanager.bo.PessoaCargoBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.Cargo;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.PessoaCargo;
 import br.com.churchmanager.model.filter.PessoaCargoFilter;
-import br.com.churchmanager.util.BuscaObjeto;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
+import br.com.churchmanager.service.PessoaCargoService;
 
 @Named
 @ViewScoped
@@ -27,34 +29,31 @@ public class PessoaCargoMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private PessoaCargo pessoaCargo;
 	private List<PessoaCargo> pessoaCargos;
-	private MyLazyDataModel<PessoaCargo> pessoaCargosLazy;
+	private LazyDataModel<PessoaCargo> pessoaCargosLazy;
 	private PessoaCargoFilter pessoaCargoFilter;
 	@Inject
-	private PessoaCargoBO bo;
+	private PessoaCargoService bo;
+	@Inject
+	private FacesUtil facesUtil;
+	@Inject
+	private JsfMessage<Msgs> msgs;
 
 	@PostConstruct
 	public void init() {
-		PessoaCargo pessoaCargo = BuscaObjeto.comParametroGET("id", this.bo);
+		PessoaCargo pessoaCargo = null;
 		this.pessoaCargo = pessoaCargo;
 	}
 
 	public String salvar() {
 		try {
-			this.bo.salvar(this.pessoaCargo);
-			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.pessoaCargo.toString());
-			FacesUtil.atualizaComponente("msg-cad-pessoa-cargo");
+			this.bo.save(this.pessoaCargo);
+			msgs.addInfo().cadastradoComSucesso();
 			this.pessoaCargo = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.atualizarComponente("msg-cad-pessoa-cargo");
 		}
 
 		return null;
@@ -62,42 +61,33 @@ public class PessoaCargoMB implements Serializable {
 
 	public String atualizar() {
 		try {
-			this.bo.atualizar(this.pessoaCargo);
-			FacesUtil.informacao("msg", "Editado com sucesso!", this.pessoaCargo.toString());
+			this.bo.save(this.pessoaCargo);
+			msgs.addInfo().editadoComSucesso();
 			pessoaCargo = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("msg");
+			facesUtil.manterMensagem();
 		}
 
 		return "/list/pessoaCargo?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.pessoaCargosLazy = this.bo.filtrar(this.pessoaCargoFilter);
+		this.pessoaCargosLazy = this.bo.lazyList(this.pessoaCargoFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.pessoaCargo);
+		this.bo.delete(this.pessoaCargo);
 		this.pessoaCargo = null;
 		return null;
 	}
 
 	public List<PessoaCargo> pessoaCargos() {
-		return this.bo.listar();
+		return this.bo.findAll();
 	}
 
 	public PessoaCargo getPessoaCargo() {
@@ -124,15 +114,15 @@ public class PessoaCargoMB implements Serializable {
 		this.pessoaCargos = pessoaCargos;
 	}
 
-	public MyLazyDataModel<PessoaCargo> getPessoaCargosLazy() {
+	public LazyDataModel<PessoaCargo> getPessoaCargosLazy() {
 		if (this.pessoaCargosLazy == null) {
-			this.pessoaCargosLazy = this.bo.filtrar(this.getPessoaCargoFilter());
+			this.pessoaCargosLazy = this.bo.lazyList(this.getPessoaCargoFilter());
 		}
 
 		return this.pessoaCargosLazy;
 	}
 
-	public void setPessoaCargosLazy(MyLazyDataModel<PessoaCargo> pessoaCargosLazy) {
+	public void setPessoaCargosLazy(LazyDataModel<PessoaCargo> pessoaCargosLazy) {
 		this.pessoaCargosLazy = pessoaCargosLazy;
 	}
 

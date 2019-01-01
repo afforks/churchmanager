@@ -40,7 +40,7 @@
 						styleClass="font-12">
 						<f:selectItems var="mes" itemLabel="#{mes.abreviacao}"
 							itemValue="#{mes.numero}" value="#{utilMB.meses()}" />
-						<p:ajax process="mes" listener="#{dizimoMB.filtrar()}"
+						<p:ajax process="mes" listener="#{dizimoMB.lazyList()}"
 							update="table" />
 					</p:selectOneButton>
 				</h:panelGroup>
@@ -52,7 +52,7 @@
 						styleClass="font-12">
 						<f:selectItems var="ano" itemLabel="#{ano}" itemValue="#{ano}"
 							value="#{dizimoMB.listAnos}" />
-						<p:ajax process="ano" listener="#{dizimoMB.filtrar()}"
+						<p:ajax process="ano" listener="#{dizimoMB.lazyList()}"
 							update="table ano" />
 					</p:selectOneButton>
 				</h:panelGroup>
@@ -74,7 +74,7 @@
 						</div>
 
 						<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
-							<p:commandButton action="#{dizimoMB.filtrar()}"
+							<p:commandButton action="#{dizimoMB.lazyList()}"
 								process="@this filtro" update="table" icon="fa fa-search"
 								styleClass="btn-grey" id="buscar" />
 						</div>

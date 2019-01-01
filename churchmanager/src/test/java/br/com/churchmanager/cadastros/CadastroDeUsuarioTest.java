@@ -17,9 +17,9 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import br.com.churchmanager.builder.PaginaBuilder;
 import br.com.churchmanager.builder.PerfilBuilder;
 import br.com.churchmanager.builder.UsuarioBuilder;
-import br.com.churchmanager.dao.PaginaDAO;
-import br.com.churchmanager.dao.PerfilDAO;
-import br.com.churchmanager.dao.UsuarioDAO;
+import br.com.churchmanager.repository.PaginaRepository;
+import br.com.churchmanager.repository.PerfilRepository;
+import br.com.churchmanager.repository.UsuarioRepository;
 import br.com.churchmanager.model.Pagina;
 import br.com.churchmanager.model.Perfil;
 import br.com.churchmanager.model.Usuario;
@@ -35,9 +35,9 @@ public class CadastroDeUsuarioTest {
 	private static WebDriver driver;
 	private static EntityManager entityManager;
 	
-	private static UsuarioDAO usuarioDAO;
-	private static PerfilDAO perfilDAO;
-	private static PaginaDAO paginaDAO;
+	private static UsuarioRepository usuarioRepository;
+	private static PerfilRepository perfilRepository;
+	private static PaginaRepository paginaRepository;
 
 	private static Usuario usuario;
 	private static Perfil perfil;
@@ -47,8 +47,8 @@ public class CadastroDeUsuarioTest {
 		
 		removerDados();
 		
-		usuarioDAO = null;
-		perfilDAO = null;
+		usuarioRepository = null;
+		perfilRepository = null;
 		usuario = null;
 		// entityManager.getTransaction().rollback();
 		entityManager.close();
@@ -56,9 +56,9 @@ public class CadastroDeUsuarioTest {
 	}
 	
 	private static void removerDados() {
-		paginaDAO.listar(true).forEach(p->paginaDAO.excluir(p));
-		usuarioDAO.excluir(usuario);
-		perfilDAO.excluir(perfil);
+		paginaRepository.findAll(true).forEach(p->paginaRepository.remove(p));
+		usuarioRepository.remove(usuario);
+		perfilRepository.remove(perfil);
 	}
 
 	@BeforeClass
@@ -86,18 +86,18 @@ public class CadastroDeUsuarioTest {
 		Pagina listUsuario = new PaginaBuilder().comNome("Listar usuário")
 				.comDescricao("Descrição da página").build();
 
-		paginaDAO = new PaginaDAO(entityManager);
-		perfilDAO = new PerfilDAO(entityManager);
+		paginaRepository = new PaginaRepository(entityManager);
+		perfilRepository = new PerfilRepository(entityManager);
 		perfil = new PerfilBuilder().comNome("Admin")
 				.comDescricao("Perfil de administrador").ativo()
 				.comPaginas(cadUsuario, editUsuario, listUsuario).builder();
-		perfilDAO.salvar(perfil);
+		perfilRepository.save(perfil);
 
-		usuarioDAO = new UsuarioDAO(entityManager);
+		usuarioRepository = new UsuarioRepository(entityManager);
 		usuario = new UsuarioBuilder().comNome("Usuário de Teste").comEmail("user@admin").comPerfil(perfil)
 				.comSenha(new Md5PasswordEncoder().encodePassword("123", null))
 				.comPaginas(cadUsuario, editUsuario, listUsuario).build();
-		usuarioDAO.salvar(usuario);
+		usuarioRepository.save(usuario);
 		
 		//COMMIT 
 		entityManager.getTransaction().commit();

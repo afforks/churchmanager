@@ -9,17 +9,18 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.churchmanager.bo.PatrimonioBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.AvaliacaoPatrimonio;
 import br.com.churchmanager.model.Patrimonio;
-import br.com.churchmanager.model.Tipo;
 import br.com.churchmanager.model.filter.PatrimonioFilter;
-import br.com.churchmanager.util.BuscaObjeto;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
+import br.com.churchmanager.service.PatrimonioService;
 
 @Named
 @ViewScoped
@@ -28,35 +29,30 @@ public class PatrimonioMB implements Serializable {
 	private Patrimonio patrimonio;
 	private AvaliacaoPatrimonio avaliacao;
 	private List<Patrimonio> patrimonios;
-	private MyLazyDataModel<Patrimonio> patrimoniosLazy;
+	private LazyDataModel<Patrimonio> patrimoniosLazy;
 	private PatrimonioFilter patrimonioFilter;
 	@Inject
-	private PatrimonioBO bo;
+	private PatrimonioService bo;
+	@Inject
+	private FacesUtil facesUtil;
+	@Inject
+	private JsfMessage<Msgs> msgs;
 
 	@PostConstruct
 	public void init() {
-		Patrimonio p = BuscaObjeto.comParametroGET("id", this.bo);
+		Patrimonio p = null;
 		this.patrimonio = p;
 	}
 
 	public String salvar() {
 		try {
-			this.bo.salvar(this.patrimonio);
-			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.patrimonio.toString());
-			FacesUtil.atualizaComponente("msg");
+			this.bo.save(this.patrimonio);
+			msgs.addInfo().cadastradoComSucesso();
 			this.patrimonio = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + patrimonio.getNome() + "' está duplicado, por favor, informe outro!");
-
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.atualizarComponente("msg");
 		}
 		return null;
 	}
@@ -64,68 +60,61 @@ public class PatrimonioMB implements Serializable {
 	public String atualizar() {
 
 		try {
-			this.bo.atualizar(this.patrimonio);
-			FacesUtil.informacao("msg", "Editado com sucesso!", this.patrimonio.toString());
+			this.bo.save(this.patrimonio);
+			msgs.addInfo().editadoComSucesso();
 			this.patrimonio = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + patrimonio.getNome() + "' está duplicado, por favor, informe outro!");
-
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("msg");
+			facesUtil.manterMensagem();
 		}
 		return "/list/patrimonio?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.patrimoniosLazy = this.bo.filtrar(this.patrimonioFilter);
+		this.patrimoniosLazy = this.bo.lazyList(this.patrimonioFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.patrimonio);
+		this.bo.delete(this.patrimonio);
 		this.patrimonio = null;
 		return null;
 	}
 
 	public List<Patrimonio> patrimonios() {
-		return this.bo.listar();
+		return this.bo.findAll();
 	}
 
 	public String removerTipo() {
-		this.patrimonio.setTipo((Tipo) null);
-		FacesUtil.atencao("msg", "O tipo de patrimônio foi removido!", (String) null);
+		this.patrimonio.setTipo(null);
+		msgs.addWarn().atencao("O tipo de patrimônio foi removido!", "");
 		return null;
 	}
 
 	public String adicionarAvaliacao() {
 		this.patrimonio.adicionar(this.avaliacao);
-		FacesUtil.informacao("avaliacao-msg", "Avaliação adicionada!", (String) null);
+		msgs.addInfo().info("Avaliação adicionada!", "");
+		facesUtil.atualizarComponente("avaliacao-msg");
 		this.avaliacao = new AvaliacaoPatrimonio();
 		return this.resetarAvaliacao();
 	}
 
 	public String atualizarAvaliacao() {
-		this.patrimonio.atualizar(this.avaliacao);
-		FacesUtil.informacao("avaliacao-msg", "Avaliação atualzada!", (String) null);
+		this.patrimonio.update(this.avaliacao);
+		msgs.addInfo().info("Avaliação atualzada!", "");
 		this.avaliacao = new AvaliacaoPatrimonio();
-		FacesUtil.executarJS("PF(\'cad-avaliacao-patrimonio\').hide();");
+		facesUtil.atualizarComponente("avaliacao-msg");
+		facesUtil.executarJavascript("PF(\'cad-avaliacao-patrimonio\').hide();");
 		return this.resetarAvaliacao();
 	}
 
 	public String removerAvaliacao() {
 		this.patrimonio.remover(this.avaliacao);
-		FacesUtil.informacao("avaliacao-msg", "Avaliação removida!", (String) null);
+		msgs.addInfo().info("Avaliação removida!", "");
+		facesUtil.atualizarComponente("avaliacao-msg");
 		return this.resetarAvaliacao();
 	}
 
@@ -158,15 +147,15 @@ public class PatrimonioMB implements Serializable {
 		this.patrimonios = patrimonios;
 	}
 
-	public MyLazyDataModel<Patrimonio> getPatrimoniosLazy() {
+	public LazyDataModel<Patrimonio> getPatrimoniosLazy() {
 		if (this.patrimoniosLazy == null) {
-			this.patrimoniosLazy = this.bo.filtrar(this.patrimonioFilter);
+			this.patrimoniosLazy = this.bo.lazyList(this.patrimonioFilter);
 		}
 
 		return this.patrimoniosLazy;
 	}
 
-	public void setPatrimoniosLazy(MyLazyDataModel<Patrimonio> patrimoniosLazy) {
+	public void setPatrimoniosLazy(LazyDataModel<Patrimonio> patrimoniosLazy) {
 		this.patrimoniosLazy = patrimoniosLazy;
 	}
 

@@ -9,98 +9,87 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.churchmanager.bo.DiretoriaBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.Cargo;
 import br.com.churchmanager.model.Diretoria;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.PessoaCargo;
 import br.com.churchmanager.model.filter.DiretoriaFilter;
-import br.com.churchmanager.util.BuscaObjeto;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
+import br.com.churchmanager.service.DiretoriaService;
 
 @Named
 @ViewScoped
 public class DiretoriaMB implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	private Diretoria diretoria;
 	private List<Diretoria> diretorias;
-	private MyLazyDataModel<Diretoria> diretoriasLazy;
+	private LazyDataModel<Diretoria> diretoriasLazy;
 	private DiretoriaFilter diretoriaFilter;
 	private Pessoa pessoa;
 	private Cargo cargo;
 	@Inject
-	private DiretoriaBO bo;
+	private DiretoriaService diretoriaService;
+
+	@Inject
+	private FacesUtil facesUtil;
+	@Inject
+	private JsfMessage<Msgs> msgs;
 
 	@PostConstruct
 	public void init() {
-		Diretoria diretoria = BuscaObjeto.comParametroGET("id", this.bo);
+		Diretoria diretoria = null;
 		this.diretoria = diretoria;
 	}
 
 	public String salvar() {
 		try {
-			this.bo.salvar(this.diretoria);
-			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.diretoria.toString());
+			this.diretoriaService.save(this.diretoria);
+			msgs.addInfo().cadastradoComSucesso();
 			this.diretoria = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + diretoria.getNome() + "' está duplicado, por favor, informe outro!");
-
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.atualizarComponente("msg");
 		}
 		return null;
 	}
 
 	public String atualizar() {
 		try {
-			this.bo.atualizar(this.diretoria);
-			FacesUtil.informacao("msg", "Editado com sucesso!", this.diretoria.toString());
-			FacesUtil.manterMensagem();
+			this.diretoriaService.save(this.diretoria);
+			msgs.addInfo().editadoComSucesso();
 			this.diretoria = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + diretoria.getNome() + "' está duplicado, por favor, informe outro!");
-
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("msg");
+			facesUtil.manterMensagem();
 		}
 		return "/list/diretoria?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.diretoriasLazy = this.bo.filtrar(this.diretoriaFilter);
+		this.diretoriasLazy = this.diretoriaService.lazyList(this.diretoriaFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.diretoria);
+		this.diretoriaService.delete(this.diretoria);
 		this.diretoria = null;
 		return null;
 	}
 
 	public List<Diretoria> diretorias() {
-		return this.bo.listar();
+		return this.diretoriaService.findAll();
 	}
 
 	public Diretoria getDiretoria() {
@@ -127,15 +116,15 @@ public class DiretoriaMB implements Serializable {
 		this.diretorias = diretorias;
 	}
 
-	public MyLazyDataModel<Diretoria> getDiretoriasLazy() {
+	public LazyDataModel<Diretoria> getDiretoriasLazy() {
 		if (this.diretoriasLazy == null) {
-			this.diretoriasLazy = this.bo.filtrar(this.diretoriaFilter);
+			this.diretoriasLazy = this.diretoriaService.lazyList(this.diretoriaFilter);
 		}
 
 		return this.diretoriasLazy;
 	}
 
-	public void setDiretoriasLazy(MyLazyDataModel<Diretoria> diretoriasLazy) {
+	public void setDiretoriasLazy(LazyDataModel<Diretoria> diretoriasLazy) {
 		this.diretoriasLazy = diretoriasLazy;
 	}
 

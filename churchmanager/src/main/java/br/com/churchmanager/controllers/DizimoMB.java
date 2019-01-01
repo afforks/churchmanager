@@ -14,20 +14,22 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import br.com.churchmanager.bo.DizimoBO;
-import br.com.churchmanager.bo.PessoaBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.Dizimo;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.filter.DizimoFilter;
 import br.com.churchmanager.report.GenericReport;
-import br.com.churchmanager.util.BuscaObjeto;
+import br.com.churchmanager.service.DizimoService;
+import br.com.churchmanager.service.PessoaService;
 import br.com.churchmanager.util.BuscarArquivo;
 import br.com.churchmanager.util.DataUtil;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
 
 @Named
 @ViewScoped
@@ -35,12 +37,17 @@ public class DizimoMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Dizimo dizimo;
 	private List<Dizimo> dizimos;
-	private MyLazyDataModel<Dizimo> dizimosLazy;
+	private LazyDataModel<Dizimo> dizimosLazy;
 	private DizimoFilter dizimoFilter;
 	@Inject
-	private DizimoBO bo;
+	private DizimoService bo;
 	@Inject
-	PessoaBO pessoaBO;
+	private PessoaService pessoaService;
+
+	@Inject
+	private FacesUtil facesUtil;
+	@Inject
+	private JsfMessage<Msgs> msgs;
 
 	@NotNull
 	@Size(min = 17, max = 17, message = "Deve conter 17 caracteres")
@@ -50,7 +57,7 @@ public class DizimoMB implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Dizimo dizimo = BuscaObjeto.comParametroGET("id", this.bo);
+		Dizimo dizimo = null;
 		this.dizimo = dizimo;
 		this.getDizimoFilter().setMes(DataUtil.mes());
 		this.getDizimoFilter().setAno(DataUtil.ano());
@@ -58,53 +65,36 @@ public class DizimoMB implements Serializable {
 
 	public String salvar() {
 		try {
-			this.bo.salvar(this.dizimo);
-			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.dizimo.toString());
-			FacesUtil.atualizaComponente("msg");
+			this.bo.save(this.dizimo);
+			msgs.addInfo().cadastradoComSucesso();
 			this.dizimo = null;
 			this.idPessoa = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.atualizarComponente("msg");
 		}
 		return null;
 	}
 
 	public String atualizar() {
 		try {
-			this.bo.atualizar(this.dizimo);
-			FacesUtil.informacao("msg", "Editado com sucesso!", this.dizimo.toString());
+			this.bo.save(this.dizimo);
+			msgs.addInfo().editadoComSucesso();
 			this.dizimo = null;
 			this.idPessoa = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("msg");
+			facesUtil.manterMensagem();
 		}
 		return "/list/dizimo?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.dizimosLazy = this.bo.filtrar(this.dizimoFilter);
+		this.dizimosLazy = this.bo.lazyList(this.dizimoFilter);
 		this.listAnos = DataUtil.getAnos(this.dizimoFilter.getAno());
 		return null;
 	}
@@ -114,24 +104,23 @@ public class DizimoMB implements Serializable {
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.dizimo);
+		this.bo.delete(this.dizimo);
 		this.dizimo = null;
 		return null;
 	}
 
 	public List<Dizimo> perfis() {
-		return this.bo.listar();
+		return this.bo.findAll();
 	}
 
 	public void buscarPessoa() {
-		Pessoa pessoa = this.pessoaBO.buscarPorMatricula(this.getIdPessoa());
+		Pessoa pessoa = this.pessoaService.findByMatricula(this.getIdPessoa());
 		if (pessoa != null) {
 			this.getDizimo().setPessoa(pessoa);
-			FacesUtil.atualizaComponente("grid-pessoa-selecionada");
+			facesUtil.atualizarComponente("grid-pessoa-selecionada");
 		} else {
-			FacesUtil.atencao("msg", "Atenção!",
-					"Nenhum dizimista foi encontrado para o código " + getIdPessoa() + "!");
-			FacesUtil.atualizaComponente("msg");
+			msgs.addWarn().atencao("Atenção!", "Nenhum dizimista foi encontrado para o código " + getIdPessoa() + "!");
+			facesUtil.atualizarComponente("msg");
 		}
 	}
 
@@ -163,15 +152,15 @@ public class DizimoMB implements Serializable {
 		this.dizimos = dizimos;
 	}
 
-	public MyLazyDataModel<Dizimo> getDizimosLazy() {
+	public LazyDataModel<Dizimo> getDizimosLazy() {
 		if (this.dizimosLazy == null) {
-			this.dizimosLazy = this.bo.filtrar(this.dizimoFilter);
+			this.dizimosLazy = this.bo.lazyList(this.dizimoFilter);
 		}
 
 		return this.dizimosLazy;
 	}
 
-	public void setDizimosLazy(MyLazyDataModel<Dizimo> dizimosLazy) {
+	public void setDizimosLazy(LazyDataModel<Dizimo> dizimosLazy) {
 		this.dizimosLazy = dizimosLazy;
 	}
 

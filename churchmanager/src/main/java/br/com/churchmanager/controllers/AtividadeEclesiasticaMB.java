@@ -9,91 +9,85 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.churchmanager.bo.AtividadeEclesiasticaBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.AtividadeEclesiastica;
 import br.com.churchmanager.model.filter.AtividadeEclesiasticaFilter;
-import br.com.churchmanager.util.BuscaObjeto;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
+import br.com.churchmanager.service.AtividadeEclesiasticaService;
 
 @Named
 @ViewScoped
 public class AtividadeEclesiasticaMB implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
 	private AtividadeEclesiastica atividade;
 	private List<AtividadeEclesiastica> atividades;
-	private MyLazyDataModel<AtividadeEclesiastica> atividadesLazy;
+	private LazyDataModel<AtividadeEclesiastica> atividadesLazy;
 	private AtividadeEclesiasticaFilter atividadeFilter;
+
 	@Inject
-	private AtividadeEclesiasticaBO bo;
+	private AtividadeEclesiasticaService atividadeService;
+
+	@Inject
+	private JsfMessage<Msgs> message;
+
+	@Inject
+	private FacesUtil facesUtil;
 
 	@PostConstruct
 	public void init() {
-		AtividadeEclesiastica atividade = BuscaObjeto.comParametroGET("id", this.bo);
+		AtividadeEclesiastica atividade = null;
 		this.atividade = atividade;
 	}
 
 	public String salvar() {
 		try {
-			this.bo.salvar(this.atividade);
-			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.atividade.toString());
+			this.atividadeService.save(this.atividade);
+			message.addInfo().cadastradoComSucesso();
 			this.atividade = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + atividade.getNome() + "' está duplicado, por favor, informe outro!");
-
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			message.addWarn().atencao("Atenção!", e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.atualizarComponente("msg");
 		}
 		return null;
 	}
 
 	public String atualizar() {
 		try {
-			this.bo.atualizar(this.atividade);
-			FacesUtil.informacao("msg", "Editado com sucesso!", this.atividade.toString());
+			this.atividadeService.save(this.atividade);
+			message.addInfo().cadastradoComSucesso();
 			this.atividade = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + atividade.getNome() + "' está duplicado, por favor, informe outro!");
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			message.addWarn().atencao("Atenção!", e.getMessage());
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("msg");
+			facesUtil.manterMensagem();
 		}
 		return "/list/atividade?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.atividadesLazy = this.bo.filtrar(this.atividadeFilter);
+		this.atividadesLazy = this.atividadeService.lazyList(this.atividadeFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.atividade);
+		this.atividadeService.delete(this.atividade);
 		this.atividade = null;
 		return null;
 	}
 
 	public List<AtividadeEclesiastica> atividades() {
-		return this.bo.listar();
+		return this.atividadeService.findAll();
 	}
 
 	public AtividadeEclesiastica getAtividadeEclesiastica() {
@@ -120,15 +114,15 @@ public class AtividadeEclesiasticaMB implements Serializable {
 		this.atividades = atividades;
 	}
 
-	public MyLazyDataModel<AtividadeEclesiastica> getAtividadeEclesiasticasLazy() {
+	public LazyDataModel<AtividadeEclesiastica> getAtividadeEclesiasticasLazy() {
 		if (this.atividadesLazy == null) {
-			this.atividadesLazy = this.bo.filtrar(this.atividadeFilter);
+			this.atividadesLazy = this.atividadeService.lazyList(this.atividadeFilter);
 		}
 
 		return this.atividadesLazy;
 	}
 
-	public void setAtividadeEclesiasticasLazy(MyLazyDataModel<AtividadeEclesiastica> atividadesLazy) {
+	public void setAtividadeEclesiasticasLazy(LazyDataModel<AtividadeEclesiastica> atividadesLazy) {
 		this.atividadesLazy = atividadesLazy;
 	}
 

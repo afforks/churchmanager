@@ -9,15 +9,17 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.churchmanager.bo.TipoBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.Tipo;
 import br.com.churchmanager.model.filter.TipoFilter;
-import br.com.churchmanager.util.BuscaObjeto;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
+import br.com.churchmanager.service.TipoService;
 
 @Named
 @ViewScoped
@@ -25,71 +27,62 @@ public class TipoMB implements Serializable {
 	private static final long serialVersionUID = 19879234234L;
 	private Tipo tipo;
 	private List<Tipo> tipos;
-	private MyLazyDataModel<Tipo> tiposLazy;
+	private LazyDataModel<Tipo> tiposLazy;
 	private TipoFilter tipoFilter;
 	@Inject
-	private TipoBO bo;
+	private TipoService bo;
+	@Inject
+	private FacesUtil facesUtil;
+	@Inject
+	private JsfMessage<Msgs> msgs;
 
 	@PostConstruct
 	public void init() {
-		Tipo tipo = BuscaObjeto.comParametroGET("id", this.bo);
+		Tipo tipo = null;
 		this.tipo = tipo;
 	}
 
 	public String salvar() {
 		try {
-			this.bo.salvar(this.tipo);
-			FacesUtil.informacao("tipo-msg", "Cadastrado com sucesso!", this.tipo.toString());
-			FacesUtil.atualizaComponente("tipo-msg");
+			this.bo.save(this.tipo);
+			msgs.addInfo().cadastradoComSucesso();
 			this.tipo = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + tipo.getNome() + "' está duplicado, por favor, informe outro!");
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.atualizarComponente("msg");
 		}
 		return null;
 	}
 
 	public String atualizar() {
 		try {
-			this.bo.atualizar(this.tipo);
-			FacesUtil.informacao("tipo-msg", "Editado com sucesso!", this.tipo.toString());
+			this.bo.save(this.tipo);
+			msgs.addInfo().editadoComSucesso();
 			this.tipo = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + tipo.getNome() + "' está duplicado, por favor, informe outro!");
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("msg");
+			facesUtil.manterMensagem();
 		}
 		return "/list/tipo?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.tiposLazy = this.bo.filtrar(this.tipoFilter);
+		this.tiposLazy = this.bo.lazyList(this.tipoFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.tipo);
+		this.bo.delete(this.tipo);
 		this.tipo = null;
 		return null;
 	}
 
 	public List<Tipo> tipos() {
-		return this.bo.listar();
+		return this.bo.findAll();
 	}
 
 	public Tipo getTipo() {
@@ -116,15 +109,15 @@ public class TipoMB implements Serializable {
 		this.tipos = tipos;
 	}
 
-	public MyLazyDataModel<Tipo> getTiposLazy() {
+	public LazyDataModel<Tipo> getTiposLazy() {
 		if (this.tiposLazy == null) {
-			this.tiposLazy = this.bo.filtrar(this.tipoFilter);
+			this.tiposLazy = this.bo.lazyList(this.tipoFilter);
 		}
 
 		return this.tiposLazy;
 	}
 
-	public void setTiposLazy(MyLazyDataModel<Tipo> tiposLazy) {
+	public void setTiposLazy(LazyDataModel<Tipo> tiposLazy) {
 		this.tiposLazy = tiposLazy;
 	}
 
@@ -139,5 +132,5 @@ public class TipoMB implements Serializable {
 	public void setTipoFilter(TipoFilter tipoFilter) {
 		this.tipoFilter = tipoFilter;
 	}
-	
+
 }

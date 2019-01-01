@@ -1,4 +1,4 @@
-package br.com.churchmanager.dao;
+package br.com.churchmanager.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -17,6 +17,7 @@ import br.com.churchmanager.builder.AtividadeEclesiasticaBuilder;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.AtividadeEclesiastica;
 import br.com.churchmanager.model.Status;
+import br.com.churchmanager.repository.AtividadeEclesiasticaRepository;
 import br.com.churchmanager.util.JPAUtil;
 
 public class AtividadeEclesiasticaDaoTest {
@@ -25,7 +26,7 @@ public class AtividadeEclesiasticaDaoTest {
 	private static final boolean ASC = true;
 
 	private EntityManager entityManager;
-	private AtividadeEclesiasticaDAO atividadeDAO;
+	private AtividadeEclesiasticaRepository atividadeRepository;
 	private AtividadeEclesiastica atividade;
 
 	@Rule
@@ -41,7 +42,7 @@ public class AtividadeEclesiasticaDaoTest {
 	public void setUp() {
 		entityManager = new JPAUtil().getEntityManager();
 		entityManager.getTransaction().begin();
-		atividadeDAO = new AtividadeEclesiasticaDAO(entityManager);
+		atividadeRepository = new AtividadeEclesiasticaRepository(entityManager);
 		atividade = novaAtividade();
 	}
 
@@ -49,18 +50,18 @@ public class AtividadeEclesiasticaDaoTest {
 	public void tearDown() {
 		entityManager.getTransaction().rollback();
 		entityManager.close();
-		atividadeDAO = null;
+		atividadeRepository = null;
 		atividade = null;
 	}
 
 	@Test
 	public void deveCadastrarAtividade() {
 
-		long qtdRegistros = atividadeDAO.contagem("id", null, null, DISTINCT_TRUE);
-		atividadeDAO.salvar(atividade);
-		long totalAtualRegistros = atividadeDAO.contagem("id", null, null, DISTINCT_TRUE);
+		long qtdRegistros = atividadeRepository.contagem("id", null, null, DISTINCT_TRUE);
+		atividadeRepository.save(atividade);
+		long totalAtualRegistros = atividadeRepository.contagem("id", null, null, DISTINCT_TRUE);
 
-		AtividadeEclesiastica atividadeDoBanco = atividadeDAO.buscarPorId(atividade.getId());
+		AtividadeEclesiastica atividadeDoBanco = atividadeRepository.findBy(atividade.getId());
 
 		assertEquals(qtdRegistros + 1, totalAtualRegistros);
 		assertEquals("id", atividade.getId(), atividadeDoBanco.getId());
@@ -72,14 +73,14 @@ public class AtividadeEclesiasticaDaoTest {
 
 	@Test
 	public void deveEditarAtividade() {
-		atividadeDAO.salvar(atividade);
+		atividadeRepository.save(atividade);
 
 		atividade.setNome("Cantar");
 		atividade.setDescricao("Uma nova descrição");
 
-		atividadeDAO.atualizar(atividade);
+		atividadeRepository.save(atividade);
 
-		AtividadeEclesiastica atividadeDoBanco = atividadeDAO.buscarPorAtributo("nome", atividade.getNome());
+		AtividadeEclesiastica atividadeDoBanco = atividadeRepository.buscarPorAtributo("nome", atividade.getNome());
 
 		assertEquals("id", atividade.getId(), atividadeDoBanco.getId());
 		assertEquals("nome", atividade.getNome(), atividadeDoBanco.getNome());
@@ -90,11 +91,11 @@ public class AtividadeEclesiasticaDaoTest {
 
 	@Test
 	public void deveRemoverAtividade() {
-		atividadeDAO.salvar(atividade);
-		long qtdRegistros = atividadeDAO.contagem("id", null, null, DISTINCT_TRUE);
-		atividadeDAO.excluir(atividade);
-		long totalAtualRegistros = atividadeDAO.contagem("id", null, null, DISTINCT_TRUE);
-		atividade = atividadeDAO.buscarPorId(atividade.getId());
+		atividadeRepository.save(atividade);
+		long qtdRegistros = atividadeRepository.contagem("id", null, null, DISTINCT_TRUE);
+		atividadeRepository.remove(atividade);
+		long totalAtualRegistros = atividadeRepository.contagem("id", null, null, DISTINCT_TRUE);
+		atividade = atividadeRepository.findBy(atividade.getId());
 		assertNull(atividade);
 		assertEquals(qtdRegistros - 1, totalAtualRegistros);
 	}
@@ -111,12 +112,12 @@ public class AtividadeEclesiasticaDaoTest {
 		AtividadeEclesiastica darAula = new AtividadeEclesiasticaBuilder().comNome("Dar aulas")
 				.comDescricao("Descrição da atividade").ativo().build();
 
-		atividadeDAO.salvar(tocarGuitarra);
-		atividadeDAO.salvar(cantar);
-		atividadeDAO.salvar(darAula);
-		atividadeDAO.salvar(recepcionarVisitantes);
+		atividadeRepository.save(tocarGuitarra);
+		atividadeRepository.save(cantar);
+		atividadeRepository.save(darAula);
+		atividadeRepository.save(recepcionarVisitantes);
 
-		List<AtividadeEclesiastica> atividades = atividadeDAO.listar(ASC, "nome");
+		List<AtividadeEclesiastica> atividades = atividadeRepository.findAll(ASC, "nome");
 		int tamanhoDaLista = atividades.size();
 
 		assertEquals(4, tamanhoDaLista);
@@ -130,8 +131,8 @@ public class AtividadeEclesiasticaDaoTest {
 	@Test
 	public void deveBuscarAtividadePorIdentificador() {
 
-		atividadeDAO.salvar(atividade);
-		AtividadeEclesiastica atividadeDoBanco = atividadeDAO.buscarPorId(atividade.getId());
+		atividadeRepository.save(atividade);
+		AtividadeEclesiastica atividadeDoBanco = atividadeRepository.findBy(atividade.getId());
 
 		assertEquals("id", atividade.getId(), atividadeDoBanco.getId());
 		assertEquals("nome", atividade.getNome(), atividadeDoBanco.getNome());
@@ -143,8 +144,8 @@ public class AtividadeEclesiasticaDaoTest {
 	@Test
 	public void deveEncontrarAtividadePorNome() {
 
-		atividadeDAO.salvar(atividade);
-		AtividadeEclesiastica atividadeDoBanco = atividadeDAO.buscarPorAtributo("nome", "Tocar guitarra");
+		atividadeRepository.save(atividade);
+		AtividadeEclesiastica atividadeDoBanco = atividadeRepository.buscarPorAtributo("nome", "Tocar guitarra");
 
 		assertEquals("id", atividade.getId(), atividadeDoBanco.getId());
 		assertEquals("nome", atividade.getNome(), atividadeDoBanco.getNome());
@@ -154,7 +155,7 @@ public class AtividadeEclesiasticaDaoTest {
 
 	@Test
 	public void deveRetornarNuloSeNaoEncontrarAtividadePorNome() {
-		AtividadeEclesiastica atividadeDoBanco = atividadeDAO.buscarPorAtributo("nome", "Cantar");
+		AtividadeEclesiastica atividadeDoBanco = atividadeRepository.buscarPorAtributo("nome", "Cantar");
 		assertNull(atividadeDoBanco);
 	}
 
@@ -167,8 +168,8 @@ public class AtividadeEclesiasticaDaoTest {
 		AtividadeEclesiastica cantar2 = new AtividadeEclesiasticaBuilder().comNome("Cantar")
 				.comDescricao("Descrição da atividade").ativo().build();
 
-		atividadeDAO.salvar(cantar1);
-		atividadeDAO.salvar(cantar2);
+		atividadeRepository.save(cantar1);
+		atividadeRepository.save(cantar2);
 
 	}
 
@@ -179,14 +180,14 @@ public class AtividadeEclesiasticaDaoTest {
 		AtividadeEclesiastica tocarGuitarra = new AtividadeEclesiasticaBuilder().comNome("Tocar Guitarra")
 				.comDescricao("Descrição da atividade").inativo().build();
 
-		atividadeDAO.salvar(cantar);
-		atividadeDAO.salvar(tocarGuitarra);
+		atividadeRepository.save(cantar);
+		atividadeRepository.save(tocarGuitarra);
 
-		atividadeDAO.atualizarStatus(cantar);
-		atividadeDAO.atualizarStatus(tocarGuitarra);
+		atividadeRepository.saveStatus(cantar);
+		atividadeRepository.saveStatus(tocarGuitarra);
 
-		AtividadeEclesiastica atividadeBanco1 = atividadeDAO.buscarPorId(cantar.getId());
-		AtividadeEclesiastica atividadeBanco2 = atividadeDAO.buscarPorId(tocarGuitarra.getId());
+		AtividadeEclesiastica atividadeBanco1 = atividadeRepository.findBy(cantar.getId());
+		AtividadeEclesiastica atividadeBanco2 = atividadeRepository.findBy(tocarGuitarra.getId());
 
 		assertEquals(Status.INATIVO, atividadeBanco1.getStatus());
 		assertEquals(Status.ATIVO, atividadeBanco2.getStatus());

@@ -1,4 +1,4 @@
-package br.com.churchmanager.dao;
+package br.com.churchmanager.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -17,6 +17,7 @@ import br.com.churchmanager.builder.CategoriaMovimentacaoBuilder;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.CategoriaMovimentacao;
 import br.com.churchmanager.model.Status;
+import br.com.churchmanager.repository.CategoriaMovimentacaoRepository;
 import br.com.churchmanager.util.JPAUtil;
 
 public class CategoriaMovimentacaoDaoTest {
@@ -25,7 +26,7 @@ public class CategoriaMovimentacaoDaoTest {
 	private static final boolean ASC = true;
 
 	private EntityManager entityManager;
-	private CategoriaMovimentacaoDAO categoriaDAO;
+	private CategoriaMovimentacaoRepository categoriaRepository;
 	private CategoriaMovimentacao categoria;
 
 	@Rule
@@ -41,7 +42,7 @@ public class CategoriaMovimentacaoDaoTest {
 	public void setUp() {
 		entityManager = new JPAUtil().getEntityManager();
 		entityManager.getTransaction().begin();
-		categoriaDAO = new CategoriaMovimentacaoDAO(entityManager);
+		categoriaRepository = new CategoriaMovimentacaoRepository(entityManager);
 		categoria = novaCategoria();
 	}
 
@@ -49,18 +50,18 @@ public class CategoriaMovimentacaoDaoTest {
 	public void tearDown() {
 		entityManager.getTransaction().rollback();
 		entityManager.close();
-		categoriaDAO = null;
+		categoriaRepository = null;
 		categoria = null;
 	}
 
 	@Test
 	public void deveCadastrarCategoria() {
 
-		long qtdRegistros = categoriaDAO.contagem("id", null, null, DISTINCT_TRUE);
-		categoriaDAO.salvar(categoria);
-		long totalAtualRegistros = categoriaDAO.contagem("id", null, null, DISTINCT_TRUE);
+		long qtdRegistros = categoriaRepository.contagem("id", null, null, DISTINCT_TRUE);
+		categoriaRepository.save(categoria);
+		long totalAtualRegistros = categoriaRepository.contagem("id", null, null, DISTINCT_TRUE);
 
-		CategoriaMovimentacao categoriaDoBanco = categoriaDAO.buscarPorId(categoria.getId());
+		CategoriaMovimentacao categoriaDoBanco = categoriaRepository.findBy(categoria.getId());
 
 		assertEquals(qtdRegistros + 1, totalAtualRegistros);
 		assertEquals("id", categoria.getId(), categoriaDoBanco.getId());
@@ -72,14 +73,14 @@ public class CategoriaMovimentacaoDaoTest {
 
 	@Test
 	public void deveEditarCategoria() {
-		categoriaDAO.salvar(categoria);
+		categoriaRepository.save(categoria);
 
 		categoria.setNome("Mercantil");
 		categoria.setDescricao("Uma nova descrição");
 
-		categoriaDAO.atualizar(categoria);
+		categoriaRepository.save(categoria);
 
-		CategoriaMovimentacao categoriaDoBanco = categoriaDAO.buscarPorAtributo("nome", categoria.getNome());
+		CategoriaMovimentacao categoriaDoBanco = categoriaRepository.buscarPorAtributo("nome", categoria.getNome());
 
 		assertEquals("id", categoria.getId(), categoriaDoBanco.getId());
 		assertEquals("nome", categoria.getNome(), categoriaDoBanco.getNome());
@@ -90,11 +91,11 @@ public class CategoriaMovimentacaoDaoTest {
 
 	@Test
 	public void deveRemoverCategoria() {
-		categoriaDAO.salvar(categoria);
-		long qtdRegistros = categoriaDAO.contagem("id", null, null, DISTINCT_TRUE);
-		categoriaDAO.excluir(categoria);
-		long totalAtualRegistros = categoriaDAO.contagem("id", null, null, DISTINCT_TRUE);
-		categoria = categoriaDAO.buscarPorId(categoria.getId());
+		categoriaRepository.save(categoria);
+		long qtdRegistros = categoriaRepository.contagem("id", null, null, DISTINCT_TRUE);
+		categoriaRepository.remove(categoria);
+		long totalAtualRegistros = categoriaRepository.contagem("id", null, null, DISTINCT_TRUE);
+		categoria = categoriaRepository.findBy(categoria.getId());
 		assertNull(categoria);
 		assertEquals(qtdRegistros - 1, totalAtualRegistros);
 	}
@@ -111,12 +112,12 @@ public class CategoriaMovimentacaoDaoTest {
 		CategoriaMovimentacao darAula = new CategoriaMovimentacaoBuilder().comNome("Equipamento de som")
 				.comDescricao("Descrição da categoria").ativo().build();
 
-		categoriaDAO.salvar(darAula);
-		categoriaDAO.salvar(materiaLimpeza);
-		categoriaDAO.salvar(mercantil);
-		categoriaDAO.salvar(prebenda);
+		categoriaRepository.save(darAula);
+		categoriaRepository.save(materiaLimpeza);
+		categoriaRepository.save(mercantil);
+		categoriaRepository.save(prebenda);
 
-		List<CategoriaMovimentacao> categorias = categoriaDAO.listar(ASC, "nome");
+		List<CategoriaMovimentacao> categorias = categoriaRepository.findAll(ASC, "nome");
 		int tamanhoDaLista = categorias.size();
 
 		assertEquals(4, tamanhoDaLista);
@@ -130,8 +131,8 @@ public class CategoriaMovimentacaoDaoTest {
 	@Test
 	public void deveBuscarCategoriaPorIdentificador() {
 
-		categoriaDAO.salvar(categoria);
-		CategoriaMovimentacao categoriaDoBanco = categoriaDAO.buscarPorId(categoria.getId());
+		categoriaRepository.save(categoria);
+		CategoriaMovimentacao categoriaDoBanco = categoriaRepository.findBy(categoria.getId());
 
 		assertEquals("id", categoria.getId(), categoriaDoBanco.getId());
 		assertEquals("nome", categoria.getNome(), categoriaDoBanco.getNome());
@@ -143,8 +144,8 @@ public class CategoriaMovimentacaoDaoTest {
 	@Test
 	public void deveEncontrarCategoriaPorNome() {
 
-		categoriaDAO.salvar(categoria);
-		CategoriaMovimentacao categoriaDoBanco = categoriaDAO.buscarPorAtributo("nome", "Material de limpeza");
+		categoriaRepository.save(categoria);
+		CategoriaMovimentacao categoriaDoBanco = categoriaRepository.buscarPorAtributo("nome", "Material de limpeza");
 
 		assertEquals("id", categoria.getId(), categoriaDoBanco.getId());
 		assertEquals("nome", categoria.getNome(), categoriaDoBanco.getNome());
@@ -154,7 +155,7 @@ public class CategoriaMovimentacaoDaoTest {
 
 	@Test
 	public void deveRetornarNuloSeNaoEncontrarCategoriaPorNome() {
-		CategoriaMovimentacao categoriaDoBanco = categoriaDAO.buscarPorAtributo("nome", "Mercantil");
+		CategoriaMovimentacao categoriaDoBanco = categoriaRepository.buscarPorAtributo("nome", "Mercantil");
 		assertNull(categoriaDoBanco);
 	}
 
@@ -167,8 +168,8 @@ public class CategoriaMovimentacaoDaoTest {
 		CategoriaMovimentacao cantar2 = new CategoriaMovimentacaoBuilder().comNome("Mercantil")
 				.comDescricao("Descrição da categoria").ativo().build();
 
-		categoriaDAO.salvar(cantar1);
-		categoriaDAO.salvar(cantar2);
+		categoriaRepository.save(cantar1);
+		categoriaRepository.save(cantar2);
 
 	}
 
@@ -179,14 +180,14 @@ public class CategoriaMovimentacaoDaoTest {
 		CategoriaMovimentacao tocarGuitarra = new CategoriaMovimentacaoBuilder().comNome("Material de limpeza")
 				.comDescricao("Descrição da categoria").inativo().build();
 
-		categoriaDAO.salvar(cantar);
-		categoriaDAO.salvar(tocarGuitarra);
+		categoriaRepository.save(cantar);
+		categoriaRepository.save(tocarGuitarra);
 
-		categoriaDAO.atualizarStatus(cantar);
-		categoriaDAO.atualizarStatus(tocarGuitarra);
+		categoriaRepository.saveStatus(cantar);
+		categoriaRepository.saveStatus(tocarGuitarra);
 
-		CategoriaMovimentacao categoriaBanco1 = categoriaDAO.buscarPorId(cantar.getId());
-		CategoriaMovimentacao categoriaBanco2 = categoriaDAO.buscarPorId(tocarGuitarra.getId());
+		CategoriaMovimentacao categoriaBanco1 = categoriaRepository.findBy(cantar.getId());
+		CategoriaMovimentacao categoriaBanco2 = categoriaRepository.findBy(tocarGuitarra.getId());
 
 		assertEquals(Status.INATIVO, categoriaBanco1.getStatus());
 		assertEquals(Status.ATIVO, categoriaBanco2.getStatus());

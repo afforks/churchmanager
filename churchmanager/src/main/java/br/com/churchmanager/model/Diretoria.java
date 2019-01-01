@@ -42,10 +42,10 @@ public class Diretoria extends EntidadeGenerica implements Serializable {
 	@NotNull
 	@NotEmpty
 
-	@ManyToMany(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(name = "diretoria_pessoa_cargo", joinColumns = {
 			@JoinColumn(name = "diretoria_id") }, inverseJoinColumns = { @JoinColumn(name = "pessoa_cargo_id") })
+	@ManyToMany(fetch = FetchType.EAGER, targetEntity = PessoaCargo.class)
 	private List<PessoaCargo> pessoaCargos = new ArrayList<>();
 
 	@NotNull

@@ -47,7 +47,7 @@
 			<p:selectOneRadio id="status"
 				value="#{perfilMB.perfil.status}">
 				<f:selectItems itemLabel="#{status.descricao}" var="status"
-					value="#{utilMB.listarStatus()}" itemValue="#{status}" />
+					value="#{utilMB.findAllStatus()}" itemValue="#{status}" />
 			</p:selectOneRadio>
 			<p:message for="status" />
 		</div>
@@ -62,7 +62,7 @@
 				columns="3" layout="responsive">
 				<f:attribute name="collectionType" value="java.util.ArrayList" />
 				<f:selectItems var="pagina" itemValue="#{pagina}"
-					itemLabel="#{pagina.nome}" value="#{paginaMB.listarPaginas()}" />
+					itemLabel="#{pagina.nome}" value="#{paginaMB.findAllPaginas()}" />
 
 			</p:selectManyCheckbox>
 		</div>
@@ -70,12 +70,12 @@
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 
-				<p:commandButton value="Cadastrar" action="#{perfilMB.salvar()}"
+				<p:commandButton value="Cadastrar" action="#{perfilMB.save()}"
 					update="group" validateClient="true" icon="fa fa-save"
 					rendered="#{perfilMB.perfil.id == null}" styleClass="btn-blue">
 				</p:commandButton>
 
-				<p:commandButton value="Editar" action="#{perfilMB.atualizar()}"
+				<p:commandButton value="Editar" action="#{perfilMB.save()}"
 					update="group" validateClient="true" icon="fa fa-edit"
 					rendered="#{perfilMB.perfil.id != null}" styleClass="btn-green">
 				</p:commandButton>

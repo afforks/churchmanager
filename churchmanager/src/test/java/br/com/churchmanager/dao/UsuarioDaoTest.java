@@ -1,4 +1,4 @@
-package br.com.churchmanager.dao;
+package br.com.churchmanager.repository;
 
 import static org.junit.Assert.*;
 
@@ -18,6 +18,8 @@ import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Perfil;
 import br.com.churchmanager.model.Status;
 import br.com.churchmanager.model.Usuario;
+import br.com.churchmanager.repository.PerfilRepository;
+import br.com.churchmanager.repository.UsuarioRepository;
 import br.com.churchmanager.util.JPAUtil;
 
 public class UsuarioDaoTest {
@@ -26,8 +28,8 @@ public class UsuarioDaoTest {
 	private static final boolean ASC = true;
 
 	private EntityManager entityManager;
-	private UsuarioDAO usuarioDAO;
-	private PerfilDAO perfilDAO;
+	private UsuarioRepository usuarioRepository;
+	private PerfilRepository perfilRepository;
 	private Perfil perfil;
 	private Usuario usuario;
 
@@ -36,7 +38,7 @@ public class UsuarioDaoTest {
 
 	private Perfil novoPerfil() {
 		Perfil perfil = new PerfilBuilder().comNome("Admin").comDescricao("Perfil de administrador").ativo().builder();
-		perfilDAO.salvar(perfil);
+		perfilRepository.save(perfil);
 		return perfil;
 	}
 
@@ -50,8 +52,8 @@ public class UsuarioDaoTest {
 	public void setUp() {
 		entityManager = new JPAUtil().getEntityManager();
 		entityManager.getTransaction().begin();
-		usuarioDAO = new UsuarioDAO(entityManager);
-		perfilDAO = new PerfilDAO(entityManager);
+		usuarioRepository = new UsuarioRepository(entityManager);
+		perfilRepository = new PerfilRepository(entityManager);
 		perfil = novoPerfil();
 		usuario = novoUsuario();
 	}
@@ -60,8 +62,8 @@ public class UsuarioDaoTest {
 	public void tearDown() {
 		entityManager.getTransaction().rollback();
 		entityManager.close();
-		usuarioDAO = null;
-		perfilDAO = null;
+		usuarioRepository = null;
+		perfilRepository = null;
 		perfil = null;
 		usuario = null;
 	}
@@ -69,11 +71,11 @@ public class UsuarioDaoTest {
 	@Test
 	public void deveCadastrarUsuario() {
 
-		long qtdRegistros = usuarioDAO.contagem("id", null, null, DISTINCT_TRUE);
-		usuarioDAO.salvar(usuario);
-		long totalAtualRegistros = usuarioDAO.contagem("id", null, null, DISTINCT_TRUE);
+		long qtdRegistros = usuarioRepository.contagem("id", null, null, DISTINCT_TRUE);
+		usuarioRepository.save(usuario);
+		long totalAtualRegistros = usuarioRepository.contagem("id", null, null, DISTINCT_TRUE);
 
-		Usuario usuarioDoBanco = usuarioDAO.buscarPorId(usuario.getId());
+		Usuario usuarioDoBanco = usuarioRepository.findBy(usuario.getId());
 
 		assertEquals(qtdRegistros + 1, totalAtualRegistros);
 		assertEquals("id", usuario.getId(), usuarioDoBanco.getId());
@@ -86,14 +88,14 @@ public class UsuarioDaoTest {
 
 	@Test
 	public void deveEditarUsuario() {
-		usuarioDAO.salvar(usuario);
+		usuarioRepository.save(usuario);
 
 		usuario.setNomeCompleto("Nome editado");
 		usuario.setEmail("email@editado.com");
 
-		usuarioDAO.atualizar(usuario);
+		usuarioRepository.save(usuario);
 
-		Usuario usuarioDoBanco = usuarioDAO.porEmail("email@editado.com");
+		Usuario usuarioDoBanco = usuarioRepository.porEmail("email@editado.com");
 
 		assertEquals("id", usuario.getId(), usuarioDoBanco.getId());
 		assertEquals("nome", usuario.getNomeCompleto(), usuarioDoBanco.getNomeCompleto());
@@ -105,11 +107,11 @@ public class UsuarioDaoTest {
 
 	@Test
 	public void deveRemoverUsuario() {
-		usuarioDAO.salvar(usuario);
-		long qtdRegistros = usuarioDAO.contagem("id", null, null, DISTINCT_TRUE);
-		usuarioDAO.excluir(usuario);
-		long totalAtualRegistros = usuarioDAO.contagem("id", null, null, DISTINCT_TRUE);
-		usuario = usuarioDAO.buscarPorId(usuario.getId());
+		usuarioRepository.save(usuario);
+		long qtdRegistros = usuarioRepository.contagem("id", null, null, DISTINCT_TRUE);
+		usuarioRepository.remove(usuario);
+		long totalAtualRegistros = usuarioRepository.contagem("id", null, null, DISTINCT_TRUE);
+		usuario = usuarioRepository.findBy(usuario.getId());
 		assertNull(usuario);
 		assertEquals(qtdRegistros - 1, totalAtualRegistros);
 	}
@@ -123,11 +125,11 @@ public class UsuarioDaoTest {
 		Usuario usuario3 = new UsuarioBuilder().comNome("Usuário Três").comEmail("usuario@tres.com.br")
 				.comPerfil(perfil).comSenha("333").build();
 
-		usuarioDAO.salvar(usuario1);
-		usuarioDAO.salvar(usuario2);
-		usuarioDAO.salvar(usuario3);
+		usuarioRepository.save(usuario1);
+		usuarioRepository.save(usuario2);
+		usuarioRepository.save(usuario3);
 
-		List<Usuario> usuarios = usuarioDAO.listar(ASC, "nomeCompleto");
+		List<Usuario> usuarios = usuarioRepository.findAll(ASC, "nomeCompleto");
 		int tamanhoDaLista = usuarios.size();
 
 		assertEquals(3, tamanhoDaLista);
@@ -140,8 +142,8 @@ public class UsuarioDaoTest {
 	@Test
 	public void deveBuscarUsuarioPorIdentificador() {
 
-		usuarioDAO.salvar(usuario);
-		Usuario usuarioDoBanco = usuarioDAO.buscarPorId(usuario.getId());
+		usuarioRepository.save(usuario);
+		Usuario usuarioDoBanco = usuarioRepository.findBy(usuario.getId());
 
 		assertEquals("id", usuario.getId(), usuarioDoBanco.getId());
 		assertEquals("nome", usuario.getNomeCompleto(), usuarioDoBanco.getNomeCompleto());
@@ -154,8 +156,8 @@ public class UsuarioDaoTest {
 	@Test
 	public void deveEncontrarUsuarioPorEmail() {
 
-		usuarioDAO.salvar(usuario);
-		Usuario usuarioDoBanco = usuarioDAO.porEmail("usuario@teste.com.br");
+		usuarioRepository.save(usuario);
+		Usuario usuarioDoBanco = usuarioRepository.porEmail("usuario@teste.com.br");
 
 		assertEquals("id", usuario.getId(), usuarioDoBanco.getId());
 		assertEquals("nome", usuario.getNomeCompleto(), usuarioDoBanco.getNomeCompleto());
@@ -166,7 +168,7 @@ public class UsuarioDaoTest {
 
 	@Test
 	public void deveRetornarNuloSeNaoEncontrarUsuarioPorEmail() {
-		Usuario usuarioDoBanco = usuarioDAO.porEmail("usuario@teste.com.br");
+		Usuario usuarioDoBanco = usuarioRepository.porEmail("usuario@teste.com.br");
 		assertNull(usuarioDoBanco);
 	}
 
@@ -180,8 +182,8 @@ public class UsuarioDaoTest {
 		Usuario usuario2 = new UsuarioBuilder().comNome("Usuário de Teste 2").comEmail("usuario@teste.com.br")
 				.comPerfil(perfil).comSenha("456").build();
 
-		usuarioDAO.salvar(usuario1);
-		usuarioDAO.salvar(usuario2);
+		usuarioRepository.save(usuario1);
+		usuarioRepository.save(usuario2);
 
 	}
 	
@@ -193,14 +195,14 @@ public class UsuarioDaoTest {
 		Usuario usuario2 = new UsuarioBuilder().comNome("Usuário de Teste 2").comEmail("usuario2@dois.com.br")
 				.comPerfil(perfil).comSenha("456").inativo().build();
 
-		usuarioDAO.salvar(usuario1);
-		usuarioDAO.salvar(usuario2);
+		usuarioRepository.save(usuario1);
+		usuarioRepository.save(usuario2);
 		
-		usuarioDAO.atualizarStatus(usuario1);
-		usuarioDAO.atualizarStatus(usuario2);
+		usuarioRepository.saveStatus(usuario1);
+		usuarioRepository.saveStatus(usuario2);
 		
-		Usuario usuarioBanco1 = usuarioDAO.buscarPorId(usuario1.getId());
-		Usuario usuarioBanco2 = usuarioDAO.buscarPorId(usuario2.getId());
+		Usuario usuarioBanco1 = usuarioRepository.findBy(usuario1.getId());
+		Usuario usuarioBanco2 = usuarioRepository.findBy(usuario2.getId());
 		
 		assertEquals(Status.INATIVO, usuarioBanco1.getStatus());
 		assertEquals(Status.ATIVO, usuarioBanco2.getStatus());

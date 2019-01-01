@@ -35,7 +35,7 @@
 								value="#{pessoaMB.pessoaFilter.nome}" />
 
 							<h:panelGrid columns="2">
-								<p:commandButton action="#{pessoaMB.filtrar()}"
+								<p:commandButton action="#{pessoaMB.lazyList()}"
 									process="@this filtro-pessoa" update="table-pessoa" icon="fa fa-search"
 									styleClass="btn-grey" />
 							</h:panelGrid>

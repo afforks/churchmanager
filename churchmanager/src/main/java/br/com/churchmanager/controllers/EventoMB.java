@@ -11,17 +11,19 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.churchmanager.bo.EventoBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.Evento;
 import br.com.churchmanager.model.filter.EventoFilter;
 import br.com.churchmanager.report.GenericReport;
-import br.com.churchmanager.util.BuscaObjeto;
+import br.com.churchmanager.service.EventoService;
 import br.com.churchmanager.util.BuscarArquivo;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
 
 @Named
 @ViewScoped
@@ -29,77 +31,63 @@ public class EventoMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Evento evento;
 	private List<Evento> eventos;
-	private MyLazyDataModel<Evento> eventosLazy;
+	private LazyDataModel<Evento> eventosLazy;
 	private EventoFilter eventoFilter;
 	@Inject
-	private EventoBO bo;
+	private EventoService bo;
+	@Inject
+	private FacesUtil facesUtil;
+	@Inject
+	private JsfMessage<Msgs> msgs;
 
 	@PostConstruct
 	public void init() {
-		Evento evento = BuscaObjeto.comParametroGET("id", this.bo);
+		Evento evento = null;
 		this.evento = evento;
 	}
 
 	public String salvar() {
 		try {
-			this.bo.salvar(this.evento);
-			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.evento.toString());
-			FacesUtil.atualizaComponente("msg");
+			this.bo.save(this.evento);
+			msgs.addInfo().cadastradoComSucesso();
+			facesUtil.atualizarComponente("msg");
 			this.evento = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + evento.getNome() + "' está duplicado, por favor, informe outro!");
-
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.atualizarComponente("msg");
 		}
 		return null;
 	}
 
 	public String atualizar() {
 		try {
-			this.bo.atualizar(this.evento);
-			FacesUtil.informacao("msg", "Editado com sucesso!", this.evento.toString());
+			this.bo.save(this.evento);
+			msgs.addInfo().cadastradoComSucesso();
 			this.evento = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + evento.getNome() + "' está duplicado, por favor, informe outro!");
-
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("msg");
+			facesUtil.manterMensagem();
 		}
 		return "/list/evento?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.eventosLazy = this.bo.filtrar(this.eventoFilter);
+		this.eventosLazy = this.bo.lazyList(this.eventoFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.evento);
+		this.bo.delete(this.evento);
 		this.evento = null;
 		return null;
 	}
 
 	public List<Evento> perfis() {
-		return this.bo.listar();
+		return this.bo.findAll();
 	}
 
 	public void relatorioDeEventos() {
@@ -132,15 +120,15 @@ public class EventoMB implements Serializable {
 		this.eventos = eventos;
 	}
 
-	public MyLazyDataModel<Evento> getEventosLazy() {
+	public LazyDataModel<Evento> getEventosLazy() {
 		if (this.eventosLazy == null) {
-			this.eventosLazy = this.bo.filtrar(this.eventoFilter);
+			this.eventosLazy = this.bo.lazyList(this.eventoFilter);
 		}
 
 		return this.eventosLazy;
 	}
 
-	public void setEventosLazy(MyLazyDataModel<Evento> eventosLazy) {
+	public void setEventosLazy(LazyDataModel<Evento> eventosLazy) {
 		this.eventosLazy = eventosLazy;
 	}
 

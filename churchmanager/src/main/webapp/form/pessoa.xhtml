@@ -60,7 +60,7 @@
 						value="#{pessoaMB.pessoa.estadoCivil}"
 						converterMessage="Não foi possível converter o objeto (EstadoCivil)">
 						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-						<f:selectItems value="#{utilMB.listarEstadoCivil()}"
+						<f:selectItems value="#{utilMB.findAllEstadoCivil()}"
 							itemLabel="#{estacoCivil.descricao}" itemValue="#{estacoCivil}"
 							var="estacoCivil" />
 
@@ -74,7 +74,7 @@
 				<p:outputLabel for="sexo" styleClass="my-label" value="Sexo" />
 				<p:selectOneRadio id="sexo" value="#{pessoaMB.pessoa.sexo}">
 					<f:selectItems itemLabel="#{sexo.descricao}" var="sexo"
-						value="#{utilMB.listarSexo()}" itemValue="#{sexo}" />
+						value="#{utilMB.findAllSexo()}" itemValue="#{sexo}" />
 				</p:selectOneRadio>
 				<p:message for="sexo" />
 			</div>
@@ -88,7 +88,7 @@
 					converterMessage="Não foi possível converter o objeto (Escolaridade)"
 					styleClass="min-size-correcao">
 					<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-					<f:selectItems value="#{utilMB.listarPerfilEscolaridade()}"
+					<f:selectItems value="#{utilMB.findAllPerfilEscolaridade()}"
 						itemLabel="#{escolaridade.descricao}" itemValue="#{escolaridade}"
 						var="escolaridade" />
 				</p:selectOneMenu>
@@ -111,7 +111,7 @@
 				<p:outputLabel for="status" styleClass="my-label" value="Status" />
 				<p:selectOneRadio id="status" value="#{pessoaMB.pessoa.status}">
 					<f:selectItems itemLabel="#{status.descricao}" var="status"
-						value="#{utilMB.listarStatus()}" itemValue="#{status}" />
+						value="#{utilMB.findAllStatus()}" itemValue="#{status}" />
 				</p:selectOneRadio>
 				<p:message for="status" />
 			</div>
@@ -190,7 +190,7 @@
 					value="#{pessoaMB.pessoa.endereco.estado}"
 					converterMessage="Não foi possível converter o objeto (Estado)">
 					<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-					<f:selectItems value="#{utilMB.listarEstados()}"
+					<f:selectItems value="#{utilMB.findAllEstados()}"
 						itemLabel="#{estado.descricao}" itemValue="#{estado}" var="estado" />
 				</p:selectOneMenu>
 				<p:message for="estado" />
@@ -343,12 +343,12 @@
 
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
-				<p:commandButton value="Cadastrar" action="#{pessoaMB.salvar()}"
+				<p:commandButton value="Cadastrar" action="#{pessoaMB.save()}"
 					update="group" validateClient="true" icon="fa fa-save"
 					rendered="#{pessoaMB.pessoa.id == null}" styleClass="btn-blue">
 				</p:commandButton>
 
-				<p:commandButton value="Editar" action="#{pessoaMB.atualizar()}"
+				<p:commandButton value="Editar" action="#{pessoaMB.save()}"
 					update="group" validateClient="true" icon="fa fa-edit"
 					rendered="#{pessoaMB.pessoa.id != null}" styleClass="btn-green">
 				</p:commandButton>

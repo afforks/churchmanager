@@ -10,16 +10,18 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.churchmanager.bo.PaginaBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.Pagina;
 import br.com.churchmanager.model.filter.PaginaFilter;
 import br.com.churchmanager.report.GenericReport;
-import br.com.churchmanager.util.BuscaObjeto;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
+import br.com.churchmanager.service.PaginaService;
 
 @Named
 @ViewScoped
@@ -28,73 +30,61 @@ public class PaginaMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Pagina pagina;
 	private List<Pagina> paginas;
-	private MyLazyDataModel<Pagina> paginasLazy;
+	private LazyDataModel<Pagina> paginasLazy;
 	private PaginaFilter paginaFilter;
 	private static final Logger LOGGER = Logger.getLogger(GenericReport.class.getName());
 
 	@Inject
-	private PaginaBO bo;
+	private PaginaService bo;
+
+	@Inject
+	private FacesUtil facesUtil;
+	@Inject
+	private JsfMessage<Msgs> msgs;
 
 	@PostConstruct
 	public void init() {
-		Pagina pagina = BuscaObjeto.comParametroGET("id", this.bo);
+		Pagina pagina = null;
 		this.pagina = pagina;
 	}
 
 	public String salvar() {
 		try {
-			this.bo.salvar(this.pagina);
-			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.pagina.toString());
-			FacesUtil.atualizaComponente("msg");
+			this.bo.save(this.pagina);
+			msgs.addInfo().cadastradoComSucesso();
 			this.pagina = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			LOGGER.info(e.getMessage());
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O valor '" + pagina.getNome() + "' está duplicado, por favor, informe outro!");
-			LOGGER.info(e.getMessage());
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 			LOGGER.info(e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.atualizarComponente("msg");
 		}
 		return null;
 	}
 
 	public String atualizar() {
 		try {
-			this.bo.atualizar(this.pagina);
-			FacesUtil.informacao("msg", "Editado com sucesso!", this.pagina.toString());
+			this.bo.save(this.pagina);
+			msgs.addInfo().editadoComSucesso();
 			this.pagina = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			LOGGER.info(e.getMessage());
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O valor '" + pagina.getNome() + "' está duplicado, por favor, informe outro!");
-			LOGGER.info(e.getMessage());
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 			LOGGER.info(e.getMessage());
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("msg");
+			facesUtil.manterMensagem();
 		}
 		return "/list/pagina?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.paginasLazy = this.bo.filtrar(this.paginaFilter);
+		this.paginasLazy = this.bo.lazyList(this.paginaFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.pagina);
+		this.bo.delete(this.pagina);
 		this.pagina = null;
 		return null;
 	}
@@ -102,8 +92,8 @@ public class PaginaMB implements Serializable {
 	private List<Pagina> listarPaginas;
 
 	public List<Pagina> listarPaginas() {
-		if (listarPaginas == null && FacesUtil.isNotPostback()) {
-			listarPaginas = this.bo.listar();
+		if (listarPaginas == null && facesUtil.isNotPostback()) {
+			listarPaginas = this.bo.findAll();
 		}
 		return listarPaginas;
 	}
@@ -132,15 +122,15 @@ public class PaginaMB implements Serializable {
 		this.paginas = paginas;
 	}
 
-	public MyLazyDataModel<Pagina> getPaginasLazy() {
+	public LazyDataModel<Pagina> getPaginasLazy() {
 		if (this.paginasLazy == null) {
-			this.paginasLazy = this.bo.filtrar(this.paginaFilter);
+			this.paginasLazy = this.bo.lazyList(this.paginaFilter);
 		}
 
 		return this.paginasLazy;
 	}
 
-	public void setPaginasLazy(MyLazyDataModel<Pagina> paginasLazy) {
+	public void setPaginasLazy(LazyDataModel<Pagina> paginasLazy) {
 		this.paginasLazy = paginasLazy;
 	}
 

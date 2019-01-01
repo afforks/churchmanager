@@ -61,14 +61,14 @@
 										styleClass="font-12">
 										<f:selectItems var="ano" itemLabel="#{ano}" itemValue="#{ano}"
 											value="#{dashBoard.listAnos}" />
-										<p:ajax process="ano" update="ano" listener="#{dashBoard.atualizarAno()}"/>
+										<p:ajax process="ano" update="ano" listener="#{dashBoard.saveAno()}"/>
 									</p:selectOneButton>
 								</h:panelGroup>
 								
 								<h:panelGroup>
 									<p:outputLabel value="Atualizar " styleClass="my-label" />
 									<br />
-									<p:commandButton icon="fa fa-refresh" action="#{dashBoard.atualizarDados()}" update="frm"/>
+									<p:commandButton icon="fa fa-refresh" action="#{dashBoard.saveDados()}" update="frm"/>
 								</h:panelGroup>
 
 							</p:panelGrid>
@@ -252,7 +252,7 @@
 											<h:outputText value="#{dashBoard.mesAtual().nome}" />
 										</div>
 										<p:dataTable var="pessoa"
-											value="#{dashBoard.listarDizimistas()}" rowHover="true"
+											value="#{dashBoard.findAllDizimistas()}" rowHover="true"
 											reflow="true" emptyMessage="Nenhum registro foi encontrado!">
 
 											<p:column headerText="Nome">

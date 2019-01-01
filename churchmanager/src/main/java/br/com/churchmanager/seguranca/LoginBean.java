@@ -2,6 +2,7 @@ package br.com.churchmanager.seguranca;
 
 import java.io.IOException;
 import java.io.Serializable;
+
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -12,27 +13,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import br.com.churchmanager.util.faces.FacesUtil;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
 
 @Named
 @SessionScoped
 public class LoginBean implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private FacesContext facesContext;
-	
+
 	@Inject
 	private HttpServletRequest request;
-	
+
 	@Inject
 	private HttpServletResponse response;
-	
+
+	@Inject
+	private JsfMessage<Msgs> msgs;
+
+	@Inject
+	private FacesUtil facesUtil;
+
 	@NotNull
 	@NotEmpty
 	@NotBlank
@@ -41,7 +50,8 @@ public class LoginBean implements Serializable {
 
 	public void preRender() {
 		if ("true".equals(this.request.getParameter("invalid"))) {
-			FacesUtil.erro("msg", "Usuário não encontrado!", "Tente novamente.");
+			msgs.addError().error("Usuário não encontrado!", "Tente novamente.");
+			facesUtil.atualizarComponente("msgs");
 		}
 	}
 

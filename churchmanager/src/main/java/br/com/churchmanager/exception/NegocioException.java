@@ -1,6 +1,6 @@
 package br.com.churchmanager.exception;
 
-public class NegocioException extends Exception {
+public class NegocioException extends RuntimeException {
 
 	/**
 	 * 

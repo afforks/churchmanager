@@ -77,7 +77,7 @@ public class Patrimonio extends EntidadeGenerica implements Serializable {
 		this.getAvaliacoes().add(avaliacao);
 	}
 
-	public void atualizar(AvaliacaoPatrimonio avaliacao) {
+	public void update(AvaliacaoPatrimonio avaliacao) {
 		int id = this.indiceDe(avaliacao);
 		this.getAvaliacoes().set(id, avaliacao);
 	}

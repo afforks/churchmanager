@@ -9,15 +9,16 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.churchmanager.bo.CargoBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.Cargo;
 import br.com.churchmanager.model.filter.CargoFilter;
-import br.com.churchmanager.util.BuscaObjeto;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
+import br.com.churchmanager.service.CargoService;
 
 @Named
 @ViewScoped
@@ -25,80 +26,65 @@ public class CargoMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Cargo cargo;
 	private List<Cargo> cargos;
-	private MyLazyDataModel<Cargo> cargosLazy;
+	private LazyDataModel<Cargo> cargosLazy;
 	private CargoFilter cargoFilter;
 	@Inject
-	private CargoBO bo;
+	private CargoService bo;
+
+	@Inject
+	private JsfMessage<Msgs> msgs;
+
+	@Inject
+	private br.com.churchmanager.jsf.FacesUtil facesUtil;
 
 	@PostConstruct
 	public void init() {
-		if (FacesUtil.isNotPostback()) {
-			Cargo cargo = BuscaObjeto.comParametroGET("id", this.bo);
+		if (facesUtil.isNotPostback()) {
+			Cargo cargo = null;
 			this.cargo = cargo;
 		}
 	}
 
 	public String salvar() {
 		try {
-			this.bo.salvar(this.cargo);
-			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.cargo.toString());
+			this.bo.save(this.cargo);
+			msgs.addInfo().cadastradoComSucesso();
 			this.cargo = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + cargo.getNome() + "' está duplicado, por favor, informe outro!");
-			
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.atualizarComponente("msg");
 		}
 		return null;
 	}
 
 	public String atualizar() {
 		try {
-			this.bo.atualizar(this.cargo);
-			FacesUtil.informacao("msg", "Editado com sucesso!", this.cargo.toString());
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
-			this.cargo = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + cargo.getNome() + "' está duplicado, por favor, informe outro!");
-			
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			
-			return null;
+			this.bo.save(this.cargo);
+			msgs.addInfo().editadoComSucesso();
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("msg");
+			facesUtil.manterMensagem();
+			this.cargo = null;
 		}
 		return "/list/cargo?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.cargosLazy = this.bo.filtrar(this.cargoFilter);
+		this.cargosLazy = this.bo.lazyList(this.cargoFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.cargo);
+		this.bo.delete(this.cargo);
 		this.cargo = null;
 		return null;
 	}
 
 	public List<Cargo> cargos() {
-		return this.bo.listar();
+		return this.bo.findAll();
 	}
 
 	public Cargo getCargo() {
@@ -125,15 +111,15 @@ public class CargoMB implements Serializable {
 		this.cargos = cargos;
 	}
 
-	public MyLazyDataModel<Cargo> getCargosLazy() {
+	public LazyDataModel<Cargo> getCargosLazy() {
 		if (this.cargosLazy == null) {
-			this.cargosLazy = this.bo.filtrar(this.getCargoFilter());
+			this.cargosLazy = this.bo.lazyList(this.getCargoFilter());
 		}
 
 		return this.cargosLazy;
 	}
 
-	public void setCargosLazy(MyLazyDataModel<Cargo> cargosLazy) {
+	public void setCargosLazy(LazyDataModel<Cargo> cargosLazy) {
 		this.cargosLazy = cargosLazy;
 	}
 

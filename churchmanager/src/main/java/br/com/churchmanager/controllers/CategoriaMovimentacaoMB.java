@@ -9,97 +9,98 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.churchmanager.bo.CategoriaMovimentacaoBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.CategoriaMovimentacao;
 import br.com.churchmanager.model.filter.CategoriaMovimentacaoFilter;
-import br.com.churchmanager.util.BuscaObjeto;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
+import br.com.churchmanager.service.CategoriaMovimentacaoService;
 
 @Named
 @ViewScoped
 public class CategoriaMovimentacaoMB implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private CategoriaMovimentacao categoria;
 	private List<CategoriaMovimentacao> categorias;
-	private MyLazyDataModel<CategoriaMovimentacao> categoriasLazy;
+	private LazyDataModel<CategoriaMovimentacao> categoriasLazy;
 	private CategoriaMovimentacaoFilter categoriaFilter;
-	
+
 	@Inject
-	private CategoriaMovimentacaoBO bo;
+	private CategoriaMovimentacaoService bo;
+
+	@Inject
+	private FacesUtil facesUtil;
+
+	@Inject
+	private JsfMessage<Msgs> msgs;
 
 	@PostConstruct
 	public void init() {
-		CategoriaMovimentacao categoria = BuscaObjeto.comParametroGET("id", this.bo);
+		CategoriaMovimentacao categoria = null;
 		this.categoria = categoria;
 	}
 
 	public String salvar() {
 		try {
-			this.bo.salvar(this.categoria);
-			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.categoria.toString());
+			this.bo.save(this.categoria);
+			msgs.addInfo().cadastradoComSucesso();
 			this.categoria = null;
 		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+			msgs.addWarn().atencao(e.getMessage());
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + categoria.getNome() + "' está duplicado, por favor, informe outro!");
-
+			msgs.addWarn().atencao(e.getMessage());
 		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+			msgs.addWarn().atencao(e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.updateComponentes("msg");
 		}
 		return null;
 	}
 
 	public String atualizar() {
 		try {
-			this.bo.atualizar(this.categoria);
-			FacesUtil.informacao("msg", "Editado com sucesso!", this.categoria.toString());
+			this.bo.save(this.categoria);
+			msgs.addInfo().editadoComSucesso();
 			this.categoria = null;
 		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+			msgs.addWarn().atencao(e.getMessage());
 			return null;
 		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O nome '" + categoria.getNome() + "' está duplicado, por favor, informe outro!");
+			msgs.addWarn().atencao(e.getMessage());
 			return null;
 		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			msgs.addWarn().atencao(e.getMessage());
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.updateComponentes("msg");
 		}
 		return "/list/categoria?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.categoriasLazy = this.bo.filtrar(this.categoriaFilter);
+		this.categoriasLazy = this.bo.lazyList(this.categoriaFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.categoria);
+		this.bo.delete(this.categoria);
 		this.categoria = null;
 		return null;
 	}
 
 	public List<CategoriaMovimentacao> categorias() {
-		return this.bo.listar();
+		return this.bo.findAll();
 	}
 
 	public List<CategoriaMovimentacao> categoriasAutoComplete(String value) {
-		return this.bo.autoCompletar(value);
+		return this.bo.autoComplete(value);
 	}
 
 	public CategoriaMovimentacao getCategoriaMovimentacao() {
@@ -126,15 +127,15 @@ public class CategoriaMovimentacaoMB implements Serializable {
 		this.categorias = categorias;
 	}
 
-	public MyLazyDataModel<CategoriaMovimentacao> getCategoriaMovimentacaosLazy() {
+	public LazyDataModel<CategoriaMovimentacao> getCategoriaMovimentacaosLazy() {
 		if (this.categoriasLazy == null) {
-			this.categoriasLazy = this.bo.filtrar(this.categoriaFilter);
+			this.categoriasLazy = this.bo.lazyList(this.categoriaFilter);
 		}
 
 		return this.categoriasLazy;
 	}
 
-	public void setCategoriaMovimentacaosLazy(MyLazyDataModel<CategoriaMovimentacao> categoriasLazy) {
+	public void setCategoriaMovimentacaosLazy(LazyDataModel<CategoriaMovimentacao> categoriasLazy) {
 		this.categoriasLazy = categoriasLazy;
 	}
 
@@ -158,7 +159,7 @@ public class CategoriaMovimentacaoMB implements Serializable {
 		return categorias;
 	}
 
-	public MyLazyDataModel<CategoriaMovimentacao> getCategoriasLazy() {
+	public LazyDataModel<CategoriaMovimentacao> getCategoriasLazy() {
 		return categoriasLazy;
 	}
 

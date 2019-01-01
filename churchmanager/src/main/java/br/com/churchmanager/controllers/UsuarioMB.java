@@ -9,15 +9,17 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.churchmanager.bo.UsuarioBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.Usuario;
 import br.com.churchmanager.model.filter.UsuarioFilter;
-import br.com.churchmanager.util.BuscaObjeto;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
+import br.com.churchmanager.service.UsuarioService;
 
 @Named
 @ViewScoped
@@ -27,60 +29,53 @@ public class UsuarioMB implements Serializable {
 
 	private Usuario usuario = new Usuario();
 	private List<Usuario> usuarios = new ArrayList<>();
-	private MyLazyDataModel<Usuario> usuariosLazy;
+	private LazyDataModel<Usuario> usuariosLazy;
 	private UsuarioFilter usuarioFilter = new UsuarioFilter();
 	private Boolean mudarSenha;
 
 	@Inject
-	private UsuarioBO bo;
+	private UsuarioService usuarioService;
+
+	@Inject
+	private FacesUtil facesUtil;
+	@Inject
+	private JsfMessage<Msgs> msgs;
 
 	@PostConstruct
 	public void init() {
-		Usuario usuario = BuscaObjeto.comParametroGET("id", this.bo);
+		Usuario usuario = null;
 		this.usuario = usuario == null ? new Usuario() : usuario;
 	}
 
 	public String salvar() {
 		try {
-			this.bo.salvar(this.usuario);
-			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.usuario.toString());
+			this.usuarioService.save(this.usuario);
+			msgs.addInfo().cadastradoComSucesso();
 			this.usuario = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", "O e-mail '" + usuario.getEmail() + "' está duplicado, por favor, informe outro!");
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.atualizarComponente("msg");
 		}
 		return null;
 	}
 
 	public String atualizar() {
 		try {
-			this.bo.atualizar(this.usuario);
-			FacesUtil.informacao("msg", "Editado com sucesso!", this.usuario.toString());
+			this.usuarioService.save(this.usuario);
+			msgs.addInfo().editadoComSucesso();
 			this.usuario = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!",
-					"O e-mail '" + usuario.getEmail() + "' está duplicado, por favor, informe outro!");
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-			return null;
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("msg");
+			facesUtil.manterMensagem();
 		}
 		return "/list/usuario?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.usuariosLazy = this.bo.filtrar(this.usuarioFilter);
+		this.usuariosLazy = this.usuarioService.lazyList(this.usuarioFilter);
 		return null;
 	}
 
@@ -89,20 +84,20 @@ public class UsuarioMB implements Serializable {
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.usuario);
+		this.usuarioService.delete(this.usuario);
 		this.usuario = null;
 		return null;
 	}
 
 	public Usuario porEmail(String email) {
-		return bo.porEmail(email);
+		return usuarioService.findByEmail(email);
 	}
 
 	// *************************************************************
 
-	public MyLazyDataModel<Usuario> getUsuariosLazy() {
+	public LazyDataModel<Usuario> getUsuariosLazy() {
 		if (this.usuariosLazy == null) {
-			this.usuariosLazy = this.bo.filtrar(this.usuarioFilter);
+			this.usuariosLazy = this.usuarioService.lazyList(this.usuarioFilter);
 		}
 
 		return this.usuariosLazy;
@@ -143,7 +138,7 @@ public class UsuarioMB implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public void setUsuariosLazy(MyLazyDataModel<Usuario> usuariosLazy) {
+	public void setUsuariosLazy(LazyDataModel<Usuario> usuariosLazy) {
 		this.usuariosLazy = usuariosLazy;
 	}
 

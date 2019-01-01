@@ -9,20 +9,22 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.churchmanager.bo.MovimentacaoBO;
-import br.com.churchmanager.bo.ParcelaMovimentacaoBO;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.Movimentacao;
 import br.com.churchmanager.model.ParcelaMovimentacao;
 import br.com.churchmanager.model.StatusMovimentacao;
 import br.com.churchmanager.model.filter.MovimentacaoFilter;
-import br.com.churchmanager.util.BuscaObjeto;
+import br.com.churchmanager.service.MovimentacaoService;
+import br.com.churchmanager.service.ParcelaMovimentacaoService;
 import br.com.churchmanager.util.DataUtil;
 import br.com.churchmanager.util.Meses;
-import br.com.churchmanager.util.MyLazyDataModel;
-import br.com.churchmanager.util.faces.FacesUtil;
 
 @Named
 @ViewScoped
@@ -32,19 +34,24 @@ public class MovimentacaoMB implements Serializable {
 
 	private Movimentacao movimentacao;
 	private List<Movimentacao> movimentacaos;
-	private MyLazyDataModel<Movimentacao> movimentacaosLazy;
+	private LazyDataModel<Movimentacao> movimentacaosLazy;
 	private MovimentacaoFilter movimentacaoFilter;
 	private ParcelaMovimentacao parcela;
 	@Inject
-	private MovimentacaoBO bo;
+	private MovimentacaoService movimentacaoService;
 	@Inject
-	private ParcelaMovimentacaoBO parcelasBO;
+	private ParcelaMovimentacaoService parcelasService;
 
 	private List<Integer> listAnos = DataUtil.getAnos();
 
+	@Inject
+	private FacesUtil facesUtil;
+	@Inject
+	private JsfMessage<Msgs> msgs;
+
 	@PostConstruct
 	public void init() {
-		Movimentacao movimentacao = BuscaObjeto.comParametroGET("id", this.bo);
+		Movimentacao movimentacao = null;
 		this.movimentacao = movimentacao;
 		this.getMovimentacaoFilter().setMes(DataUtil.mes());
 		this.getMovimentacaoFilter().setAno(DataUtil.ano());
@@ -53,7 +60,7 @@ public class MovimentacaoMB implements Serializable {
 
 	public void buscarParcelas() {
 		if (this.movimentacao != null) {
-			List<ParcelaMovimentacao> parcelas = this.parcelasBO.busarParcelas(this.movimentacao);
+			List<ParcelaMovimentacao> parcelas = this.parcelasService.busarParcelas(this.movimentacao);
 			this.movimentacao.setParcelas(parcelas);
 		}
 
@@ -62,14 +69,13 @@ public class MovimentacaoMB implements Serializable {
 	public String salvar() {
 		this.movimentacao.gerarParcelas();
 		try {
-			this.bo.salvar(this.movimentacao);
-			FacesUtil.informacao("msg", "Cadastrado com sucesso!", this.movimentacao.toString());
-			FacesUtil.atualizaComponente("msg");
+			this.movimentacaoService.save(this.movimentacao);
+			msgs.addInfo().cadastradoComSucesso();
 			this.movimentacao = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("msg");
+			facesUtil.atualizarComponente("msg");
 		}
 		return null;
 	}
@@ -77,42 +83,33 @@ public class MovimentacaoMB implements Serializable {
 	public String atualizar() {
 		try {
 			this.movimentacao.gerarParcelas();
-			this.bo.atualizar(this.movimentacao);
-			FacesUtil.informacao("msg", "Editado com sucesso!", this.movimentacao.toString());
+			this.movimentacaoService.save(this.movimentacao);
+			msgs.addInfo().editadoComSucesso();
 			this.movimentacao = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("msg");
+			facesUtil.manterMensagem();
 		}
 		return "/list/movimentacao?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.movimentacaosLazy = this.bo.filtrar(this.movimentacaoFilter);
+		this.movimentacaosLazy = this.movimentacaoService.lazyList(this.movimentacaoFilter);
 		this.listAnos = DataUtil.getAnos(this.movimentacaoFilter.getAno());
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.movimentacao);
+		this.movimentacaoService.delete(this.movimentacao);
 		this.movimentacao = null;
 		return null;
 	}
 
 	public List<Movimentacao> movimentacaos() {
-		return this.bo.listar();
+		return this.movimentacaoService.findAll();
 	}
 
 	public Movimentacao getMovimentacao() {
@@ -139,15 +136,15 @@ public class MovimentacaoMB implements Serializable {
 		this.movimentacaos = movimentacaos;
 	}
 
-	public MyLazyDataModel<Movimentacao> getMovimentacaosLazy() {
+	public LazyDataModel<Movimentacao> getMovimentacaosLazy() {
 		if (this.movimentacaosLazy == null) {
-			this.movimentacaosLazy = this.bo.filtrar(this.movimentacaoFilter);
+			this.movimentacaosLazy = this.movimentacaoService.lazyList(this.movimentacaoFilter);
 		}
 
 		return this.movimentacaosLazy;
 	}
 
-	public void setMovimentacaosLazy(MyLazyDataModel<Movimentacao> movimentacaosLazy) {
+	public void setMovimentacaosLazy(LazyDataModel<Movimentacao> movimentacaosLazy) {
 		this.movimentacaosLazy = movimentacaosLazy;
 	}
 
@@ -190,7 +187,7 @@ public class MovimentacaoMB implements Serializable {
 		if (this.getParcela().getDataPagamento() != null) {
 			this.getParcela().setStatusMovimentacao(StatusMovimentacao.PAGO);
 			Movimentacao movimentacao = this.parcela.getMovimentacao();
-			List<ParcelaMovimentacao> listaDeParcelas = this.parcelasBO.busarParcelas(movimentacao);
+			List<ParcelaMovimentacao> listaDeParcelas = this.parcelasService.busarParcelas(movimentacao);
 			movimentacao.setParcelas(listaDeParcelas);
 			long parcelasEmAberto = movimentacao.getParcelas().stream().filter(ParcelaMovimentacao::isStatusEmAbeto)
 					.count();
@@ -199,20 +196,17 @@ public class MovimentacaoMB implements Serializable {
 			}
 
 			try {
-				this.movimentacao = this.bo.atualizar(movimentacao);
-				this.parcela = this.parcelasBO.atualizar(this.parcela);
+				this.movimentacao = this.movimentacaoService.update(movimentacao);
+				this.parcela = this.parcelasService.update(this.parcela);
 				this.movimentacao.atualizaParcela(this.parcela);
-				FacesUtil.informacao("msg-pagar-receber", "Editado com sucesso!", this.parcela.toString());
+				msgs.addInfo().info("Editado com sucesso!", this.parcela.toString());
 			} catch (Exception e) {
-				FacesUtil.atencao("msg-pagar-receber", "Atenção!", e.getMessage());
-
-			} finally {
-				FacesUtil.atualizaComponente("msg-pagar-receber");
+				msgs.addWarn().atencao("Atenção!", e.getMessage());
 			}
 		} else {
-			FacesUtil.atencao("msg-pagar-receber", "É necessário informar a data!", "");
-			FacesUtil.atualizaComponente("msg-pagar-receber");
+			msgs.addWarn().atencao("É necessário informar a data!", "");
 		}
+		facesUtil.atualizarComponente("msg-pagar-receber");
 
 		return null;
 	}
@@ -229,22 +223,22 @@ public class MovimentacaoMB implements Serializable {
 		this.getParcela().setStatusMovimentacao(StatusMovimentacao.EM_ABERTO);
 		this.getParcela().setDataPagamento(null);
 		Movimentacao movimentacao = this.parcela.getMovimentacao();
-		List<ParcelaMovimentacao> listaDeParcelas = this.parcelasBO.busarParcelas(movimentacao);
+		List<ParcelaMovimentacao> listaDeParcelas = this.parcelasService.busarParcelas(movimentacao);
 		movimentacao.setParcelas(listaDeParcelas);
 		long parcelasPagas = movimentacao.getParcelas().stream().filter(ParcelaMovimentacao::isStatusEmAbeto).count();
 		if (parcelasPagas == 0L) {
 			movimentacao.setStatusMovimentacao(StatusMovimentacao.EM_ABERTO);
 		}
 		try {
-			this.movimentacao = this.bo.atualizar(movimentacao);
-			this.parcela = this.parcelasBO.atualizar(this.parcela);
+			this.movimentacao = this.movimentacaoService.update(movimentacao);
+			this.parcela = this.parcelasService.update(this.parcela);
 			this.movimentacao.atualizaParcela(this.parcela);
-			FacesUtil.informacao("msg-pagar-receber", "Editado com sucesso!", this.parcela.toString());
+			msgs.addInfo().editadoComSucesso();
 		} catch (Exception e) {
-			FacesUtil.atencao("msg-pagar-receber", "Atenção!", e.getMessage());
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 
 		} finally {
-			FacesUtil.atualizaComponente("msg-pagar-receber");
+			facesUtil.atualizarComponente("msg-pagar-receber");
 		}
 		return null;
 	}

@@ -11,18 +11,19 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
 import org.hibernate.validator.constraints.Email;
 
-import br.com.churchmanager.bo.PessoaBO;
 import br.com.churchmanager.exception.DadosException;
 import br.com.churchmanager.exception.NegocioException;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
+import br.com.churchmanager.jsf.FacesUtil;
+import br.com.churchmanager.jsf.Msgs;
+import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.filter.PessoaFilter;
-import br.com.churchmanager.util.BuscaObjeto;
-import br.com.churchmanager.util.MyLazyDataModel;
+import br.com.churchmanager.service.PessoaService;
 import br.com.churchmanager.util.custom.Telefone;
-import br.com.churchmanager.util.faces.FacesUtil;
 
 @Named
 @ViewScoped
@@ -32,7 +33,7 @@ public class PessoaMB implements Serializable {
 
 	private Pessoa pessoa;
 	private List<Pessoa> pessoas = new ArrayList<>();
-	private MyLazyDataModel<Pessoa> pessoasLazy;
+	private LazyDataModel<Pessoa> pessoasLazy;
 	private PessoaFilter pessoaFilter = new PessoaFilter();
 
 	@Telefone
@@ -42,11 +43,16 @@ public class PessoaMB implements Serializable {
 	private String email;
 
 	@Inject
-	private PessoaBO bo;
+	private PessoaService bo;
+
+	@Inject
+	private FacesUtil facesUtil;
+	@Inject
+	private JsfMessage<Msgs> msgs;
 
 	@PostConstruct
 	public void init() {
-		Pessoa pessoa = BuscaObjeto.comParametroGET("id", this.bo);
+		Pessoa pessoa = null;
 		this.pessoa = pessoa == null ? new Pessoa() : pessoa;
 	}
 
@@ -54,63 +60,46 @@ public class PessoaMB implements Serializable {
 		try {
 			this.pessoa.setDataCadastro(new Date());
 			this.pessoa.gerarMatricula();
-			this.bo.salvar(this.pessoa);
-			FacesUtil.informacao("pessoa-msg", "Cadastrado com sucesso!", this.pessoa.toString());
-			FacesUtil.atualizaComponente("pessoa-msg");
+			this.bo.save(this.pessoa);
+			msgs.addInfo().cadastradoComSucesso();
 			this.pessoa = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
-
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
-
-		} catch (DadosException e) {
-			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 		} finally {
-			FacesUtil.atualizaComponente("pessoa-msg");
+			facesUtil.atualizarComponente("pessoa-msg");
 		}
 		return null;
 	}
 
 	public String atualizar() {
 		try {
-			this.bo.atualizar(this.pessoa);
-			FacesUtil.informacao("pessoa-msg", "Editado com sucesso!", this.pessoa.toString());
+			this.bo.save(this.pessoa);
+			msgs.addInfo().editadoComSucesso();
 			this.pessoa = null;
-		} catch (NegocioException e) {
-			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (ViolacaoDeRestricaoException e) {
-			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
-
-			return null;
-		} catch (DadosException e) {
-			FacesUtil.atencao("pessoa-msg", "Atenção!", e.getMessage());
-
+		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
+			msgs.addWarn().atencao("Atenção!", e.getMessage());
 			return null;
 		} finally {
-			FacesUtil.atualizaComponente("pessoa-msg");
-			FacesUtil.manterMensagem();
+			facesUtil.atualizarComponente("pessoa-msg");
+			facesUtil.manterMensagem();
 		}
 		return "/list/pessoa?faces-redirect=true";
 	}
 
 	public String filtrar() {
-		this.pessoasLazy = this.bo.filtrar(this.pessoaFilter);
+		this.pessoasLazy = this.bo.lazyList(this.pessoaFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.deletar(this.pessoa);
+		this.bo.delete(this.pessoa);
 		this.pessoa = null;
 		return null;
 	}
 
-	public MyLazyDataModel<Pessoa> getPessoasLazy() {
+	public LazyDataModel<Pessoa> getPessoasLazy() {
 		if (this.pessoasLazy == null) {
-			this.pessoasLazy = this.bo.filtrar(this.getPessoaFilter());
+			this.pessoasLazy = this.bo.lazyList(this.getPessoaFilter());
 		}
 		return this.pessoasLazy;
 	}
@@ -118,17 +107,17 @@ public class PessoaMB implements Serializable {
 	// ***********************************
 
 	public void resetarTelefone() {
-		if (FacesUtil.naoFalhouNaValidacao()) {
-			FacesUtil.informacao("msg-tel-email", "Telefone adicionado!", "Número: " + this.telefone);
-			FacesUtil.atualizaComponente("msg-tel-email");
+		if (facesUtil.naoFalhouNaValidacao()) {
+			msgs.addInfo().info("Telefone adicionado!", "Número: " + this.telefone);
+			facesUtil.atualizarComponente("msg-tel-email");
 			this.telefone = null;
 		}
 	}
 
 	public void resetarEmail() {
-		if (FacesUtil.naoFalhouNaValidacao()) {
-			FacesUtil.informacao("msg-tel-email", "E-mail adicionado!", "E-mail: " + this.email);
-			FacesUtil.atualizaComponente("msg-tel-email");
+		if (facesUtil.naoFalhouNaValidacao()) {
+			msgs.addInfo().info("E-mail adicionado!", "E-mail: " + this.email);
+			facesUtil.atualizarComponente("msg-tel-email");
 			this.email = null;
 		}
 	}
@@ -173,7 +162,7 @@ public class PessoaMB implements Serializable {
 		this.email = email;
 	}
 
-	public void setPessoasLazy(MyLazyDataModel<Pessoa> pessoasLazy) {
+	public void setPessoasLazy(LazyDataModel<Pessoa> pessoasLazy) {
 		this.pessoasLazy = pessoasLazy;
 	}
 

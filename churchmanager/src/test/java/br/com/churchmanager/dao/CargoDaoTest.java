@@ -1,4 +1,4 @@
-package br.com.churchmanager.dao;
+package br.com.churchmanager.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -17,6 +17,7 @@ import br.com.churchmanager.builder.CargoBuilder;
 import br.com.churchmanager.exception.ViolacaoDeRestricaoException;
 import br.com.churchmanager.model.Cargo;
 import br.com.churchmanager.model.Status;
+import br.com.churchmanager.repository.CargoRepository;
 import br.com.churchmanager.util.JPAUtil;
 
 public class CargoDaoTest {
@@ -25,7 +26,7 @@ public class CargoDaoTest {
 	private static final boolean ASC = true;
 
 	private EntityManager entityManager;
-	private CargoDAO cargoDAO;
+	private CargoRepository cargoRepository;
 	private Cargo cargo;
 
 	@Rule
@@ -40,7 +41,7 @@ public class CargoDaoTest {
 	public void setUp() {
 		entityManager = new JPAUtil().getEntityManager();
 		entityManager.getTransaction().begin();
-		cargoDAO = new CargoDAO(entityManager);
+		cargoRepository = new CargoRepository(entityManager);
 		cargo = novaCargo();
 	}
 
@@ -48,18 +49,18 @@ public class CargoDaoTest {
 	public void tearDown() {
 		entityManager.getTransaction().rollback();
 		entityManager.close();
-		cargoDAO = null;
+		cargoRepository = null;
 		cargo = null;
 	}
 
 	@Test
 	public void deveCadastrarCargo() {
 
-		long qtdRegistros = cargoDAO.contagem("id", null, null, DISTINCT_TRUE);
-		cargoDAO.salvar(cargo);
-		long totalAtualRegistros = cargoDAO.contagem("id", null, null, DISTINCT_TRUE);
+		long qtdRegistros = cargoRepository.contagem("id", null, null, DISTINCT_TRUE);
+		cargoRepository.save(cargo);
+		long totalAtualRegistros = cargoRepository.contagem("id", null, null, DISTINCT_TRUE);
 
-		Cargo cargoDoBanco = cargoDAO.buscarPorId(cargo.getId());
+		Cargo cargoDoBanco = cargoRepository.findBy(cargo.getId());
 
 		assertEquals(qtdRegistros + 1, totalAtualRegistros);
 		assertEquals("id", cargo.getId(), cargoDoBanco.getId());
@@ -71,14 +72,14 @@ public class CargoDaoTest {
 
 	@Test
 	public void deveEditarCargo() {
-		cargoDAO.salvar(cargo);
+		cargoRepository.save(cargo);
 
 		cargo.setNome("Vice-presidente");
 		cargo.setDescricao("Uma nova descrição");
 
-		cargoDAO.atualizar(cargo);
+		cargoRepository.save(cargo);
 
-		Cargo cargoDoBanco = cargoDAO.buscarPorAtributo("nome", cargo.getNome());
+		Cargo cargoDoBanco = cargoRepository.buscarPorAtributo("nome", cargo.getNome());
 
 		assertEquals("id", cargo.getId(), cargoDoBanco.getId());
 		assertEquals("nome", cargo.getNome(), cargoDoBanco.getNome());
@@ -89,11 +90,11 @@ public class CargoDaoTest {
 
 	@Test
 	public void deveRemoverCargo() {
-		cargoDAO.salvar(cargo);
-		long qtdRegistros = cargoDAO.contagem("id", null, null, DISTINCT_TRUE);
-		cargoDAO.excluir(cargo);
-		long totalAtualRegistros = cargoDAO.contagem("id", null, null, DISTINCT_TRUE);
-		cargo = cargoDAO.buscarPorId(cargo.getId());
+		cargoRepository.save(cargo);
+		long qtdRegistros = cargoRepository.contagem("id", null, null, DISTINCT_TRUE);
+		cargoRepository.remove(cargo);
+		long totalAtualRegistros = cargoRepository.contagem("id", null, null, DISTINCT_TRUE);
+		cargo = cargoRepository.findBy(cargo.getId());
 		assertNull(cargo);
 		assertEquals(qtdRegistros - 1, totalAtualRegistros);
 	}
@@ -107,12 +108,12 @@ public class CargoDaoTest {
 		Cargo Secretario = new CargoBuilder().comNome("Secretário").comDescricao("Descrição do cargo").ativo().build();
 		Cargo tesoureiro = new CargoBuilder().comNome("Tesoureiro").comDescricao("Descrição do cargo").ativo().build();
 
-		cargoDAO.salvar(presidente);
-		cargoDAO.salvar(vicePresidente);
-		cargoDAO.salvar(tesoureiro);
-		cargoDAO.salvar(Secretario);
+		cargoRepository.save(presidente);
+		cargoRepository.save(vicePresidente);
+		cargoRepository.save(tesoureiro);
+		cargoRepository.save(Secretario);
 
-		List<Cargo> cargos = cargoDAO.listar(ASC, "nome");
+		List<Cargo> cargos = cargoRepository.findAll(ASC, "nome");
 		int tamanhoDaLista = cargos.size();
 
 		assertEquals(4, tamanhoDaLista);
@@ -126,8 +127,8 @@ public class CargoDaoTest {
 	@Test
 	public void deveBuscarCargoPorIdentificador() {
 
-		cargoDAO.salvar(cargo);
-		Cargo cargoDoBanco = cargoDAO.buscarPorId(cargo.getId());
+		cargoRepository.save(cargo);
+		Cargo cargoDoBanco = cargoRepository.findBy(cargo.getId());
 
 		assertEquals("id", cargo.getId(), cargoDoBanco.getId());
 		assertEquals("nome", cargo.getNome(), cargoDoBanco.getNome());
@@ -139,8 +140,8 @@ public class CargoDaoTest {
 	@Test
 	public void deveEncontrarCargoPorNome() {
 
-		cargoDAO.salvar(cargo);
-		Cargo cargoDoBanco = cargoDAO.buscarPorAtributo("nome", "Presidente");
+		cargoRepository.save(cargo);
+		Cargo cargoDoBanco = cargoRepository.buscarPorAtributo("nome", "Presidente");
 
 		assertEquals("id", cargo.getId(), cargoDoBanco.getId());
 		assertEquals("nome", cargo.getNome(), cargoDoBanco.getNome());
@@ -150,7 +151,7 @@ public class CargoDaoTest {
 
 	@Test
 	public void deveRetornarNuloSeNaoEncontrarCargoPorNome() {
-		Cargo cargoDoBanco = cargoDAO.buscarPorAtributo("nome", "Vice-presidente");
+		Cargo cargoDoBanco = cargoRepository.buscarPorAtributo("nome", "Vice-presidente");
 		assertNull(cargoDoBanco);
 	}
 
@@ -163,8 +164,8 @@ public class CargoDaoTest {
 		Cargo cantar2 = new CargoBuilder().comNome("Vice-presidente").comDescricao("Descrição do cargo").ativo()
 				.build();
 
-		cargoDAO.salvar(cantar1);
-		cargoDAO.salvar(cantar2);
+		cargoRepository.save(cantar1);
+		cargoRepository.save(cantar2);
 
 	}
 
@@ -174,14 +175,14 @@ public class CargoDaoTest {
 		Cargo tocarGuitarra = new CargoBuilder().comNome("Presidente").comDescricao("Descrição do cargo").inativo()
 				.build();
 
-		cargoDAO.salvar(cantar);
-		cargoDAO.salvar(tocarGuitarra);
+		cargoRepository.save(cantar);
+		cargoRepository.save(tocarGuitarra);
 
-		cargoDAO.atualizarStatus(cantar);
-		cargoDAO.atualizarStatus(tocarGuitarra);
+		cargoRepository.saveStatus(cantar);
+		cargoRepository.saveStatus(tocarGuitarra);
 
-		Cargo cargoBanco1 = cargoDAO.buscarPorId(cantar.getId());
-		Cargo cargoBanco2 = cargoDAO.buscarPorId(tocarGuitarra.getId());
+		Cargo cargoBanco1 = cargoRepository.findBy(cantar.getId());
+		Cargo cargoBanco2 = cargoRepository.findBy(tocarGuitarra.getId());
 
 		assertEquals(Status.INATIVO, cargoBanco1.getStatus());
 		assertEquals(Status.ATIVO, cargoBanco2.getStatus());
