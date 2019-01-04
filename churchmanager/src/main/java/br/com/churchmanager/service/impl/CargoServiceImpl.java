@@ -48,8 +48,7 @@ public class CargoServiceImpl implements CargoService {
 	}
 
 	public LazyDataModel<Cargo> lazyList(Filter filter) {
-		//return this.repository.lazyList(this.repository);
-		return null;
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

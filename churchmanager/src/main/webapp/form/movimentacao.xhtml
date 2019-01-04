@@ -34,7 +34,7 @@
 				value="#{movimentacaoMB.movimentacao.tipoMovimentacao}">
 				<f:selectItems itemLabel="#{tipoMovimentacao.descricao}"
 					itemValue="#{tipoMovimentacao}"
-					value="#{utilMB.findAllTipoMovimentacao()}" var="tipoMovimentacao" />
+					value="#{utilMB.listarTipoMovimentacao()}" var="tipoMovimentacao" />
 
 			</p:selectOneRadio>
 			<p:message for="tipoMovimentacao" />
@@ -48,7 +48,7 @@
 				value="#{movimentacaoMB.movimentacao.statusMovimentacao}">
 				<f:selectItems itemLabel="#{statusMovimentacao.descricao}"
 					itemValue="#{statusMovimentacao}"
-					value="#{utilMB.findAllStatusMovimentacao()}"
+					value="#{utilMB.listarStatusMovimentacao()}"
 					var="statusMovimentacao" />
 				<!-- 				<p:ajax process="@this" update="labelForma, compoenenteForma, msgForma "/> -->
 			</p:selectOneRadio>
@@ -67,7 +67,7 @@
 					value="#{movimentacaoMB.movimentacao.formaMovimentacao}">
 					<f:selectItems itemLabel="#{formaMovimentacao.descricao}"
 						itemValue="#{formaMovimentacao}"
-						value="#{utilMB.findAllFormaMovimentacao()}"
+						value="#{utilMB.listarFormaMovimentacao()}"
 						var="formaMovimentacao" />
 				</p:selectOneRadio>
 			</h:panelGroup>
@@ -211,7 +211,7 @@
 			<p:selectOneRadio id="status"
 				value="#{movimentacaoMB.movimentacao.status}">
 				<f:selectItems itemLabel="#{status.descricao}" var="status"
-					value="#{utilMB.findAllStatus()}" itemValue="#{status}" />
+					value="#{utilMB.listarStatus()}" itemValue="#{status}" />
 			</p:selectOneRadio>
 			<p:message for="status" />
 		</div>
@@ -220,14 +220,14 @@
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 
 				<p:commandButton value="Cadastrar"
-					action="#{movimentacaoMB.save()}" update="group"
+					action="#{movimentacaoMB.salvar()}" update="group"
 					validateClient="true" icon="fa fa-save" oncomplete="goToTop()"
 					rendered="#{movimentacaoMB.movimentacao.id == null}"
 					styleClass="btn-blue">
 				</p:commandButton>
 
 				<p:commandButton value="Editar"
-					action="#{movimentacaoMB.save()}" update="group"
+					action="#{movimentacaoMB.atualizar()}" update="group"
 					validateClient="true" icon="fa fa-edit"
 					rendered="#{movimentacaoMB.movimentacao.id != null}"
 					styleClass="btn-green">

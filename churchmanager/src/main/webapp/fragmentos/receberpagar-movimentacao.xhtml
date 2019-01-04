@@ -38,7 +38,7 @@
 		               <f:facet name="output"><p:outputLabel value="#{parcela.formaMovimentacao.descricao}"/></f:facet>
 		               <f:facet name="input">
 		                   <p:selectOneMenu value="#{parcela.formaMovimentacao}" style="width:100%">
-		                       <f:selectItems value="#{utilMB.findAllFormaMovimentacao()}" var="forma" 
+		                       <f:selectItems value="#{utilMB.listarFormaMovimentacao()}" var="forma" 
 		                       itemLabel="#{forma.descricao}" itemValue="#{forma}" />
 		                   </p:selectOneMenu>
 		               </f:facet>

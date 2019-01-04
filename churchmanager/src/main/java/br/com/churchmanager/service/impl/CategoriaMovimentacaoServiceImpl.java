@@ -66,7 +66,7 @@ public class CategoriaMovimentacaoServiceImpl implements CategoriaMovimentacaoSe
 
 	@Override
 	public LazyDataModel<CategoriaMovimentacao> lazyList(Filter filter) {
-		return repository.lazyList(filter);
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

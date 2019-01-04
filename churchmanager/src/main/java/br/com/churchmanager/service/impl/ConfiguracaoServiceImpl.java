@@ -71,8 +71,7 @@ public class ConfiguracaoServiceImpl implements ConfiguaracaoService {
 
 	@Override
 	public LazyDataModel<Configuracao> lazyList(Filter filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

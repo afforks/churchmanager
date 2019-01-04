@@ -91,8 +91,7 @@ public class ParcelaMovimentacaoServiceImpl implements ParcelaMovimentacaoServic
 
 	@Override
 	public LazyDataModel<ParcelaMovimentacao> lazyList(Filter filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

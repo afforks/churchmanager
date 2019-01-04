@@ -71,8 +71,7 @@ public class PessoaCargoServiceImpl implements PessoaCargoService {
 
 	@Override
 	public LazyDataModel<PessoaCargo> lazyList(Filter filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

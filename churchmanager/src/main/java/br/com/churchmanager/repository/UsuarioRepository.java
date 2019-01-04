@@ -6,12 +6,12 @@ import org.apache.deltaspike.data.api.Repository;
 import br.com.churchmanager.model.Usuario;
 import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 
-@Repository
+@Repository(forEntity = Usuario.class)
 public interface UsuarioRepository extends EntityRepository<Usuario, Long> {
 
-	public Usuario findByEmail(String email);
+	Usuario findByEmail(String email);
 
-	public LazyDataModel<Usuario> filtrar(UsuarioRepository repository);
+	LazyDataModel<Usuario> filtrar(UsuarioRepository repository);
 
-	public Usuario porEmail(String email);
+	Usuario porEmail(String email);
 }

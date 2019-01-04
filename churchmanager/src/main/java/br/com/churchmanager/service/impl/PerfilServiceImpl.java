@@ -66,8 +66,7 @@ public class PerfilServiceImpl implements PerfilService {
 
 	@Override
 	public LazyDataModel<Perfil> lazyList(Filter filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

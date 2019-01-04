@@ -66,8 +66,7 @@ public class TipoServiceImpl implements TipoService {
 
 	@Override
 	public LazyDataModel<Tipo> lazyList(Filter filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

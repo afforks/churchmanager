@@ -42,7 +42,7 @@
 						</div>
 
 						<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
-							<p:commandButton action="#{categoriaMovimentacaoMB.lazyList()}"
+							<p:commandButton action="#{categoriaMovimentacaoMB.categoriasLazy()}"
 								process="@this filtro" update="table" icon="fa fa-search"
 								styleClass="btn-grey" id="buscar" />
 						</div>
@@ -63,11 +63,11 @@
 					<p:dataTable id="table" var="categoriaMovimentacao" lazy="true"
 						value="#{categoriaMovimentacaoMB.categoriaMovimentacaosLazy}"
 						rowHover="true" categoriaMovimentacaotorPosition="bottom"
-						categoriaMovimentacaotor="true"
-						categoriaMovimentacaotorAlwaysVisible="false" rows="20"
+						paginator="true"
+						paginatorAlwaysVisible="false" rows="20"
 						rowsPerPageLabel="de"
 						emptyMessage="Nenhum registro foi encontrado!"
-						categoriaMovimentacaotorTemplate="{CurrentPageReport} {FirstPageLink} 
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
 						{PreviousPageLink} {PageLinks} {NextPageLink} 
 							{LastPageLink} {RowsPerPageDropdown}"
 						currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página {currentPage} de {totalPages})">

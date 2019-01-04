@@ -72,7 +72,7 @@
 			<p:selectOneRadio id="estado" 
 				value="#{patrimonioMB.patrimonio.estado}">
 				<f:selectItems itemLabel="#{estado.descricao}" var="estado"
-					value="#{utilMB.findAllEstadoPatrimonio()}" itemValue="#{estado}" />
+					value="#{utilMB.listarEstadoPatrimonio()}" itemValue="#{estado}" />
 			</p:selectOneRadio>
 			<p:message for="estado" />
 		</div>
@@ -139,7 +139,7 @@
 			<p:selectOneRadio id="situacao" 
 				value="#{patrimonioMB.patrimonio.situacao}">
 				<f:selectItems itemLabel="#{situacao.descricao}" var="situacao"
-					value="#{utilMB.findAllSituacao()}" itemValue="#{situacao}" />
+					value="#{utilMB.listarSituacao()}" itemValue="#{situacao}" />
 			</p:selectOneRadio>
 			<p:message for="situacao" />
 		</div>
@@ -165,7 +165,7 @@
 			<p:selectOneRadio id="status" 
 				value="#{patrimonioMB.patrimonio.status}">
 				<f:selectItems itemLabel="#{status.descricao}" var="status"
-					value="#{utilMB.findAllStatus()}" itemValue="#{status}" />
+					value="#{utilMB.listarStatus()}" itemValue="#{status}" />
 			</p:selectOneRadio>
 			<p:message for="status" />
 		</div>
@@ -239,13 +239,13 @@
 
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
-				<p:commandButton value="Cadastrar" action="#{patrimonioMB.save()}"
+				<p:commandButton value="Cadastrar" action="#{patrimonioMB.salvar()}"
 					update="group" validateClient="true" icon="fa fa-save"
 					rendered="#{patrimonioMB.patrimonio.id == null}"
 					styleClass="btn-blue">
 				</p:commandButton>
 
-				<p:commandButton value="Editar" action="#{patrimonioMB.save()}"
+				<p:commandButton value="Editar" action="#{patrimonioMB.atualizar()}"
 					update="group" validateClient="true" icon="fa fa-edit"
 					rendered="#{patrimonioMB.patrimonio.id != null}"
 					styleClass="btn-green">

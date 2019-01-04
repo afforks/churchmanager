@@ -100,8 +100,7 @@ public class PessoaServiceImpl implements PessoaService {
 
 	@Override
 	public LazyDataModel<Pessoa> lazyList(Filter filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

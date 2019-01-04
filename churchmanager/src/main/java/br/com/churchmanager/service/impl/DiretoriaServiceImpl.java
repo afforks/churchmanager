@@ -69,8 +69,7 @@ public class DiretoriaServiceImpl implements DiretoriaService {
 
 	@Override
 	public LazyDataModel<Diretoria> lazyList(Filter filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

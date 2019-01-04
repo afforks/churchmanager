@@ -45,7 +45,7 @@
 				<p:selectOneRadio id="status"
 					value="#{atividadeEclesiasticaMB.atividadeEclesiastica.status}">
 					<f:selectItems itemLabel="#{status.descricao}" var="status"
-						value="#{utilMB.findAllStatus()}"
+						value="#{utilMB.listarStatus()}"
 						itemValue="#{status}" />
 				</p:selectOneRadio>
 				<p:message for="status" />
@@ -56,14 +56,14 @@
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 
 				<p:commandButton value="Cadastrar"
-					action="#{atividadeEclesiasticaMB.save()}" update="group"
+					action="#{atividadeEclesiasticaMB.salvar()}" update="group"
 					validateClient="true" icon="fa fa-save"
 					rendered="#{atividadeEclesiasticaMB.atividadeEclesiastica.id == null}"
 					styleClass="btn-blue">
 				</p:commandButton>
 
 				<p:commandButton value="Editar"
-					action="#{atividadeEclesiasticaMB.save()}" update="group"
+					action="#{atividadeEclesiasticaMB.atualizar()}" update="group"
 					validateClient="true" icon="fa fa-edit"
 					rendered="#{atividadeEclesiasticaMB.atividadeEclesiastica.id != null}"
 					styleClass="btn-green">

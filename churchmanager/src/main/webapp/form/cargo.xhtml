@@ -43,7 +43,7 @@
 				<p:outputLabel for="status" styleClass="my-label" value="Status" />
 				<p:selectOneRadio id="status" value="#{cargoMB.cargo.status}">
 					<f:selectItems itemLabel="#{status.descricao}" var="status"
-						value="#{utilMB.findAllStatus()}" itemValue="#{status}" />
+						value="#{utilMB.listarStatus()}" itemValue="#{status}" />
 				</p:selectOneRadio>
 				<p:message for="status" />
 			</div>
@@ -51,12 +51,12 @@
 
 		<div class="ui-g-12 ui-g-nopad">
 			<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
-				<p:commandButton value="Cadastrar" action="#{cargoMB.save()}"
+				<p:commandButton value="Cadastrar" action="#{cargoMB.salvar()}"
 					update="group" validateClient="true" icon="fa fa-save"
 					rendered="#{cargoMB.cargo.id == null}" styleClass="btn-blue">
 				</p:commandButton>
 
-				<p:commandButton value="Editar" action="#{cargoMB.save()}"
+				<p:commandButton value="Editar" action="#{cargoMB.atualizar()}"
 					update="group" validateClient="true" icon="fa fa-edit"
 					rendered="#{cargoMB.cargo.id != null}" styleClass="btn-green">
 				</p:commandButton>

@@ -64,8 +64,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public LazyDataModel<Usuario> lazyList(Filter filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

@@ -50,7 +50,7 @@ public class AtividadeEclesiasticaServiceImpl implements AtividadeEclesiasticaSe
 
 	@Override
 	public LazyDataModel<AtividadeEclesiastica> lazyList(Filter filter) {
-		return null;
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

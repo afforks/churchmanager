@@ -66,8 +66,7 @@ public class PaginaServiceImpl implements PaginaService {
 
 	@Override
 	public LazyDataModel<Pagina> lazyList(Filter filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

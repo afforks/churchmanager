@@ -66,8 +66,7 @@ public class MovimentacaoServiceImpl implements MovimentacaoService {
 
 	@Override
 	public LazyDataModel<Movimentacao> lazyList(Filter filter) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LazyDataModel<>(repository);
 	}
 
 	@Override

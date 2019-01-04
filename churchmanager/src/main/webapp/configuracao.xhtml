@@ -218,7 +218,7 @@
 						filter="true"
 						converterMessage="Não foi possível converter o objeto (Estado)">
 						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-						<f:selectItems value="#{utilMB.findAllEstados()}"
+						<f:selectItems value="#{utilMB.listarEstados()}"
 							itemLabel="#{estado.descricao}" itemValue="#{estado}"
 							var="estado" />
 					</p:selectOneMenu>
@@ -237,7 +237,7 @@
 				<div class="ui-g-12 ui-g-nopad">
 					<div class="ui-g-3 ui-lg-3 ui-md-4 ui-sm-6">
 						<p:commandButton value="Cadastrar"
-							action="#{configuracaoMB.save()}" update="group"
+							action="#{configuracaoMB.salvar()}" update="group"
 							validateClient="true" icon="fa fa-save" styleClass="btn-blue">
 						</p:commandButton>
 
