@@ -27,6 +27,7 @@ import br.com.churchmanager.model.Evento;
 import br.com.churchmanager.model.FormaMovimentacao;
 import br.com.churchmanager.model.StatusMovimentacao;
 import br.com.churchmanager.model.TipoMovimentacao;
+import br.com.churchmanager.model.Usuario;
 import br.com.churchmanager.model.dto.Aniversariante;
 import br.com.churchmanager.model.dto.DetalheMovimentacao;
 import br.com.churchmanager.model.dto.Dizimista;
@@ -40,7 +41,7 @@ import br.com.churchmanager.model.filter.DizimoFilter;
 import br.com.churchmanager.model.filter.EventoFilter;
 import br.com.churchmanager.model.filter.ParcelaMovimentacaoFilter;
 import br.com.churchmanager.model.filter.PessoaFilter;
-import br.com.churchmanager.seguranca.Seguranca;
+import br.com.churchmanager.seguranca.UsuarioLogado;
 import br.com.churchmanager.service.DizimoService;
 import br.com.churchmanager.service.EventoService;
 import br.com.churchmanager.service.ParcelaMovimentacaoService;
@@ -64,26 +65,33 @@ public class DashBoard implements Serializable {
 	private String mes;
 	private String ano;
 	private List<Integer> listAnos = DataUtil.getAnos();
+	
 	@Inject
 	private HttpServletRequest request;
-	@Inject
-	private Seguranca seguranca;
-
+	
+	@UsuarioLogado
+	private Usuario usuarioLogado;
+	
 	@Inject
 	private ParcelaMovimentacaoService parcelasService;
+	
 	@Inject
 	private PessoaService pessoaService;
+	
 	@Inject
 	private EventoService eventoService;
+	
 	private PercentualDizimista percentualDizimista;
+	
 	@Inject
 	private DizimoService dizimoService;
+	
 	@Inject
 	private JsfMessage<Msgs> message;
 
 	public void loginSucesso() {
 		if ("true".equals(this.request.getParameter("logado"))) {
-			message.addInfo().bemVindo(this.seguranca.getUsuarioLogado().getUsuario().getNomeCompleto());
+			message.addInfo().bemVindo(this.usuarioLogado.getNomeCompleto());
 		}
 
 	}

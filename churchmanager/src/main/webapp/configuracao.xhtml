@@ -39,9 +39,11 @@
 					showSummary="true" />
 			</div>
 
-			<p:commandButton value="Carregar última configuração"
-				styleClass="btn btn-red" icon="fa fa-refresh" process="@this"
-				action="#{configuracaoMB.carregarUltimaConfiguracao()}"></p:commandButton>
+			<div class="ui-g-12">
+				<p:commandButton value="Carregar última configuração"
+					styleClass="btn btn-red float-right" icon="fa fa-refresh" process="@this"
+					action="#{configuracaoMB.carregarUltimaConfiguracao()}"/>
+			</div>
 
 			<div class="ui-fluid" jsf:id="group">
 

@@ -42,7 +42,7 @@
 						styleClass="font-12">
 						<f:selectItems var="mes" itemLabel="#{mes.abreviacao}"
 							itemValue="#{mes.numero}" value="#{movimentacaoMB.meses()}" />
-						<p:ajax process="mes" listener="#{movimentacaoMB.movimentacaosLazy}"
+						<p:ajax process="mes" listener="#{movimentacaoMB.filtrar()}"
 							update="table" />
 					</p:selectOneButton>
 				</h:panelGroup>
@@ -55,7 +55,7 @@
 						styleClass="font-12">
 						<f:selectItems var="ano" itemLabel="#{ano}" itemValue="#{ano}"
 							value="#{movimentacaoMB.listAnos}" />
-						<p:ajax process="ano" listener="#{movimentacaoMB.movimentacaosLazy}"
+						<p:ajax process="ano" listener="#{movimentacaoMB.filtrar()}"
 							update="table ano" />
 					</p:selectOneButton>
 				</h:panelGroup>
@@ -78,7 +78,7 @@
 						</div>
 
 						<div class="ui-g-1 ui-lg-1 ui-md-1 ui-sm-2">
-							<p:commandButton action="#{movimentacaoMB.movimentacaosLazy}"
+							<p:commandButton action="#{movimentacaoMB.filtrar()}"
 								process="@this filtro" update="table" icon="fa fa-search"
 								styleClass="btn-grey" id="buscar" />
 						</div>

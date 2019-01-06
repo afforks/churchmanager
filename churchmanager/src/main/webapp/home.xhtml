@@ -61,14 +61,14 @@
 										styleClass="font-12">
 										<f:selectItems var="ano" itemLabel="#{ano}" itemValue="#{ano}"
 											value="#{dashBoard.listAnos}" />
-										<p:ajax process="ano" update="ano" listener="#{dashBoard.saveAno()}"/>
+										<p:ajax process="ano" update="ano" listener="#{dashBoard.updateAno()}"/>
 									</p:selectOneButton>
 								</h:panelGroup>
 								
 								<h:panelGroup>
 									<p:outputLabel value="Atualizar " styleClass="my-label" />
 									<br />
-									<p:commandButton icon="fa fa-refresh" action="#{dashBoard.saveDados()}" update="frm"/>
+									<p:commandButton icon="fa fa-refresh" action="#{dashBoard.updateDados()}" update="frm"/>
 								</h:panelGroup>
 
 							</p:panelGrid>

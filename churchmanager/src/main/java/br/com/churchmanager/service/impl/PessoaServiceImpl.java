@@ -55,7 +55,7 @@ public class PessoaServiceImpl implements PessoaService {
 	}
 
 	public Pessoa buscarPorMatricula(String matricula) {
-		return this.repository.buscarPorMatricula(matricula);
+		return this.repository.findByMatricula(matricula);
 	}
 
 	public LazyDataModel<Pessoa> filtrar(PessoaFilter pessoaFilter) {
@@ -84,7 +84,7 @@ public class PessoaServiceImpl implements PessoaService {
 	}
 
 	public List<Dizimista> listarDizimistas(PessoaFilter filter) {
-		return this.repository.findAllDizimistas(filter);
+		return this.repository.listarDizimistas(filter);
 	}
 
 	@Override

@@ -53,13 +53,8 @@ public class ParcelaMovimentacaoServiceImpl implements ParcelaMovimentacaoServic
 		return this.repository.findBy(id);
 	}
 
-	public LazyDataModel<ParcelaMovimentacao> filtrar(ParcelaMovimentacaoFilter parcelaFilter) {
-		// return this.repository.lazyList(this.repository);
-		return null;
-	}
-
 	public List<ParcelaMovimentacao> busarParcelas(Movimentacao movimentacao) {
-		return this.repository.busarParcelas(movimentacao);
+		return this.repository.findByMovimentacaoOrderByDataVencimento(movimentacao);
 	}
 
 	public List<DetalheMovimentacao> ultimosLancamentos(ParcelaMovimentacaoFilter parcelaFilter) {

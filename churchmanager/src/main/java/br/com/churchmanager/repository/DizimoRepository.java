@@ -3,6 +3,9 @@ package br.com.churchmanager.repository;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
 import org.hibernate.Criteria;
@@ -12,12 +15,14 @@ import org.hibernate.Session;
 import br.com.churchmanager.model.Dizimo;
 import br.com.churchmanager.model.dto.PercentualDizimista;
 import br.com.churchmanager.model.filter.DizimoFilter;
-import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 
 @Repository
-public interface DizimoRepository extends EntityRepository<Dizimo, Long> {
+public abstract class DizimoRepository implements EntityRepository<Dizimo, Long> {
 
-	public PercentualDizimista percentualDizimista(DizimoFilter filter);/* {
+	@Inject
+	private EntityManager entityManager;
+
+	public PercentualDizimista percentualDizimista(DizimoFilter filter) {
 		String sql = "select * from percentual_dizimistas where mes = :mes and ano = :ano";
 		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
@@ -33,7 +38,6 @@ public interface DizimoRepository extends EntityRepository<Dizimo, Long> {
 					((Integer) dados.get("ANO")).intValue(), (BigDecimal) dados.get("PORCENTAGEM"));
 		}
 		return percentual;
-	}*/
+	}
 
-	public LazyDataModel<Dizimo> filtrar(DizimoRepository repository);
 }

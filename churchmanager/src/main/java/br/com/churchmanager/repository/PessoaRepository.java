@@ -1,13 +1,26 @@
 package br.com.churchmanager.repository;
 
+import static br.com.churchmanager.util.DataUtil.ano;
+import static br.com.churchmanager.util.DataUtil.semestre;
+import static br.com.churchmanager.util.DataUtil.stringParaDate;
+import static br.com.churchmanager.util.DataUtil.ultimoDiaDoMes;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
+import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 
-import br.com.churchmanager.jsf.primefaces.LazyDataModel;
 import br.com.churchmanager.model.Pessoa;
 import br.com.churchmanager.model.dto.Aniversariante;
 import br.com.churchmanager.model.dto.Dizimista;
@@ -16,9 +29,12 @@ import br.com.churchmanager.model.dto.PessoaAtividaEclesiastica;
 import br.com.churchmanager.model.filter.PessoaFilter;
 
 @Repository
-public interface PessoaRepository extends EntityRepository<Pessoa, Long> {
+public abstract class PessoaRepository implements EntityRepository<Pessoa, Long> {
 
-	public BigDecimal[] quantidadeDeMembros(PessoaFilter filter);/* {
+	@Inject
+	private EntityManager entityManager;
+
+	public BigDecimal[] quantidadeDeMembros(PessoaFilter filter) {
 		String sql = "select sum(total) as total, sum(M) as M, sum(F) as F from total_membros_periodo where dc <= :data";
 		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
@@ -33,9 +49,9 @@ public interface PessoaRepository extends EntityRepository<Pessoa, Long> {
 		Map<?, ?> dados = (Map<?, ?>) query.uniqueResult();
 		return new BigDecimal[] { (BigDecimal) dados.get("total"), (BigDecimal) dados.get("M"),
 				(BigDecimal) dados.get("F") };
-	}*/
+	}
 
-	public List<Aniversariante> aniversariantesDoMes(PessoaFilter filter);/* {
+	public List<Aniversariante> aniversariantesDoMes(PessoaFilter filter) {
 		int mes = Integer.parseInt((filter.getMes()));
 		int ano = Integer.parseInt((filter.getAno()));
 		String sql = "select * from aniversariantes where ano_cadastro <= :ano_atual and month(data_nascimento) = :mes_atual ";
@@ -56,9 +72,9 @@ public interface PessoaRepository extends EntityRepository<Pessoa, Long> {
 		}
 
 		return resultList;
-	}*/
+	}
 
-	public List<MembrosPorFaixaEtaria> membresiaFaixaEtaria(PessoaFilter filter);/* {
+	public List<MembrosPorFaixaEtaria> membresiaFaixaEtaria(PessoaFilter filter) {
 		String sql = "select sum(M) as M, sum(F) as F, faixa_etaria from faixa_etaria where dc <= :data  group by faixa_etaria";
 		ArrayList<MembrosPorFaixaEtaria> resultList = new ArrayList<>();
 		Session session = this.entityManager.unwrap(Session.class);
@@ -82,9 +98,9 @@ public interface PessoaRepository extends EntityRepository<Pessoa, Long> {
 		}
 
 		return resultList;
-	}*/
+	}
 
-	public List<PessoaAtividaEclesiastica> pessoasPorAtividadeEclesiastica(PessoaFilter filter);/* {
+	public List<PessoaAtividaEclesiastica> pessoasPorAtividadeEclesiastica(PessoaFilter filter) {
 		String sql = "SELECT distinct categoria, sum(quantidade) as quantidade FROM pessoas_por_atividade_eclesiastica where data < :data group by categoria";
 		ArrayList<PessoaAtividaEclesiastica> resultList = new ArrayList<>();
 		Session session = this.entityManager.unwrap(Session.class);
@@ -108,9 +124,9 @@ public interface PessoaRepository extends EntityRepository<Pessoa, Long> {
 		}
 
 		return resultList;
-	}*/
+	}
 
-	public String gerarMatricula(Date dataCadastro);/* {
+	public String gerarMatricula(Date dataCadastro) {
 		String sql = "select contagem_por_periodo(:data) as qtd_registros";
 		Session session = this.entityManager.unwrap(Session.class);
 		SQLQuery query = session.createSQLQuery(sql);
@@ -121,9 +137,9 @@ public interface PessoaRepository extends EntityRepository<Pessoa, Long> {
 		Map<?, ?> dados = (Map<?, ?>) query.uniqueResult();
 		String qtdPorPeriodo = (String) dados.get("qtd_registros");
 		return (ano() + semestre() + qtdPorPeriodo);
-	}*/
+	}
 
-	public List<Dizimista> listarDizimistas(PessoaFilter filter);/* {
+	public List<Dizimista> listarDizimistas(PessoaFilter filter) {
 		String sql = "select nome, data from dizimistas where MONTH(data) = :mes and YEAR(data) = :ano order by nome";
 		ArrayList<Dizimista> dizimistas = new ArrayList<>();
 		Session session = this.entityManager.unwrap(Session.class);
@@ -147,13 +163,8 @@ public interface PessoaRepository extends EntityRepository<Pessoa, Long> {
 
 		return dizimistas;
 
-	}*/
+	}
 
-	public LazyDataModel<Pessoa> filtrar(PessoaRepository repository);
+	public abstract Pessoa findByMatricula(String matricula);
 
-	public Pessoa buscarPorMatricula(String matricula);
-
-	public List<Dizimista> findAllDizimistas(PessoaFilter filter);
-
-	public Pessoa findByMatricula(String idPessoa);
 }

@@ -128,6 +128,7 @@ public class CategoriaMovimentacaoMB implements Serializable {
 	}
 
 	public LazyDataModel<CategoriaMovimentacao> getCategoriaMovimentacaosLazy() {
+		if(categoriasLazy == null) categoriasLazy = service.lazyList(getCategoriaFilter());
 		return this.categoriasLazy;
 	}
 
