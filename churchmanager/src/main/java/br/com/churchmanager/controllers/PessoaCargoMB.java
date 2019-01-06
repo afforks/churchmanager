@@ -32,7 +32,7 @@ public class PessoaCargoMB implements Serializable {
 	private LazyDataModel<PessoaCargo> pessoaCargosLazy;
 	private PessoaCargoFilter pessoaCargoFilter;
 	@Inject
-	private PessoaCargoService bo;
+	private PessoaCargoService service;
 	@Inject
 	private FacesUtil facesUtil;
 	@Inject
@@ -46,7 +46,7 @@ public class PessoaCargoMB implements Serializable {
 
 	public String salvar() {
 		try {
-			this.bo.save(this.pessoaCargo);
+			this.service.save(this.pessoaCargo);
 			msgs.addInfo().cadastradoComSucesso();
 			this.pessoaCargo = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -61,7 +61,7 @@ public class PessoaCargoMB implements Serializable {
 
 	public String atualizar() {
 		try {
-			this.bo.save(this.pessoaCargo);
+			this.service.save(this.pessoaCargo);
 			msgs.addInfo().editadoComSucesso();
 			pessoaCargo = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -76,18 +76,18 @@ public class PessoaCargoMB implements Serializable {
 	}
 
 	public String filtrar() {
-		this.pessoaCargosLazy = this.bo.lazyList(this.pessoaCargoFilter);
+		this.pessoaCargosLazy = this.service.lazyList(this.pessoaCargoFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.delete(this.pessoaCargo);
+		this.service.delete(this.pessoaCargo);
 		this.pessoaCargo = null;
 		return null;
 	}
 
 	public List<PessoaCargo> pessoaCargos() {
-		return this.bo.findAll();
+		return this.service.findAll();
 	}
 
 	public PessoaCargo getPessoaCargo() {
@@ -116,7 +116,7 @@ public class PessoaCargoMB implements Serializable {
 
 	public LazyDataModel<PessoaCargo> getPessoaCargosLazy() {
 		if (this.pessoaCargosLazy == null) {
-			this.pessoaCargosLazy = this.bo.lazyList(this.getPessoaCargoFilter());
+			this.pessoaCargosLazy = this.service.lazyList(this.getPessoaCargoFilter());
 		}
 
 		return this.pessoaCargosLazy;

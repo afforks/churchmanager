@@ -2,6 +2,8 @@ package br.com.churchmanager.model;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -117,6 +119,10 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 
 	public int getIdade() {
 		return DataUtil.calcularIdade(this.dataNascimento);
+	}
+	
+	public FaixaEtaria getFaixaEtaria() {
+		return FaixaEtaria.porIdade(getIdade());
 	}
 
 	public String gerarMatricula() {
@@ -261,5 +267,4 @@ public class Pessoa extends EntidadeGenerica implements Serializable {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-
 }

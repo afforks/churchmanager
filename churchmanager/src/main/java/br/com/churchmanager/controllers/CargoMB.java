@@ -29,7 +29,7 @@ public class CargoMB implements Serializable {
 	private LazyDataModel<Cargo> cargosLazy;
 	private CargoFilter cargoFilter;
 	@Inject
-	private CargoService bo;
+	private CargoService service;
 
 	@Inject
 	private JsfMessage<Msgs> msgs;
@@ -47,7 +47,7 @@ public class CargoMB implements Serializable {
 
 	public String salvar() {
 		try {
-			this.bo.save(this.cargo);
+			this.service.save(this.cargo);
 			msgs.addInfo().cadastradoComSucesso();
 			this.cargo = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -60,7 +60,7 @@ public class CargoMB implements Serializable {
 
 	public String atualizar() {
 		try {
-			this.bo.save(this.cargo);
+			this.service.save(this.cargo);
 			msgs.addInfo().editadoComSucesso();
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
 			msgs.addWarn().atencao("Atenção!", e.getMessage());
@@ -73,18 +73,18 @@ public class CargoMB implements Serializable {
 	}
 
 	public String filtrar() {
-		this.cargosLazy = this.bo.lazyList(this.cargoFilter);
+		this.cargosLazy = this.service.lazyList(this.cargoFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.delete(this.cargo);
+		this.service.delete(this.cargo);
 		this.cargo = null;
 		return null;
 	}
 
 	public List<Cargo> cargos() {
-		return this.bo.findAll();
+		return this.service.findAll();
 	}
 
 	public Cargo getCargo() {
@@ -113,7 +113,7 @@ public class CargoMB implements Serializable {
 
 	public LazyDataModel<Cargo> getCargosLazy() {
 		if (this.cargosLazy == null) {
-			this.cargosLazy = this.bo.lazyList(this.getCargoFilter());
+			this.cargosLazy = this.service.lazyList(this.getCargoFilter());
 		}
 
 		return this.cargosLazy;

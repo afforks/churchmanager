@@ -38,6 +38,7 @@ public class UsuarioMB implements Serializable {
 
 	@Inject
 	private FacesUtil facesUtil;
+	
 	@Inject
 	private JsfMessage<Msgs> msgs;
 

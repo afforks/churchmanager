@@ -71,7 +71,7 @@ public class CategoriaMovimentacaoServiceImpl implements CategoriaMovimentacaoSe
 
 	@Override
 	public List<CategoriaMovimentacao> autoComplete(String value) {
-		return repository.autoComplete(value);
+		return repository.findByNomeLike(value);
 	}
 
 }

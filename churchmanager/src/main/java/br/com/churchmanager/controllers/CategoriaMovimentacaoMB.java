@@ -33,7 +33,7 @@ public class CategoriaMovimentacaoMB implements Serializable {
 	private CategoriaMovimentacaoFilter categoriaFilter;
 
 	@Inject
-	private CategoriaMovimentacaoService bo;
+	private CategoriaMovimentacaoService service;
 
 	@Inject
 	private FacesUtil facesUtil;
@@ -49,7 +49,7 @@ public class CategoriaMovimentacaoMB implements Serializable {
 
 	public String salvar() {
 		try {
-			this.bo.save(this.categoria);
+			this.service.save(this.categoria);
 			msgs.addInfo().cadastradoComSucesso();
 			this.categoria = null;
 		} catch (NegocioException e) {
@@ -66,7 +66,7 @@ public class CategoriaMovimentacaoMB implements Serializable {
 
 	public String atualizar() {
 		try {
-			this.bo.save(this.categoria);
+			this.service.save(this.categoria);
 			msgs.addInfo().editadoComSucesso();
 			this.categoria = null;
 		} catch (NegocioException e) {
@@ -85,22 +85,22 @@ public class CategoriaMovimentacaoMB implements Serializable {
 	}
 
 	public String filtrar() {
-		this.categoriasLazy = this.bo.lazyList(this.categoriaFilter);
+		this.categoriasLazy = this.service.lazyList(this.categoriaFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.delete(this.categoria);
+		this.service.delete(this.categoria);
 		this.categoria = null;
 		return null;
 	}
 
 	public List<CategoriaMovimentacao> categorias() {
-		return this.bo.findAll();
+		return this.service.findAll();
 	}
 
 	public List<CategoriaMovimentacao> categoriasAutoComplete(String value) {
-		return this.bo.autoComplete(value);
+		return this.service.autoComplete(value);
 	}
 
 	public CategoriaMovimentacao getCategoriaMovimentacao() {

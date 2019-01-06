@@ -24,14 +24,18 @@ import br.com.churchmanager.service.TipoService;
 @Named
 @ViewScoped
 public class TipoMB implements Serializable {
+
 	private static final long serialVersionUID = 19879234234L;
+
 	private Tipo tipo;
 	private List<Tipo> tipos;
 	private LazyDataModel<Tipo> tiposLazy;
 	private TipoFilter tipoFilter;
+
 	@Inject
-	private TipoService bo;
+	private TipoService service;
 	@Inject
+
 	private FacesUtil facesUtil;
 	@Inject
 	private JsfMessage<Msgs> msgs;
@@ -44,7 +48,7 @@ public class TipoMB implements Serializable {
 
 	public String salvar() {
 		try {
-			this.bo.save(this.tipo);
+			this.service.save(this.tipo);
 			msgs.addInfo().cadastradoComSucesso();
 			this.tipo = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -57,7 +61,7 @@ public class TipoMB implements Serializable {
 
 	public String atualizar() {
 		try {
-			this.bo.save(this.tipo);
+			this.service.save(this.tipo);
 			msgs.addInfo().editadoComSucesso();
 			this.tipo = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -71,18 +75,18 @@ public class TipoMB implements Serializable {
 	}
 
 	public String filtrar() {
-		this.tiposLazy = this.bo.lazyList(this.tipoFilter);
+		this.tiposLazy = this.service.lazyList(this.tipoFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.delete(this.tipo);
+		this.service.delete(this.tipo);
 		this.tipo = null;
 		return null;
 	}
 
 	public List<Tipo> tipos() {
-		return this.bo.findAll();
+		return this.service.findAll();
 	}
 
 	public Tipo getTipo() {
@@ -111,7 +115,7 @@ public class TipoMB implements Serializable {
 
 	public LazyDataModel<Tipo> getTiposLazy() {
 		if (this.tiposLazy == null) {
-			this.tiposLazy = this.bo.lazyList(this.tipoFilter);
+			this.tiposLazy = this.service.lazyList(this.tipoFilter);
 		}
 
 		return this.tiposLazy;

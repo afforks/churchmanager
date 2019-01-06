@@ -32,7 +32,7 @@ public class PatrimonioMB implements Serializable {
 	private LazyDataModel<Patrimonio> patrimoniosLazy;
 	private PatrimonioFilter patrimonioFilter;
 	@Inject
-	private PatrimonioService bo;
+	private PatrimonioService service;
 	@Inject
 	private FacesUtil facesUtil;
 	@Inject
@@ -46,7 +46,7 @@ public class PatrimonioMB implements Serializable {
 
 	public String salvar() {
 		try {
-			this.bo.save(this.patrimonio);
+			this.service.save(this.patrimonio);
 			msgs.addInfo().cadastradoComSucesso();
 			this.patrimonio = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -60,7 +60,7 @@ public class PatrimonioMB implements Serializable {
 	public String atualizar() {
 
 		try {
-			this.bo.save(this.patrimonio);
+			this.service.save(this.patrimonio);
 			msgs.addInfo().editadoComSucesso();
 			this.patrimonio = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -74,18 +74,18 @@ public class PatrimonioMB implements Serializable {
 	}
 
 	public String filtrar() {
-		this.patrimoniosLazy = this.bo.lazyList(this.patrimonioFilter);
+		this.patrimoniosLazy = this.service.lazyList(this.patrimonioFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.delete(this.patrimonio);
+		this.service.delete(this.patrimonio);
 		this.patrimonio = null;
 		return null;
 	}
 
 	public List<Patrimonio> patrimonios() {
-		return this.bo.findAll();
+		return this.service.findAll();
 	}
 
 	public String removerTipo() {
@@ -149,7 +149,7 @@ public class PatrimonioMB implements Serializable {
 
 	public LazyDataModel<Patrimonio> getPatrimoniosLazy() {
 		if (this.patrimoniosLazy == null) {
-			this.patrimoniosLazy = this.bo.lazyList(this.patrimonioFilter);
+			this.patrimoniosLazy = this.service.lazyList(this.patrimonioFilter);
 		}
 
 		return this.patrimoniosLazy;

@@ -34,7 +34,7 @@ public class EventoMB implements Serializable {
 	private LazyDataModel<Evento> eventosLazy;
 	private EventoFilter eventoFilter;
 	@Inject
-	private EventoService bo;
+	private EventoService service;
 	@Inject
 	private FacesUtil facesUtil;
 	@Inject
@@ -48,7 +48,7 @@ public class EventoMB implements Serializable {
 
 	public String salvar() {
 		try {
-			this.bo.save(this.evento);
+			this.service.save(this.evento);
 			msgs.addInfo().cadastradoComSucesso();
 			facesUtil.atualizarComponente("msg");
 			this.evento = null;
@@ -62,7 +62,7 @@ public class EventoMB implements Serializable {
 
 	public String atualizar() {
 		try {
-			this.bo.save(this.evento);
+			this.service.save(this.evento);
 			msgs.addInfo().cadastradoComSucesso();
 			this.evento = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -76,18 +76,18 @@ public class EventoMB implements Serializable {
 	}
 
 	public String filtrar() {
-		this.eventosLazy = this.bo.lazyList(this.eventoFilter);
+		this.eventosLazy = this.service.lazyList(this.eventoFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.delete(this.evento);
+		this.service.delete(this.evento);
 		this.evento = null;
 		return null;
 	}
 
 	public List<Evento> perfis() {
-		return this.bo.findAll();
+		return this.service.findAll();
 	}
 
 	public void relatorioDeEventos() {
@@ -122,7 +122,7 @@ public class EventoMB implements Serializable {
 
 	public LazyDataModel<Evento> getEventosLazy() {
 		if (this.eventosLazy == null) {
-			this.eventosLazy = this.bo.lazyList(this.eventoFilter);
+			this.eventosLazy = this.service.lazyList(this.eventoFilter);
 		}
 
 		return this.eventosLazy;

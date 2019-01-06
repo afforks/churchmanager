@@ -43,7 +43,7 @@ public class PessoaMB implements Serializable {
 	private String email;
 
 	@Inject
-	private PessoaService bo;
+	private PessoaService service;
 
 	@Inject
 	private FacesUtil facesUtil;
@@ -60,7 +60,7 @@ public class PessoaMB implements Serializable {
 		try {
 			this.pessoa.setDataCadastro(new Date());
 			this.pessoa.gerarMatricula();
-			this.bo.save(this.pessoa);
+			this.service.save(this.pessoa);
 			msgs.addInfo().cadastradoComSucesso();
 			this.pessoa = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -73,7 +73,7 @@ public class PessoaMB implements Serializable {
 
 	public String atualizar() {
 		try {
-			this.bo.save(this.pessoa);
+			this.service.save(this.pessoa);
 			msgs.addInfo().editadoComSucesso();
 			this.pessoa = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -87,19 +87,19 @@ public class PessoaMB implements Serializable {
 	}
 
 	public String filtrar() {
-		this.pessoasLazy = this.bo.lazyList(this.pessoaFilter);
+		this.pessoasLazy = this.service.lazyList(this.pessoaFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.delete(this.pessoa);
+		this.service.delete(this.pessoa);
 		this.pessoa = null;
 		return null;
 	}
 
 	public LazyDataModel<Pessoa> getPessoasLazy() {
 		if (this.pessoasLazy == null) {
-			this.pessoasLazy = this.bo.lazyList(this.getPessoaFilter());
+			this.pessoasLazy = this.service.lazyList(this.getPessoaFilter());
 		}
 		return this.pessoasLazy;
 	}

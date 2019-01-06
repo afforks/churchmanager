@@ -30,7 +30,7 @@ public class PerfilMB implements Serializable {
 	private LazyDataModel<Perfil> perfilsLazy;
 	private PerfilFilter perfilFilter;
 	@Inject
-	private PerfilService bo;
+	private PerfilService service;
 	@Inject
 	private FacesUtil facesUtil;
 	@Inject
@@ -44,7 +44,7 @@ public class PerfilMB implements Serializable {
 
 	public String salvar() {
 		try {
-			this.bo.save(this.perfil);
+			this.service.save(this.perfil);
 			msgs.addInfo().cadastradoComSucesso();
 			this.perfil = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -58,7 +58,7 @@ public class PerfilMB implements Serializable {
 
 	public String atualizar() {
 		try {
-			this.bo.save(this.perfil);
+			this.service.save(this.perfil);
 			msgs.addInfo().editadoComSucesso();
 			this.perfil = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -72,12 +72,12 @@ public class PerfilMB implements Serializable {
 	}
 
 	public String filtrar() {
-		this.perfilsLazy = this.bo.lazyList(this.perfilFilter);
+		this.perfilsLazy = this.service.lazyList(this.perfilFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.delete(this.perfil);
+		this.service.delete(this.perfil);
 		this.perfil = null;
 		return null;
 	}
@@ -86,7 +86,7 @@ public class PerfilMB implements Serializable {
 
 	public List<Perfil> perfis() {
 		if (perfis == null && facesUtil.isNotPostback()) {
-			perfis = this.bo.findAll();
+			perfis = this.service.findAll();
 		}
 		return perfis;
 	}
@@ -117,7 +117,7 @@ public class PerfilMB implements Serializable {
 
 	public LazyDataModel<Perfil> getPerfilsLazy() {
 		if (this.perfilsLazy == null) {
-			this.perfilsLazy = this.bo.lazyList(this.perfilFilter);
+			this.perfilsLazy = this.service.lazyList(this.perfilFilter);
 		}
 
 		return this.perfilsLazy;

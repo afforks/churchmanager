@@ -40,7 +40,7 @@ public class DizimoMB implements Serializable {
 	private LazyDataModel<Dizimo> dizimosLazy;
 	private DizimoFilter dizimoFilter;
 	@Inject
-	private DizimoService bo;
+	private DizimoService service;
 	@Inject
 	private PessoaService pessoaService;
 
@@ -65,7 +65,7 @@ public class DizimoMB implements Serializable {
 
 	public String salvar() {
 		try {
-			this.bo.save(this.dizimo);
+			this.service.save(this.dizimo);
 			msgs.addInfo().cadastradoComSucesso();
 			this.dizimo = null;
 			this.idPessoa = null;
@@ -79,7 +79,7 @@ public class DizimoMB implements Serializable {
 
 	public String atualizar() {
 		try {
-			this.bo.save(this.dizimo);
+			this.service.save(this.dizimo);
 			msgs.addInfo().editadoComSucesso();
 			this.dizimo = null;
 			this.idPessoa = null;
@@ -94,7 +94,7 @@ public class DizimoMB implements Serializable {
 	}
 
 	public String filtrar() {
-		this.dizimosLazy = this.bo.lazyList(this.dizimoFilter);
+		this.dizimosLazy = this.service.lazyList(this.dizimoFilter);
 		this.listAnos = DataUtil.getAnos(this.dizimoFilter.getAno());
 		return null;
 	}
@@ -104,13 +104,13 @@ public class DizimoMB implements Serializable {
 	}
 
 	public String deletar() {
-		this.bo.delete(this.dizimo);
+		this.service.delete(this.dizimo);
 		this.dizimo = null;
 		return null;
 	}
 
 	public List<Dizimo> perfis() {
-		return this.bo.findAll();
+		return this.service.findAll();
 	}
 
 	public void buscarPessoa() {
@@ -154,7 +154,7 @@ public class DizimoMB implements Serializable {
 
 	public LazyDataModel<Dizimo> getDizimosLazy() {
 		if (this.dizimosLazy == null) {
-			this.dizimosLazy = this.bo.lazyList(this.dizimoFilter);
+			this.dizimosLazy = this.service.lazyList(this.dizimoFilter);
 		}
 
 		return this.dizimosLazy;

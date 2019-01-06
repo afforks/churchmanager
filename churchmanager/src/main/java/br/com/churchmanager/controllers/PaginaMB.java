@@ -35,10 +35,11 @@ public class PaginaMB implements Serializable {
 	private static final Logger LOGGER = Logger.getLogger(GenericReport.class.getName());
 
 	@Inject
-	private PaginaService bo;
+	private PaginaService service;
 
 	@Inject
 	private FacesUtil facesUtil;
+	
 	@Inject
 	private JsfMessage<Msgs> msgs;
 
@@ -50,7 +51,7 @@ public class PaginaMB implements Serializable {
 
 	public String salvar() {
 		try {
-			this.bo.save(this.pagina);
+			this.service.save(this.pagina);
 			msgs.addInfo().cadastradoComSucesso();
 			this.pagina = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -64,7 +65,7 @@ public class PaginaMB implements Serializable {
 
 	public String atualizar() {
 		try {
-			this.bo.save(this.pagina);
+			this.service.save(this.pagina);
 			msgs.addInfo().editadoComSucesso();
 			this.pagina = null;
 		} catch (NegocioException | ViolacaoDeRestricaoException | DadosException e) {
@@ -79,12 +80,12 @@ public class PaginaMB implements Serializable {
 	}
 
 	public String filtrar() {
-		this.paginasLazy = this.bo.lazyList(this.paginaFilter);
+		this.paginasLazy = this.service.lazyList(this.paginaFilter);
 		return null;
 	}
 
 	public String deletar() {
-		this.bo.delete(this.pagina);
+		this.service.delete(this.pagina);
 		this.pagina = null;
 		return null;
 	}
@@ -93,7 +94,7 @@ public class PaginaMB implements Serializable {
 
 	public List<Pagina> listarPaginas() {
 		if (listarPaginas == null && facesUtil.isNotPostback()) {
-			listarPaginas = this.bo.findAll();
+			listarPaginas = this.service.findAll();
 		}
 		return listarPaginas;
 	}
@@ -124,7 +125,7 @@ public class PaginaMB implements Serializable {
 
 	public LazyDataModel<Pagina> getPaginasLazy() {
 		if (this.paginasLazy == null) {
-			this.paginasLazy = this.bo.lazyList(this.paginaFilter);
+			this.paginasLazy = this.service.lazyList(this.paginaFilter);
 		}
 
 		return this.paginasLazy;
